@@ -12,32 +12,26 @@
 .close {
 	border: none;
 }
-
 a {
 	text-decoration: none;
 	color: black;
 }
-
 .modal-header {
 	width: 300px;
 	text-align: center;
 }
-
 .modal-body {
 	width: 300px;
 	text-align: center;
 }
-
-.inputId, .inputPw, .loginBtn {
+.inputEmail, .inputPw, .loginBtn {
 	width: 100%;
 	height: 30px;
 	margin-top: 10px;
 }
-
 .saveId {
 	margin-top: 10px;
 }
-
 .modal-footer {
 	width: 300px;
 	margin-top: 10px;
@@ -61,7 +55,7 @@ a {
 								</button>
 							</div>
 							<div class="modal-body">
-								<input type="text" class="inputId" name="id"
+								<input type="text" class="inputEmail" name="email"
 									placeholder="아이디 입력"><br> <input type="password"
 									class="inputPw" name="pw" placeholder="비밀번호 입력"><br>
 								<button type="button" class="loginBtn" onclick="toLogin()">Login</button>
@@ -74,8 +68,8 @@ a {
 							<div class="modal-footer">
 								<a href="" class="findId">아이디 찾기</a> <span> | </span> <a href=""
 									class="findPw">비밀번호 찾기</a> <span> | </span> <a
-									href="${pageContext.request.contextPath}/member/signup.do"
-									class="signup">회원가입</a>
+									href="${pageContext.request.contextPath}/member/signUp.do"
+									class="signUp">회원가입</a>
 							</div>
 						</div>
 					</div>
@@ -87,9 +81,8 @@ a {
         var login = document.getElementsByClassName("loginBtn");
 
         function toLogin(){
-            document.getElementById("loginFrm").submit();
+            document.getElementById("loginForm").submit();
         }
-
     </script>
 </body>
 </html>
