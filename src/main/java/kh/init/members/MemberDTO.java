@@ -6,6 +6,7 @@ public class MemberDTO {
 	private String email;
 	private String pw;
 	private String nickname;
+	private String name;
 	private String phone;
 	private String birth;
 	private String profile_img;
@@ -16,13 +17,14 @@ public class MemberDTO {
 	private String black;
 	
 	public MemberDTO() {}
-	
-	public MemberDTO(String email, String pw, String nickname, String phone, String birth, String profile_img,
-			String profile_msg, String admin, Timestamp join_date, String id_type, String black) {
+
+	public MemberDTO(String email, String pw, String nickname, String name, String phone, String birth,
+			String profile_img, String profile_msg, String admin, Timestamp join_date, String id_type, String black) {
 		super();
 		this.email = email;
 		this.pw = pw;
 		this.nickname = nickname;
+		this.name = name;
 		this.phone = phone;
 		this.birth = birth;
 		this.profile_img = profile_img;
@@ -42,6 +44,9 @@ public class MemberDTO {
 	public String getNickname() {return nickname;}
 	public void setNickname(String nickname) {this.nickname = nickname;}
 
+	public String getName() {return name;}
+	public void setName(String name) {this.name = name;}
+
 	public String getPhone() {return phone;}
 	public void setPhone(String phone) {this.phone = phone;}
 
@@ -56,7 +61,7 @@ public class MemberDTO {
 
 	public String getAdmin() {return admin;}
 	public void setAdmin(String admin) {this.admin = admin;}
-	
+
 	public Timestamp getJoin_date() {return join_date;}
 	public void setJoin_date(Timestamp join_date) {this.join_date = join_date;}
 
@@ -64,5 +69,5 @@ public class MemberDTO {
 	public void setId_type(String id_type) {this.id_type = id_type;}
 
 	public String getBlack() {return black;}
-	public void setBlack(String black) {this.black = black;}	
+	public void setBlack(String black) {this.black = black;}
 }
