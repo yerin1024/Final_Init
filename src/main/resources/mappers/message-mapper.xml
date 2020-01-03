@@ -4,4 +4,34 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace ="Message">
 
+<!-- 	private int msg_seq; -->
+<!-- 	private String from_id; -->
+<!-- 	private String to_id; -->
+<!-- 	private String contents; -->
+<!-- 	private Timestamp write_date; -->
+<!-- 	private String receive_read; -->
+	
+	<!--  -->
+	<insert id="insertMsg"> <!-- 입력 -->
+		insert into tb_message values(meg_seq.nextval, #{from_id}, #{to_id}, #{contents}, sysdate, 'N')
+	</insert>
+	
+	<select id="selectFifty" resultType="kh.init.messages.MessageDTO"> <!-- 메시지 최근 50개 -->
+	<![CDATA[
+		select * from (select * from tb_message order by 1 desc) where ((from_id=#{from_id} and to_id=#{to_id}) or (from_id=#{to_id} and to_id=#{from_id})) and rownum <=50 order by 1
+	]]>
+	</select>
+	
+	<select id="selectAll" resultType="kh.init.messages.MessageDTO"> <!-- 메시지 전부 출력 -->
+		select * from tb_message order by 1
+	</select>
+	
+	<update id="readCheck"> <!-- 읽음 표시 -->
+		update tb_message set receive_read = 'Y' where from_id=#{to_id} and to_id=#{from_id}
+	</update>
+	
+	<select id="previewMsg"> <!-- 미리 보기 -->
+		select * from tb_message
+	</select>
+
 </mapper>
