@@ -11,5 +11,8 @@ public class MemberController {
 	@Autowired
 	private MemberService service;
 	
-	
+//	@RequestMapping("/login.do")
+//	public String toLogin(String id, String pw) {
+//		
+//	}
 }
