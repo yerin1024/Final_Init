@@ -9,6 +9,12 @@
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 </head>
 <body>
-
+<div>
+ 프로필 사진
+ 닉네임 
+  프로필 메세지
+ 
+ </div> 
+ <button type="button">회원 정보 편집</button>
 </body>
 </html>
