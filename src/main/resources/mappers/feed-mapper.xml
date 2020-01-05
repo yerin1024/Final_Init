@@ -3,7 +3,17 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace ="Feed">
+
+	
+	<select id="selectAll" resultType="kh.init.feeds.FeedDTO">
+		select * from tb_feed
+	</select>
+
 	<insert id="registerFeed" parameterType="kh.init.feeds.FeedDTO">		
 		insert into tb_feed values(feed_seq.nextval,#{email},#{nickname},#{title},#{contents},#{relation},sysdate) 
 	</insert>
+	
+	<select id="detailView" resultType="kh.init.feeds.FeedDTO">
+		select * from tb_feed where feed_seq = #{feed_seq}
+	</select>
 </mapper>
