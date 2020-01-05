@@ -14,10 +14,14 @@
 		$("#wholeFeed").on("click",function(){
 			location.href = "feed/wholeFeed";
 		})
+		$("#myInformation").on("click",function(){
+			location.href = "member/goMyInfo";
+		})
 	})
 </script>
 </head>
 <body>	
 	<button type="button" id="writeFeed">게시물 등록</button> <button id="wholeFeed">전체피드</button>
+	<button type="button" id="myInformation">회원 정보 수정</button>
 </body>
 </html>
