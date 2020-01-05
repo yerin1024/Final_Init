@@ -10,4 +10,8 @@ public class FeedDAO {
 	@Autowired
 	private SqlSessionTemplate jdbc;
 	
+	public int registerFeed(FeedDTO dto) {
+		int result = jdbc.insert("Feed.registerFeed", dto);
+		return result;
+	}
 }

@@ -8,5 +8,8 @@ public class FeedService {
 	@Autowired
 	private FeedDAO dao;
 	
+	public int registerFeed(FeedDTO dto) {
+		return dao.registerFeed(dto);
+	}
 	
 }
