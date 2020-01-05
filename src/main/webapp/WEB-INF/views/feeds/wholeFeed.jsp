@@ -20,11 +20,12 @@
 					<tr>
 						<td>글번호
 						<td>글제목
+						<td>글내용
 					</tr>
 				<c:forEach items="${list }" var="list">
 					<tr>
-						<td>${list.seq }
-						<td>${list.title }
+						<td>${list.feed_seq }
+						<td><a href="/feed/detailView?feed_seq=${list.feed_seq }">${list.title }</a>
 					</tr>
 				</c:forEach>
 				</table>

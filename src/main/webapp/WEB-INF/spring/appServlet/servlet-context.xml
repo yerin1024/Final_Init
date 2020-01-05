@@ -22,42 +22,52 @@
    
    <mvc:annotation-driven></mvc:annotation-driven>
    <mvc:resources location="/files/" mapping="/files/**"></mvc:resources>
+   <mvc:resources location="/videoFiles/" mapping="/feed/videoFiles/**"></mvc:resources>
    
    <context:component-scan base-package="kh.init" />
    <task:annotation-driven/>
 
-   <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-      <property name="prefix" value="/WEB-INF/views/" />
-      <property name="suffix" value=".jsp" />
-   </bean>
-   
-   <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-      <property name="maxUploadSize" value="104857600"></property>
-      <property name="defaultEncoding" value="utf-8"></property>
-   </bean>   
-   
-   <bean class="org.apache.commons.dbcp2.BasicDataSource" id="dataSource">
-      <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
-      <property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"/>
-      <property name="username" value="admin"/>
-      <property name="password" value="admin"/>
-      <property name="initialSize" value="30"/>
-   </bean>
-   
-   <bean id="sqlSession" class="org.mybatis.spring.SqlSessionFactoryBean">
-      <property name="dataSource" ref="dataSource"/>
-      <property name="mapperLocations" value="classpath:/mappers/*mapper.xml"/>
-   </bean>
-   
-   <bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
-      <constructor-arg ref="sqlSession"></constructor-arg>
-   </bean>
-   
-   <tx:annotation-driven transaction-manager="txManager"/>
-   <bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-      <property name="dataSource" ref="dataSource"/>
-   </bean>
-   
-   <bean id="authAdv" class="kh.init.advisors.AuthAdvisor"/>
-   
+
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/views/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+	
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize" value="10485760"></property>
+		<property name="defaultEncoding" value="utf-8"></property>
+	</bean>	
+	
+	<bean class="org.apache.commons.dbcp2.BasicDataSource" id="dataSource">
+		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
+		<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"/>
+		<property name="username" value="init"/>
+		<property name="password" value="init"/>
+		<property name="initialSize" value="30"/>
+	</bean>
+	
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"/>
+		<property name="mapperLocations" value="classpath:/mappers/*mapper.xml"/>
+	</bean>
+	
+	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg ref="sqlSession"></constructor-arg>
+	</bean>
+	
+	<tx:annotation-driven transaction-manager="txManager"/>
+	<bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"/>
+	</bean>
+	
+	<bean id="authAdv" class="kh.init.advisors.AuthAdvisor"/>
+	
+<!-- 	<aop:config> -->
+<!-- 		<aop:pointcut id="allControllerMethod" expression="execution(*kh.init.*(..))  -->
+<!-- 		and not execution(*kh.init.members.GuestController.*(..))"/> -->
+<!-- 		<aop:aspect id="authAsp" ref="authAdv"> -->
+<!-- 			<aop:around method="loginCheck" pointcut-ref="allControllerMethod"/> -->
+<!-- 		</aop:aspect> -->
+<!-- 	</aop:config> -->
+	
 </beans>

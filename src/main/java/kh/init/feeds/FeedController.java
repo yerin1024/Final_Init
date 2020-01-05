@@ -1,13 +1,13 @@
 package kh.init.feeds;
 
-import java.io.File;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.multipart.MultipartFile;
 
 @RequestMapping("/feed")
 @Controller
@@ -15,38 +15,57 @@ public class FeedController {
 
 	@Autowired
 	private FeedService service;
-
 	@Autowired
 	private HttpSession session;
-
-	@RequestMapping("/write")
-	public String write() {
-		System.out.println("write 도착");
-		return "/feeds/write";
+	
+	@RequestMapping("/myFeed")
+	public String myFeed() {
+		return "feeds/myFeed";
 	}
-
-	@RequestMapping("/writeProc")
-	public String writeProc(FeedDTO dto) {
-		System.out.println("writeProc 도착");
-		dto.setEmail("yerin102@nate.com");
-		dto.setNickname("yerinNickname");
+	
+	@RequestMapping("/writeFeed")
+	public String writeFeed() {
+		return "feeds/writeFeed";
+	}
+	@RequestMapping("/writeFeedProc")
+	public String writeFeedProc(FeedDTO dto) {
+		System.out.println("게시물 등록 도착!");
 		
-		String filePath = session.getServletContext().getRealPath("files");
-		File path = new File(filePath);
-		if(!(path.exists())) {
-			System.out.println();
-			path.mkdir();
-		}
+		dto.setEmail("email");
+		dto.setNickname("nickname");
+		String imagePath = session.getServletContext().getRealPath("imageFiles");
+		String videoPath = session.getServletContext().getRealPath("videoFiles");
+		
+		
+		int result = service.registerFeed(dto, videoPath);
+		System.out.println(result + "행의 게시물이 등록");
+		return "redirect:/home";
+	}
+	
+	
+	@RequestMapping("/wholeFeed")
+	public String wholeFeed(Model model) {
+		System.out.println("wholeFeed 도착");
+		List<FeedDTO> list = null;
 		try {
-			for(MultipartFile tmp : dto.getFiles()) {
-				System.out.println(tmp.getContentType());
-				String oriName = tmp.getOriginalFilename();
-				String sysName = System.currentTimeMillis()+oriName;
-				tmp.transferTo(new File(path+"/"+sysName));
-			}
+			list = service.selectAll();
+			model.addAttribute("list", list);
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
-		return "/home";
+		return "/feeds/wholeFeed";
+	}
+	
+	@RequestMapping("/detailView")
+	public String detailView(String feed_seq, Model model) {
+		System.out.println("detailView 도착");
+		FeedDTO dto = null;
+		try {
+			dto = service.detailView(feed_seq);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		model.addAttribute("dto", dto);
+		return "/feeds/detailView";
 	}
 }
