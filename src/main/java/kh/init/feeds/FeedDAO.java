@@ -10,4 +10,8 @@ public class FeedDAO {
 	@Autowired
 	private SqlSessionTemplate jdbc;
 	
+	public int write(FeedDTO dto) throws Exception{
+		int result = jdbc.insert("write");
+		return result;
+	}
 }
