@@ -30,18 +30,20 @@ public class FeedController {
 	@RequestMapping("/writeFeedProc")
 	public String writeFeedProc(FeedDTO dto) {
 		System.out.println("게시물 등록 도착!");
-		
-		dto.setEmail("email");
-		dto.setNickname("nickname");
+		String email = "yes";
+		String nickname = "yes";
+		dto.setEmail(email);
+		dto.setNickname(nickname);
+		System.out.println(dto.toString());
 		String imagePath = session.getServletContext().getRealPath("imageFiles");
 		String videoPath = session.getServletContext().getRealPath("videoFiles");
+		int result = service.registerFeed(dto,imagePath,videoPath);
 		
+	
 		
-		int result = service.registerFeed(dto, videoPath);
 		System.out.println(result + "행의 게시물이 등록");
 		return "redirect:/home";
 	}
-	
 	
 	@RequestMapping("/wholeFeed")
 	public String wholeFeed(Model model) {
