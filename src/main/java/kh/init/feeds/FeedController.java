@@ -31,11 +31,10 @@ public class FeedController {
 		dto.setEmail(email);
 		dto.setNickname(nickname);
 		System.out.println(dto.toString());
-		int result = service.registerFeed(dto);
+		String imagePath = session.getServletContext().getRealPath("imageFiles");
+		String videoPath = session.getServletContext().getRealPath("videoFiles");
+		int result = service.registerFeed(dto,imagePath,videoPath);
 		System.out.println(result + "행의 게시물이 등록");
 		return "redirect:../main";
 	}
-	
-	
-	
 }
