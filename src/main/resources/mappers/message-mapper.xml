@@ -31,7 +31,11 @@
 	</update>
 	
 	<select id="previewMsg"> <!-- 미리 보기 -->
-		select * from tb_message
+		select * from (select * from tb_message order by 1 desc) where ((from_id=#{from_id} and to_id=#{to_id}) or (from_id=#{to_id} and to_id=#{from_id})) and rownum=1;
+	</select>
+	
+	<select id="unreadCount"> <!-- 읽지 않은 메시지 수 -->
+		select count(*) from tb_message where (from_id=#{to_id} and to_id=#{from_id}) and receive_read = 'N'
 	</select>
 
 </mapper>
