@@ -7,7 +7,7 @@
 		select * from tb_member where black = 'Y'
 	</select>
 	<select id="memberList" resultType="kh.init.members.MemberDTO">
-		select * from tb_member where admin = 'N'
+		select * from tb_member where admin = 'N' and black = 'N'
 	</select>
 	<update id="toBlack" parameterType="String">
 		update tb_member set black = 'Y' where email = #{email}
