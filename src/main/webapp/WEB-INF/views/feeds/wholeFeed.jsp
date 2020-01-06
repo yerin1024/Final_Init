@@ -54,7 +54,7 @@
 						</c:if>
 							<div class="col-4 feed">
 							<c:if test="${feed.check==0}">
-							${feed.title }
+							 <a href="/feed/detailView?feed_seq=${feed_seq }">${feed.title }</a>
 							</c:if>
 							
 							</div>
