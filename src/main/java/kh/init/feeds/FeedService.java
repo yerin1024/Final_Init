@@ -20,36 +20,45 @@ public class FeedService {
 	private FeedDAO dao;
 	public int registerFeed(FeedDTO dto,String iPath,String vPath) {
 		File filePath = new File(iPath);
+		String contents=dto.getContents();
+		String imageTag = "";
+		String videoTag = "";
 		if(!filePath.exists()) {
 			filePath.mkdir();
 		}
 		Pattern p = Pattern.compile("<img.+?src=\"(.+?)\".+?data-filename=\"(.+?)\".*?>");
 		Matcher m = p.matcher(dto.getContents());
-		dto.setCheck(0);
+		
 		while(m.find()) {
-			dto.setCheck(1);
 			String oriName = m.group(2);
 			String sysName = System.currentTimeMillis() + "_" + oriName ;
 			System.out.println(oriName);
 			System.out.println(sysName);
 			String imgString = m.group(1).split(",")[1];
 			byte[] imgBytes = Base64Utils.decodeFromString(imgString);
+			
+			
 			try {
 				FileOutputStream fos = new FileOutputStream(iPath + "/" + sysName);
 				DataOutputStream dos = new DataOutputStream(fos);
 				dos.write(imgBytes);
 				dos.flush();
 				dos.close();
-				String contents = dto.getContents().replaceFirst(Pattern.quote(m.group(1)), "imageFiles/"+sysName);
+				contents = dto.getContents().replaceFirst(Pattern.quote(m.group(1)), "imageFiles/"+sysName);
 				dto.setContents(contents);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
 
+		Pattern p1 = Pattern.compile(".*?(<img.*?>).*?");
+		Matcher m1 = p1.matcher(dto.getContents());
+		while(m1.find()) {
+			System.out.println(m1.group(1));
+			imageTag+=m1.group(1);
+			contents = contents.replaceFirst(Pattern.quote(m1.group(1)), "");
+		}
 
-
-		String contents = dto.getContents();
 		MultipartFile[] files = dto.getFiles();
 		File videoPath = new File(vPath);
 		if(!(videoPath.exists())) {
@@ -58,15 +67,17 @@ public class FeedService {
 		int result = 0;
 		try {
 			if(files.length!=0) {
-				dto.setCheck(1);
 				for(MultipartFile file : files) {
 					String sysName = System.currentTimeMillis()+"_"+file.getOriginalFilename();
 					String videoSrc =  "videoFiles/"+sysName;
 					file.transferTo(new File(videoPath+"/"+sysName));
-					String videoTag = "<br><video src=\""+videoSrc+"\" controls><br>";
-					contents = contents+videoTag;
+					String videotag = "<video src=\""+videoSrc+"\" controls>";
+					videoTag+=videotag;
 				}
-
+				System.out.println(imageTag);
+				System.out.println(videoTag);
+				dto.setImage(imageTag);
+				dto.setVideo(videoTag);
 				dto.setContents(contents);
 			}
 			result = dao.registerFeed(dto);
