@@ -3,38 +3,37 @@ package kh.init.members;
 import java.sql.Timestamp;
 
 public class MemberDTO {
-   private String email;
-   private String pw;
-   private String nickname;
-   private String name;
-   private String phone;
-   private String birth;
-   private String profile_img;
-   private String profile_msg;
-   private String admin;
-   private Timestamp join_date;
-   private String id_type;
-   private String black;
-   
-   public MemberDTO() {}
+	private String email;
+	private String pw;
+	private String nickname;
+	private String name;
+	private String phone;
+	private String birth;
+	private String profile_img;
+	private String profile_msg;
+	private String admin;
+	private Timestamp join_date;
+	private String id_type;
+	private String black;
+	
+	public MemberDTO() {}
 
-   public MemberDTO(String email, String pw, String nickname, String name, String phone, String birth,
-         String profile_img, String profile_msg, String admin, Timestamp join_date, String id_type, String black) {
-      super();
-      this.email = email;
-      this.pw = pw;
-      this.nickname = nickname;
-      this.name = name;
-      this.phone = phone;
-      this.birth = birth;
-      this.profile_img = profile_img;
-      this.profile_msg = profile_msg;
-      this.admin = admin;
-      this.join_date = join_date;
-      this.id_type = id_type;
-      this.black = black;
-   }
-
+	public MemberDTO(String email, String pw, String nickname, String name, String phone, String birth,
+			String profile_img, String profile_msg, String admin, Timestamp join_date, String id_type, String black) {
+		super();
+		this.email = email;
+		this.pw = pw;
+		this.nickname = nickname;
+		this.name = name;
+		this.phone = phone;
+		this.birth = birth;
+		this.profile_img = profile_img;
+		this.profile_msg = profile_msg;
+		this.admin = admin;
+		this.join_date = join_date;
+		this.id_type = id_type;
+		this.black = black;
+	}
    public String getEmail() {return email;}
    public void setEmail(String email) {this.email = email;}
 
