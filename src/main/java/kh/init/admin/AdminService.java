@@ -34,7 +34,7 @@ public class AdminService {
 	public int deleteFeed(int feed_seq) throws Exception{
 		return adao.deleteFeed(feed_seq);
 	}
-	public List<MemberDTO> search(String search) throws Exception{
-		return adao.search(search);
+	public List<MemberDTO> search(String searchTag, String search) throws Exception{
+		return adao.search(searchTag, search);
 	}
 }

@@ -2,6 +2,8 @@ package kh.init.admin;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,77 +20,89 @@ public class AdminController {
 	private AdminService aService;
 
 	@RequestMapping("adminHome.do")
-	public String adminHome() throws Exception{
+	public String adminHome() throws Exception {
 		return "admin/adminHome";
 	}
+
 	@RequestMapping("blackList.do")
-	public String blackList(Model mod) throws Exception{
+	public String blackList(Model mod) throws Exception {
 		List<MemberDTO> blackList = aService.blackList();
 		mod.addAttribute("blackList", blackList);
 		return "admin/manageBlack";
 	}
+
 	@RequestMapping("memberList.do")
-	public String memberList(Model mod) throws Exception{
+	public String memberList(Model mod) throws Exception {
 		List<MemberDTO> memberList = aService.memberList();
 		mod.addAttribute("memberList", memberList);
 		return "admin/manageMember";
 	}
+
 	@RequestMapping("blackProc.do")
 	@ResponseBody
-	public String blackProc(String blackMember) throws Exception{
+	public String blackProc(String blackMember) throws Exception {
 		System.out.println(blackMember);
 		int toBlack = aService.toBlack(blackMember);
-		if(toBlack>0) {
+		if (toBlack > 0) {
 			return blackMember;
-		}else {
+		} else {
 			return "black fail";
 		}
 	}
+
 	@RequestMapping("withdrawalProc.do")
 	@ResponseBody
-	public String withdrawalProc(String withdrawal) throws Exception{
-		String email = withdrawal.substring(withdrawal.lastIndexOf("_")+1);
+	public String withdrawalProc(String withdrawal) throws Exception {
+		String email = withdrawal.substring(withdrawal.lastIndexOf("_") + 1);
 		System.out.println(email);
 		int withdrawalR = aService.withdrawal(email);
-		if(withdrawalR>0) {
+		if (withdrawalR > 0) {
 			return withdrawal;
-		}else {
+		} else {
 			return "withdrawal fail";
 		}
 	}
+
 	@RequestMapping("toMemberProc.do")
 	@ResponseBody
-	public String toMember(String cbMember) throws Exception{
+	public String toMember(String cbMember) throws Exception {
 		System.out.println(cbMember);
-		String email = cbMember.substring(cbMember.lastIndexOf("_")+1);
+		String email = cbMember.substring(cbMember.lastIndexOf("_") + 1);
 		System.out.println(email);
 		int toMemberR = aService.toMember(email);
-		if(toMemberR>0) {
+		if (toMemberR > 0) {
 			return cbMember;
-		}else {
+		} else {
 			return "toMember fail";
 		}
 	}
+
 	@RequestMapping("goFeed.do")
-	public String goFeed(String email,Model mod) throws Exception{
+	public String goFeed(String email, Model mod) throws Exception {
 		List<FeedDTO> list = aService.myFeedList(email);
 		mod.addAttribute("list", list);
 		return "feeds/myFeed";
 	}
+
 	@RequestMapping("deleteFeed.do")
-	public String deleteFeedProc(int feed_seq) throws Exception{
+	public String deleteFeedProc(int feed_seq) throws Exception {
 		int deleteR = aService.deleteFeed(feed_seq);
-		if(deleteR>0) {
+		if (deleteR > 0) {
 			return "deleteFeed success";
-		}else {
+		} else {
 			return "deleteFeed fail";
 		}
 	}
+
 	@RequestMapping("search.do")
-	public String searchProc(String search,Model mod) throws Exception{
-		List<MemberDTO> searchList = aService.search(search);
-		mod.addAttribute("memberList", searchList);
+	public String searchProc(String searchTag, String search, Model mod) throws Exception {
+		System.out.println(searchTag + ":" + search); 
+		List<MemberDTO> searchList = aService.search(searchTag, search); 
+		mod.addAttribute("memberList",searchList); 
+		for(MemberDTO tmp : searchList) {
+			System.out.println(tmp.getEmail() + " : " + tmp.getName() + " : " +tmp.getNickname()); }
+
 		return "admin/manageMember";
 	}
 
-}        
+}

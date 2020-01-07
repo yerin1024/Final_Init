@@ -5,7 +5,7 @@
 <mapper namespace ="Admin">
 <!-- 멤버관리 -->
 	<select id="blackList" resultType="kh.init.members.MemberDTO">
-		select * from tb_member where black = 'Y'
+		select * from tb_member where black = 'Y' and admin = 'N'
 	</select>
 	<select id="memberList" resultType="kh.init.members.MemberDTO">
 		select * from tb_member where admin = 'N' and black = 'N'
@@ -26,18 +26,13 @@
 	<delete id="deleteFeed" parameterType="Integer">
 		delete from tb_feed where feed_seq = #{feed_seq}
 	</delete>
-	<select id="search" resultType="kh.init.members.MemberDTO">
-		select * from tb_member
-		<trim prefix="where" prefixOverrides="and|or">
-			<if test=" name != null">
-				name = #{name}
-			</if>
-			<if test= "nickname != null">
-				and nickname = #{nickname}
-			</if>
-			<if test= "email != null">
-				and email = #{email}
-			</if>
-		</trim>
+<!-- 검색기능 -->
+	<select id="search" resultType="kh.init.members.MemberDTO" parameterType="java.util.Map">
+		select * from tb_member where black = 'N' and admin = 'N' and
+		<choose>
+			<when test="search != ''">
+				${searchTag} like '%' ||#{search}||'%'  
+			</when>
+			</choose>
 	</select>
 </mapper>

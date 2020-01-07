@@ -1,6 +1,8 @@
 package kh.init.admin;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +37,12 @@ public class AdminDAO {
 	public int deleteFeed(int feed_seq) throws Exception{
 		return jdbc.delete("Admin.deleteFeed", feed_seq);
 	}
-	public List<MemberDTO> search(String search) throws Exception{
-		return jdbc.selectList("Admin.search",search);
+	public List<MemberDTO> search(String searchTag, String search) throws Exception{
+		System.out.println("DAO안이고");
+		System.out.println(searchTag + ":" + search);
+		Map<String, Object> map = new HashMap<>();
+		map.put("searchTag", searchTag);
+		map.put("search", search);
+		return jdbc.selectList("Admin.search", map);
 	}
 }
