@@ -39,7 +39,7 @@ a {
 }
 </style>
 <body>
-	<form action="${pageContext.request.contextPath}/member/login.do"
+	<form action="${pageContext.request.contextPath}/member/loginProc.do"
 		method="post" id="loginForm">
 		<div class="container">
 			<div class="loginContainer">
@@ -68,7 +68,7 @@ a {
 							<div class="modal-footer">
 								<a href="" class="findId">아이디 찾기</a> <span> | </span> <a href=""
 									class="findPw">비밀번호 찾기</a> <span> | </span> <a
-									href="${pageContext.request.contextPath}/member/signUp.do"
+									href="${pageContext.request.contextPath}/guest/signUp.do"
 									class="signUp">회원가입</a>
 							</div>
 						</div>

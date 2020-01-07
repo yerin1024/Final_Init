@@ -26,12 +26,11 @@ public class GuestController {
 		System.out.println(dto.getNickname());
 		System.out.println(dto.getPhone());
 		System.out.println(dto.getPw());
-		System.out.println("여기서부터 파일!! "); 
 		System.out.println(profileImg);
 		System.out.println(profileImg.getName());
 		System.out.println(profileImg.getOriginalFilename());
-		
-		
+		service.insert(dto, profileImg);
+		System.out.println("회원가입 컨트롤러 진입");
 		return "main";
 	}
 
