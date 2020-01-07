@@ -12,26 +12,32 @@
 .close {
 	border: none;
 }
+
 a {
 	text-decoration: none;
 	color: black;
 }
+
 .modal-header {
 	width: 300px;
 	text-align: center;
 }
+
 .modal-body {
 	width: 300px;
 	text-align: center;
 }
+
 .inputEmail, .inputPw, .loginBtn {
 	width: 100%;
 	height: 30px;
 	margin-top: 10px;
 }
+
 .saveId {
 	margin-top: 10px;
 }
+
 .modal-footer {
 	width: 300px;
 	margin-top: 10px;
@@ -55,13 +61,14 @@ a {
 								</button>
 							</div>
 							<div class="modal-body">
-								<input type="text" class="inputEmail" name="email"
+								<input type="text" id="inputEmail" name="email"
 									placeholder="아이디 입력"><br> <input type="password"
-									class="inputPw" name="pw" placeholder="비밀번호 입력"><br>
-								<button type="button" class="loginBtn" onclick="toLogin()">Login</button>
+									id="inputPw" name="pw" placeholder="비밀번호 입력"><br>
+								<button type="button" class="loginBtn"
+									onclick="toLogin(); toCheckCookie();">Login</button>
 								<br>
 								<div class="saveId">
-									<input type="checkbox" class="checkbox"> <span>아이디
+									<input type="checkbox" id="saveIdCheck"> <span>아이디
 										저장</span>
 								</div>
 							</div>
@@ -78,11 +85,78 @@ a {
 		</div>
 	</form>
 	<script>
-        var login = document.getElementsByClassName("loginBtn");
+		var doc = document;
+		var login = doc.getElementsByClassName("loginBtn");
+		var saveIdCheck = doc.getElementById("saveIdCheck");
+		var email = doc.getElementById("inputEmail");
 
-        function toLogin(){
-            document.getElementById("loginForm").submit();
-        }
-    </script>
+		function toLogin() {
+			//         document.getElementById("loginForm").submit();
+		}
+
+		var userInputId = getCookie("userInputId");
+		var setCookieYN = getCookie("setCookieYN");
+		console.log(userInputId);
+		console.log(setCookieYN);
+
+		if (setCookieYN == 'Y') {
+			console.log("checked");
+			saveIdCheck.checked = true;
+		} else {
+			console.log("unchecked");
+			saveIdCheck.checked = false;
+		}
+
+		function toCheckCookie() {
+
+			if (saveIdCheck.checked == true) {
+				setCookie("userInputId", email.value, 60);
+				setCookie("setCookieYN", 'Y', 60);
+			} else {
+				deleteCookie("userInputId");
+				deleteCookie("setCookieYN");
+			}
+		}
+		//     alert(document.cookie);
+
+		function setCookie(cookieName, value, exdays) {
+			var exdate = new Date();
+			exdate.setDate(exdate.getDate() + exdays);
+			console.log("exdate : " + exdate);
+			var cookieValue = escape(value)
+					+ ((exdays == null) ? "" : "; expires="
+							+ exdate.toGMTString());
+			//         + "; HttpOnly"
+			console.log("cookieValue : " + cookieValue);
+			doc.cookie = cookieName + "=" + cookieValue;
+		}
+
+		function deleteCookie(cookieName) {
+			var expireDate = new Date();
+			expireDate.setDate(expireDate.getDate(-1));
+			doc.cookie = cookieName = +"= " + "; expires="
+					+ expireDate.toGMTString();
+		}
+
+		function getCookie(cookie_name) {
+			cookieName = cookie_name + '=';
+			var cookieData = doc.cookie;
+			console.log("cookieData : " + cookieData);
+			var start = cookieData.indexOf(cookieName);
+			console.log("start : " + start);
+			var cookieValue = '';
+			if (start != -1) {
+				start += cookieName.length;
+				console.log("start2 : " + start);
+				var end = cookieData.indexOf(';', start);
+				console.log("end : " + end);
+				if (end == -1)
+					end = cookieData.length;
+				cookieValue = cookieData.substring(start, end);
+				console.log("cookieValue : " + cookieValue);
+			}
+			return unescape(cookieValue);
+		}
+	</script>
 </body>
 </html>
