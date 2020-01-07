@@ -48,8 +48,8 @@
 </div>
 <div class="row">
 <div class="col" id="searchDiv">
-<form action="${pageContext.request.contextPath}/admin/search.do" method="post" id="searchF">
-<select id="searhTag" name="searhTag">
+<form action="${pageContext.request.contextPath}/admin/searchForBlack.do" method="post" id="searchF">
+<select id="searchTag" name="searchTag">
 <option value="nickname">닉네임</option>
 <option value="name">이름</option>
 <option value="email">이메일</option>

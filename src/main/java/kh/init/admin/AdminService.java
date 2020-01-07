@@ -37,4 +37,7 @@ public class AdminService {
 	public List<MemberDTO> search(String searchTag, String search) throws Exception{
 		return adao.search(searchTag, search);
 	}
+	public List<MemberDTO> searchForBlack(String searchTag, String search) throws Exception{
+		return adao.searchForBlack(searchTag, search);
+	}
 }

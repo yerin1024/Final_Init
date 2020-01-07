@@ -35,4 +35,12 @@
 			</when>
 			</choose>
 	</select>
+	<select id="searchForBlack" resultType="kh.init.members.MemberDTO" parameterType="java.util.Map">
+		select * from tb_member where black = 'Y' and admin = 'N' and
+		<choose>
+			<when test="search != ''">
+				${searchTag} like '%' ||#{search}||'%'  
+			</when>
+			</choose>
+	</select>
 </mapper>

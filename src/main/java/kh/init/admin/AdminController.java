@@ -99,10 +99,13 @@ public class AdminController {
 		System.out.println(searchTag + ":" + search); 
 		List<MemberDTO> searchList = aService.search(searchTag, search); 
 		mod.addAttribute("memberList",searchList); 
-		for(MemberDTO tmp : searchList) {
-			System.out.println(tmp.getEmail() + " : " + tmp.getName() + " : " +tmp.getNickname()); }
-
 		return "admin/manageMember";
 	}
-
+	@RequestMapping("searchForBlack.do")
+	public String searchForBlack(String searchTag, String search, Model mod) throws Exception {
+		System.out.println(searchTag + ":" + search); 
+		List<MemberDTO> searchList = aService.searchForBlack(searchTag, search); 
+		mod.addAttribute("blackList",searchList);
+		return "admin/manageBlack";
+	}
 }

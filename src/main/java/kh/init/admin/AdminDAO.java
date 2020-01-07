@@ -38,11 +38,16 @@ public class AdminDAO {
 		return jdbc.delete("Admin.deleteFeed", feed_seq);
 	}
 	public List<MemberDTO> search(String searchTag, String search) throws Exception{
-		System.out.println("DAO안이고");
-		System.out.println(searchTag + ":" + search);
 		Map<String, Object> map = new HashMap<>();
 		map.put("searchTag", searchTag);
 		map.put("search", search);
 		return jdbc.selectList("Admin.search", map);
+	}
+	public List<MemberDTO> searchForBlack(String searchTag, String search) throws Exception{
+		System.out.println(searchTag + ":" + search);
+		Map<String, Object> map = new HashMap<>();
+		map.put("searchTag", searchTag);
+		map.put("search", search);
+		return jdbc.selectList("Admin.searchForBlack", map);
 	}
 }
