@@ -18,6 +18,7 @@ public class FeedDTO {
 	private MultipartFile[] files;
 
 
+
 	@Override
 	public String toString() {
 		return "FeedDTO [feed_seq=" + feed_seq + ", email=" + email + ", nickname=" + nickname + ", title=" + title
@@ -123,6 +124,5 @@ public class FeedDTO {
 	public void setFiles(MultipartFile[] files) {
 		this.files = files;
 	}
-
 
 }

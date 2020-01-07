@@ -9,8 +9,8 @@
 <title>Insert title here</title>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script>
-	$(function(){
-		$("#registerFeed").on("click",function(){
+	$(function() {
+		$("#registerFeed").on("click", function() {
 			location.href = "writeFeed";
 		})
 	})
@@ -18,10 +18,12 @@
 </head>
 <body>
 	<div id="wrapper">
+		<div>프로필 사진 닉네임 프로필 메세지</div>
+		<button type="button">회원 정보 편집</button>
 		<c:choose>
 			<c:when test="${fn:length(list) ==0}">
 				게시물이 없습니다.<br>
-				  <button id="registerFeed">게시물 등록</button>
+				<button id="registerFeed">게시물 등록</button>
 			</c:when>
 			<c:otherwise>
 				<table>

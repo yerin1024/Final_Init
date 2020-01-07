@@ -90,7 +90,9 @@ public class FeedController {
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
+		
 		model.addAttribute("dto", dto);
+		
 		return "/feeds/detailView";
 	}
 	@RequestMapping("/modifyFeedProc")
