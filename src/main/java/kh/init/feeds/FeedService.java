@@ -92,6 +92,18 @@ public class FeedService {
 		return list;
 	}
 
+	public List<FeedDTO> wholeFeed() throws Exception{
+		List<FeedDTO> list = dao.selectAll();
+		return list;
+	}
+	public int deleteFeed(String seq)throws Exception{
+		int result = dao.deleteFeed(seq);
+		return result;
+	}
+	public int modifyFeed(FeedDTO dto)throws Exception{
+		int result = dao.modifyFeed(dto);
+		return result;
+	}
 	public FeedDTO detailView(String feed_seq) throws Exception{
 		FeedDTO dto = dao.detailView(feed_seq);
 		String contents = dto.getContents();
