@@ -8,8 +8,8 @@
 <title>Insert title here</title>
 <script>
 	$(function(){
-		$("#writeFeed").on("click",function(){
-			location.href = "feed/writeFeed";
+		$("#myFeed").on("click",function(){
+			location.href = "feed/myFeed";
 		})
 		$("#wholeFeed").on("click",function(){
 			location.href = "feed/wholeFeed";
@@ -18,6 +18,6 @@
 </script>
 </head>
 <body>	
-	<button type="button" id="writeFeed">게시물 등록</button> <button id="wholeFeed">전체피드</button>
+	<button type="button" id="myFeed">내 피드</button> <button id="wholeFeed">전체피드</button>
 </body>
 </html>

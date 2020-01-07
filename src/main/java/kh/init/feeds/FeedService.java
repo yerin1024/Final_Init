@@ -24,7 +24,7 @@ public class FeedService {
 		}
 		Pattern p = Pattern.compile("<img.+?src=\"(.+?)\".+?data-filename=\"(.+?)\".*?>");
 		Matcher m = p.matcher(dto.getContents());
-		while(m.find()) {
+		while(m.find()) { 
 			String oriName = m.group(2);
 			String sysName = System.currentTimeMillis() + "_" + oriName ;
 			System.out.println(oriName);
@@ -44,6 +44,9 @@ public class FeedService {
 			}
 		}
 
+		Pattern imgP = Pattern.compile("<img.+?src=\"(.+?)\".+?data-filename=\"(.+?)\".*?>");
+		Matcher imgM = p.matcher(dto.getContents());
+
 
 
 		String contents = dto.getContents();
@@ -59,7 +62,7 @@ public class FeedService {
 					String sysName = System.currentTimeMillis()+"_"+file.getOriginalFilename();
 					String videoSrc =  "videoFiles/"+sysName;
 					file.transferTo(new File(videoPath+"/"+sysName));
-					String videoTag = "<video src=\""+videoSrc+"\" controls>";
+					String videoTag = "<br><video src=\""+videoSrc+"\" controls><br>";
 					contents = contents+videoTag;
 				}
 
@@ -77,6 +80,18 @@ public class FeedService {
 		return list;
 	}
 
+	public List<FeedDTO> wholeFeed() throws Exception{
+		List<FeedDTO> list = dao.selectAll();
+		return list;
+	}
+	public int deleteFeed(String seq)throws Exception{
+		int result = dao.deleteFeed(seq);
+		return result;
+	}
+	public int modifyFeed(FeedDTO dto)throws Exception{
+		int result = dao.modifyFeed(dto);
+		return result;
+	}
 	public FeedDTO detailView(String feed_seq) throws Exception{
 		FeedDTO dto = dao.detailView(feed_seq);
 		return dto;
