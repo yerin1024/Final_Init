@@ -3,6 +3,7 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace ="Admin">
+<!-- 멤버관리 -->
 	<select id="blackList" resultType="kh.init.members.MemberDTO">
 		select * from tb_member where black = 'Y'
 	</select>
@@ -18,4 +19,25 @@
 	<update id="toMember" parameterType="String">
 		update tb_member set black = 'N' where email = #{email}
 	</update>
+<!-- 피드관리 -->
+	<select id="myFeedList" resultType="kh.init.feeds.FeedDTO">
+		select * from tb_feed where email = #{email}
+	</select>
+	<delete id="deleteFeed" parameterType="Integer">
+		delete from tb_feed where feed_seq = #{feed_seq}
+	</delete>
+	<select id="search" resultType="kh.init.members.MemberDTO">
+		select * from tb_member
+		<trim prefix="where" prefixOverrides="and|or">
+			<if test=" name != null">
+				name = #{name}
+			</if>
+			<if test= "nickname != null">
+				and nickname = #{nickname}
+			</if>
+			<if test= "email != null">
+				and email = #{email}
+			</if>
+		</trim>
+	</select>
 </mapper>

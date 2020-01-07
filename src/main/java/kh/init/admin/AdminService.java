@@ -2,10 +2,10 @@ package kh.init.admin;
 
 import java.util.List;
 
-import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import kh.init.feeds.FeedDTO;
 import kh.init.members.MemberDTO;
 
 @Service
@@ -27,5 +27,14 @@ public class AdminService {
 	}
 	public int toMember(String email) throws Exception{
 		return adao.toMember(email);
+	}
+	public List<FeedDTO> myFeedList(String email) throws Exception{
+		return adao.myFeedList(email);
+	}
+	public int deleteFeed(int feed_seq) throws Exception{
+		return adao.deleteFeed(feed_seq);
+	}
+	public List<MemberDTO> search(String search) throws Exception{
+		return adao.search(search);
 	}
 }
