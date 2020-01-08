@@ -38,8 +38,7 @@
 				enctype="multipart/form-data" id="writeForm">
 				제목:<input type="text" name="title">
 					<select name="relation">
-					<option value='' selected>-- 관계 선택 --</option>
-					<option value='0'>전체보기</option>
+					<option value='0' selected>전체보기</option>
 					<option value='1'>지인</option>
 					<option value='2'>아는친구</option>
 					<option value='3'>절친</option>

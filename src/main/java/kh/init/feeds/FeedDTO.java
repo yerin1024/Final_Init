@@ -1,9 +1,7 @@
 package kh.init.feeds;
 
 import java.security.Timestamp;
-import java.util.Arrays;
 
-import org.springframework.web.multipart.MultipartFile;
 
 public class FeedDTO {
     private int feed_seq;
