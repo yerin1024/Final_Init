@@ -11,5 +11,16 @@ public class MessageController {
 	@Autowired
 	private MessageService service;
 	
+	@RequestMapping("messageList")
+	public String toMsgList() {
+		System.out.println("message home 도착");
+		return "messageList";
+	}
+	
+//	@RequestMapping("sendFly.msg")
+//	public String sendMsg() {
+//		
+//	}
+	
 	
 }
