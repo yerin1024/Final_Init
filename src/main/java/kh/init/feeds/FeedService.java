@@ -18,6 +18,9 @@ import org.springframework.web.multipart.MultipartFile;
 public class FeedService {
 	@Autowired
 	private FeedDAO dao;
+	@Autowired
+	private ReplyDAO replyDAO;
+	
 	public int registerFeed(FeedDTO dto,String iPath,String vPath) {
 		File filePath = new File(iPath);
 		String contents=dto.getContents();
@@ -96,15 +99,15 @@ public class FeedService {
 		List<FeedDTO> list = dao.selectAll();
 		return list;
 	}
-	public int deleteFeed(String seq)throws Exception{
-		int result = dao.deleteFeed(seq);
+	public int deleteFeed(int feed_seq)throws Exception{
+		int result = dao.deleteFeed(feed_seq);
 		return result;
 	}
 	public int modifyFeed(FeedDTO dto)throws Exception{
 		int result = dao.modifyFeed(dto);
 		return result;
 	}
-	public FeedDTO detailView(String feed_seq) throws Exception{
+	public FeedDTO detailView(int feed_seq) throws Exception{
 		FeedDTO dto = dao.detailView(feed_seq);
 		String contents = dto.getContents();
 		List<String> tags = new ArrayList<>();
@@ -147,5 +150,19 @@ public class FeedService {
 //		System.out.println(tags.size());
 //		System.out.println(contents);
 		return dto;
+	}
+	
+	public int registerReply(FeedDTO dto)throws Exception{
+		int result = replyDAO.registerReply(dto);
+		return result;
+	}
+	public int deleteReply(int feed_seq)throws Exception{
+		int result = replyDAO.deleteReply(feed_seq);
+		return result;
+	}
+	public List<ReplyDTO> viewReply(int feed_seq)throws Exception{
+		List<ReplyDTO> list = replyDAO.viewReply(feed_seq);
+		System.out.println(list.size()+"서비스의 리스트사이즈");
+		return list;
 	}
 }

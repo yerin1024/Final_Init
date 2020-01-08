@@ -18,19 +18,55 @@
 }
 
 img {
-	width: 50px;
-	height: 50px;
+	width: 300px;
+	height: 300px;
+}
+
+video {
+	width: 300px;
+	height: 300px;
 }
 </style>
 <script>
-    $(document).ready(function() { 
-    	$("img").css("height","300px");
-    	$("video").css("height","300px");
-    	$("img").css("width","300px");
-    	$("video").css("width","300px");
-    	$(".carousel-item").css("text-align","center");
-	});
-    </script>
+	$(function() {
+		$("#replyDeleteBtn").on("click", function() {
+			var feed_seq = ${dto.feed_seq};
+			var reply_seq = $("#replyDeleteBtn").val();
+			console.log(feed_seq + "입니다.");
+			console.log(reply_seq + "입니다.");
+			$.ajax({
+				type : "POST",
+				url : "${pageContext.request.contextPath }/feed/deleteReply",
+				data : {
+					feed_seq : feed_seq,
+					reply_seq : reply_seq
+				}
+			}).done(function(resp) {
+				console.log(resp + "의 댓글이 삭제되었습니다.");
+			})
+		})
+		$("#replyBtn").on("click", function() {
+			var feed_seq = $
+			{
+				dto.feed_seq
+			}
+			;
+			console.log(feed_seq + "입니다.");
+			$.ajax({
+				type : "POST",
+				url : "${pageContext.request.contextPath }/feed/viewReply",
+				data : {
+					feed_seq : feed_seq
+				}
+			}).done(function(resp) {
+				console.log('성공적으로 성공');
+			})
+		})
+		$("#replyModifyBtn").on("click", function() {
+			location.href = "${pageContext.request.contextPath }/feed/";
+		})
+	})
+</script>
 </head>
 <body>
 	<div id="container">
@@ -43,7 +79,7 @@ img {
 				<div class="col-4 feed">${dto.contents }</div>
 				<div class="col-4 feed">
 					<a
-						href="${pageContext.request.contextPath }/feed/deleteProc?seq=${dto.feed_seq}">
+						href="${pageContext.request.contextPath }/feed/deleteProc?feed_seq=${dto.feed_seq}">
 						<img
 						src="${pageContext.request.contextPath }/resources/images/delete.png">
 					</a>
@@ -56,6 +92,35 @@ img {
 					</a>
 				</div>
 			</div>
+			
+			<c:forEach items="${replylist }" var="replylist">
+				<div class="row">
+					<div class="col-2 feed" style="text-align: center">${replylist.nickname }님의
+						댓글</div>
+					<div class="col-9 feed">
+						<div>${replylist.contents }</div>
+					</div>
+					<div class="col-1 feed">
+						<button type="button" id="replyDeleteBtn" value="${replylist.reply_seq }" style="width: 30%">삭제</button>
+						<button type="button" id="replyModifyBtn" style="width: 30%">수정</button>
+					</div>
+				</div>
+			</c:forEach>
+			
+			<form
+				action="/feed/registerReply?feed_seq=${dto.feed_seq }&nickname=${dto.nickname }"
+				method="post">
+				<div class="row">
+					<div class="col-2 feed" style="text-align: center">${dto.nickname }님의
+						댓글</div>
+					<div class="col-9 feed">
+						<input type="text" id="reply" name="contents" style="width: 100%">
+					</div>
+					<div class="col-1 feed">
+						<button type="submit" id="replyBtn" style="width: 30%">등록</button>
+					</div>
+				</div>
+			</form>
 		</div>
 	</div>
 </body>

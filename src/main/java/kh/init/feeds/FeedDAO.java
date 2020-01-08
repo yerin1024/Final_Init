@@ -19,10 +19,8 @@ public class FeedDAO {
 		int result = jdbc.insert("Feed.registerFeed", dto);
 		return result;
 	}
-	public int deleteFeed(String seq) throws Exception{
-		Map<String,String> param = new HashMap<String, String>();
-		param.put("seq", seq);
-		return jdbc.delete("Feed.deleteFeed", param);
+	public int deleteFeed(int feed_seq) throws Exception{
+		return jdbc.delete("Feed.deleteFeed", feed_seq);
 	}
 	
 	public List<FeedDTO> selectAll() throws Exception{
@@ -33,7 +31,7 @@ public class FeedDAO {
 		return jdbc.update("Feed.modifyFeed",dto);		
 	}
 	
-	public FeedDTO detailView(String feed_seq) throws Exception{
+	public FeedDTO detailView(int feed_seq) throws Exception{
 		FeedDTO dto = jdbc.selectOne("detailView", feed_seq);
 		return dto;
 	}
