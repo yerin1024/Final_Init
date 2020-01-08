@@ -16,5 +16,17 @@ public class GuestService {
 		dto.setProfile_img(profile_img.getOriginalFilename());
 		System.out.println("회원가입 서비스 진입");
 		return dao.insert(dto);
-	}	
+	}
+	
+	public int checkEmail(String email) {
+		return dao.checkEmail(email);
+	}
+	
+	public int checkNickname(String nickname) {
+		return dao.checkNickname(nickname);
+	}
+	
+	public int checkPhone(String email) {
+		return dao.checkPhone(email);
+	}
 }

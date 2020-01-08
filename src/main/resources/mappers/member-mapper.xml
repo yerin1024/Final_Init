@@ -6,6 +6,16 @@
 	<insert id="insert">
 		insert into tb_member values(#{email},#{pw},#{nickname},#{name},#{phone},#{birth},#{profile_img},null,'N',sysdate,'E','N')
 	</insert>
+	<select id="checkEmail" resultType="integer">
+		select count(*) from tb_member where email=#{value}
+	</select>
+	<select id="checkNickname" resultType="integer">
+		select count(*) from tb_member where nickname=#{value}
+	</select>
+	<select id="checkPhone" resultType="integer">
+		select count(*) from tb_member where phone=#{value}
+	</select>
+	
 	<select id="isLoginOk" parameterType="java.util.Map" resultType="integer">
 		select count(*) from tb_member where email=#{email} and pw=#{pw}
 	</select>

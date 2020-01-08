@@ -1,8 +1,11 @@
 package kh.init.members;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 @RequestMapping("/guest")
@@ -11,7 +14,10 @@ public class GuestController {
 
 	@Autowired
 	private GuestService service;
-
+	
+	@Autowired
+	private HttpSession session;
+	
 	//회원가입	
 	@RequestMapping("/signUp.do")
 	public String toSignUp() {
@@ -20,24 +26,44 @@ public class GuestController {
 	
 	@RequestMapping("/signUpProc.do")
 	public String toSignUpProc(MemberDTO dto, MultipartFile profileImg) {
-		System.out.println(dto.getEmail());
-		System.out.println(dto.getBirth());
-		System.out.println(dto.getName());
-		System.out.println(dto.getNickname());
-		System.out.println(dto.getPhone());
-		System.out.println(dto.getPw());
-		System.out.println(profileImg);
-		System.out.println(profileImg.getName());
-		System.out.println(profileImg.getOriginalFilename());
+		String path = session.getServletContext().getRealPath("profileImg");
+		System.out.println(path);
 		service.insert(dto, profileImg);
 		System.out.println("회원가입 컨트롤러 진입");
 		return "main";
 	}
 
-	@RequestMapping("/emailCheck.do")
-	public String toCheckEmail() {
-		//ajax 비동기로 동작
-		return "signUp";
+	@RequestMapping(value="/checkEmail.do", produces="text/html;charset=UTF-8")
+	@ResponseBody
+	public String toCheckEmail(String email) {
+		System.out.println(email);
+		if(service.checkEmail(email) > 0) {
+			return "available";
+		}else {
+			return "unavailable";
+		}
+	}
+	
+	@RequestMapping(value="/checkNickname.do", produces="text/html;charset=UTF-8")
+	@ResponseBody
+	public String toCheckNickname(String nickname) {
+		System.out.println(nickname);
+		if(service.checkEmail(nickname) > 0) {
+			return "available";
+		}else {
+			return "unavailable";
+		}
+	}
+	
+	@RequestMapping(value="/checkPhone.do", produces="text/html;charset=UTF-8")
+	@ResponseBody
+	public String toCheckPhone(String phone) {
+		System.out.println(phone);
+		if(service.checkEmail(phone) > 0) {
+			return "available";
+		}else {
+			return "unavailable";
+		}
 	}
 
 	@RequestMapping("/verifyUser.do")
