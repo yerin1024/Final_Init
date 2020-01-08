@@ -19,7 +19,7 @@
 		})
 		
 		$("#messenger").on("click",function(){
-			location.href="message/messageList"
+			location.href="message/startMsg.msg"
 		})
 		$("#alarm").on("click",function(){
 			

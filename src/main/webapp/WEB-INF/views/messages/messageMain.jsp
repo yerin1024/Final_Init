@@ -199,12 +199,12 @@
 </head>
 <body>
 	
-	<div class="ac1"><img src="/images/letter.png" style="width:50px;"></div>
-
+	<div class="ac1"><img src="images/letter.png" style="width:50px;"></div>
+dsfsfsdfsfd
 	<div id="view1">
 		<div class="ac2">
 		    <div id=cross>
-		    <img src="/images/cross.png" style="width:30px;">
+		    <img src="/guest/resources/cross.png" style="width:30px;">
             </div>
 		</div>
 		<div class="pre_top">
@@ -213,61 +213,73 @@
           </div>
           
       <div class="search">
-            <input type="text"> <img src="images/search1.png" style="width: 20px;">
+            <input type="text"> <img src="/images/search1.png" style="width: 20px;">
         </div>
           
 		<div class="sector">
 <!--           ------------------------------------------------->
-            <div class="pre_line">
-                <div class="pre_pf"><img src="images/b1.png" class="pre_pf_img"></div>
-                <div class="pre_text"><b>yuri</b></div>
-                <div class="pre_time"><img src="images/startMsg.png" class="pre_start"></div>
+			<c:forEach var="dto" items="${list}">
+        	<div class="pre_line">
+        		<div class="pre_pf"><img src="images/b1.png" class="pre_pf_img"></div>
+        		<div class="pre_text"><b>${dto.fr_id}</b></div>
+                <div class="pre_time">
+                <a href="${pageContext.request.contextPath}/message/messageView.msg?fr_id=${dto.fr_id}">
+                <img src="/guest/resources/startMsg.png" class="pre_start">
+                </a></div>
             </div>
-            <div class="pre_line">
-                <div class="pre_pf"><img src="images/b4.png" class="pre_pf_img"></div>
-                <div class="pre_text"><b>k_jjjjks</b></div>
-                <div class="pre_time"><img src="images/startMsg.png" class="pre_start"></div>
-            </div>
-            <div class="pre_line">
-                <div class="pre_pf"><img src="images/b3.jpg" class="pre_pf_img"></div>
-                <div class="pre_text"><b>123j_yu</b></div>
-                <div class="pre_time"><img src="images/startMsg.png" class="pre_start"></div>
-            </div>
-            <div class="pre_line">
-                <div class="pre_pf"><img src="images/default.png" class="pre_pf_img"></div>
-                <div class="pre_text"><b>n</b></div>
-                <div class="pre_time"><img src="images/startMsg.png" class="pre_start"></div>
-            </div>
-            <div class="pre_line">
-                <div class="pre_pf"><img src="images/default.png" class="pre_pf_img"></div>
-                <div class="pre_text"><b>zzzz</b></div>
-                <div class="pre_time"><img src="images/startMsg.png" class="pre_start"></div>
-            </div>
-            <div class="pre_line">
-                <div class="pre_pf"><img src="images/default.png" class="pre_pf_img"></div>
-                <div class="pre_text"><b>whoru</b></div>
-                <div class="pre_time"><img src="images/startMsg.png" class="pre_start"></div>
-            </div>
-            <div class="pre_line">
-                <div class="pre_pf"><img src="images/default.png" class="pre_pf_img"></div>
-                <div class="pre_text"><b>collapse</b></div>
-                <div class="pre_time"><img src="images/startMsg.png" class="pre_start"></div>
-            </div>
-            <div class="pre_line">
-                <div class="pre_pf"><img src="images/default.png" class="pre_pf_img"></div>
-                <div class="pre_text"><b>coco</b></div>
-                <div class="pre_time"><img src="images/startMsg.png" class="pre_start"></div>
-            </div>
-            <div class="pre_line">
-                <div class="pre_pf"><img src="images/default.png" class="pre_pf_img"></div>
-                <div class="pre_text"><b>init</b></div>
-                <div class="pre_time"><img src="images/startMsg.png" class="pre_start"></div>
-            </div>
-            <div class="pre_line">
-                <div class="pre_pf"><img src="images/default.png" class="pre_pf_img"></div>
-                <div class="pre_text"><b>who</b></div>
-                <div class="pre_time"><img src="images/startMsg.png" class="pre_start"></div>
-            </div>
+       		</c:forEach>
+			
+<!--             <div class="pre_line"> -->
+<!--                 <div class="pre_pf"><img src="images/b1.png" class="pre_pf_img"></div> -->
+<!--                 <div class="pre_text"><b>yuri</b></div> -->
+<!--                 <div class="pre_time"><img src="images/startMsg.png" class="pre_start"></div> -->
+<!--             </div> -->
+<!--             <div class="pre_line"> -->
+<!--                 <div class="pre_pf"><img src="images/b4.png" class="pre_pf_img"></div> -->
+<!--                 <div class="pre_text"><b>k_jjjjks</b></div> -->
+<!--                 <div class="pre_time"><img src="images/startMsg.png" class="pre_start"></div> -->
+<!--             </div> -->
+<!--             <div class="pre_line"> -->
+<!--                 <div class="pre_pf"><img src="images/b3.jpg" class="pre_pf_img"></div> -->
+<!--                 <div class="pre_text"><b>123j_yu</b></div> -->
+<!--                 <div class="pre_time"><img src="images/startMsg.png" class="pre_start"></div> -->
+<!--             </div> -->
+<!--             <div class="pre_line"> -->
+<!--                 <div class="pre_pf"><img src="images/default.png" class="pre_pf_img"></div> -->
+<!--                 <div class="pre_text"><b>n</b></div> -->
+<!--                 <div class="pre_time"><img src="images/startMsg.png" class="pre_start"></div> -->
+<!--             </div> -->
+<!--             <div class="pre_line"> -->
+<!--                 <div class="pre_pf"><img src="images/default.png" class="pre_pf_img"></div> -->
+<!--                 <div class="pre_text"><b>zzzz</b></div> -->
+<!--                 <div class="pre_time"><img src="images/startMsg.png" class="pre_start"></div> -->
+<!--             </div> -->
+<!--             <div class="pre_line"> -->
+<!--                 <div class="pre_pf"><img src="images/default.png" class="pre_pf_img"></div> -->
+<!--                 <div class="pre_text"><b>whoru</b></div> -->
+<!--                 <div class="pre_time"><img src="images/startMsg.png" class="pre_start"></div> -->
+<!--             </div> -->
+<!--             <div class="pre_line"> -->
+<!--                 <div class="pre_pf"><img src="images/default.png" class="pre_pf_img"></div> -->
+<!--                 <div class="pre_text"><b>collapse</b></div> -->
+<!--                 <div class="pre_time"><img src="images/startMsg.png" class="pre_start"></div> -->
+<!--             </div> -->
+<!--             <div class="pre_line"> -->
+<!--                 <div class="pre_pf"><img src="images/default.png" class="pre_pf_img"></div> -->
+<!--                 <div class="pre_text"><b>coco</b></div> -->
+<!--                 <div class="pre_time"><img src="images/startMsg.png" class="pre_start"></div> -->
+<!--             </div> -->
+<!--             <div class="pre_line"> -->
+<!--                 <div class="pre_pf"><img src="images/default.png" class="pre_pf_img"></div> -->
+<!--                 <div class="pre_text"><b>init</b></div> -->
+<!--                 <div class="pre_time"><img src="images/startMsg.png" class="pre_start"></div> -->
+<!--             </div> -->
+<!--             <div class="pre_line"> -->
+<!--                 <div class="pre_pf"><img src="images/default.png" class="pre_pf_img"></div> -->
+<!--                 <div class="pre_text"><b>who</b></div> -->
+<!--                 <div class="pre_time"><img src="images/startMsg.png" class="pre_start"></div> -->
+<!--             </div> -->
+
 <!--           ------------------------------------------------->
         <div id="footer">
         </div>
@@ -285,6 +297,44 @@
 	 $("div[id='cross']").click(function(){
 	   $("div[id='view1']").fadeOut(0);
 	   });
+	 
+// 	 $(".pre_start").on("click",function(){
+// 		 location.href="${pageContext.request.contextPath}/message/messageView.msg?to_id=${dto.fr_id}";
+// 	 });
+	 
+// 	 $("#pre_start").on("click",function(){
+// 		 $.ajax({
+// 	            url : "start.msg",
+// 	            method : "post",
+// 	            data : {
+// 	               root : "${dto.seq}",
+// 	               comments : $("#commentInput").val(),
+// 	               currentCoPage : $("#hide").html()
+// 	            },
+// 	            dataType : "json"
+// 	         }).done(function(data) {
+// 	            var list = JSON.parse(data.list);
+// 	            $("#hide").html(1);
+// 	            if(list!=null){
+// 	               $("#coNavi").html("");
+// 	               $("#coNavi").html(data.coNavi);
+// 	               $("#commentList").html("");   
+// 	               $("#commentInput").val("");
+	               
+// 	               var login = "${loginInfo.id}";
+// 	               var manager_check = "${loginInfo.manager_check}";
+// 	               $.each(list, function(index, value){   
+	               
+// 	                  if(login==value.writer||manager_check=='Y'){
+// 	                     $("#commentList").append( "<div class='comment' seq="+value.seq+"><span class='coWriter'>"+value.writer+"</span>&nbsp<span class='coDate'>"+value.formed_date+"</span><span class='commentBtns'><a class='coUpdate' seq="+value.seq+">수정</a>&nbsp;<a class='coDelete' seq="+value.seq+">삭제</a></span></div>");
+// 	                  }else{
+// 	                     $("#commentList").append( "<div class='comment' seq="+value.seq+"><span class='coWriter'>"+value.writer+"</span>&nbsp<span class='coDate'>"+value.formed_date+"</span></div>");
+// 	                  }
+// 	                  $(".comment[seq="+value.seq+"]").append("<br><textarea class='coInput' seq="+value.seq+" readonly=true>"+value.contents+"</textarea></div>&nbsp;<div class='upBtns'><a class='upBtn' seq="+value.seq+"></a>&nbsp;<a class='upBtn' seq="+value.seq+">수정완료</a>");
+// 	               })
+// 	            }
+// 	         })
+// 	 });
 	 
 	});
 	</script>

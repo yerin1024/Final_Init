@@ -6,11 +6,11 @@
 	
 	<!--  -->
 	<select id="insertMsgSeq">
-		select meg_seq.nextval from dual
+		select msg_seq.nextval from dual
 	</select>
 	
 	<insert id="insertMsg"> <!-- 입력 -->
-		insert into tb_message values(#{sharedSeq}, #{from_id}, #{to_id}, #{contents}, sysdate, 'N')
+		insert into tb_message values(msg_seq.nextval, #{from_id}, #{to_id}, #{contents}, sysdate, 'N')
 	</insert>
 	
 	<select id="selectThirty" resultType="kh.init.messages.MessageDTO"> <!-- 메시지 최근 30개 -->

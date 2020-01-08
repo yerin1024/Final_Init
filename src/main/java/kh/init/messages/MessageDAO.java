@@ -22,19 +22,22 @@ public class MessageDAO {
 		return result;
 	}
 	
-	public int insertMsg(MessageDTO dto, int sharedSeq) { 
+	public int insertMsg(MessageDTO dto, String from_id, String to_id) { 
 		Map<String, Object> prm = new HashMap<>();
-		prm.put("from_id", dto.getFrom_id());
-		prm.put("to_id", dto.getTo_id());
+		prm.put("from_id", from_id);
+		prm.put("to_id", to_id);
+//		prm.put("from_id", dto.getFrom_id());
+//		prm.put("to_id", dto.getTo_id());
 		prm.put("contents", dto.getContents());
-		prm.put("sharedSeq", sharedSeq);
 		return jdbc.insert("Message.insertMsg", prm);
 	}
 	
-	public List<MessageDTO> selectThirty(MessageDTO dto){
+	public List<MessageDTO> selectThirty(String from_id, String to_id){
 		Map<String, String> prm = new HashMap<>();
-		prm.put("from_id", dto.getFrom_id());
-		prm.put("to_id", dto.getTo_id());
+		prm.put("from_id", from_id);
+		prm.put("to_id", to_id);
+//		prm.put("from_id", dto.getFrom_id());
+//		prm.put("to_id", dto.getTo_id());
 		return jdbc.selectList("Message.selectThirty", prm);
 	}
 	
@@ -64,9 +67,10 @@ public class MessageDAO {
 		return result;
 	}
 	
-	public List<FriendDTO> friendList(FriendDTO dto){
+	public List<FriendDTO> friendList(FriendDTO dto, String myId){
 		Map<String, String> prm = new HashMap<>();
-		prm.put("my_id", dto.getMy_id());
+		prm.put("my_id", myId);
+//		prm.put("my_id", dto.getMy_id());
 //		prm.put("fr_id", dto.getFr_id());
 		return jdbc.selectList("Message.friendList", prm);
 	}

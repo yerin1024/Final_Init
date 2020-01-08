@@ -79,7 +79,7 @@ ul {
 	padding-bottom: 10px;
 }
 
-.from_id {
+.to_id {
 	background-color: gray;
 	color: white;
 	display: inline-block;
@@ -92,7 +92,7 @@ ul {
 	box-shadow: 2px 2px 2px #777777;
 }
 
-.to_id {
+.from_id {
 	background-color: cornflowerblue;
 	color: white;
 	display: inline-block;
@@ -219,43 +219,65 @@ ul {
 		<div class="sector">
 <!--           ------------------------------------------------->
            <div class="sector_in">
-            <ul>
-                <li class="from_id">ㅏㅏㅓㅏㅓㅏㅓㅏ</li><span class=time>10:39</span><br>
-            </ul>
-            <ul>
-                <li class="to_id">집가고싶다</li><span class=time_right>10:39</span><br>
-            </ul>
-            <ul>
-                <li class="to_id">집가고싶다</li><span class=time_right>10:39</span><br>
-            </ul>
-            <ul>
-                <li class="to_id">집가고싶다</li><span class=time_right>10:39</span><br>
-            </ul>
-            <ul>
-                <li class="from_id">시험용 싯ㅅㅅㅅㅅㅅㅅㅅㅅㅅㅅㅅjjjjjjjjjjjjjjjjjjjjjjjㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅅㅅㅅㅅㅅㅅㅅㅅㅅㅅㅅㅅㅅ시험용ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ</li><span class=time>10:39</span><br>
-            </ul>
-            <ul>
-                <li class="to_id">시험용 시험ㅇㅇㅇㅇㅇ</li><span class=time_right>10:39</span><span class=readCheck></span><br>
-            </ul>
-            <ul>
-                <li class="to_id">시험용 시험ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ용ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ</li><span class=time_right>10:39</span><span class=readCheck></span><br>
-            </ul>
-            <ul>
-                <li class="to_id">시험용 시험ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ용ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ</li><span class=time_right>10:39</span><span class=readCheck></span><br>
-            </ul>
+<!--             <ul> -->
+<!--                 <li class="from_id">ㅏㅏㅓㅏㅓㅏㅓㅏ</li><span class=time>10:39</span><br> -->
+<!--             </ul> -->
+<!--             <ul> -->
+<!--                 <li class="to_id">집가고싶다</li><span class=time_right>10:39</span><br> -->
+<!--             </ul> -->
+<!--             <ul> -->
+<!--                 <li class="to_id">집가고싶다</li><span class=time_right>10:39</span><br> -->
+<!--             </ul> -->
+<!--             <ul> -->
+<!--                 <li class="to_id">집가고싶다</li><span class=time_right>10:39</span><br> -->
+<!--             </ul> -->
+<!--             <ul> -->
+<!--                 <li class="from_id">시험용 싯ㅅㅅㅅㅅㅅㅅㅅㅅㅅㅅㅅjjjjjjjjjjjjjjjjjjjjjjjㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅕㅅㅅㅅㅅㅅㅅㅅㅅㅅㅅㅅㅅㅅ시험용ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ</li><span class=time>10:39</span><br> -->
+<!--             </ul> -->
+<!--             <ul> -->
+<!--                 <li class="to_id">시험용 시험ㅇㅇㅇㅇㅇ</li><span class=time_right>10:39</span><span class=readCheck></span><br> -->
+<!--             </ul> -->
+<!--             <ul> -->
+<!--                 <li class="to_id">시험용 시험ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ용ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ</li><span class=time_right>10:39</span><span class=readCheck></span><br> -->
+<!--             </ul> -->
+<!--             <ul> -->
+<!--                 <li class="to_id">시험용 시험ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ용ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ</li><span class=time_right>10:39</span><span class=readCheck></span><br> -->
+<!--             </ul> -->
+
+		<c:forEach var="dto" items="${list}">
+			
+			<c:choose>
+			   <c:when test="${dto.from_id eq '123@123.123'}">
+			     <ul>
+	                <li class="from_id">${dto.contents}</li><span class=time_right>${dto.write_date}</span>
+	                <span class=readCheck>${dto.receive_read}</span><br>
+	            </ul>
+			   </c:when>
+			   
+			   <c:otherwise>
+	            <ul>
+	                <li class="to_id">${dto.contents}</li><span class=time>${dto.write_date}</span><br>
+	            </ul>
+			   </c:otherwise>
+			</c:choose>
+
+       	</c:forEach>
+            
+            
             </div>
 <!--           ------------------------------------------------->
-	<form action="sendFly.msg" method="post">
-        <div id="footer"><input type="text" id="inputtxt">
-            <button id="sendfly"><b>SEND</b></button>
+        <div id="footer"><input type="text" id="inputtxt" name="contents">
+            <button id="sendfly" type="submit"><b>SEND</b></button>
         </div>
-    </form>
+        
 		</div>
     </div>
 	
 	
 	<script>
 	$(document).ready(function(){
+		
+// 		$("#view1").scrollTop($("#view1")[0].scrollHeight);
 		
 	   $("div[class='ac1']").click(function(){
 	   $("div[id='view1']").fadeIn(0);
@@ -265,11 +287,37 @@ ul {
 	   $("div[id='view1']").fadeOut(0);
 	   });
 	 
-	 $("#sendfly").on("click",function(){
-		 sumbit();
-	 });
+// 	 $("#sendfly").on("click",function(){
+// 		 sumbit();
+// 	 });
 	 
 	});
+	
+	
+	
+	 $(document).on("click", "#sendfly", function(){
+         $.ajax({
+            url : "${pageContext.request.contextPath}/message/sendFly.msg",
+            method : "post",
+            data : {
+               contents : $("#inputtxt").val(),
+               to_id: "098@123.123"
+            },
+            dataType : "json"
+         }).done(function(resp) {
+        	 $("#inputtxt").val("");
+        	 $(".sector_in").append("<ul><li class='from_id'>"+resp.contents+"</li><span class=time_right></span><span class=readCheck></span><br></ul>");
+        	 
+        	 var objDiv = document.getElementById("view1");
+        	 objDiv.scrollTop=objDiv.scrollHeight;
+        	 
+        }).fail(function(a,b,c){
+        	console.log(a);
+        	console.log(b);
+        	console.log(c);
+        })
+        
+      })
 	</script>
 	
 </body>
