@@ -16,7 +16,6 @@ public class MemberDAO {
 	private SqlSessionTemplate jdbc;
 	
 	public int insert(MemberDTO dto) {
-		System.out.println("회원가입 DAO 진입");
 		return jdbc.insert("Member.insert", dto);
 	}
 	
@@ -30,6 +29,10 @@ public class MemberDAO {
 	
 	public int checkPhone(String phone) {
 		return jdbc.selectOne("Member.checkPhone", phone);
+	}
+	
+	public String getProfile(String email) {
+		return jdbc.selectOne("Member.getProfile", email);
 	}
 	
 	public int isLoginOk(String email, String pw) {
