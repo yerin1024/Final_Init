@@ -16,9 +16,24 @@ public class MemberDAO {
 	private SqlSessionTemplate jdbc;
 	
 	public int insert(MemberDTO dto) {
-		System.out.println("회원가입 DAO 진입");
 		return jdbc.insert("Member.insert", dto);
-	}	
+	}
+	
+	public int checkEmail(String email) {
+		return jdbc.selectOne("Member.checkEmail", email);
+	}
+	
+	public int checkNickname(String nickname) {
+		return jdbc.selectOne("Member.checkNickname", nickname);
+	}
+	
+	public int checkPhone(String phone) {
+		return jdbc.selectOne("Member.checkPhone", phone);
+	}
+	
+	public String getProfile(String email) {
+		return jdbc.selectOne("Member.getProfile", email);
+	}
 	
 	public int isLoginOk(String email, String pw) {
 		Map<String, String> param = new HashMap<>();

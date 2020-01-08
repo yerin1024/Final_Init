@@ -109,6 +109,7 @@
 </form>
 <div id="summernote"></div>
 
+
 	<script>
 		$('#summernote').summernote({
 			placeholder : 'Hello bootstrap 4',
