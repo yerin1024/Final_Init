@@ -20,6 +20,8 @@ public class FeedController {
 	
 	@RequestMapping("/myFeed")
 	public String myFeed() {
+		System.out.println("마이피드로 가자!");
+		
 		return "feeds/myFeed";
 	}
 	

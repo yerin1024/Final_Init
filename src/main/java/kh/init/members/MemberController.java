@@ -4,10 +4,9 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
-
-import kh.init.members.MemberDTO;
 
 @RequestMapping("/member")
 @Controller
@@ -32,9 +31,19 @@ public class MemberController {
 		}
 	}
 	@RequestMapping("/goMyInfo")
-	public String goMyInfo() {
+	public String goMyInfo(String email, Model model) {
 		System.out.println("개인 정보 CON 도착.");
-		return "myInformation";
+		try {
+		MemberDTO dto = service.getMyPageService("kks@naver.com");
+		System.out.println(dto.getEmail());
+		System.out.println(dto.getName());
+		model.addAttribute("dto", dto);
+		
+		return "members/myInformation";
+		}catch(Exception e) {
+			e.printStackTrace();
+			return "error";
+		}
 	}
 
 	@RequestMapping(value = "/getMyPage", produces ="text/html; charset=utf-8")
@@ -57,13 +66,14 @@ public class MemberController {
 		System.out.println("회원 탈퇴 CON 도착.");
 		try {
 			int result = service.withdrawMemService("kks@naver.com");
+			System.out.println(result);
 			if(result> 0) {
 				session.invalidate();
 				System.out.println("회원탈퇴 성공하셨슴당.");
-				return "";
+				return "home";
 			}else {
 				System.out.println("회원탈퇴 실패하셨슴당.");
-				return "goodjob";
+				return "error";
 			}
 
 
@@ -77,19 +87,19 @@ public class MemberController {
 	}
 
 	@RequestMapping("/changeMyInfo")
-	public String changeInfo(String pw,String name,String phone) {
+	public String changeInfo(String pw) {
 		System.out.println("회원 정보 수정 CON 도착.");
 		try {
 			MemberDTO dto = new MemberDTO();
-
-			int result = service.changeMyInfoService((String)session.getAttribute("loginInfo"), dto);
+			dto.setPw(pw);
+			int result = service.changeMyInfoService("kks@naver.com", dto);
 			if(result> 0) {
 
 				System.out.println("정보변경에 성공하셨슴당.");
 				return "home";
 			}else {
 				System.out.println("정보변경에 실패하셨슴당.");
-				return "home";
+				return "error";
 			}
 
 
