@@ -9,7 +9,7 @@ public class MemberDTO {
 	private String name;
 	private String phone;
 	private String birth;
-	private String profile_img;
+	private String profile_img = "/resources/images/default_profile_img.png";
 	private String profile_msg;
 	private String admin;
 	private Timestamp join_date;

@@ -3,6 +3,22 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace ="Member">
+	<insert id="insert">
+		insert into tb_member values(#{email},#{pw},#{nickname},#{name},#{phone},#{birth},#{profile_img},null,'N',sysdate,'E','N')
+	</insert>
+	<select id="checkEmail" resultType="integer">
+		select count(*) from tb_member where email=#{email}
+	</select>
+	<select id="checkNickname" resultType="integer">
+		select count(*) from tb_member where nickname=#{nickname}
+	</select>
+	<select id="checkPhone" resultType="integer">
+		select count(*) from tb_member where phone=#{phone}
+	</select>
+	<select id="getProfile" resultType="string">
+		select profile_img from tb_member where email=#{email}
+	</select>
+	
 	<select id="isLoginOk" parameterType="java.util.Map" resultType="integer">
 		select count(*) from tb_member where email= #{email} and pw= #{pw}
 	</select>
