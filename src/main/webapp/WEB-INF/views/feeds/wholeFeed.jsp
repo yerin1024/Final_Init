@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 
@@ -54,8 +53,6 @@
 						</c:if>
 							<div class="col-4 feed">
 							 <a href="/feed/detailView?feed_seq=${feed.feed_seq }">${feed.title }</a>
-
-							
 							</div>
 						<c:if test="${status.count mod 3==0}">
 						</div>

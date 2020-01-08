@@ -17,17 +17,16 @@
       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
 
-	<mvc:annotation-driven />
-	<mvc:resources mapping="/resources/**"
-		location="/resources/" />
 
 
 	<mvc:annotation-driven></mvc:annotation-driven>
+	<mvc:resources mapping="/resources/**" location="/resources/" />
+	<mvc:resources location="/resources/images/" mapping="/guest/resources/**" />
 	<mvc:resources location="/files/" mapping="/files/**"></mvc:resources>
-<!-- 	<mvc:resources location="/videoFiles/" mapping="/feed/videoFiles/**"></mvc:resources> -->
-<!-- 	<mvc:resources location="/imageFiles/" mapping="/feed/imageFiles/**"></mvc:resources> -->
+	<!-- <mvc:resources location="/videoFiles/" mapping="/feed/videoFiles/**"></mvc:resources> -->
+	<!-- <mvc:resources location="/imageFiles/" mapping="/feed/imageFiles/**"></mvc:resources> -->
 	<mvc:resources location="/mediaTmp/" mapping="/mediaTmp/**"></mvc:resources>
-	
+
 	<context:component-scan base-package="kh.init" />
 	<task:annotation-driven />
 
@@ -75,7 +74,7 @@
 	</bean>
 
 	<bean id="authAdv" class="kh.init.advisors.AuthAdvisor" />
-	
+
 	<!-- <aop:config> -->
 	<!-- <aop:pointcut id="allControllerMethod" expression="execution(*kh.init.*(..)) -->
 	<!-- and not execution(*kh.init.members.GuestController.*(..))"/> -->

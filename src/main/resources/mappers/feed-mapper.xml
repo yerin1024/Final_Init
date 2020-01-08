@@ -19,7 +19,7 @@
       select * from tb_feed where feed_seq = #{feed_seq}
    </select>
    
-   <select id="getMediaList">
-	  select media from tb_feed_file where feed_file_seq = ;
+   <select id="getMediaList" resultType="String">
+	  select media from tb_feed_file where feed_file_seq = #{feed_seq}
    </select>
 </mapper>
