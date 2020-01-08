@@ -88,11 +88,13 @@
 }
 .slick-prev:before
 {
-    content: '←';
+    content: 'BEFORE';
+    /*  '←';*/
 }
 [dir='rtl'] .slick-prev:before
 {
-    content: '→';
+    content: 'NEXT';
+    /*  '→';*/
 }
 
 .slick-next
@@ -106,11 +108,13 @@
 }
 .slick-next:before
 {
-    content: '→';
+    content: 'NEXT';
+	/*  '→';*/
 }
 [dir='rtl'] .slick-next:before
 {
-    content: '←';
+    content: 
+	/*  '←';*/
 }
 
 /* Dots */

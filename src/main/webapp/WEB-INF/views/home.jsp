@@ -24,14 +24,18 @@
 		$("#alarm").on("click",function(){
 			
 		})
+			
+		$("#fileTest").on("click",function(){
+			location.href = "/fileTest";
+		})
 	})
 </script>
 </head>
 <body>	
 	<button type="button" id="myFeed">내 피드</button> <button id="wholeFeed">전체피드</button>
-	<button type="button" id="writeFeed">게시물 등록</button> <button id="wholeFeed">전체피드</button>
 	<button type="button" id="myInformation">회원 정보 수정</button>
 	<button type="button" id="messenger">메신저</button>
 	<button type="button" id="alarm">알림</button>
+	<button type="button" id="fileTest">파일테스트</button>
 </body>
 </html>
