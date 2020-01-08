@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns:mvc="http://www.springframework.org/schema/mvc"
-   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-   xmlns="http://www.springframework.org/schema/beans"
-   xmlns:context="http://www.springframework.org/schema/context"
-   xmlns:aop="http://www.springframework.org/schema/aop"
-   xmlns:task="http://www.springframework.org/schema/task"
-   xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
-   xmlns:tx="http://www.springframework.org/schema/tx"
-   xmlns:jdbc="http://www.springframework.org/schema/jdbc"
-   xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.3.xsd
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.3.xsd
       http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
       http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.3.xsd
       http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
@@ -17,59 +17,71 @@
       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
 
-   <mvc:annotation-driven />
-   <mvc:resources mapping="/resources/**" location="/resources/" />
-   
-   
-   <mvc:annotation-driven></mvc:annotation-driven>
-   <mvc:resources location="/files/" mapping="/files/**"></mvc:resources>
-   <mvc:resources location="/videoFiles/" mapping="/feed/videoFiles/**"></mvc:resources>
-   <mvc:resources location="/imageFiles/" mapping="/feed/imageFiles/**"></mvc:resources>
-   
-   <context:component-scan base-package="kh.init" />
-   <task:annotation-driven/>
+	<mvc:annotation-driven />
+	<mvc:resources mapping="/resources/**"
+		location="/resources/" />
 
 
-	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+	<mvc:annotation-driven></mvc:annotation-driven>
+	<mvc:resources location="/files/" mapping="/files/**"></mvc:resources>
+<!-- 	<mvc:resources location="/videoFiles/" mapping="/feed/videoFiles/**"></mvc:resources> -->
+<!-- 	<mvc:resources location="/imageFiles/" mapping="/feed/imageFiles/**"></mvc:resources> -->
+	<mvc:resources location="/mediaTmp/" mapping="/mediaTmp/**"></mvc:resources>
+	
+	<context:component-scan base-package="kh.init" />
+	<task:annotation-driven />
+
+
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/WEB-INF/views/" />
 		<property name="suffix" value=".jsp" />
 	</bean>
-	
-	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 		<property name="maxUploadSize" value="10485760"></property>
 		<property name="defaultEncoding" value="utf-8"></property>
-	</bean>	
-	
-	<bean class="org.apache.commons.dbcp2.BasicDataSource" id="dataSource">
-		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
-		<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"/>
-		<property name="username" value="init"/>
-		<property name="password" value="init"/>
-		<property name="initialSize" value="30"/>
 	</bean>
-	
-	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionFactoryBean">
-		<property name="dataSource" ref="dataSource"/>
-		<property name="mapperLocations" value="classpath:/mappers/*mapper.xml"/>
+
+	<bean class="org.apache.commons.dbcp2.BasicDataSource"
+		id="dataSource">
+		<property name="driverClassName"
+			value="oracle.jdbc.driver.OracleDriver" />
+		<property name="url"
+			value="jdbc:oracle:thin:@localhost:1521:xe" />
+		<property name="username" value="init" />
+		<property name="password" value="init" />
+		<property name="initialSize" value="30" />
 	</bean>
-	
-	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+
+	<bean id="sqlSession"
+		class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="mapperLocations"
+			value="classpath:/mappers/*mapper.xml" />
+	</bean>
+
+	<bean id="sqlSessionTemplate"
+		class="org.mybatis.spring.SqlSessionTemplate">
 		<constructor-arg ref="sqlSession"></constructor-arg>
 	</bean>
-	
-	<tx:annotation-driven transaction-manager="txManager"/>
-	<bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-		<property name="dataSource" ref="dataSource"/>
+
+	<tx:annotation-driven
+		transaction-manager="txManager" />
+	<bean id="txManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
 	</bean>
+
+	<bean id="authAdv" class="kh.init.advisors.AuthAdvisor" />
 	
-	<bean id="authAdv" class="kh.init.advisors.AuthAdvisor"/>
-	
-<!-- 	<aop:config> -->
-<!-- 		<aop:pointcut id="allControllerMethod" expression="execution(*kh.init.*(..))  -->
-<!-- 		and not execution(*kh.init.members.GuestController.*(..))"/> -->
-<!-- 		<aop:aspect id="authAsp" ref="authAdv"> -->
-<!-- 			<aop:around method="loginCheck" pointcut-ref="allControllerMethod"/> -->
-<!-- 		</aop:aspect> -->
-<!-- 	</aop:config> -->
-	
+	<!-- <aop:config> -->
+	<!-- <aop:pointcut id="allControllerMethod" expression="execution(*kh.init.*(..)) -->
+	<!-- and not execution(*kh.init.members.GuestController.*(..))"/> -->
+	<!-- <aop:aspect id="authAsp" ref="authAdv"> -->
+	<!-- <aop:around method="loginCheck" pointcut-ref="allControllerMethod"/> -->
+	<!-- </aop:aspect> -->
+	<!-- </aop:config> -->
+
 </beans>

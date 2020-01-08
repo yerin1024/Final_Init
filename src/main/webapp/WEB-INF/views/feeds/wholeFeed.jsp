@@ -53,9 +53,8 @@
 						<div class="row" style="margin:0px">
 						</c:if>
 							<div class="col-4 feed">
-							<c:if test="${feed.check==0}">
-							 <a href="/feed/detailView?feed_seq=${feed_seq }">${feed.title }</a>
-							</c:if>
+							 <a href="/feed/detailView?feed_seq=${feed.feed_seq }">${feed.title }</a>
+
 							
 							</div>
 						<c:if test="${status.count mod 3==0}">

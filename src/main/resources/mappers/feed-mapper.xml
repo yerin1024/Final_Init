@@ -8,7 +8,7 @@
    </select>
 
    <insert id="registerFeed" parameterType="kh.init.feeds.FeedDTO">      
-      insert into tb_feed values(feed_seq.nextval,#{email},#{nickname},#{title},#{contents},#{image},#{video},#{relation},sysdate) 
+      insert into tb_feed values(feed_seq.nextval,#{email},#{nickname},#{title},#{contents},#{relation},sysdate) 
    </insert>
    
    <delete id="deleteFeed" parameterType="java.util.Map">
@@ -17,5 +17,9 @@
    
    <select id="detailView" resultType="kh.init.feeds.FeedDTO">
       select * from tb_feed where feed_seq = #{feed_seq}
+   </select>
+   
+   <select id="getMediaList">
+	  select media from tb_feed_file where feed_file_seq = ;
    </select>
 </mapper>

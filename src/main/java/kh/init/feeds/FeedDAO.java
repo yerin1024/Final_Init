@@ -24,7 +24,12 @@ public class FeedDAO {
 	}
 	
 	public FeedDTO detailView(String feed_seq) throws Exception{
-		FeedDTO dto = jdbc.selectOne("detailView", feed_seq);
+		FeedDTO dto = jdbc.selectOne("Feed.detailView", feed_seq);
 		return dto;
+	}
+	
+	public List<String> getMediaList(String feed_seq) throws Exception{
+		List<String> list = jdbc.selectList("Feed.getMediaList", feed_seq);
+		return list;
 	}
 }
