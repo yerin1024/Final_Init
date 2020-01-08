@@ -21,6 +21,7 @@
 <script>
 	$(function() {
 		$("#writeForm").on("submit", function() {
+			$(".note-editable img").removeAttr("style");
 			var note = $(".note-editable").html();
 			$("#contents").val(note);
 		})
@@ -35,11 +36,9 @@
 		<c:otherwise>			
 			<form action="writeFeedProc" method="post"
 				enctype="multipart/form-data" id="writeForm">
-				제목:<input type="text" name="title"> 파일:<input type="file"
-					name="files" multiple="multiple"> 
+				제목:<input type="text" name="title">
 					<select name="relation">
-					<option value='' selected>-- 관계 선택 --</option>
-					<option value='0'>전체보기</option>
+					<option value='0' selected>전체보기</option>
 					<option value='1'>지인</option>
 					<option value='2'>아는친구</option>
 					<option value='3'>절친</option>
@@ -56,7 +55,16 @@
 			placeholder : 'Hello bootstrap 4',
 			tabsize : 2,
 			height : 600,
-			width : 900
+			width : 900,
+			toolbar: [
+	             // [groupName, [list of button]]
+	             ['style', ['bold', 'italic', 'underline', 'clear']],
+	             ['font', ['strikethrough', 'superscript', 'subscript']],
+	             ['fontsize', ['fontsize']],
+	             ['color', ['color']],
+	             ['para', ['ul', 'ol', 'paragraph']],
+	             ['height', ['height']]
+	           ]
 		});
 	</script>
 </body>

@@ -1,8 +1,6 @@
 package kh.init.feeds;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +17,8 @@ public class FeedDAO {
 		int result = jdbc.insert("Feed.registerFeed", dto);
 		return result;
 	}
-	public int deleteFeed(int feed_seq) throws Exception{
-		return jdbc.delete("Feed.deleteFeed", feed_seq);
+	public int deleteFeed(ReplyDTO dto) throws Exception{
+		return jdbc.delete("Feed.deleteFeed", dto);
 	}
 	
 	public List<FeedDTO> selectAll() throws Exception{
@@ -32,7 +30,12 @@ public class FeedDAO {
 	}
 	
 	public FeedDTO detailView(int feed_seq) throws Exception{
-		FeedDTO dto = jdbc.selectOne("detailView", feed_seq);
+		FeedDTO dto = jdbc.selectOne("Feed.detailView", feed_seq);
 		return dto;
+	}
+	
+	public List<String> getMediaList(int feed_seq) throws Exception{
+		List<String> list = jdbc.selectList("Feed.getMediaList", feed_seq);
+		return list;
 	}
 }

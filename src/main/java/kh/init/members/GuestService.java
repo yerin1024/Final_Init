@@ -1,7 +1,5 @@
 package kh.init.members;
 
-import javax.swing.plaf.multi.MultiFileChooserUI;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,8 +12,9 @@ public class GuestService {
 	private MemberDAO dao;
 	
 	@Transactional("txManager")
-	public void insert(MemberDTO dto, MultipartFile profile_img) {
-		
-	}
-	
+	public int insert(MemberDTO dto, MultipartFile profile_img) {
+		dto.setProfile_img(profile_img.getOriginalFilename());
+		System.out.println("회원가입 서비스 진입");
+		return dao.insert(dto);
+	}	
 }

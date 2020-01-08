@@ -15,11 +15,13 @@ public class ReplyDAO {
 	public int registerReply(FeedDTO dto)throws Exception{
 		return jdbc.insert("Feed.registerReply", dto);
 	}
-	public int deleteReply(int feed_seq)throws Exception{
-		return jdbc.delete("Feed.deleteReply", feed_seq);
+	public int deleteReply(ReplyDTO dto)throws Exception{
+		return jdbc.delete("Feed.deleteReply", dto);
 	}
 	public List<ReplyDTO> viewReply(int feed_seq)throws Exception{
-		System.out.println(feed_seq);
 		return jdbc.selectList("Feed.viewReply",feed_seq);
+	}
+	public int deleteFeedAndReply(ReplyDTO dto)throws Exception{
+		return jdbc.delete("Feed.deleteFeedAndReply", dto);
 	}
 }

@@ -16,9 +16,9 @@ public class MemberDAO {
 	private SqlSessionTemplate jdbc;
 	
 	public int insert(MemberDTO dto) {
+		System.out.println("회원가입 DAO 진입");
 		return jdbc.insert("Member.insert", dto);
-	}
-	
+	}	
 	
 	public int isLoginOk(String email, String pw) {
 		Map<String, String> param = new HashMap<>();
