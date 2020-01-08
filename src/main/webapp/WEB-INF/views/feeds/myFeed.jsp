@@ -19,11 +19,10 @@
 <body>
 	<div id="wrapper">
 		<div>프로필 사진 닉네임 프로필 메세지</div>
-		<button type="button">회원 정보 편집</button>
+		<button type="button">회원 정보 편집</button><br>
 		<c:choose>
 			<c:when test="${fn:length(list) ==0}">
-				게시물이 없습니다.<br>
-				<button id="registerFeed">게시물 등록</button>
+				게시물이 없습니다.
 			</c:when>
 			<c:otherwise>
 				<table>
@@ -35,14 +34,14 @@
 					<c:forEach items="${list }" var="list">
 						<tr>
 							<td>${list.feed_seq }
-							<td><a href="/feed/detailView?feed_seq=${list.feed_seq }">${list.title }</a>
-							<td><a href="/feed/detailView?feed_seq=${list.feed_seq }">${list.title }</a>
-							<td><button id="registerFeed">게시물 등록</button>
+							<td><a href="/feed/detailView?feed_seqS=${list.feed_seq }">${list.title }</a>
+							<td><a href="/feed/detailView?feed_seqS=${list.feed_seq }">${list.title }</a>
 						</tr>
 					</c:forEach>
 				</table>
 			</c:otherwise>
 		</c:choose>
+		<br><button id="registerFeed">게시물 등록</button>
 	</div>
 </body>
 </html>

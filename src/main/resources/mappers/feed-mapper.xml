@@ -7,8 +7,16 @@
       select * from tb_feed
    </select>
 
+	<select id="getFeedSeq" resultType="integer">
+		select feed_seq.nextval from dual
+	</select>
+
    <insert id="registerFeed" parameterType="kh.init.feeds.FeedDTO">      
-      insert into tb_feed values(feed_seq.nextval,#{email},#{nickname},#{title},#{contents},#{relation},sysdate) 
+      insert into tb_feed values(#{feed_seq},#{email},#{nickname},#{title},#{contents},#{relation},sysdate) 
+   </insert>
+   
+   <insert id="registerMedia" parameterType="java.util.Map">
+   	  insert into tb_feed_file values(#{feed_seq}, feed_file_seq.nextval, #{media})
    </insert>
    
    <delete id="deleteFeed" parameterType="java.util.Map">
@@ -20,6 +28,6 @@
    </select>
    
    <select id="getMediaList" resultType="String">
-	  select media from tb_feed_file where feed_file_seq = #{feed_seq}
+	  select media from tb_feed_file where feed_seq = #{feed_seq}
    </select>
 </mapper>

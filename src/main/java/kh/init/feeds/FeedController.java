@@ -66,15 +66,18 @@ public class FeedController {
 		dto.setEmail(email);
 		dto.setNickname(nickname);
 		int result = 0;
-		
+		String mediaPath = session.getServletContext().getRealPath("media");
+		String realPath = session.getServletContext().getRealPath("");
 		List<String> mediaList = ((ArrayList<String>)session.getAttribute("mediaList"));
 		
 		try {
-			result = service.registerFeed(dto, mediaList);
+			result = service.registerFeed(dto, mediaList, mediaPath, realPath);
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
 		System.out.println(result + "행의 게시물이 등록");
+		
+		session.setAttribute("mediaList", null);
 		return "redirect:myFeed";
 	}
 
@@ -111,10 +114,10 @@ public class FeedController {
 		return "/feeds/wholeFeed";
 	}
 
-	@RequestMapping("/detailView")
-	public String detailView(String feed_seq, Model model) {
+	@RequestMapping("/detailView") 
+	public String detailView(String feed_seqS, Model model) {
 		System.out.println("detailView 도착");
-		System.out.println(feed_seq);
+		int feed_seq = Integer.parseInt(feed_seqS);
 		FeedDTO dto = null;
 		List<String> list = null;
 		try {
@@ -141,15 +144,18 @@ public class FeedController {
 		return "/feeds/modifyFeedView";
 	}
 	@RequestMapping("/modifyFeedView")
-	public String modifyFeedView(String feed_seq,FeedDTO dto,Model model) {
+	public String modifyFeedView(int feed_seq, Model model) {
 		System.out.println("게시물 수정페이지 도착!");
-		System.out.println(dto.getFeed_seq());
+		FeedDTO dto = null;
+		List<String> list = null;
 		try {
 			dto = service.detailView(feed_seq);
-			model.addAttribute("dto",dto);
-		} catch (Exception e) {
+			list = service.getMediaList(feed_seq);
+		}catch(Exception e) {
 			e.printStackTrace();
 		}
+		model.addAttribute("dto", dto);
+		model.addAttribute("media", list);
 		return "/feeds/modifyFeedView";
 	}
 }

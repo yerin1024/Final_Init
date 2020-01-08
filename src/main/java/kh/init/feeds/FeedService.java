@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,9 +24,28 @@ public class FeedService {
 	private FeedDAO dao;
 	
 	@Transactional
-	public int registerFeed(FeedDTO dto, List<String> mediaList) throws Exception{
+	public int registerFeed(FeedDTO dto, List<String> mediaList, String mediaPath, String realPath) throws Exception{
+		int feed_seq = dao.getFeedSeq();
+		dto.setFeed_seq(feed_seq);
 		int result = dao.registerFeed(dto);
-		//tmp폴더에 있는 파일들 옮기는 DAO작업 와야함 
+		File path = new File(mediaPath);
+		if(mediaList!=null||!(path.exists())) {
+			path.mkdir();
+		}
+		for(int i=0; i<mediaList.size(); i++) {
+			System.out.println("mediaList("+i+") -"+mediaList.get(i)+" register");
+			
+			//파일복사 코드 추가하기
+			File fromFile = new File(realPath+mediaList.get(i));
+			
+			File toFile = new File(realPath+mediaList.get(i).replace("Tmp", ""));
+			fromFile.renameTo(toFile);
+			
+			fromFile.delete();
+			
+			dao.registerMedia(feed_seq, mediaList.get(i).replace("Tmp", ""));
+		}
+		
 		return result;
 	}
 
@@ -46,13 +66,22 @@ public class FeedService {
 		int result = dao.modifyFeed(dto);
 		return result;
 	}
-	public FeedDTO detailView(String feed_seq) throws Exception{
+	public FeedDTO detailView(int feed_seq) throws Exception{
 		FeedDTO dto = dao.detailView(feed_seq);
 		return dto;
 	}
 	
-	public List<String> getMediaList(String feed_seq) throws Exception{
+	public List<String> getMediaList(int feed_seq) throws Exception{
 		List<String> list = dao.getMediaList(feed_seq);
+		for(int i=0; i<list.size(); i++) {
+			if(list.get(i).endsWith("mp4")) { //파일이 동영상일 경우
+				String video = "<video src=\""+list.get(i)+"\">";
+				list.set(i, video);
+			}else {//파일이 이미지
+				String img = "<img src=\""+list.get(i)+"\">";
+				list.set(i, img);
+			}
+		}
 		return list;
 	}
 	
