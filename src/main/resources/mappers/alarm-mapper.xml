@@ -3,13 +3,6 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="Alarm">
-	
-<!-- 	ALARM_SEQ      NUMBER        NOT NULL,  -->
-<!--     TYPE           VARCHAR(1) CHECK (TYPE IN ('M', 'R', 'L', 'F')), -->
-<!--     APPLIED_SEQ    NUMBER        NOT NULL,  -->
-<!--     REG_DATE       TIMESTAMP     NOT NULL, -->
-<!--     alarm_check    VARCHAR2(1) DEFAULT 'N' CHECK (alarm_check IN ('Y', 'N')), -->
-
 	<insert id="insertAlarm_m"> <!-- 알림 추가 -->
 		insert into tb_alarm values(alarm_seq, 'M', #{sharedSeq}, sysdate, 'N')
 	</insert>
@@ -26,12 +19,12 @@
 		insert into tb_alarm values(alarm_seq, 'F', #{sharedSeq}, sysdate, 'N')
 	</insert>
 	
-	<select id=""> <!-- 알림 목록 -->
-		select * from tb_alarm where alarm_check='N'
-	</select>
+<!-- 	<select id=""> 알림 목록 -->
+<!-- 		select * from tb_alarm where alarm_check='N' -->
+<!-- 	</select> -->
 	
-	<update id=""> <!-- 읽음 완료 -->
-		update tb_alarm set alarm_check='Y' where where alarm_check='N'
-	</update>
+<!-- 	<update id=""> 읽음 완료 -->
+<!-- 		update tb_alarm set alarm_check='Y' where where alarm_check='N' -->
+<!-- 	</update> -->
     
 </mapper>

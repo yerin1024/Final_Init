@@ -43,7 +43,7 @@
 		select * from tb_friend where my_id=#{my_id} and to_id like '%'||#{fr_id}'%'
 	</select>
 	
-	<select id="friendListConvert" resultType="kh.init.friends.MemberDTO"> <!-- 친구 닉네임으로 반환 -->
+	<select id="friendListConvert" resultType="kh.init.members.MemberDTO"> <!-- 친구 닉네임으로 반환 -->
 		select nickname from tb_member where email=#{email}
 	</select>
 
