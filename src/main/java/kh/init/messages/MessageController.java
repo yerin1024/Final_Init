@@ -11,10 +11,10 @@ public class MessageController {
 	@Autowired
 	private MessageService service;
 	
-	@RequestMapping("messageList")
+	@RequestMapping("messageMain")
 	public String toMsgList() {
 		System.out.println("message home 도착");
-		return "messageList";
+		return "messages/messageMain";
 	}
 	
 //	@RequestMapping("sendFly.msg")

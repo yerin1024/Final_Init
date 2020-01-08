@@ -17,6 +17,13 @@
 		$("#myInformation").on("click",function(){
 			location.href = "member/goMyInfo";
 		})
+		
+		$("#messenger").on("click",function(){
+			location.href="message/messageList"
+		})
+		$("#alarm").on("click",function(){
+			
+		})
 	})
 </script>
 </head>
@@ -24,5 +31,7 @@
 	<button type="button" id="myFeed">내 피드</button> <button id="wholeFeed">전체피드</button>
 	<button type="button" id="writeFeed">게시물 등록</button> <button id="wholeFeed">전체피드</button>
 	<button type="button" id="myInformation">회원 정보 수정</button>
+	<button type="button" id="messenger">메신저</button>
+	<button type="button" id="alarm">알림</button>
 </body>
 </html>
