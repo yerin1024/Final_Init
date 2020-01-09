@@ -45,16 +45,13 @@
 	display: none;
 }
 
-<<<<<<< HEAD
 .carousel-item {
 	margin: auto;
 	text-align: center;
 }
-
-.carousel-control-next, .carousel-control-prev {
-
+.carousel-inner{
+	width:100vw;
 }
-
 .carousel-item *{
 	width: 600px;
 	height: 600px;
@@ -151,16 +148,20 @@
 			</c:choose>
 			
 			<div class="row">
-				<div class="col-12 feed">${dto.contents }</div>
-				<div class="col-6 feed btnss">
+				<div class="col-12 feed" style="height:200px; border:2px solid red;">${dto.contents }</div>
+				<div class="col-4 feed btnss">
 					<a href="${pageContext.request.contextPath }/feed/deleteProc?seq=${dto.feed_seq}">
 						<img src="${pageContext.request.contextPath }/resources/images/delete.png">
-
 					</a>
 				</div>
-				<div class="col-6 feed btnss">
+				<div class="col-4 feed btnss">
 					<a href="${pageContext.request.contextPath }/feed/modifyFeedView?feed_seq=${dto.feed_seq}">
 						<img src="${pageContext.request.contextPath }/resources/images/improvement.png">
+					</a>
+				</div>
+				<div class="col-4 feed btnss like">
+					<a href="feed_seq=${dto.feed_seq}">
+						<img src="${pageContext.request.contextPath }/resources/images/likeBefore.png">
 					</a>
 				</div>
 			</div>

@@ -59,7 +59,9 @@
 	width: 600px;
 	height: 600px;
 }
-
+.carousel-inner{
+	width:100vw;
+}
 
 </style>
 <script>
@@ -97,12 +99,11 @@
 <form action="writeFeedProc" method="post" enctype="multipart/form-data" id="writeForm">
 	제목:<input type="text" name="title">
 	<select name="relation">
-	<option value='' selected>-- 관계 선택 --</option>
 	<option value='0'>전체보기</option>
 	<option value='1'>지인</option>
 	<option value='2'>아는친구</option>
 	<option value='3'>절친</option>
-	<option value='4'>나만보기</option>
+	<option value='4' selected>나만보기</option>
 	</select>
 	<textarea name="contents" style="display: none" id="contents"></textarea>
 	<button>등록</button>

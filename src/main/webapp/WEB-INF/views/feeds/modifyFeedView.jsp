@@ -50,7 +50,9 @@
 	margin: auto;
 	text-align: center;
 }
-
+.carousel-inner{
+	width:100vw;
+}
 .carousel-control-next, .carousel-control-prev {
 	height: 600px;
 }
