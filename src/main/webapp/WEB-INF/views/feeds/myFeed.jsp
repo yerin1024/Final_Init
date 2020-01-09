@@ -36,7 +36,7 @@
 						<tr>
 							<td>${list.feed_seq }
 							<td><a href="/feed/detailView?feed_seq=${list.feed_seq }">${list.title }</a>
-							<td><a href="/feed/detailView?feed_seq=${list.feed_seq }">${list.title }</a>
+							<td>${list.contents }
 							<td><button id="registerFeed">게시물 등록</button>
 						</tr>
 					</c:forEach>

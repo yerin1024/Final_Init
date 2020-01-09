@@ -1,18 +1,10 @@
 package kh.init.feeds;
-import java.io.DataOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.Base64Utils;
 import org.springframework.web.multipart.MultipartFile;
 
 
@@ -21,6 +13,8 @@ import org.springframework.web.multipart.MultipartFile;
 public class FeedService {
 	@Autowired
 	private FeedDAO dao;
+	@Autowired
+	private ReplyDAO replyDAO;
 	
 	@Transactional
 	public int registerFeed(FeedDTO dto, List<String> mediaList) throws Exception{
@@ -38,20 +32,24 @@ public class FeedService {
 		List<FeedDTO> list = dao.selectAll();
 		return list;
 	}
-	public int deleteFeed(String seq)throws Exception{
-		int result = dao.deleteFeed(seq);
-		return result;
+	
+	@Transactional
+	public int deleteFeed(int feed_seq)throws Exception{
+		int feedResult = dao.deleteFeed(feed_seq);
+		int replyResult = replyDAO.deleteReply("feed_seq",feed_seq);
+		return replyResult;
 	}
+	
 	public int modifyFeed(FeedDTO dto)throws Exception{
 		int result = dao.modifyFeed(dto);
 		return result;
 	}
-	public FeedDTO detailView(String feed_seq) throws Exception{
+	public FeedDTO detailView(int feed_seq) throws Exception{
 		FeedDTO dto = dao.detailView(feed_seq);
 		return dto;
 	}
 	
-	public List<String> getMediaList(String feed_seq) throws Exception{
+	public List<String> getMediaList(int feed_seq) throws Exception{
 		List<String> list = dao.getMediaList(feed_seq);
 		return list;
 	}
@@ -73,5 +71,18 @@ public class FeedService {
 		
 		//파일경로 리턴
 		return "/mediaTmp/"+sysName;
+	}
+	
+	public int registerReply(FeedDTO dto)throws Exception{
+		int result = replyDAO.registerReply(dto);
+		return result;
+	}
+	public int deleteReply(int reply_seq)throws Exception{
+		int result = replyDAO.deleteReply("reply_seq",reply_seq);
+		return result;
+	}
+	public List<ReplyDTO> viewReply(int feed_seq)throws Exception{
+		List<ReplyDTO> list = replyDAO.viewReply(feed_seq);
+		return list;
 	}
 }
