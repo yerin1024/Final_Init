@@ -110,16 +110,13 @@ public class FeedController {
 	@RequestMapping("/detailView")
 	public String detailView(int feed_seq, Model model) {
 		System.out.println("detailView 도착");
-		System.out.println(feed_seq);
 		FeedDTO dto = null;
 		List<ReplyDTO> replyList = null;
 		List<String> list = null;
 		try {
 			dto = service.detailView(feed_seq);
-			replyList = service.viewReply(feed_seq);
+			replyList = service.viewAllReply(feed_seq);
 			list = service.getMediaList(feed_seq);
-			System.out.println(replyList.size() + "리플라이리스트 사이즈입니다.");
-			System.out.println(dto.toString());
 			model.addAttribute("replylist",replyList);
 			model.addAttribute("media", list);
 			model.addAttribute("dto", dto);	
@@ -159,20 +156,22 @@ public class FeedController {
 	// ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 
 	@RequestMapping("/registerReply")
-	public String registerReply(FeedDTO dto) {
+	@ResponseBody
+	public String registerReply(ReplyDTO dto) {
 		System.out.println("댓글 등록도착!");
-		
-		//세션값 대체 임시 닉네임
-		dto.setNickname("yes");
-		
+		System.out.println("피드시퀀스:"+dto.getFeed_seq());
+		System.out.println("댓글 내용입니다 :"+dto.getContents());
+		String result = null;
+		//나중에 세션값으로 대체
+		dto.setNickname("abd");
 		System.out.println(dto.getFeed_seq()+ " : "+dto.getContents()+" : "+dto.getNickname());
 		try {
-			int result = service.registerReply(dto);
-			System.out.println(result + "개의 댓글이 추가되었습니다");
+			result = service.registerReply(dto);
+			System.out.println(dto.getFeed_seq()+"??????????");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "redirect:myFeed";
+		return result;
 	}
 	@RequestMapping("/modifyReply")
 	public String modifyReply(FeedDTO dto) {
@@ -193,13 +192,13 @@ public class FeedController {
 		System.out.println(reply_seq+"");
 		return  reply_seq+"";
 	}
-	@RequestMapping("/viewReply")
+	@RequestMapping("/viewAllReply")
 	@ResponseBody
 	public String viewReply(int feed_seq,Model model) {
 		System.out.println("게시물 댓글 보기 도착!!");
 		System.out.println(feed_seq);
 		try {
-			List<ReplyDTO> list = service.viewReply(feed_seq);
+			List<ReplyDTO> list = service.viewAllReply(feed_seq);
 			model.addAttribute("list", list);
 		} catch (Exception e) {
 			e.printStackTrace();
