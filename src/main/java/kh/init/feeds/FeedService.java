@@ -32,14 +32,14 @@ public class FeedService {
 		List<FeedDTO> list = dao.selectAll();
 		return list;
 	}
-	public int deleteFeed(ReplyDTO dto)throws Exception{
-		int result = dao.deleteFeed(dto);
-		return result;
+	
+	@Transactional
+	public int deleteFeed(int feed_seq)throws Exception{
+		int feedResult = dao.deleteFeed(feed_seq);
+		int replyResult = replyDAO.deleteReply("feed_seq",feed_seq);
+		return replyResult;
 	}
-	public int deleteFeedAndReply(ReplyDTO dto)throws Exception{
-		int result = replyDAO.deleteFeedAndReply(dto);
-		return result;
-	}
+	
 	public int modifyFeed(FeedDTO dto)throws Exception{
 		int result = dao.modifyFeed(dto);
 		return result;
@@ -77,8 +77,8 @@ public class FeedService {
 		int result = replyDAO.registerReply(dto);
 		return result;
 	}
-	public int deleteReply(ReplyDTO dto)throws Exception{
-		int result = replyDAO.deleteReply(dto);
+	public int deleteReply(int reply_seq)throws Exception{
+		int result = replyDAO.deleteReply("reply_seq",reply_seq);
 		return result;
 	}
 	public List<ReplyDTO> viewReply(int feed_seq)throws Exception{

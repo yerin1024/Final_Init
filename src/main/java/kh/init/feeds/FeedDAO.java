@@ -17,8 +17,8 @@ public class FeedDAO {
 		int result = jdbc.insert("Feed.registerFeed", dto);
 		return result;
 	}
-	public int deleteFeed(ReplyDTO dto) throws Exception{
-		return jdbc.delete("Feed.deleteFeed", dto);
+	public int deleteFeed(int feed_seq) throws Exception{
+		return jdbc.delete("Feed.deleteFeed", feed_seq);
 	}
 	
 	public List<FeedDTO> selectAll() throws Exception{

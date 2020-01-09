@@ -35,12 +35,12 @@ public class FeedController {
 	}
 
 	@RequestMapping("/deleteProc")
-	public String deleteProc(ReplyDTO dto) {
+	public String deleteProc(int feed_seq) {
 		System.out.println("삭제 도착!");
-		System.out.println(dto.getFeed_seq()+dto.getReply_seq());
+		System.out.println(feed_seq + " ㅁㄴㅇㅁㄴ");
 		try {
-			int result =  service.deleteFeed(dto);
-			int replyResult = service.deleteFeedAndReply(dto);
+			int result =  service.deleteFeed(feed_seq);
+			int replyResult = service.deleteReply(feed_seq);
 			System.out.println(result + "행이 삭제되었습니다.");
 			System.out.println(replyResult + "행이 삭제되었습니다.");
 		} catch (Exception e) {
@@ -161,6 +161,10 @@ public class FeedController {
 	@RequestMapping("/registerReply")
 	public String registerReply(FeedDTO dto) {
 		System.out.println("댓글 등록도착!");
+		
+		//세션값 대체 임시 닉네임
+		dto.setNickname("yes");
+		
 		System.out.println(dto.getFeed_seq()+ " : "+dto.getContents()+" : "+dto.getNickname());
 		try {
 			int result = service.registerReply(dto);
@@ -177,19 +181,17 @@ public class FeedController {
 
 	@RequestMapping("/deleteReply")
 	@ResponseBody
-	public String deleteReply(ReplyDTO dto) {
-		int seq = dto.getReply_seq();
+	public String deleteReply(int reply_seq) {
 		System.out.println("댓글 삭제 도착!!");
-		System.out.println(dto.getFeed_seq()+": 피드 시퀀스~");
-		System.out.println(dto.getReply_seq()+": 댓글피드 시퀀스~");
+		System.out.println(reply_seq+"이 댓글 삭제로 넘어옴!");
 		int result = 0;
 		try {
-			result = service.deleteReply(dto);
+			result = service.deleteReply(reply_seq);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println(seq+"");
-		return seq+"";
+		System.out.println(reply_seq+"");
+		return  reply_seq+"";
 	}
 	@RequestMapping("/viewReply")
 	@ResponseBody
