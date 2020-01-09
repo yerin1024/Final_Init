@@ -4,14 +4,11 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-
-import kh.init.friends.FriendDTO;
-import kh.init.messages.MessageDTO;
 
 @RequestMapping("/alarm")
 @Controller
@@ -28,13 +25,21 @@ public class AlarmController {
 	
 	@RequestMapping(value="/test.al", produces="text/html; charset=utf8")
 	@ResponseBody
-	public String testAl() {
+	public String testAl(String email) {
 		System.out.println("테스트 시작");
 		
-		JsonObject obj = new JsonObject();
-		obj.addProperty("contents", "테스트용 화면 띄우기");
-		return obj.toString();
+		List<AlarmDTO> result = service.alarmList("123@123.123");
+		
+		for(AlarmDTO tmp : result) {
+			System.out.println(tmp.getType() + " : " + tmp.getReg_date());
+		}
+		
+		Gson gs = new Gson();
+		
+		return gs.toJson(result);
 	}
+	
+	
 	
 //	@RequestMapping(value="/sendFly.msg", produces="text/html; charset=utf8")
 //	@ResponseBody

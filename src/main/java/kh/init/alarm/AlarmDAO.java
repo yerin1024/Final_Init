@@ -8,6 +8,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import kh.init.feeds.ReplyDTO;
+
 @Repository
 public class AlarmDAO {
 	
@@ -20,6 +22,11 @@ public class AlarmDAO {
 		prm.put("shardSeq",sharedSeq);
 		prm.put("email",email);
 		return jdbc.insert("Alarm.alarmReply",prm);
+	} // 댓글 작성자 / 피드seq
+	public ReplyDTO alarmReplyWho(int reply_seq) {
+		Map<String, Object> prm = new HashMap<>();
+		prm.put("reply_seq", reply_seq);
+		return jdbc.selectOne("Alarm.alarmReplyWho",prm);
 	}
 	
 	// 좋아요 알림
