@@ -31,18 +31,33 @@ video {
 <script>
 	$(function() {
 		$("#replyBtn").on("click", function() {
-			var queryString = $("#registerReply").serialize();
 			var feed_seq = ${dto.feed_seq};
+			var contents = $("#replyContents").val();
 			$.ajax({
 				type : "POST",
 				url : "${pageContext.request.contextPath }/feed/registerReply",
-				dataType : 'json',
-				data : {queryString:queryString,feed_seq:feed_seq}
-			}).done(function(resp) {
-				
-			})
+				data :{feed_seq:feed_seq,contents:contents},
+				dataType:"json"
+			}).done(function(resp) {	
+				var html = "";
+		        console.log(resp.contents);
+		        console.log(resp.nickname);
+		        console.log(resp.reply_seq);
+		        	html += "<div class=\"row replyFeed "+resp.reply_seq+"\">"
+		        	html += "<div class=\"col-2 feed\" style=\"text-align:center\">"+resp.nickname+"님의 댓글</div>"
+		        	html += "<div class=\"col-9 feed\">"
+		        	html += "<div>"+resp.contents+"</div>"
+		        	html += "</div>"
+			        html += "<div class=\"col-1 feed\">"
+		        	html += "<button type=\"button\" class=\"replyDeleteBtn\" value=\""+resp.reply_seq+"\" style=\"width:30%\">삭제</button>"
+		        	html += "<button type=\"button\" class=\"replyModifyBtn\" style=\"width:30%\">수정</button>"
+				    html += "</div>"
+				    html += "</div>"
+					$(".replyList").append(html);
+				    $("#replyContents").val("");
 		})
-		$(".replyDeleteBtn").on("click", function() {
+		})
+		$(document).on("click",".replyDeleteBtn" ,function() {
 			var reply_seq = $(this).val();
 			console.log(reply_seq + "입니다.");
 			$.ajax({
@@ -51,6 +66,7 @@ video {
 				data : {reply_seq:reply_seq}				
 			}).done(function(resp) {
 				console.log('성공적으로 성공');
+// 				console.log(resp);
 				$("."+resp).html("");
 			})
 		})
@@ -62,11 +78,13 @@ video {
 </head>
 <body>
 	<div id="container">
-		<div class="table">
+		<div class="header">
 			<div class="row">
 				<div class="col-4">${dto.nickname }</div>
 				<div class="col-8">${dto.title }</div>
 			</div>
+			</div>
+			<div class="body">
 			<div class="row">
 				<div class="col-4 feed">${dto.contents }</div>
 				<div class="col-4 feed">
@@ -84,7 +102,8 @@ video {
 					</a>
 				</div>
 			</div>
-
+			</div>
+			<div class="replyList">
 			<c:forEach items="${replylist }" var="replylist">
 				<div class="row replyFeed ${replylist.reply_seq }">
 					<div class="col-2 feed" style="text-align: center">${replylist.nickname }님의
@@ -99,20 +118,21 @@ video {
 					</div>
 				</div>
 			</c:forEach>
-
+			</div>
+			<div class="replyWindow">
 			<form method="post" id="registerReply">
 				<div class="row">
 					<div class="col-2 feed" style="text-align: center">${dto.nickname }님의
 						댓글</div>
 					<div class="col-9 feed">
-						<input type="text" id="reply" name="contents" style="width: 100%">
+						<input type="text" id="replyContents" name="contents" style="width: 100%">
 					</div>
 					<div class="col-1 feed">
-						<button type="submit" id="replyBtn" style="width: 30%">등록</button>
+						<button type="button" id="replyBtn" style="width: 30%">등록</button>
 					</div>
 				</div>
 			</form>
+			</div>
 		</div>
-	</div>
 </body>
 </html>

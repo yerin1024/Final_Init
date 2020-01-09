@@ -14,7 +14,7 @@ public class ReplyDAO {
 	@Autowired
 	private SqlSessionTemplate jdbc;
 	
-	public int registerReply(FeedDTO dto)throws Exception{
+	public int registerReply(ReplyDTO dto)throws Exception{
 		return jdbc.insert("Feed.registerReply", dto);
 	}
 	public int deleteReply(String col,int val)throws Exception{
@@ -23,7 +23,10 @@ public class ReplyDAO {
 		param.put("val", val);
 		return jdbc.delete("Feed.deleteReply",param);
 	}
-	public List<ReplyDTO> viewReply(int feed_seq)throws Exception{
-		return jdbc.selectList("Feed.viewReply",feed_seq);
+	public List<ReplyDTO> viewAllReply(int feed_seq)throws Exception{
+		return jdbc.selectList("Feed.viewAllReply",feed_seq);
+	}
+	public int replyNextSeq()throws Exception{
+		return jdbc.selectOne("Feed.replyNextSeq");
 	}
 }
