@@ -13,10 +13,7 @@
 	box-sizing: border-box;
 }
 
-.ac1, #cross {
-	cursor: pointer;
-}
-
+.ac1, #cross { cursor: pointer; }
 .ac1 {
 	width: 50px;
 	height: 50px;
@@ -56,7 +53,6 @@
 	overflow: scroll;
 	overflow-x: hidden;
 }
-
 #cross {
 	/*            border: 1px solid red;*/
 	float: right;
@@ -70,14 +66,8 @@
 	min-height: 60px;
 }
 
-li {
-	list-style: none;
-}
-
-ul {
-	/*            border: 1px solid red;*/
-	padding-bottom: 10px;
-}
+li { list-style: none; } 
+ul { padding-bottom: 10px; }
 
 .to_id {
 	background-color: gray;
@@ -173,7 +163,7 @@ ul {
 	cursor: pointer;
 }
 
-.pre_top_pf {
+.pre_top_fr_pf {
 	/*            border: 1px solid #1bd369;*/
 	width: 50px;
 	float: left;
@@ -182,7 +172,7 @@ ul {
 	padding-top: 10px;
 }
 
-.pre_top_pf_img {
+.pre_top_fr_pf_img {
 	width: 100%;
 	height: 45px;
 	border-radius: 30px;
@@ -212,7 +202,7 @@ ul {
 		</div>
 		<div class="pre_top">
             <div class="pre_back"><img src="images/left2.png" class="pre_back_img"></div>
-            <div class="pre_top_pf"><img src="images/b1.png" class="pre_top_pf_img"></div>
+            <div class="pre_top_fr_pf"><img src="images/b1.png" class="pre_top_fr_pf_img"></div>
             <div class="pre_text"><b>yuri</b></div>
           </div>
           

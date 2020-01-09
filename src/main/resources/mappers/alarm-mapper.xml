@@ -4,27 +4,31 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="Alarm">
 	<insert id="insertAlarm_m"> <!-- 알림 추가 -->
-		insert into tb_alarm values(alarm_seq, 'M', #{sharedSeq}, sysdate, 'N')
+		insert into tb_alarm values(alarm_seq.nextval, 'M', #{sharedSeq}, sysdate, 'N', #{email})
 	</insert>
 	
-	<insert id="insertAlarm_r"> <!-- 알림 추가 -->
-		insert into tb_alarm values(alarm_seq, 'R', #{sharedSeq}, sysdate, 'N')
+	<insert id="alarmReply"> <!-- 알림 추가 / 댓글 -->
+		insert into tb_alarm values(alarm_seq.nextval, 'R', #{sharedSeq}, sysdate, 'N', #{email})
 	</insert>
 	
-	<insert id="insertAlarm_l"> <!-- 알림 추가 -->
-		insert into tb_alarm values(alarm_seq, 'L', #{sharedSeq}, sysdate, 'N')
+	<insert id="alarmLike"> <!-- 알림 추가 / 좋아요 -->
+		insert into tb_alarm values(alarm_seq.nextval, 'L', #{sharedSeq}, sysdate, 'N', #{email})
 	</insert>
 	
-	<insert id="insertAlarm_f"> <!-- 알림 추가 -->
-		insert into tb_alarm values(alarm_seq, 'F', #{sharedSeq}, sysdate, 'N')
+	<insert id="alarmFriend"> <!-- 알림 추가 / 친구 요청 -->
+		insert into tb_alarm values(alarm_seq.nextval, 'F', #{sharedSeq}, sysdate, 'N', #{email})
 	</insert>
 	
-<!-- 	<select id=""> 알림 목록 -->
-<!-- 		select * from tb_alarm where alarm_check='N' -->
-<!-- 	</select> -->
+	<select id="alarmList" resultType="kh.init.alarm.AlarmDTO"> <!-- 알림 목록 -->
+		select * from tb_alarm where email= #{email}
+	</select>
 	
-<!-- 	<update id=""> 읽음 완료 -->
-<!-- 		update tb_alarm set alarm_check='Y' where where alarm_check='N' -->
-<!-- 	</update> -->
+	<update id="alarmCheck"> <!-- 읽음 완료 -->
+		update tb_alarm set alarm_check='Y' where email= #{email} and alarm_check='N'
+	</update>
+	
+	<delete id="deleteAlarm"> <!-- 알림 삭제 -->
+		delete from tb_alarm where email= #{email} and alarm_seq=#{alarm_seq}
+	</delete>
     
 </mapper>

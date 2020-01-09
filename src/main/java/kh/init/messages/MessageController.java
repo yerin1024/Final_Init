@@ -1,11 +1,14 @@
 package kh.init.messages;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.JsonObject;
@@ -28,16 +31,31 @@ public class MessageController {
 		return "messages/messageMain";
 	}
 	
-	@RequestMapping("messageView.msg")
-	public String toView(MessageDTO dto, String fr_id, String to_id, Model model) {
+	@RequestMapping(value="messageView.msg", produces="text/html; charset=UTF-8", method = RequestMethod.GET)
+	@ResponseBody
+	public Object toView(MessageDTO dto, String fr_id, String to_id, Model model) {
 		System.out.println("message 상세 보기 도착");
 		List<MessageDTO> result = service.selectThirty("123@123.123", fr_id);
 		for(MessageDTO tmp : result) {
 			System.out.println(tmp.getContents() + " : " + tmp.getWrite_date());
 		}
-		model.addAttribute("list", result);
-		return "messages/messageView";
+		
+		Map<String, Object> ret= new HashMap<String, Object>();
+		ret.put("resp", result);
+		
+		return ret;
 	}
+	
+//	@RequestMapping("messageView.msg")
+//	public String toView(MessageDTO dto, String fr_id, String to_id, Model model) {
+//		System.out.println("message 상세 보기 도착");
+//		List<MessageDTO> result = service.selectThirty("123@123.123", fr_id);
+//		for(MessageDTO tmp : result) {
+//			System.out.println(tmp.getContents() + " : " + tmp.getWrite_date());
+//		}
+//		model.addAttribute("list", result);
+//		return "messages/messageView";
+//	}
 	
 	
 //	int root = Integer.parseInt(request.getParameter("root"));

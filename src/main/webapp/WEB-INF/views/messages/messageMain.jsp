@@ -11,55 +11,40 @@
 * {
 	box-sizing: border-box;
 }
-
-.ac1, #cross {
-	cursor: pointer;
-}
-
+.ac1, #cross { cursor: pointer; }
 .ac1 {
 	width: 50px;
 	height: 50px;
 	position: relative;
 	left: 100px;
 }
-
 .ac2 {
 	position: fixed;
-	bottom: 620px;
-	right: 10px;
+	bottom: 620px; right: 10px;
 	/*            border: 1px solid black;*/
-	width: 50px;
-	height: 50px;
+	width: 50px; height: 50px;
 }
-
 .pre_top {
 	position: fixed;
-	bottom: 560px;
-	right: 10px;
-	width: 400px;
-	height: 65px;
+	bottom: 560px; right: 10px;
+	width: 400px; height: 65px;
 	background-color: #5d9ef5;
 	color: white;
 }
-
 #view1 {
 	display: none;
 	position: fixed;
-	bottom: 60px;
-	right: 10px;
-	width: 400px;
-	height: 500px;
+	bottom: 60px; right: 10px;
+	width: 400px; height: 500px;
 	border: 1px solid #5d9ef5;
 	/*            border-radius: 10px;*/
 	overflow: scroll;
 	overflow-x: hidden;
 }
-
 #cross {
 	/*            border: 1px solid red;*/
 	float: right;
-	width: 30px;
-	height: 30px;
+	width: 30px; height: 30px;
 	margin: 10px;
 }
 
@@ -68,90 +53,131 @@
 	min-height: 60px;
 }
 
-[class^=pre] {
-	height: 60px;
-}
-
-.pre_line {
-	/*            border: 1px solid red;*/
+/* -- pre 시작 ----------------------------------------- */
+	[class^=pre] { height: 60px; }
+	.pre_line {
 	
-}
+	}
+	.pre_line:hover {
+		background-color: #e8e8e8;
+		transition-duration: 0.2s;
+	}
+	.pre_pf {
+		width: 50px;
+		float: left;
+		margin-left: 3px;
+		padding: 2px; padding-top: 10px;
+	}
+	.pre_pf_img {
+		width: 100%; height: 45px;
+		border-radius: 30px;
+	}
+	.pre_text {
+		float: left;
+		width: 250px;
+		line-height: 55px;
+		font-size: 14px;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		padding-left: 15px; padding-right: 15px;
+	}
+	.pre_title {
+		font-size: 30px;
+		margin-left: 10px;
+		float: left;
+		line-height: 60px;
+	}
+	.pre_top_pf {
+		width: 50px;
+		float: left;
+		margin-left: 3px;
+		padding: 2px; padding-top: 10px;
+	}
+	.pre_top_pf_img {
+		width: 100%; height: 45px;
+		border-radius: 30px;
+	}
+/* -- pre (messageView) ----------------------------------------- */
+	.pre_top_fr_pf {
+		width: 50px;
+		float: left;
+		margin-left: 3px;
+		padding: 2px;
+		padding-top: 10px;
+	}
+	.pre_top_fr_pf_img {
+		width: 100%;
+		height: 45px;
+		border-radius: 30px;
+	}
+	.pre_back_img { width: 80%; }
+	.pre_back {
+		float: left;
+		width: 30px;
+		margin-left: 3px;
+		padding: 2px; padding-top: 15px;
+	}
+	.pre_back:hover { cursor: pointer; }
+	.pre_text {
+		float: left;
+		line-height: 60px;
+		padding-left: 10px;
+	}
+/* -- pre 끝 ----------------------------------------- */
 
-.pre_line:hover {
-	background-color: #e8e8e8;
-	transition-duration: 0.2s;
-}
+li { list-style: none; } 
+ul { padding-bottom: 10px; }
 
-.pre_pf {
-	/*            border: 1px solid #1bd369;*/
-	width: 50px;
-	float: left;
-	margin-left: 3px;
-	padding: 2px;
-	padding-top: 10px;
-}
-
-.pre_pf_img {
-	width: 100%;
-	height: 45px;
-	border-radius: 30px;
-}
-
-.pre_text {
-	/*            border: 1px solid #4500ff;*/
-	float: left;
-	width: 250px;
-	line-height: 55px;
+.to_id {
+	background-color: gray;
+	color: white;
+	display: inline-block;
+	padding: 5px;
+	margin-left: -30px;
+	margin-right: 20px;
+	border-radius: 10px;
+	word-break: break-all;
 	font-size: 14px;
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	padding-left: 15px;
-	padding-right: 15px;
+	box-shadow: 2px 2px 2px #777777;
 }
-
-.pre_title {
-	font-size: 30px;
-	margin-left: 10px;
-	float: left;
-	line-height: 60px;
+.from_id {
+	background-color: cornflowerblue;
+	color: white;
+	display: inline-block;
+	padding: 5px;
+	margin-right: 10px;
+	border-radius: 10px;
+	float: right;
+	word-break: break-all;
+	font-size: 14px;
+	box-shadow: 2px 2px 2px #777777;
 }
-
-.pre_back {
-	float: left;
-	width: 30px;
-	margin-left: 3px;
-	padding: 2px;
-	padding-top: 15px;
+.time {
+	font-size: 8px;
+	margin-left: 5px;
+	margin-right: 5px;
+	margin-left: -10px;
 }
-
-.pre_back:hover {
-	cursor: pointer;
+.time_right {
+	font-size: 8px;
+	margin-left: 5px;
+	margin-right: 5px;
+	float: right;
+	line-height: 25px;
 }
-
-.pre_top_pf {
-	/*            border: 1px solid #1bd369;*/
-	width: 50px;
-	float: left;
-	margin-left: 3px;
-	padding: 2px;
-	padding-top: 10px;
+.readCheck {
+	float: right;
+	font-size: 8px;
+	margin-bottom: 10px;
+	line-height: 25px;
 }
-
-.pre_top_pf_img {
-	width: 100%;
-	height: 45px;
-	border-radius: 30px;
-}
-
 #footer {
 	position: fixed;
 	bottom: 20px;
-	right: 10px;
-	width: 400px;
-	height: 40px;
+/* 	right: 10px; */
+	width: 400px; height: 40px;
 	float: left;
-	/*            border: 1px solid black;*/
 	background-color: #5d9ef5;
 }
 
@@ -167,11 +193,16 @@
 	border: none;
 }
 
-#sendfly {
-	float: right;
-	color: white;
-	line-height: 40px;
-	margin-right: 20px;
+#sendfly{
+    float: right;
+    color: white;
+    line-height: 40px;
+    margin-right: 20px;
+    cursor: pointer;
+    height: 100%;
+    background-color: #5d9ef5;
+    border: none;
+    font-size: 15px;
 }
 
 .search {
@@ -200,11 +231,11 @@
 <body>
 	
 	<div class="ac1"><img src="images/letter.png" style="width:50px;"></div>
-dsfsfsdfsfd
+	
 	<div id="view1">
 		<div class="ac2">
 		    <div id=cross>
-		    <img src="/guest/resources/cross.png" style="width:30px;">
+		    <img src="/images/cross.png" style="width:30px;">
             </div>
 		</div>
 		<div class="pre_top">
@@ -223,9 +254,10 @@ dsfsfsdfsfd
         		<div class="pre_pf"><img src="images/b1.png" class="pre_pf_img"></div>
         		<div class="pre_text"><b>${dto.fr_id}</b></div>
                 <div class="pre_time">
-                <a href="${pageContext.request.contextPath}/message/messageView.msg?fr_id=${dto.fr_id}">
-                <img src="/guest/resources/startMsg.png" class="pre_start">
-                </a></div>
+<%--                 <a href="${pageContext.request.contextPath}/message/messageView.msg?fr_id=${dto.fr_id}"> --%>
+                <img src="/images/startMsg.png" class="pre_start">
+<!--                 </a> -->
+                </div>
             </div>
        		</c:forEach>
 			
@@ -246,37 +278,12 @@ dsfsfsdfsfd
 <!--             </div> -->
 <!--             <div class="pre_line"> -->
 <!--                 <div class="pre_pf"><img src="images/default.png" class="pre_pf_img"></div> -->
-<!--                 <div class="pre_text"><b>n</b></div> -->
-<!--                 <div class="pre_time"><img src="images/startMsg.png" class="pre_start"></div> -->
-<!--             </div> -->
-<!--             <div class="pre_line"> -->
-<!--                 <div class="pre_pf"><img src="images/default.png" class="pre_pf_img"></div> -->
-<!--                 <div class="pre_text"><b>zzzz</b></div> -->
-<!--                 <div class="pre_time"><img src="images/startMsg.png" class="pre_start"></div> -->
-<!--             </div> -->
-<!--             <div class="pre_line"> -->
-<!--                 <div class="pre_pf"><img src="images/default.png" class="pre_pf_img"></div> -->
 <!--                 <div class="pre_text"><b>whoru</b></div> -->
 <!--                 <div class="pre_time"><img src="images/startMsg.png" class="pre_start"></div> -->
 <!--             </div> -->
 <!--             <div class="pre_line"> -->
 <!--                 <div class="pre_pf"><img src="images/default.png" class="pre_pf_img"></div> -->
 <!--                 <div class="pre_text"><b>collapse</b></div> -->
-<!--                 <div class="pre_time"><img src="images/startMsg.png" class="pre_start"></div> -->
-<!--             </div> -->
-<!--             <div class="pre_line"> -->
-<!--                 <div class="pre_pf"><img src="images/default.png" class="pre_pf_img"></div> -->
-<!--                 <div class="pre_text"><b>coco</b></div> -->
-<!--                 <div class="pre_time"><img src="images/startMsg.png" class="pre_start"></div> -->
-<!--             </div> -->
-<!--             <div class="pre_line"> -->
-<!--                 <div class="pre_pf"><img src="images/default.png" class="pre_pf_img"></div> -->
-<!--                 <div class="pre_text"><b>init</b></div> -->
-<!--                 <div class="pre_time"><img src="images/startMsg.png" class="pre_start"></div> -->
-<!--             </div> -->
-<!--             <div class="pre_line"> -->
-<!--                 <div class="pre_pf"><img src="images/default.png" class="pre_pf_img"></div> -->
-<!--                 <div class="pre_text"><b>who</b></div> -->
 <!--                 <div class="pre_time"><img src="images/startMsg.png" class="pre_start"></div> -->
 <!--             </div> -->
 
@@ -288,15 +295,11 @@ dsfsfsdfsfd
 	
 	
 	<script>
+	 
 	$(document).ready(function(){
-		
-	   $("div[class='ac1']").click(function(){
-	   $("div[id='view1']").fadeIn(0);
-	   });
-	   
-	 $("div[id='cross']").click(function(){
-	   $("div[id='view1']").fadeOut(0);
-	   });
+		// 열기 - 접기
+		$("div[class='ac1']").click(function(){ $("div[id='view1']").fadeIn(0); });
+		$("div[id='cross']").click(function(){ $("div[id='view1']").fadeOut(0); });
 	 
 // 	 $(".pre_start").on("click",function(){
 // 		 location.href="${pageContext.request.contextPath}/message/messageView.msg?to_id=${dto.fr_id}";
@@ -337,6 +340,39 @@ dsfsfsdfsfd
 // 	 });
 	 
 	});
+	
+	$(".pre_start").on("click",function(){
+		 var url = "${pageContext.request.contextPath}/message/messageView.msg?fr_id=${dto.fr_id}";
+		 var url2 = "${pageContext.request.contextPath}/message/messageView.msg?fr_id='098@123.123'";
+		 var url3 = "${pageContext.request.contextPath}/message/messageView.msg?fr_id=098@123.123";
+		 console.log(url);
+		 console.log(url2);
+		 console.log(url3);
+		 
+		 $.ajax({
+			url: "${pageContext.request.contextPath}/message/messageView.msg",
+			method: "get",
+			data: {
+				to_id: "098@123.123"
+			},
+			dataType: "json"
+		 }).done(function(resp){
+			 console.log("성공!!")
+			 console.log(resp.result);
+			 for(var i=0 in resp){
+				 console.log(resp[i].result);
+				 }
+
+	       	
+		 }).fail(function(a,b,c){
+			 console.log("실패!")
+	        	console.log(a);
+	        	console.log(b);
+	        	console.log(c);
+	      })
+		 
+	 });
+	
 	</script>
 	
 </body>
