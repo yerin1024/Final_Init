@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import kh.init.configuration.Configuration;
+import kh.init.configuration.Utils;
 import kh.init.feeds.FeedDTO;
 import kh.init.members.MemberDTO;
 
@@ -40,10 +42,10 @@ public class AdminService {
 	public String getPageNavi(int currentPage) throws Exception{ 
 		int recordTotalCount = adao.recordTotal();
 		int pageTotalCount  = 0;
-		if(recordTotalCount % Configuration.recordCountPerPage > 0) {
-			pageTotalCount = recordTotalCount /  Configuration.recordCountPerPage + 1;
+		if(recordTotalCount % Utils.recordCountPerPage > 0) {
+			pageTotalCount = recordTotalCount /  Utils.recordCountPerPage + 1;
 		}else {
-			pageTotalCount = recordTotalCount /  Configuration.recordCountPerPage;
+			pageTotalCount = recordTotalCount /  Utils.recordCountPerPage;
 		}
 		if(currentPage < 1) {
 			currentPage = 1;
@@ -53,8 +55,8 @@ public class AdminService {
 		}
 
 		int startNavi = 0;
-		startNavi = (( currentPage - 1 )/  Configuration.naviCountPerPage) *  Configuration.naviCountPerPage + 1;
-		int endNavi = startNavi+( Configuration.naviCountPerPage-1);
+		startNavi = (( currentPage - 1 )/  Utils.naviCountPerPage) *  Utils.naviCountPerPage + 1;
+		int endNavi = startNavi+( Utils.naviCountPerPage-1);
 
 		if(endNavi > pageTotalCount) {
 			endNavi = pageTotalCount;
@@ -90,10 +92,10 @@ public class AdminService {
 	public String getPageNaviSearch(int currentPage,String searchTag, String search) throws Exception{ 
 		int recordTotalCount = adao.recordSearchForMember(searchTag, search);
 		int pageTotalCount  = 0;
-		if(recordTotalCount % Configuration.recordCountPerPage > 0) {
-			pageTotalCount = recordTotalCount /  Configuration.recordCountPerPage + 1;
+		if(recordTotalCount % Utils.recordCountPerPage > 0) {
+			pageTotalCount = recordTotalCount /  Utils.recordCountPerPage + 1;
 		}else {
-			pageTotalCount = recordTotalCount /  Configuration.recordCountPerPage;
+			pageTotalCount = recordTotalCount /  Utils.recordCountPerPage;
 		}
 
 		if(currentPage < 1) {
@@ -105,8 +107,8 @@ public class AdminService {
 
 		int startNavi = 0;
 
-		startNavi = (( currentPage - 1 )/  Configuration.naviCountPerPage) *  Configuration.naviCountPerPage + 1; //딱 떨어지는 숫자면 오동작 ->1을 빼면 동작
-		int endNavi = startNavi+( Configuration.naviCountPerPage-1);
+		startNavi = (( currentPage - 1 )/  Utils.naviCountPerPage) *  Utils.naviCountPerPage + 1; //딱 떨어지는 숫자면 오동작 ->1을 빼면 동작
+		int endNavi = startNavi+( Utils.naviCountPerPage-1);
 
 		if(endNavi > pageTotalCount) {
 			endNavi = pageTotalCount;
@@ -139,10 +141,10 @@ public class AdminService {
 		int recordTotalCount = adao.recordBlack();
 		System.out.println(recordTotalCount);
 		int pageTotalCount  = 0;
-		if(recordTotalCount % Configuration.recordCountPerPage > 0) {
-			pageTotalCount = recordTotalCount /  Configuration.recordCountPerPage + 1;
+		if(recordTotalCount % Utils.recordCountPerPage > 0) {
+			pageTotalCount = recordTotalCount /  Utils.recordCountPerPage + 1;
 		}else {
-			pageTotalCount = recordTotalCount /  Configuration.recordCountPerPage;
+			pageTotalCount = recordTotalCount /  Utils.recordCountPerPage;
 		}
 
 		if(currentPage < 1) {
@@ -154,8 +156,8 @@ public class AdminService {
 
 		int startNavi = 0;
 
-		startNavi = (( currentPage - 1 )/  Configuration.naviCountPerPage) *  Configuration.naviCountPerPage + 1; 
-		int endNavi = startNavi+( Configuration.naviCountPerPage-1);
+		startNavi = (( currentPage - 1 )/  Utils.naviCountPerPage) *  Utils.naviCountPerPage + 1; 
+		int endNavi = startNavi+( Utils.naviCountPerPage-1);
 
 		if(endNavi > pageTotalCount) {
 			endNavi = pageTotalCount;
@@ -188,10 +190,10 @@ public class AdminService {
 		int recordTotalCount = adao.recordSearchForBlack(searchTag, search);
 		System.out.println(recordTotalCount);
 		int pageTotalCount  = 0;
-		if(recordTotalCount % Configuration.recordCountPerPage > 0) {
-			pageTotalCount = recordTotalCount /  Configuration.recordCountPerPage + 1;
+		if(recordTotalCount % Utils.recordCountPerPage > 0) {
+			pageTotalCount = recordTotalCount /  Utils.recordCountPerPage + 1;
 		}else {
-			pageTotalCount = recordTotalCount /  Configuration.recordCountPerPage;
+			pageTotalCount = recordTotalCount /  Utils.recordCountPerPage;
 		}
 
 		if(currentPage < 1) {
@@ -203,8 +205,8 @@ public class AdminService {
 
 		int startNavi = 0;
 
-		startNavi = (( currentPage - 1 )/  Configuration.naviCountPerPage) *  Configuration.naviCountPerPage + 1; 
-		int endNavi = startNavi+( Configuration.naviCountPerPage-1);
+		startNavi = (( currentPage - 1 )/  Utils.naviCountPerPage) *  Utils.naviCountPerPage + 1; 
+		int endNavi = startNavi+( Utils.naviCountPerPage-1);
 
 		if(endNavi > pageTotalCount) {
 			endNavi = pageTotalCount;
@@ -244,10 +246,10 @@ public class AdminService {
 		int recordTotalCount = adao.recordFeed();
 		System.out.println(recordTotalCount);
 		int pageTotalCount  = 0;
-		if(recordTotalCount % Configuration.recordCountPerPage > 0) {
-			pageTotalCount = recordTotalCount /  Configuration.recordCountPerPage + 1;
+		if(recordTotalCount % Utils.recordCountPerPage > 0) {
+			pageTotalCount = recordTotalCount /  Utils.recordCountPerPage + 1;
 		}else {
-			pageTotalCount = recordTotalCount /  Configuration.recordCountPerPage;
+			pageTotalCount = recordTotalCount /  Utils.recordCountPerPage;
 		}
 
 		if(currentPage < 1) {
@@ -259,8 +261,8 @@ public class AdminService {
 
 		int startNavi = 0;
 
-		startNavi = (( currentPage - 1 )/  Configuration.naviCountPerPage) *  Configuration.naviCountPerPage + 1; 
-		int endNavi = startNavi+( Configuration.naviCountPerPage-1);
+		startNavi = (( currentPage - 1 )/  Utils.naviCountPerPage) *  Utils.naviCountPerPage + 1; 
+		int endNavi = startNavi+( Utils.naviCountPerPage-1);
 
 		if(endNavi > pageTotalCount) {
 			endNavi = pageTotalCount;
@@ -291,10 +293,10 @@ public class AdminService {
 	public String getPageNaviSearchFeed(int currentPage,String searchTag, String search) throws Exception{ 
 		int recordTotalCount = adao.recordSearchForFeed(searchTag, search);
 		int pageTotalCount  = 0;
-		if(recordTotalCount % Configuration.recordCountPerPage > 0) {
-			pageTotalCount = recordTotalCount /  Configuration.recordCountPerPage + 1;
+		if(recordTotalCount % Utils.recordCountPerPage > 0) {
+			pageTotalCount = recordTotalCount /  Utils.recordCountPerPage + 1;
 		}else {
-			pageTotalCount = recordTotalCount /  Configuration.recordCountPerPage;
+			pageTotalCount = recordTotalCount /  Utils.recordCountPerPage;
 		}
 
 		if(currentPage < 1) {
@@ -306,8 +308,8 @@ public class AdminService {
 
 		int startNavi = 0;
 
-		startNavi = (( currentPage - 1 )/  Configuration.naviCountPerPage) *  Configuration.naviCountPerPage + 1;
-		int endNavi = startNavi+( Configuration.naviCountPerPage-1);
+		startNavi = (( currentPage - 1 )/  Utils.naviCountPerPage) *  Utils.naviCountPerPage + 1;
+		int endNavi = startNavi+( Utils.naviCountPerPage-1);
 
 		if(endNavi > pageTotalCount) {
 			endNavi = pageTotalCount;

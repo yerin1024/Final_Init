@@ -2,15 +2,13 @@ package kh.init.admin;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import kh.init.configuration.Utils;
 import kh.init.feeds.FeedDTO;
 import kh.init.members.MemberDTO;
 
@@ -33,8 +31,8 @@ public class AdminController {
 			cpage = Integer.parseInt(page); 
 		}
 
-		int start = cpage * Configuration.recordCountPerPage - (Configuration.recordCountPerPage-1);
-		int end =  cpage * Configuration.recordCountPerPage;
+		int start = cpage * Utils.recordCountPerPage - (Utils.recordCountPerPage-1);
+		int end =  cpage * Utils.recordCountPerPage;
 		String pageNavi = aService.getPageNavi(cpage);
 		if(pageNavi.contains("redirect:memberList.do?page=")) {
 			return pageNavi;
@@ -51,8 +49,8 @@ public class AdminController {
 		if(page != null) {
 			cpage = Integer.parseInt(page); 
 		}
-		int start = cpage * Configuration.recordCountPerPage - (Configuration.recordCountPerPage-1);
-		int end =  cpage * Configuration.recordCountPerPage;
+		int start = cpage * Utils.recordCountPerPage - (Utils.recordCountPerPage-1);
+		int end =  cpage * Utils.recordCountPerPage;
 		String pageNavi = aService.getPageNaviSearch(cpage, searchTag, search);      
 		if(pageNavi.contains("redirect:search.do?page=")) {
 			return pageNavi;
@@ -81,8 +79,8 @@ public class AdminController {
 		if(page != null) {
 			cpage = Integer.parseInt(page); 
 		}
-		int start = cpage * Configuration.recordCountPerPage - (Configuration.recordCountPerPage-1);
-		int end =  cpage * Configuration.recordCountPerPage;
+		int start = cpage * Utils.recordCountPerPage - (Utils.recordCountPerPage-1);
+		int end =  cpage * Utils.recordCountPerPage;
 		String pageNavi = aService.getPageNaviBlack(cpage);         
 		if(pageNavi.contains("redirect:blackList.do?page=")) {
 			return pageNavi;
@@ -99,8 +97,8 @@ public class AdminController {
 		if(page != null) {
 			cpage = Integer.parseInt(page); 
 		}
-		int start = cpage * Configuration.recordCountPerPage - (Configuration.recordCountPerPage-1);
-		int end =  cpage * Configuration.recordCountPerPage;
+		int start = cpage * Utils.recordCountPerPage - (Utils.recordCountPerPage-1);
+		int end =  cpage * Utils.recordCountPerPage;
 		String pageNavi = aService.getPageNaviSearchBlack(cpage, searchTag, search);  
 		if(pageNavi.contains("redirect:searchForBlack.do?page=")) {
 			return pageNavi;
@@ -144,8 +142,8 @@ public class AdminController {
 		if(page != null) {
 			cpage = Integer.parseInt(page); 
 		}
-		int start = cpage * Configuration.recordCountPerPage - (Configuration.recordCountPerPage-1);
-		int end =  cpage * Configuration.recordCountPerPage;
+		int start = cpage * Utils.recordCountPerPage - (Utils.recordCountPerPage-1);
+		int end =  cpage * Utils.recordCountPerPage;
 		String pageNavi = aService.getPageNaviFeed(cpage);         
 		if(pageNavi.contains("redirect:totalFeedList.do?page=")) {
 			return pageNavi;
@@ -161,8 +159,8 @@ public class AdminController {
 		if(page != null) {
 			cpage = Integer.parseInt(page); 
 		}
-		int start = cpage * Configuration.recordCountPerPage - (Configuration.recordCountPerPage-1);
-		int end =  cpage * Configuration.recordCountPerPage;
+		int start = cpage * Utils.recordCountPerPage - (Utils.recordCountPerPage-1);
+		int end =  cpage * Utils.recordCountPerPage;
 		String pageNavi = aService.getPageNaviSearchFeed(cpage, searchTag, search);    
 		if(pageNavi.contains("redirect:searchForFeed.do?page=")) {
 			return pageNavi;
