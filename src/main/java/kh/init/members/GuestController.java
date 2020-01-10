@@ -46,9 +46,6 @@ public class GuestController {
 			service.insert(dto, profileImg, path);
 		}
 		System.out.println("회원가입 컨트롤러 진입");
-//		model.addAttribute("profile1", service.getProfile("abcdefg@hanmail.net"));
-//		model.addAttribute("profile2", service.getProfile("eunbi_46@naver.com"));
-//		return "testImg";
 		return "main";
 	}
 
@@ -96,34 +93,12 @@ public class GuestController {
 	@RequestMapping("/sendVerifCode.do")
 	@ResponseBody
 	public String toSendVerifCode(String phone) {
-		
-		System.out.println("phone: " + phone);
-		
-		String api_key = "NCSUEKNQT3HPHHH9";
-		String api_secret = "ILQGY1OP8WXQE5ZZ42KAEXVFK5EWA4UZ";
-		Message coolsms = new Message(api_key, api_secret);
-		String ranNum = Utils.generateCertNum();
-		System.out.println(ranNum);
-//		HashMap<String, String> set = new HashMap<String, String>();
-//		set.put("to", "01051922972");
-//		set.put("from", phone);
-//		set.put("text", "[Init] 인증번호는 [" + ranNum + "] 입니다.");
-//		set.put("type", "SMS");
-//		set.put("app_version", "test app 2.2");
-//		System.out.println("[Init] 인증번호는 [" + ranNum + "] 입니다.");
-		
-//		try {
-//			JSONObject result = coolsms.send(set);
-//			System.out.println(result.toString());
-//		} catch (CoolsmsException e) {
-//			e.printStackTrace();
-//		}	
+		String ranNum = service.sendVerifCode(phone);
 		obj.addProperty("result", ranNum);
+		//이 부분을 사실 클라이언트에 넘길 필요가 없음... 
 		return obj.toString();
 	}
 	
-	
-		
 	@RequestMapping("/verifyUser.do")
 	public String toVerifyUser() {
 		//ajax 비동기로 동작

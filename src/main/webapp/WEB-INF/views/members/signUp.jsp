@@ -156,6 +156,8 @@
         var setProfile = doc.getElementById("setProfile");
         var profile_img = doc.getElementById("profileImg");
 
+        var setTime = 300;
+        
         function readURL(input) {
             if (input.files && input.files[0]) {
                 var reader = new FileReader();
@@ -219,7 +221,7 @@
                 console.log("invalidate");
             }
         });
-
+        
         email2.addEventListener("keyup", function(){
             rawStr = email2.value;
             console.log(rawStr);
@@ -362,7 +364,9 @@
             appendMonth();
             appendDay();
         }
-
+		
+        
+        
         function checkPhone(){
         	checkVerifCode.hidden = false;
         	sendCode.hidden = true;        
@@ -370,39 +374,7 @@
         	verif_code.disabled = false;
             phone.value = phone1.value + phone2.value + phone3.value;
             
-            function TimerStart(){
-            	tid = setInterval('msg_time()',1000);
-            	console.log("1");
-            };
-            
-            var SetTime = 50;
-            showTimer.innerHTML = "05:00";
-            console.log("2");
-            
-    		function msg_time() {
-    			m = Math.floor(SetTime / 60) + ":" + (SetTime % 60);
-    			console.log(m);
-    			console.log("3");
-    			var msg = m;
-    			showTimer.innerHTML = msg;
-    			console.log("4");
-    			SetTime--;	// 1초씩 감소
-    			if (SetTime < 0) {	
-        			console.log("5")
-    				// 시간이 종료 되었으면..
-    				clearInterval(tid);		// 타이머 해제
-    				alert("종료");
-    			}    			
-    		}    		
-    		
-            setTimeout(function () {
-            	adviseVerifCode.innerHTML = "입력시간이 초과되었습니다.";
-        		adviseVerifCode.style.color = "red";
-        		adviseInVerifCode.innerHTML ="사용불가";
-        		checkVerifCode.hidden = true;
-        		verif_code.disabled = true;
-        		
-            }, 30000);
+            setInterval('msg_time()',1000);
 
             $.ajax({
                 url : "${pageContext.request.contextPath}/guest/checkPhone.do",
@@ -443,6 +415,28 @@
                     return false;
                 });  
         }
+        
+        function msg_time() {       	
+			m = addzero(Math.floor(setTime / 60)) + ":" + addzero(setTime % 60);
+			console.log(m);
+			var msg = m;
+			showTimer.innerHTML = msg;
+			setTime--;
+			if (setTime < 0) {	
+				clearInterval(tid);
+				adviseVerifCode.innerHTML = "입력시간이 초과되었습니다.";
+        		adviseVerifCode.style.color = "red";
+        		adviseInVerifCode.innerHTML ="사용불가";
+        		resultVerification.innerHTML = "";
+        		checkVerifCode.hidden = true;
+        		verif_code.disabled = true;
+			}    			
+		}
+        
+        function addzero(num) {
+    		if(num < 10) { num = "0" + num; }
+     		return num;
+    	}
         
         function confirmVerifCode(){
         	console.log("verif_code : " + verif_code.value);

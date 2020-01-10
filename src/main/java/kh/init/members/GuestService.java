@@ -8,6 +8,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import kh.init.configuration.Configuration;
+import kh.init.configuration.Utils;
+import net.nurigo.java_sdk.api.Message;
 
 @Service
 public class GuestService {
@@ -51,6 +53,14 @@ public class GuestService {
 	
 	public int checkPhone(String email) {
 		return dao.checkPhone(email);
+	}
+	
+	public String sendVerifCode(String phone) {
+		String api_key = "NCSUEKNQT3HPHHH9";
+		String api_secret = "ILQGY1OP8WXQE5ZZ42KAEXVFK5EWA4UZ";
+		Message coolsms = new Message(api_key, api_secret);
+		String ranNum = Utils.generateCertNum();
+		return ranNum;
 	}
 	
 	public String getProfile(String email) {
