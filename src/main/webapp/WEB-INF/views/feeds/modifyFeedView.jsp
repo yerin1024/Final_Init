@@ -4,6 +4,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
@@ -17,11 +19,19 @@
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.js"></script>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<style>
+.feed {
+	border: 1px solid black;
+}
+
+img {
+	width: 50px;
+	height: 50px;
+}
+</style>
 <script>
 	$(function() {
-		$("#writeForm").on("submit", function() {
-			$(".note-editable img").removeAttr("style");
+		$("#modifyProc").on("submit", function() {
 			var note = $(".note-editable").html();
 			$("#contents").val(note);
 		})
@@ -29,42 +39,43 @@
 </script>
 </head>
 <body>
-	<c:choose>
-		<c:when test="${id ne null }">
-		바보
-		</c:when>
-		<c:otherwise>			
-			<form action="writeFeedProc" method="post"
-				enctype="multipart/form-data" id="writeForm">
-				제목:<input type="text" name="title">
-					<select name="relation">
-					<option value='0' selected>전체보기</option>
-					<option value='1'>지인</option>
-					<option value='2'>아는친구</option>
-					<option value='3'>절친</option>
-					<option value='4'>나만보기</option>
-				</select>
+	<div id="container">
+		<form action="modifyFeedProc?feed_seq=${dto.feed_seq }" method="post" id="modifyProc">
+			<div class="table">
+				<div class="row">
+					<div class="col-4">
+						제목:<input type="text" name="title" value="${dto.title }">
+					</div>
+					<div class="col-8">
+						관계선택:<select name="relation">
+							<option value=''>-- 관계 선택 --</option>
+							<option value='0'>전체보기</option>
+							<option value='1'>지인</option>
+							<option value='2'>아는친구</option>
+							<option value='3'>절친</option>
+							<option value='4'>나만보기</option>
+						</select>
+					</div>
+				</div>
 				<textarea name="contents" style="display: none" id="contents"></textarea>
 			<button>등록</button>
-			</form>
-			<div id="summernote"></div>
-		</c:otherwise>
-	</c:choose>
+				<div class="row">
+					<div class="col-12  feed"></div>
+				</div>
+				<div>
+				</div>
+			</div>
+		</form>
+		<div id="summernote">
+			${dto.contents }
+		</div>
+	</div>
 	<script>
 		$('#summernote').summernote({
 			placeholder : 'Hello bootstrap 4',
 			tabsize : 2,
 			height : 600,
-			width : 900,
-			toolbar: [
-	             // [groupName, [list of button]]
-	             ['style', ['bold', 'italic', 'underline', 'clear']],
-	             ['font', ['strikethrough', 'superscript', 'subscript']],
-	             ['fontsize', ['fontsize']],
-	             ['color', ['color']],
-	             ['para', ['ul', 'ol', 'paragraph']],
-	             ['height', ['height']]
-	           ]
+			width : 900
 		});
 	</script>
 </body>

@@ -17,14 +17,25 @@ public class FeedDAO {
 		int result = jdbc.insert("Feed.registerFeed", dto);
 		return result;
 	}
+	public int deleteFeed(int feed_seq) throws Exception{
+		return jdbc.delete("Feed.deleteFeed", feed_seq);
+	}
 	
 	public List<FeedDTO> selectAll() throws Exception{
 		List<FeedDTO> list = jdbc.selectList("Feed.selectAll");
 		return list;
 	}
+	public int modifyFeed(FeedDTO dto)throws Exception{
+		return jdbc.update("Feed.modifyFeed",dto);		
+	}
 	
-	public FeedDTO detailView(String feed_seq) throws Exception{
-		FeedDTO dto = jdbc.selectOne("detailView", feed_seq);
+	public FeedDTO detailView(int feed_seq) throws Exception{
+		FeedDTO dto = jdbc.selectOne("Feed.detailView", feed_seq);
 		return dto;
+	}
+	
+	public List<String> getMediaList(int feed_seq) throws Exception{
+		List<String> list = jdbc.selectList("Feed.getMediaList", feed_seq);
+		return list;
 	}
 }

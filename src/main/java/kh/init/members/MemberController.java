@@ -19,7 +19,7 @@ public class MemberController {
 	private HttpSession session;
 
 	//로그인	
-	@RequestMapping("/login.do")
+	@RequestMapping("/loginProc.do")
 	public String toLogin(String email, String pw) {
 		System.out.println("id : " + email);
 		System.out.println("pw : " + pw);

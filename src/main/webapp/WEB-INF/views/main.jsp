@@ -12,26 +12,32 @@
 .close {
 	border: none;
 }
+
 a {
 	text-decoration: none;
 	color: black;
 }
+
 .modal-header {
 	width: 300px;
 	text-align: center;
 }
+
 .modal-body {
 	width: 300px;
 	text-align: center;
 }
+
 .inputEmail, .inputPw, .loginBtn {
 	width: 100%;
 	height: 30px;
 	margin-top: 10px;
 }
+
 .saveId {
 	margin-top: 10px;
 }
+
 .modal-footer {
 	width: 300px;
 	margin-top: 10px;
@@ -39,7 +45,7 @@ a {
 }
 </style>
 <body>
-	<form action="${pageContext.request.contextPath}/member/login.do"
+	<form action="${pageContext.request.contextPath}/member/loginProc.do"
 		method="post" id="loginForm">
 		<div class="container">
 			<div class="loginContainer">
@@ -55,20 +61,21 @@ a {
 								</button>
 							</div>
 							<div class="modal-body">
-								<input type="text" class="inputEmail" name="email"
+								<input type="text" id="inputEmail" name="email"
 									placeholder="아이디 입력"><br> <input type="password"
-									class="inputPw" name="pw" placeholder="비밀번호 입력"><br>
-								<button type="button" class="loginBtn" onclick="toLogin()">Login</button>
+									id="inputPw" name="pw" placeholder="비밀번호 입력"><br>
+								<button type="button" class="loginBtn"
+									onclick="toLogin();">Login</button>
 								<br>
 								<div class="saveId">
-									<input type="checkbox" class="checkbox"> <span>아이디
+									<input type="checkbox" id="saveIdCheck" onChange="toCheckCbox();"> <span>아이디
 										저장</span>
 								</div>
 							</div>
 							<div class="modal-footer">
 								<a href="" class="findId">아이디 찾기</a> <span> | </span> <a href=""
 									class="findPw">비밀번호 찾기</a> <span> | </span> <a
-									href="${pageContext.request.contextPath}/member/signUp.do"
+									href="${pageContext.request.contextPath}/guest/signUp.do"
 									class="signUp">회원가입</a>
 							</div>
 						</div>
@@ -77,12 +84,51 @@ a {
 			</div>
 		</div>
 	</form>
-	<script>
-        var login = document.getElementsByClassName("loginBtn");
+	<script>		
+		var doc = document;
+		var login = doc.getElementsByClassName("loginBtn");
+		var saveIdCheck = doc.getElementById("saveIdCheck");
+		var email = doc.getElementById("inputEmail");
+		
+		window.onload = function(){
+			toCheckCookie();
+		}
 
-        function toLogin(){
-            document.getElementById("loginForm").submit();
-        }
-    </script>
+		function toLogin() {
+			doc.getElementById("loginForm").submit();
+		}
+		
+		var exdate = new Date();
+		
+		function toCheckCookie(){
+			if(doc.cookie != ""){
+				var cookies = cookieToJson(doc.cookie);
+				email.value = cookies.userID;
+				saveIdCheck.checked = true;
+			}
+		}
+		
+		function toCheckCbox(){
+			if(saveIdCheck.checked == true){
+				exdate.setDate(exdate.getDate()+30);
+				doc.cookie = "userID=" + email.value + ";expires=" + exdate.toString();
+			}else{
+				exdate.setDate(exdate.getDate()-1);
+				doc.cookie = "userID=" + email.value + ";expires=" + exdate.toString();
+			}
+		}
+
+	   	function cookieToJson(cookie){
+	   		var cookieJson = {};
+	   		var cookies = doc.cookie;
+	   		var trimedCookies = cookies.replace(/ /g, "");
+	   		var cookieArr = trimedCookies.split(";");
+	   		for(var i = 0; i < cookieArr.length; i++){
+	   			var entry = cookieArr[i].split("=");
+	   			cookieJson[entry[0]] = entry[1];
+	   		}
+	   		return cookieJson;
+	   	}
+	</script>
 </body>
 </html>
