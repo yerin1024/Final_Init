@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import kh.init.members.MemberDTO;
+
 @RequestMapping("/feed")
 @Controller
 public class FeedController {
@@ -35,10 +37,11 @@ public class FeedController {
 	}
 
 	@RequestMapping("/deleteProc")
-	public String deleteProc(int seq) {
+	public String deleteProc(int feed_seq) {
 		System.out.println("삭제 도착!");
 		try {
-			int result =  service.deleteFeed(seq);
+			int result =  service.deleteFeed(feed_seq);
+			int replyResult = service.deleteReply(feed_seq);
 			System.out.println(result + "행이 삭제되었습니다.");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -56,10 +59,8 @@ public class FeedController {
 	public String writeFeedProc(FeedDTO dto) {
 		System.out.println("게시물 등록 도착!");		
 		//임시 이메일과 닉네임 ->이후에 세션으로 변경해야함
-		String email = "yes";
-		String nickname = "yes";
-		dto.setEmail(email);
-		dto.setNickname(nickname);
+		dto.setEmail(((MemberDTO)session.getAttribute("loginInfo")).getEmail());
+		dto.setNickname(((MemberDTO)session.getAttribute("loginInfo")).getNickname());
 
 		int result = 0;
 		String mediaPath = session.getServletContext().getRealPath("media");
@@ -84,16 +85,29 @@ public class FeedController {
 	public String mediaTmpUpload(MultipartFile file) {
 		System.out.println("mediaTmpUpload 도착");
 		String path = session.getServletContext().getRealPath("mediaTmp");
-
+		
+		String filePath = null;
+		String returnVal = null;
+		if(file.getSize()>10485760) {
+			returnVal = "{\"result\" : \"fail\"}";
+			return returnVal;
+		}
+		
 		String fileType = file.getContentType();
+		
 		fileType = fileType.split("/")[0];
 		System.out.println("fileType : "+fileType);
 
-		String filePath = service.mediaTmpUpload(file, path);
-		((ArrayList<String>)session.getAttribute("mediaList")).add(filePath);
-
-		System.out.println("{\"result\" : \""+filePath+"\", \"type\" : \""+fileType+"\"}");
-		return "{\"result\" : \""+filePath+"\", \"type\" : \""+fileType+"\"}";
+		if(fileType.contentEquals("image")||fileType.contentEquals("video")) {
+			filePath = service.mediaTmpUpload(file, path);
+			System.out.println("filePath : " +filePath);
+			((ArrayList<String>)session.getAttribute("mediaList")).add(filePath);
+			
+			returnVal = "{\"result\" : \""+filePath+"\", \"type\" : \""+fileType+"\"}";
+		}else {
+			returnVal = "{\"result\" : \"fail\"}";
+		}
+		return returnVal;
 	}
 
 
@@ -116,15 +130,23 @@ public class FeedController {
 
 		System.out.println("detailView 도착");
 		int feed_seq = Integer.parseInt(feed_seqS);
+		System.out.println(feed_seq);
+		int likeCheck = 0; //0은 안한것 1은 한것
+		int bookmarkCheck = 0; //0은 안한것 1은 한것
 		FeedDTO dto = null;
 		List<ReplyDTO> replyList = null;
 		List<String> list = null;
 		try {
 			dto = service.detailView(feed_seq);
+			likeCheck = service.likeCheck(feed_seq, ((MemberDTO)session.getAttribute("loginInfo")).getEmail());
+			bookmarkCheck = service.bookmarkCheck(feed_seq, ((MemberDTO)session.getAttribute("loginInfo")).getEmail());
+			
 			replyList = service.viewReply(feed_seq);
 			list = service.getMediaList(feed_seq);
 			System.out.println(replyList.size() + "리플라이리스트 사이즈입니다.");
 			System.out.println(dto.toString());
+			model.addAttribute("likeCheck", likeCheck);
+			model.addAttribute("bookmarkCheck", bookmarkCheck);
 			model.addAttribute("replylist",replyList);
 			model.addAttribute("media", list);
 			model.addAttribute("dto", dto);	
@@ -162,6 +184,70 @@ public class FeedController {
 		return "/feeds/modifyFeedView";
 	}
 
+	//좋아요
+	@RequestMapping(value = "/insertLike", produces="text/html; charset=UTF-8")
+	@ResponseBody
+	public String insertLike(int feed_seq) {
+		System.out.println("insertLike 도착");
+		System.out.println("feed_seq : "+feed_seq);
+		String email = ((MemberDTO)session.getAttribute("loginInfo")).getEmail();
+		
+		try {
+			service.insertLike(feed_seq, email);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return "like";
+	}
+	@RequestMapping(value = "/deleteLike", produces="text/html; charset=UTF-8")
+	@ResponseBody
+	public String deleteLike(int feed_seq) {
+		System.out.println("deleteLike 도착");
+		System.out.println("feed_seq : "+feed_seq);
+		String email = ((MemberDTO)session.getAttribute("loginInfo")).getEmail();
+		try {
+			service.deleteLike(feed_seq, email);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return "like";
+	}
+	
+	
+	
+	
+	//북마크
+	@RequestMapping(value = "/insertBookmark", produces="text/html; charset=UTF-8")
+	@ResponseBody
+	public String insertBookmark(int feed_seq) {
+		System.out.println("insertBookmark 도착");
+		System.out.println("feed_seq : "+feed_seq);
+		String email = ((MemberDTO)session.getAttribute("loginInfo")).getEmail();
+		
+		try {
+			service.insertBookmark(feed_seq, email);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return "like";
+	}
+	@RequestMapping(value = "/deleteBookmark", produces="text/html; charset=UTF-8")
+	@ResponseBody
+	public String deleteBookmark(int feed_seq) {
+		System.out.println("deleteBookmark 도착");
+		System.out.println("feed_seq : "+feed_seq);
+		String email = ((MemberDTO)session.getAttribute("loginInfo")).getEmail();
+		try {
+			service.deleteBookmark(feed_seq, email);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return "like";
+	}
+	
+	
+	
+	
 	// ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 	//                                             댓글기능
 	// ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
@@ -169,6 +255,10 @@ public class FeedController {
 	@RequestMapping("/registerReply")
 	public String registerReply(FeedDTO dto) {
 		System.out.println("댓글 등록도착!");
+		
+		//세션값 대체 임시 닉네임
+		dto.setNickname("yes");
+		
 		System.out.println(dto.getFeed_seq()+ " : "+dto.getContents()+" : "+dto.getNickname());
 		try {
 			int result = service.registerReply(dto);
@@ -185,19 +275,17 @@ public class FeedController {
 
 	@RequestMapping("/deleteReply")
 	@ResponseBody
-	public String deleteReply(ReplyDTO dto) {
-		int seq = dto.getReply_seq();
+	public String deleteReply(int reply_seq) {
 		System.out.println("댓글 삭제 도착!!");
-		System.out.println(dto.getFeed_seq()+": 피드 시퀀스~");
-		System.out.println(dto.getReply_seq()+": 댓글피드 시퀀스~");
+		System.out.println(reply_seq+"이 댓글 삭제로 넘어옴!");
 		int result = 0;
 		try {
-			result = service.deleteReply(dto);
+			result = service.deleteReply(reply_seq);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println(seq+"");
-		return seq+"";
+		System.out.println(reply_seq+"");
+		return  reply_seq+"";
 	}
 	@RequestMapping("/viewReply")
 	@ResponseBody

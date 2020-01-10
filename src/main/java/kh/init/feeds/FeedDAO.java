@@ -35,6 +35,7 @@ public class FeedDAO {
 	public int deleteFeed(int seq) throws Exception{
 		return jdbc.delete("Feed.deleteFeed", seq);
 	}
+
 	
 	public List<FeedDTO> selectAll() throws Exception{
 		List<FeedDTO> list = jdbc.selectList("Feed.selectAll");
@@ -48,9 +49,60 @@ public class FeedDAO {
 		FeedDTO dto = jdbc.selectOne("Feed.detailView", feed_seq);
 		return dto;
 	}
-	
 	public List<String> getMediaList(int feed_seq) throws Exception{
 		List<String> list = jdbc.selectList("Feed.getMediaList", feed_seq);
 		return list;
+	}
+	public int likeCheck(int feed_seq, String email) throws Exception{
+		Map<String, String> param = new HashMap<>();
+		param.put("feed_seq", feed_seq+"");
+		param.put("email", email);
+		int result = jdbc.selectOne("Feed.likeCheck", param);
+		return result;
+	}
+	public int bookmarkCheck(int feed_seq, String email) throws Exception{
+		Map<String, String> param = new HashMap<>();
+		param.put("feed_seq", feed_seq+"");
+		param.put("email", email);
+		int result = jdbc.selectOne("Feed.bookmarkCheck", param);
+		return result;
+	}
+	
+	public int getLikeSeq() throws Exception{
+		int like_seq = jdbc.selectOne("Feed.getLikeSeq");
+		return like_seq;
+	}
+	
+	//좋아요
+	public int insertLike(int like_seq, int feed_seq, String email) throws Exception{
+		Map<String, String> param = new HashMap<>();
+		param.put("like_seq", like_seq+"");
+		param.put("feed_seq", feed_seq+"");
+		param.put("email", email);
+		int result = jdbc.insert("Feed.insertLike", param);
+		return result;
+	}
+	public int deleteLike(int feed_seq, String email) throws Exception{
+		Map<String, String> param = new HashMap<>();
+		param.put("feed_seq", feed_seq+"");
+		param.put("email", email);
+		int result = jdbc.insert("Feed.deleteLike", param);
+		return result;
+	}
+	
+	//북마크
+	public int insertBookmark(int feed_seq, String email) throws Exception{
+		Map<String, String> param = new HashMap<>();
+		param.put("feed_seq", feed_seq+"");
+		param.put("email", email);
+		int result = jdbc.insert("Feed.insertBookmark", param);
+		return result;
+	}
+	public int deleteBookmark(int feed_seq, String email) throws Exception{
+		Map<String, String> param = new HashMap<>();
+		param.put("feed_seq", feed_seq+"");
+		param.put("email", email);
+		int result = jdbc.insert("Feed.deleteBookmark", param);
+		return result;
 	}
 }

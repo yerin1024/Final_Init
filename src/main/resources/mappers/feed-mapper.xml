@@ -37,6 +37,39 @@
 		#{feed_seq}
 	</update>
 
+	
+	<!--좋아요 기능 -->
+	
+	<select id="getLikeSeq" resultType="integer">
+		select like_seq.nextval from dual
+	</select>
+	
+	<insert id="insertLike" parameterType="java.util.Map">
+		insert into tb_like values (#{like_seq}, #{feed_seq}, #{email})
+	</insert>
+	<delete id="deleteLike" parameterType="java.util.Map">
+		delete from tb_like where feed_seq=#{feed_seq} and email=#{email}
+	</delete>
+
+	<select id="likeCheck" parameterType="java.util.Map" resultType="integer">
+		select count(*) from tb_like where feed_seq=#{feed_seq} and email=#{email}
+	</select>
+
+	
+	
+	<!-- 북마크 -->
+	
+	<insert id="insertBookmark" parameterType="java.util.Map">
+		insert into tb_scrap values (scrap_seq.nextval, #{email}, #{feed_seq})
+	</insert>
+	<delete id="deleteBookmark" parameterType="java.util.Map">
+		delete from tb_scrap where feed_seq=#{feed_seq} and email=#{email}
+	</delete>
+
+	<select id="bookmarkCheck" parameterType="java.util.Map" resultType="integer">
+		select count(*) from tb_scrap where feed_seq=#{feed_seq} and email=#{email}
+	</select>
+
 	<!-- 댓글 기능 -->
 
 	<insert id="registerReply" parameterType="kh.init.feeds.FeedDTO">
@@ -44,12 +77,8 @@
 		values(#{feed_seq},reply_seq.nextval,#{nickname},#{contents},sysdate)
 	</insert>
 
-	<delete id="deleteReply">
-		delete from tb_reply where feed_seq = #{feed_seq} and reply_seq = #{reply_seq}
-	</delete>
-	
-	<delete id="deleteFeedAndReply">
-		delete from tb_reply where feed_seq = #{feed_seq}
+	<delete id="deleteReply" parameterType="java.util.Map">
+		delete from tb_reply where ${col} = #{val}
 	</delete>
 
 	<select id="viewReply" resultType="kh.init.feeds.ReplyDTO">

@@ -137,11 +137,22 @@
 				//   }
 				//  else { done(); }
 				// }
+				maxFilesize: 10,
 				init : function(re) {
 					console.log("ajax리턴");
+					
+					//실패했을때
+				     this.on("error", function(file, xhr, form) {
+				    	 alert("불가능한 파일유형입니다. ");
+				    });
 					//성공했을때
 					this.on("success",function(file, response) {
 						console.log(file);
+						console.log(response);
+						if(response.result=="fail"){
+							alert("불가능한 파일유형입니다. ");
+							return false;
+						}
 						var result = response.result;
 						var type = response.type;
 						if (type == "image") {

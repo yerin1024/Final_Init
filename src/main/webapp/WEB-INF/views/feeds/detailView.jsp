@@ -13,7 +13,6 @@
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
 	integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
 	crossorigin="anonymous">
-<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
 	integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
 	crossorigin="anonymous"></script>
@@ -34,6 +33,7 @@
 	rel="stylesheet">
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.js" ></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 <style>
@@ -65,28 +65,23 @@
 	$(function() {
 		$("#replyBtn").on("click", function() {
 			var queryString = $("#registerReply").serialize();
-			console.log(queryString);
+			var feed_seq = "${dto.feed_seq}";
 			$.ajax({
 				type : "POST",
 				url : "${pageContext.request.contextPath }/feed/registerReply",
 				dataType : 'json',
-				data : queryString
+				data : {queryString:queryString,feed_seq:feed_seq}
 			}).done(function(resp) {
 				
 			})
 		})
 		$(".replyDeleteBtn").on("click", function() {
-			var feed_seq = ${dto.feed_seq};
 			var reply_seq = $(this).val();
-			console.log(feed_seq + "입니다.");
 			console.log(reply_seq + "입니다.");
 			$.ajax({
 				type : "POST",
 				url : "${pageContext.request.contextPath }/feed/deleteReply",
-				data : {
-					feed_seq : feed_seq,
-					reply_seq : reply_seq
-				}
+				data : {reply_seq:reply_seq}				
 			}).done(function(resp) {
 				console.log('성공적으로 성공');
 				$("."+resp).html("");
@@ -149,39 +144,64 @@
 			
 			<div class="row">
 				<div class="col-12 feed" style="height:200px; border:2px solid red;">${dto.contents }</div>
-				<div class="col-4 feed btnss">
+				<div class="col-3 feed btnss">
 					<a href="${pageContext.request.contextPath }/feed/deleteProc?seq=${dto.feed_seq}">
 						<img src="${pageContext.request.contextPath }/resources/images/delete.png">
 					</a>
 				</div>
-				<div class="col-4 feed btnss">
+				<div class="col-3 feed btnss">
 					<a href="${pageContext.request.contextPath }/feed/modifyFeedView?feed_seq=${dto.feed_seq}">
 						<img src="${pageContext.request.contextPath }/resources/images/improvement.png">
 					</a>
 				</div>
-				<div class="col-4 feed btnss like">
-					<a href="feed_seq=${dto.feed_seq}">
-						<img src="${pageContext.request.contextPath }/resources/images/likeBefore.png">
-					</a>
+				<div class="col-3 feed btnss like">
+					<c:choose>
+						<c:when test="${likeCheck==0 }">
+						<a href="#" id="like" class="${dto.feed_seq }">
+							<span id="likeImg"><img class="likeBefore" id="likeBtn" src="${pageContext.request.contextPath }/resources/images/likeBefore.png"></span>
+						</a>
+						</c:when>
+						<c:otherwise>
+						<a href="#" id="like" class="${dto.feed_seq }">
+							<span id="likeImg"><img class="likeAfter" id="likeBtn" src="${pageContext.request.contextPath }/resources/images/likeAfter.png"></span>
+						</a>
+						</c:otherwise>
+					</c:choose>
+				</div>
+				<div class="col-3 feed btnss bookmark">
+					<c:choose>
+						<c:when test="${bookmarkCheck==0 }">
+						<a href="#" id="bookmark" class="${dto.feed_seq }">
+							<span id="bookmarkImg"><img class="bookmarkBefore" id="bookmarkBtn" src="${pageContext.request.contextPath }/resources/images/bookmarkBefore.png"></span>
+						</a>
+						</c:when>
+						<c:otherwise>
+						<a href="#" id="bookmark" class="${dto.feed_seq }">
+							<span id="bookmarkImg"><img class="bookmarkAfter" id="bookmarkBtn" src="${pageContext.request.contextPath }/resources/images/bookmarkAfter.png"></span>
+						</a>
+						</c:otherwise>
+					</c:choose>
 				</div>
 			</div>
-			
+
 			<c:forEach items="${replylist }" var="replylist">
-				<div class="row replyFeed ${replylist.reply_seq }" >
+				<div class="row replyFeed ${replylist.reply_seq }">
 					<div class="col-2 feed" style="text-align: center">${replylist.nickname }님의
 						댓글</div>
 					<div class="col-9 feed">
 						<div>${replylist.contents }</div>
 					</div>
 					<div class="col-1 feed">
-						<button type="button" class="replyDeleteBtn" value="${replylist.reply_seq }" style="width: 30%">삭제</button>
+						<button type="button" class="replyDeleteBtn"
+							value="${replylist.reply_seq }" style="width: 30%">삭제</button>
 						<button type="button" class="replyModifyBtn" style="width: 30%">수정</button>
 					</div>
 				</div>
-			</c:forEach>			
+			</c:forEach>
+
 			<form method="post" id="registerReply">
 				<div class="row">
-					<div class="col-2 feed"  style="text-align: center" >${dto.nickname }님의
+					<div class="col-2 feed" style="text-align: center">${dto.nickname }님의
 						댓글</div>
 					<div class="col-9 feed">
 						<input type="text" id="reply" name="contents" style="width: 100%">
@@ -191,8 +211,55 @@
 					</div>
 				</div>
 			</form>
-			
 		</div>
 	</div>
+	
+	
+	<script>
+	
+		$("#like").on("click", function(){
+			var seq = $(this).attr("class");
+			var likeCheck = $("#likeBtn").attr("class");
+			if(likeCheck=="likeBefore"){ //아직 좋아요를 안눌러있는 상태에서 좋아요했을때
+				$.ajax({
+					type : "POST",
+					url : "/feed/insertLike",
+					data : {feed_seq : seq}
+				}).done(function(){
+					$("#likeImg").html("<img class=\"likeAfter\" id=\"likeBtn\" src=\"${pageContext.request.contextPath }/resources/images/likeAfter.png\">");
+				})
+			}else{
+				$.ajax({
+					type : "POST",
+					url : "/feed/deleteLike",
+					data : {feed_seq : seq}
+				}).done(function(){
+					$("#likeImg").html("<img class=\"likeBefore\" id=\"likeBtn\" src=\"${pageContext.request.contextPath }/resources/images/likeBefore.png\">");
+				})
+			}
+		})
+		
+		$("#bookmark").on("click", function(){
+			var seq = $(this).attr("class");
+			var bookmarkCheck = $("#bookmarkBtn").attr("class");
+			if(bookmarkCheck=="bookmarkBefore"){ //아직 좋아요를 안눌러있는 상태에서 좋아요했을때
+				$.ajax({
+					type : "POST",
+					url : "/feed/insertBookmark",
+					data : {feed_seq : seq}
+				}).done(function(){
+					$("#bookmarkImg").html("<img class=\"bookmarkAfter\" id=\"bookmarkBtn\" src=\"${pageContext.request.contextPath }/resources/images/bookmarkAfter.png\">");
+				})
+			}else{
+				$.ajax({
+					type : "POST",
+					url : "/feed/deleteBookmark",
+					data : {feed_seq : seq}
+				}).done(function(){
+					$("#bookmarkImg").html("<img class=\"bookmarkBefore\" id=\"bookmarkBtn\" src=\"${pageContext.request.contextPath }/resources/images/bookmarkBefore.png\">");
+				})
+			}
+		})
+	</script>
 </body>
 </html>

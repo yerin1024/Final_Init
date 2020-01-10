@@ -52,24 +52,27 @@ public class FeedService {
 		List<FeedDTO> list = dao.selectAll();
 		return list;
 	}
+
+	@Transactional
 	public int deleteFeed(int feed_seq)throws Exception{
-		int result = dao.deleteFeed(feed_seq);
-		
-		return result;
+		int feedResult = dao.deleteFeed(feed_seq);
+		int replyResult = replyDAO.deleteReply("feed_seq",feed_seq);
+		return replyResult;
 	}
-	public int deleteFeedAndReply(ReplyDTO dto)throws Exception{
-		int result = replyDAO.deleteFeedAndReply(dto);
-		return result;
-	}
+	
 	public int modifyFeed(FeedDTO dto)throws Exception{
+
 		int result = dao.modifyFeed(dto);
 		return result;
 	}
+	
+
+
+	
 	public FeedDTO detailView(int feed_seq) throws Exception{
 		FeedDTO dto = dao.detailView(feed_seq);
 		return dto;
 	}
-	
 	public List<String> getMediaList(int feed_seq) throws Exception{
 		List<String> list = dao.getMediaList(feed_seq);
 		for(int i=0; i<list.size(); i++) {
@@ -82,6 +85,14 @@ public class FeedService {
 			}
 		}
 		return list;
+	}
+	public int likeCheck(int feed_seq, String email) throws Exception{
+		int result = dao.likeCheck(feed_seq, email);
+		return result;
+	}
+	public int bookmarkCheck(int feed_seq, String email) throws Exception{
+		int result = dao.bookmarkCheck(feed_seq, email);
+		return result;
 	}
 	
 	public String mediaTmpUpload(MultipartFile file, String tmpPath) {
@@ -100,15 +111,40 @@ public class FeedService {
 		}
 		
 		//파일경로 리턴
+		System.out.println("/mediaTmp/"+sysName);
 		return "/mediaTmp/"+sysName;
 	}
 	
+	@Transactional
+	public int insertLike(int feed_seq, String email) throws Exception{
+		int like_seq = dao.getLikeSeq();
+		int result = dao.insertLike(like_seq, feed_seq, email);
+		return result;
+	}
+	
+	public int deleteLike(int feed_seq, String email) throws Exception{
+		int result = dao.deleteLike(feed_seq, email);
+		return result;
+	}
+	
+	
+	public int insertBookmark(int feed_seq, String email) throws Exception{
+		int result = dao.insertBookmark(feed_seq, email);
+		return result;
+	}
+	
+	public int deleteBookmark(int feed_seq, String email) throws Exception{
+		int result = dao.deleteBookmark(feed_seq, email);
+		return result;
+	}
+	
+//	--------------------------댓글
 	public int registerReply(FeedDTO dto)throws Exception{
 		int result = replyDAO.registerReply(dto);
 		return result;
 	}
-	public int deleteReply(ReplyDTO dto)throws Exception{
-		int result = replyDAO.deleteReply(dto);
+	public int deleteReply(int reply_seq)throws Exception{
+		int result = replyDAO.deleteReply("reply_seq",reply_seq);
 		return result;
 	}
 	public List<ReplyDTO> viewReply(int feed_seq)throws Exception{
