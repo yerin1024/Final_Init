@@ -27,15 +27,35 @@ public class AlarmController {
 	@ResponseBody
 	public String testAl(String email) {
 		System.out.println("테스트 시작");
+		List<AlarmVO> result = service.alarmList2("123@123.123");
+		// 나중엔 이메일 부분 session id로 받을 것
 		
-		List<AlarmDTO> result = service.alarmList("123@123.123");
-		
-		for(AlarmDTO tmp : result) {
-			System.out.println(tmp.getType() + " : " + tmp.getReg_date());
-		}
+//		for(AlarmVO tmp : result) {
+//			System.out.println(tmp.getType() + " : " + tmp.getReg_date() + " : "
+//				+ tmp.getEmail() + " : " + tmp.getNickname_r() + " : " + tmp.getContents() + " : "
+//				+ tmp.getFrom_id() + " : " + tmp.getEmail_lk());
+//		}
 		
 		Gson gs = new Gson();
+		return gs.toJson(result);
+	}
+	
+	@RequestMapping(value="/delete.al", produces="text/html; charset=utf8")
+	@ResponseBody
+	public String deleteAlarm(String email, int alarm_seq) {
+		System.out.println("삭제 테스트 시작");
+		System.out.println("알림 시퀀스 : " + alarm_seq);
+		service.deleteAlarm("123@123.123", alarm_seq);
+		List<AlarmVO> result = service.alarmList2("123@123.123");
+		// 나중엔 이메일 부분 session id로 받을 것
 		
+//		for(AlarmVO tmp : result) {
+//			System.out.println(tmp.getType() + " : " + tmp.getReg_date() + " : "
+//				+ tmp.getEmail() + " : " + tmp.getNickname_r() + " : " + tmp.getContents() + " : "
+//				+ tmp.getFrom_id() + " : " + tmp.getEmail_lk());
+//		}
+		
+		Gson gs = new Gson();
 		return gs.toJson(result);
 	}
 	

@@ -9,7 +9,16 @@
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <style>
 	#alarmContainer{
-		width:350px; height: 200px;
+		width:500px; height: 200px;
+		overflow: scroll;
+		overflow-x: hidden;
+	}
+	.alarmCont{
+		width: 500px;
+	}
+	.alarmMsg{
+		width: 450px;
+		float: left
 	}
 </style>
 </head>
@@ -33,21 +42,59 @@
 				dataType: "json"
 			}).done(function(resp){
 // 	        	 $("#alarmContainer").append("<ul><li class='from_id'>"+resp.contents+"</li><span class=time_right></span><span class=readCheck></span><br></ul>");
-	        	 console.log(resp);
-	        	 console.log(resp[1]);
-	        	 console.log(resp[1].alarm_seq);
-	        	 
 	        	 $("#alarmContainer").children().remove();
 	        	 
 	        	 for(var i=0; i<resp.length; i++){
-	        	 $("#alarmContainer").append("<div style='background-color:skyblue; color:white;'> code : "+resp[i].type+" -- date : "+resp[i].reg_date+"</div>");
-	        	 if(resp[i].type == 'L'){
+// 	        	 $("#alarmContainer").append("<div class=alarmMsg style='background-color:skyblue; color:white;'> code : "+resp[i].type+" -- date : "+resp[i].reg_date+"</div> <button class=delAlarm>X</button>");
+		        	 if(resp[i].type == 'L'){
+		        		 var seq = resp[i].alarm_seq;
+		        		 var seqId = "alarmCont"+resp[i].alarm_seq;
+		        		 
+		        		 $("#alarmContainer").append("<div class="+seqId+"><div class=alarmMsg style='background-color:pink; color:white;'>"+resp[i].nickname_m+"님께서 회원님의 게시글을 좋아합니다.</div>"
+		        		 + "<button class=delAlarm value="+seq+">X</button></div>");
+		        		 
+		        		 
+		        	 }else if(resp[i].type == 'R'){
+		        		 var seq = resp[i].alarm_seq;
+		        		 var seqId = "alarmCont"+resp[i].alarm_seq;
+		        		 
+		        		 $("#alarmContainer").append("<div class="+seqId+"><div class=alarmMsg style='background-color:pink; color:white;'><b>"+resp[i].nickname_r+" </b>"+resp[i].contents+"</div>"
+		        		 + "<button class=delAlarm value="+seq+">X</button></div>");
+		        	 
+		        	 }else if(resp[i].type == 'F'){
+		        		 var seq = resp[i].alarm_seq;
+		        		 var seqId = "alarmCont"+resp[i].alarm_seq;
+		        		 
+		        		 $("#alarmContainer").append("<div class="+seqId+"><div class=alarmMsg style='background-color:pink; color:white;'> "+resp[i].from_id+"님의 친구 요청이 있습니다. </div>"
+		        		 +"<button class=delAlarm value="+seq+">X</button></div>");
+		        	 
+		        	 }
+	        	 }
+	        	 
+	        	 $(".delAlarm").on("click",function(){
+	        		 var seq = this.value;
+	        		 console.log("클릭 테스트");
+	        		 console.log(this.value);
 	        		 
-	        		 $("#alarmContainer").append("<div style='background-color:pink; color:white;'> 좋아요가 추가된 게시글이 있습니다.</div>");
-	        	 }else if(resp[i].type == 'R'){
-	        		 $("#alarmContainer").append("<div style='background-color:pink; color:white;'> 댓글이 달린 게시글이 있습니다. </div>");
-	        	 }
-	        	 }
+	        		 $.ajax({
+	     				url:"${pageContext.request.contextPath}/alarm/delete.al",
+	     				method: "post",
+	     				data: {
+	     					alarm_seq: seq
+	     				},
+	     				dataType: "json"
+	     			}).done(function(resp){
+	     				document.getElementById("showAlarm").click();
+	     				
+	     			}).fail(function(a,b,c){
+	     				console.log(a); console.log(b); console.log(c);
+	     			});
+	        		 
+	        		 
+     				
+     			 });
+	        	 
+	        	 
 				
 			}).fail(function(a,b,c){
 				console.log(a);
@@ -57,6 +104,75 @@
 			
 		});
 		
+// 		$(".delAlarm").on("click",function(){
+// 			$.ajax({
+// 				url:"${pageContext.request.contextPath}/alarm/delete.al?alarm_seq=",
+// 				method: "post",
+// 				data: {
+					
+// 				},
+// 				dataType: "json"
+// 			}).done(function(resp){
+// 				console.log(resp);
+
+// 				$(".alarmCont").children().remove();
+				
+// 			}).fail(function(a,b,c){
+// 				console.log(a);
+// 				console.log(b);
+// 				console.log(c);
+// 			})
+			
+// 		});
+		
+	$(".delAlarm").on("click",function(){
+		console.log("클릭 테스트");
+		console.log(this.value);
+		
+		
+// 		 $.ajax({
+// 				url:"${pageContext.request.contextPath}/alarm/delete.al",
+// 				method: "post",
+// 				data: {
+// 					alarm_seq: seq
+// 				},
+// 				dataType: "json"
+// 			}).done(function(resp){
+// 				$("#alarmContainer").children().remove();
+	        	 
+// 	        	 for(var i=0; i<resp.length; i++){
+// //	        	 $("#alarmContainer").append("<div class=alarmMsg style='background-color:skyblue; color:white;'> code : "+resp[i].type+" -- date : "+resp[i].reg_date+"</div> <button class=delAlarm>X</button>");
+// 		        	 if(resp[i].type == 'L'){
+// 		        		 var seq = resp[i].alarm_seq;
+// 		        		 var seqId = "alarmCont"+resp[i].alarm_seq;
+		        		 
+// 		        		 $("#alarmContainer").append("<div class="+seqId+"><div class=alarmMsg style='background-color:pink; color:white;'>"+resp[i].nickname_m+"님께서 회원님의 게시글을 좋아합니다.</div>"
+// 		        		 + "<button class=delAlarm value="+seq+">X</button></div>");
+		        		 
+// 		        	 }else if(resp[i].type == 'R'){
+// 		        		 var seq = resp[i].alarm_seq;
+// 		        		 var seqId = "alarmCont"+resp[i].alarm_seq;
+		        		 
+// 		        		 $("#alarmContainer").append("<div class="+seqId+"><div class=alarmMsg style='background-color:pink; color:white;'><b>"+resp[i].nickname_r+" </b>"+resp[i].contents+"</div>"
+// 		        		 + "<button class=delAlarm value="+seq+">X</button></div>");
+		        	 
+// 		        	 }else if(resp[i].type == 'F'){
+// 		        		 var seq = resp[i].alarm_seq;
+// 		        		 var seqId = "alarmCont"+resp[i].alarm_seq;
+		        		 
+// 		        		 $("#alarmContainer").append("<div class="+seqId+"><div class=alarmMsg style='background-color:pink; color:white;'> "+resp[i].from_id+"님의 친구 요청이 있습니다. </div>"
+// 		        		 +"<button class=delAlarm value="+seq+">X</button></div>");
+		        	 
+// 		        	 }
+// 	        	 }
+// 			}).fail(function(a,b,c){
+// 				console.log(a);
+// 				console.log(b);
+// 				console.log(c);
+// 			})
+	 });
+	
+	
 		$("#closeAlarm").click(function(){
 			   $("#alarmContainer").fadeOut(0);
 			   });

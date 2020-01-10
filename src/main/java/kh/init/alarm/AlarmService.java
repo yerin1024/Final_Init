@@ -20,8 +20,19 @@ public class AlarmService {
 	}
 	
 	@Transactional("txManager")
+	public List<AlarmVO> alarmList2(String email){
+		return dao.alarmList2(email);
+	}
+	
+	@Transactional("txManager")
 	public ReplyDTO alarmReplyWho(int reply_seq){
 		return dao.alarmReplyWho(reply_seq);
 	}
+	
+	@Transactional("txManager")
+	public int deleteAlarm(String email, int alarm_seq) {
+		return dao.deleteAlarm(email, alarm_seq);
+	}
+	
 
 }

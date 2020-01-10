@@ -52,6 +52,13 @@ public class AlarmDAO {
 		return jdbc.selectList("Alarm.alarmList",prm);
 	}
 	
+	// 알림 목록 2
+	public List<AlarmVO> alarmList2(String email){
+		Map<String, Object> prm = new HashMap<>();
+		prm.put("email",email);
+		return jdbc.selectList("Alarm.alarmList2",prm);
+	}
+	
 	// 읽음 완료로 표시 변경
 	public int alarmCheck(String email) {
 		Map<String, Object> prm = new HashMap<>();
@@ -64,7 +71,7 @@ public class AlarmDAO {
 		Map<String, Object> prm = new HashMap<>();
 		prm.put("email",email);
 		prm.put("alarm_seq",alarm_seq);
-		return jdbc.update("Alarm.alarmCheck", prm);
+		return jdbc.update("Alarm.deleteAlarm", prm);
 	}
 	
 	
