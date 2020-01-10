@@ -103,5 +103,36 @@ public class FriendController {
 			}
 		
 	}
+	
+	@RequestMapping(value ="/searchFndList" ,produces ="application/text; charset=utf-8")
+	@ResponseBody
+	public String searchFndList(Model model,String search) {
+		System.out.println("넘어온 서치값은 "+search);
+		System.out.println("검색 친구목록 조회 CON 도착.");
+		try {
+			List<MemberDTO> list = service.searchFriendsListService("kks@naver.com",search);
+			List<MemberDTO> waitlist = service.searchRequestMemList("kks@naver.com",search);
+			System.out.println("waitlist size ="+waitlist.size());
+			
+			System.out.println(list.size());
+			
+			Gson g = new Gson();
+			
+			g.toJson(waitlist);
+			JsonObject obj = new JsonObject();
+		    if(waitlist.size() != 0) {
+            obj.addProperty("waitlist", g.toJson(waitlist));
+		    }
+		    if(list.size() != 0) {
+            obj.addProperty("list", g.toJson(list));
+		    }
+            System.out.println(obj.toString());
+			return obj.toString();
+			}catch(Exception e) {
+				e.printStackTrace();
+				return "error";
+			}
+		
+	}
 }
 

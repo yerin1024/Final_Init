@@ -9,8 +9,33 @@
     <select id="selectById" resultType="kh.init.friends.FriendDTO">
       select * from tb_friend where my_id = #{id}
   </select>
+  <select id="selectBySearch" parameterType="java.util.Map" resultType="kh.init.friends.FriendDTO">
+      select * from tb_friend 
+      <trim prefix="where" prefixOverrides="and|or">
+    <if test="my_id != null">
+      my_id = #{my_id}
+    </if>
+    <if test="fr_id != null">
+       and fr_id like #{fr_id}
+    </if>
+    
+    </trim>
+      
+  </select>
   <select id="selectListReqById" resultType="kh.init.friends.FriendRequestDTO">
       select * from tb_friend_request where to_id = #{id}
+  </select>
+  <select id="selectListReqBySearch" resultType="kh.init.friends.FriendRequestDTO">
+      select * from tb_friend_request
+      <trim prefix="where" prefixOverrides="and|or">
+    <if test="to_id != null">
+      to_id = #{to_id}
+    </if>
+    <if test="from_id != null">
+       and from_id like #{from_id}
+    </if>
+    
+    </trim>
   </select>
   <select id="selectReqById2" parameterType="java.util.Map" resultType="kh.init.friends.FriendRequestDTO">
       select * from tb_friend_request where to_id = #{my_id} and from_id = #{yr_id}

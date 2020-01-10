@@ -35,6 +35,21 @@ public class FriendService {
 		return realList;
 	}
 	@Transactional("txManager")
+	public List<MemberDTO> searchRequestMemList(String id,String search) throws Exception{
+		List<MemberDTO> realList = new ArrayList<>();
+		List<FriendRequestDTO> list = dao.getFndRequestList(id,search);
+		System.out.println("svc listsize : "+list.size());
+		
+		for(int i=0; i<list.size();i++) {
+			MemberDTO mlist = mdao.getMyInfo(list.get(i).getFrom_id());
+			realList.add(mlist);
+			
+		}
+		System.out.println("realList :"+realList.size());
+	
+		return realList;
+	}
+	@Transactional("txManager")
 	public int acceptFriendRequest(String my_id,String yr_id,String my_relation) throws Exception{
 		FriendRequestDTO dto = dao.getFndRequest2(my_id,yr_id);
 		int result = dao.insertFriendship(my_id,yr_id,"1");
@@ -55,6 +70,21 @@ public class FriendService {
 	public List<MemberDTO> getFriendsListService(String id) throws Exception{
 		List<MemberDTO> list = new ArrayList<>();
 		List<FriendDTO> flist = dao.getFriendsList(id);
+		for(int i=0;flist.size()>i;i++) {
+			String fr_id = flist.get(i).getFr_id();
+			list.add(mdao.getMyInfoByFriend(fr_id));
+		}
+		
+			return list;
+		
+		
+	}
+	@Transactional("txManager")
+	public List<MemberDTO> searchFriendsListService(String id,String search) throws Exception{
+		List<MemberDTO> list = new ArrayList<>();
+		List<FriendDTO> flist = dao.getFriendsList(id,search);
+		System.out.println("검색 친구리스트 사이즈: "+flist.size());
+		
 		for(int i=0;flist.size()>i;i++) {
 			String fr_id = flist.get(i).getFr_id();
 			list.add(mdao.getMyInfoByFriend(fr_id));
