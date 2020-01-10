@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import kh.init.members.MemberDTO;
+import kh.init.members.MemberService;
 
 @RequestMapping("/feed")
 @Controller
@@ -23,18 +24,25 @@ public class FeedController {
 	@Autowired
 	private FeedService service;
 	@Autowired
+	private MemberService mservice;
+	@Autowired
 	private HttpSession session;
 
 	@RequestMapping("/myFeed")
+
 	public String myFeed(Model model) {
-		System.out.println("wholeFeed 도착");
+		System.out.println("myFeed 도착");
 		List<FeedDTO> list = null;
+		String email = ((MemberDTO)session.getAttribute("loginInfo")).getEmail();
 		try {
+			MemberDTO dto = mservice.getMyPageService(email);
 			list = service.selectAll();
+			model.addAttribute("dto", dto);
 			model.addAttribute("list", list);
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
+
 		return "feeds/myFeed";
 	}
 
@@ -149,7 +157,7 @@ public class FeedController {
 
 
 	@RequestMapping("/scrapFeed")
-	public String wholeFeed(Model model) {
+	public String scrapFeed(Model model) {
 		System.out.println("scrapFeed 도착");
 		String email = ((MemberDTO)session.getAttribute("loginInfo")).getEmail();
 		System.out.println("email : "+email);

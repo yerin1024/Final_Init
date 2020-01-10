@@ -115,7 +115,7 @@
 	<div id="container">
 		<div class="header">
 			<div class="row">
-				<div class="col-4">${dto.nickname }</div>
+				<div class="col-4">${dto.nickname}</div>
 				<div class="col-8">${dto.title }</div>
 			</div>
 		</div>

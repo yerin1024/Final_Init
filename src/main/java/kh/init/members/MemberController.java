@@ -1,13 +1,23 @@
 package kh.init.members;
 
+import java.util.Date;
+import java.util.Properties;
+
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
-
-import kh.init.members.MemberDTO;
 
 @RequestMapping("/member")
 @Controller
@@ -31,12 +41,114 @@ public class MemberController {
 			return "error";
 		}
 	}
-	@RequestMapping("/goMyInfo")
-	public String goMyInfo() {
-		System.out.println("개인 정보 CON 도착.");
-		return "myInformation";
+	
+	@RequestMapping("/findPw.do")
+	public String toFindPw() {
+		return "members/findPw";
 	}
-
+	
+	@RequestMapping("/findPwProc.do")
+	public String toFindPwProc(String email) {
+		
+		String host     = "smtp.naver.com";
+	    String user   = "init_manager";
+	    String password  = "initmanager6";
+	    String to     = email;
+	    
+		Properties props = new Properties();
+		props.put("mail.smtp.host", host);
+		props.put("mail.smtp.auth", "true");
+		Session session = Session.getInstance(props, new javax.mail.Authenticator() {
+			protected PasswordAuthentication getPasswordAuthentication() {
+				return new PasswordAuthentication(user, password);
+			}
+		});
+		    try {
+		        MimeMessage msg = new MimeMessage(session);
+		        msg.setFrom(new InternetAddress(user));
+		        msg.setRecipients(Message.RecipientType.TO,
+		                          to);
+		        msg.setSubject("비밀번호 찾기 테스트");
+		        msg.setText("비밀번호 찾자찾자\n");
+		        Transport.send(msg);
+		        System.out.println("message sent successfully...");
+		    } catch (MessagingException mex) {
+		        System.out.println("send failed, exception: " + mex);
+		    }
+		    
+		   return "main"; 
+//		    Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
+//		     protected PasswordAuthentication getPasswordAuthentication() {
+//		      return new PasswordAuthentication(user, password);
+//		     }
+//		    });
+//
+//		    // Compose the message
+//		    try {
+//		     MimeMessage message = new MimeMessage(session);
+//		     message.setFrom(new InternetAddress(user));
+//		     message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
+//
+//		     // Subject
+//		     message.setSubject("[Subject] Java Mail Test");
+//		     
+//		     // Text
+//		     message.setText("Simple mail test..");
+//
+//		     // send the message
+//		     Transport.send(message);
+//		     System.out.println("message sent successfully...");
+//
+//		    } catch (MessagingException e) {
+//		     e.printStackTrace();
+//		    }
+	}
+	
+	@RequestMapping("/goMyInfo")
+	public String goMyInfo(String email, Model model) {
+		System.out.println("개인 정보 CON 도착.");
+		try {
+		MemberDTO dto = service.getMyPageService("kks@naver.com");
+		System.out.println(dto.getEmail());
+		System.out.println(dto.getName());
+		String poption1 = dto.getPhone().substring(0, 2);
+		String poption2 = dto.getPhone().substring(3, 7);
+		String poption3 = dto.getPhone().substring(7, 11);
+		String boption1 = dto.getBirth().substring(0, 2);
+		String boption2 = dto.getBirth().substring(3, 4);
+		String boption3 = dto.getBirth().substring(5, 6);
+		model.addAttribute("dto", dto);
+		model.addAttribute("poption1", poption1);
+		model.addAttribute("poption2", poption2);
+		model.addAttribute("poption3", poption3);
+		model.addAttribute("boption1", boption1);
+		model.addAttribute("boption2", boption2);
+		model.addAttribute("boption3", boption3);
+		return "members/myInformation";
+		}catch(Exception e) {
+			e.printStackTrace();
+			return "error";
+		}
+	}
+     
+	@RequestMapping("/goMyProfile")
+	public String goMyProfile(String email, Model model) {
+		System.out.println("개인 프로필 수정 CON 도착.");
+		try {
+		MemberDTO dto = service.getMyPageService("kks@naver.com");
+		System.out.println(dto.getProfile_img());
+		System.out.println(dto.getNickname());
+		System.out.println(dto.getProfile_msg());
+		
+		model.addAttribute("dto", dto);
+		
+		return "members/myProfile";
+		}catch(Exception e) {
+			e.printStackTrace();
+			return "error";
+		}
+	}
+	
 	@RequestMapping(value = "/getMyPage", produces ="text/html; charset=utf-8")
 	public String getMyPage() {
 		System.out.println("마이페이지 CON 도착.");
@@ -57,13 +169,14 @@ public class MemberController {
 		System.out.println("회원 탈퇴 CON 도착.");
 		try {
 			int result = service.withdrawMemService("kks@naver.com");
+			System.out.println(result);
 			if(result> 0) {
 				session.invalidate();
 				System.out.println("회원탈퇴 성공하셨슴당.");
-				return "";
+				return "home";
 			}else {
 				System.out.println("회원탈퇴 실패하셨슴당.");
-				return "goodjob";
+				return "error";
 			}
 
 
@@ -77,19 +190,49 @@ public class MemberController {
 	}
 
 	@RequestMapping("/changeMyInfo")
-	public String changeInfo(String pw,String name,String phone) {
+	public String changeInfo(MemberDTO dto) {
 		System.out.println("회원 정보 수정 CON 도착.");
 		try {
-			MemberDTO dto = new MemberDTO();
-
-			int result = service.changeMyInfoService((String)session.getAttribute("loginInfo"), dto);
+			
+			
+			int result = service.changeMyInfoService("kks@naver.com", dto);
 			if(result> 0) {
 
 				System.out.println("정보변경에 성공하셨슴당.");
 				return "home";
 			}else {
 				System.out.println("정보변경에 실패하셨슴당.");
+				return "error";
+			}
+
+
+		}catch(Exception e) {
+			e.printStackTrace();
+			System.out.println("입력실패.");
+			return "redirect:home";
+		}
+	} 
+	
+	@RequestMapping("/changeProfile")
+	public String changeMyProfile(MemberDTO dto, MultipartFile profileImg) {
+		System.out.println("회원 정보 수정 CON 도착.");
+		String path = session.getServletContext().getRealPath("files");
+		int result = 0;
+		try {
+			if(profileImg.getOriginalFilename() == "") {
+				result = service.changeMyProfileService("kks@naver.com", dto,null,path);
+			}else {
+				result = service.changeMyProfileService("kks@naver.com", dto,profileImg,path);
+			}
+			
+			
+			if(result> 0) {
+
+				System.out.println("정보변경에 성공하셨슴당.");
 				return "home";
+			}else {
+				System.out.println("정보변경에 실패하셨슴당.");
+				return "error";
 			}
 
 
