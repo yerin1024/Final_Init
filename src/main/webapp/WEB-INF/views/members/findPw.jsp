@@ -19,6 +19,7 @@
     <script>
         var doc = document;
         var email = doc.getElementById("email");
+        console.log(email.value);
         rawStr = email.value;
         console.log(rawStr);
         var regExp = /^[0-9a-zA-Z][0-9a-zA-Z\_\-\.]*[0-9a-zA-Z]@^[0-9a-zA-Z][0-9a-zA-Z\_\-]*[0-9a-zA-Z](\.[a-zA-Z]{2,6}){1,2}$/;
