@@ -8,6 +8,9 @@
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <style>
+	#alarmPreContainer{
+		width:500px; height: 200px;
+	}
 	#alarmContainer{
 		width:500px; height: 200px;
 		overflow: scroll;
@@ -17,21 +20,30 @@
 		width: 500px;
 	}
 	.alarmMsg{
-		width: 450px;
+		width: 450px; height:40px;
+		line-height: 40px;
 		float: left
+	}
+	.delAlarm{
+		width: 30px; height:40px;
+		cursor: pointer;
+		border: none;
+		background-color: white;
 	}
 </style>
 </head>
 <body>
 	<button id=showAlarm>알람 확인하기</button> <button id=closeAlarm>알람 끄기</button>
-	<div id="alarmContainer"></div>
+	<div id="alarmPreContainer">
+		<div id="alarmContainer"></div>
+	</div>
 	
 	<script>
 	$(document).ready(function(){
 		
 	
 		$("#showAlarm").on("click",function(){
-			$("#alarmContainer").fadeIn(0);
+			$("#alarmPreContainer").fadeIn(0);
 			
 			$.ajax({
 				url:"${pageContext.request.contextPath}/alarm/test.al",
@@ -50,23 +62,39 @@
 		        		 var seq = resp[i].alarm_seq;
 		        		 var seqId = "alarmCont"+resp[i].alarm_seq;
 		        		 
-		        		 $("#alarmContainer").append("<div class="+seqId+"><div class=alarmMsg style='background-color:pink; color:white;'>"+resp[i].nickname_m+"님께서 회원님의 게시글을 좋아합니다.</div>"
-		        		 + "<button class=delAlarm value="+seq+">X</button></div>");
+		        		 if(resp[i].alarm_check == 'N'){
+		        			 $("#alarmContainer").append("<div class="+seqId+"><div class=alarmMsg style='background-color:#e8f7ff; color:black;'>"+resp[i].nickname_m+"님이 회원님의 게시글을 좋아합니다.</div>"
+		    		        		 + "<button class=delAlarm value="+seq+">X</button></div>");
+		        		 }else if(resp[i].alarm_check == 'Y'){
+		        			 $("#alarmContainer").append("<div class="+seqId+"><div class=alarmMsg style='color:black;'>"+resp[i].nickname_m+"님이 회원님의 게시글을 좋아합니다.</div>"
+		    		        		 + "<button class=delAlarm value="+seq+">X</button></div>");
+		        		 }
+		        		 
 		        		 
 		        		 
 		        	 }else if(resp[i].type == 'R'){
 		        		 var seq = resp[i].alarm_seq;
 		        		 var seqId = "alarmCont"+resp[i].alarm_seq;
 		        		 
-		        		 $("#alarmContainer").append("<div class="+seqId+"><div class=alarmMsg style='background-color:pink; color:white;'><b>"+resp[i].nickname_r+" </b>"+resp[i].contents+"</div>"
-		        		 + "<button class=delAlarm value="+seq+">X</button></div>");
+		        		 if(resp[i].alarm_check == 'N'){
+		        			 $("#alarmContainer").append("<div class="+seqId+"><div class=alarmMsg style='background-color:#e8f7ff; color:black;'><b>"+resp[i].nickname_r+" </b>"+resp[i].contents+"</div>"
+		    		        		 + "<button class=delAlarm value="+seq+">X</button></div>");
+		        		 }else if(resp[i].alarm_check == 'Y'){
+		        			 $("#alarmContainer").append("<div class="+seqId+"><div class=alarmMsg style='color:black;'><b>"+resp[i].nickname_r+" </b>"+resp[i].contents+"</div>"
+		    		        		 + "<button class=delAlarm value="+seq+">X</button></div>");
+		        		 }
 		        	 
 		        	 }else if(resp[i].type == 'F'){
 		        		 var seq = resp[i].alarm_seq;
 		        		 var seqId = "alarmCont"+resp[i].alarm_seq;
 		        		 
-		        		 $("#alarmContainer").append("<div class="+seqId+"><div class=alarmMsg style='background-color:pink; color:white;'> "+resp[i].from_id+"님의 친구 요청이 있습니다. </div>"
-		        		 +"<button class=delAlarm value="+seq+">X</button></div>");
+		        		 if(resp[i].alarm_check == 'N'){
+		        			 $("#alarmContainer").append("<div class="+seqId+"><div class=alarmMsg style='background-color:#e8f7ff; color:black;'> "+resp[i].from_id+"님의 친구 요청이 있습니다. </div>"
+		    		        		 +"<button class=delAlarm value="+seq+">X</button></div>");
+		        		 }else if(resp[i].alarm_check == 'Y'){
+		        			 $("#alarmContainer").append("<div class="+seqId+"><div class=alarmMsg style='color:black;'> "+resp[i].from_id+"님의 친구 요청이 있습니다. </div>"
+		    		        		 +"<button class=delAlarm value="+seq+">X</button></div>");
+		        		 }
 		        	 
 		        	 }
 	        	 }
@@ -90,11 +118,7 @@
 	     				console.log(a); console.log(b); console.log(c);
 	     			});
 	        		 
-	        		 
-     				
      			 });
-	        	 
-	        	 
 				
 			}).fail(function(a,b,c){
 				console.log(a);
@@ -174,7 +198,7 @@
 	
 	
 		$("#closeAlarm").click(function(){
-			   $("#alarmContainer").fadeOut(0);
+			   $("#alarmPreContainer").fadeOut(0);
 			   });
 		
 	});
