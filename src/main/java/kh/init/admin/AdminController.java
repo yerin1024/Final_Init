@@ -3,6 +3,7 @@ package kh.init.admin;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,21 +24,44 @@ public class AdminController {
 	public String adminHome() throws Exception {
 		return "admin/adminHome";
 	}
-
-	@RequestMapping("blackList.do")
-	public String blackList(Model mod) throws Exception {
-		List<MemberDTO> blackList = aService.blackList();
-		mod.addAttribute("blackList", blackList);
-		return "admin/manageBlack";
-	}
-
+	//멤버관리
 	@RequestMapping("memberList.do")
-	public String memberList(Model mod) throws Exception {
-		List<MemberDTO> memberList = aService.memberList();
+	public String memberList(Model mod, String page) throws Exception {
+		System.out.println("현재 넘어온 페이지 값  : " + page);
+		int cpage = 1;
+		if(page != null) {
+			cpage = Integer.parseInt(page); 
+		}
+
+		int start = cpage * Configuration.recordCountPerPage - (Configuration.recordCountPerPage-1);
+		int end =  cpage * Configuration.recordCountPerPage;
+		String pageNavi = aService.getPageNavi(cpage);
+		if(pageNavi.contains("redirect:memberList.do?page=")) {
+			return pageNavi;
+		}
+		System.out.println(pageNavi);
+		mod.addAttribute("pageNavi", pageNavi);
+		List<MemberDTO> memberList = aService.selectByPage(start, end);
 		mod.addAttribute("memberList", memberList);
 		return "admin/manageMember";
 	}
-
+	@RequestMapping("search.do")
+	public String searchProc(String searchTag, String search, Model mod, String page) throws Exception {
+		int cpage = 1;
+		if(page != null) {
+			cpage = Integer.parseInt(page); 
+		}
+		int start = cpage * Configuration.recordCountPerPage - (Configuration.recordCountPerPage-1);
+		int end =  cpage * Configuration.recordCountPerPage;
+		String pageNavi = aService.getPageNaviSearch(cpage, searchTag, search);      
+		if(pageNavi.contains("redirect:search.do?page=")) {
+			return pageNavi;
+		}
+		mod.addAttribute("pageNavi", pageNavi);
+		List<MemberDTO> searchList = aService.searchForMemberPaging(searchTag, search, start, end);
+		mod.addAttribute("memberList", searchList);
+		return "admin/manageMember";
+	}
 	@RequestMapping("blackProc.do")
 	@ResponseBody
 	public String blackProc(String blackMember) throws Exception {
@@ -48,6 +72,43 @@ public class AdminController {
 		} else {
 			return "black fail";
 		}
+	}
+
+	//블랙관리
+	@RequestMapping("blackList.do")
+	public String blackList(Model mod,String page) throws Exception {
+		int cpage = 1;
+		if(page != null) {
+			cpage = Integer.parseInt(page); 
+		}
+		int start = cpage * Configuration.recordCountPerPage - (Configuration.recordCountPerPage-1);
+		int end =  cpage * Configuration.recordCountPerPage;
+		String pageNavi = aService.getPageNaviBlack(cpage);         
+		if(pageNavi.contains("redirect:blackList.do?page=")) {
+			return pageNavi;
+		}
+		System.out.println(pageNavi);
+		mod.addAttribute("pageNavi", pageNavi);
+		List<MemberDTO> blackList = aService.selectBlackByPage(start, end);
+		mod.addAttribute("blackList", blackList);
+		return "admin/manageBlack";
+	}
+	@RequestMapping("searchForBlack.do")
+	public String searchForBlack(String searchTag, String search, Model mod, String page) throws Exception {
+		int cpage = 1;
+		if(page != null) {
+			cpage = Integer.parseInt(page); 
+		}
+		int start = cpage * Configuration.recordCountPerPage - (Configuration.recordCountPerPage-1);
+		int end =  cpage * Configuration.recordCountPerPage;
+		String pageNavi = aService.getPageNaviSearchBlack(cpage, searchTag, search);  
+		if(pageNavi.contains("redirect:searchForBlack.do?page=")) {
+			return pageNavi;
+		}
+		mod.addAttribute("pageNavi", pageNavi);
+		List<MemberDTO> searchList = aService.searchForBlackPaging(searchTag, search, start, end); 
+		mod.addAttribute("blackList",searchList);
+		return "admin/manageBlack";
 	}
 
 	@RequestMapping("withdrawalProc.do")
@@ -62,7 +123,6 @@ public class AdminController {
 			return "withdrawal fail";
 		}
 	}
-
 	@RequestMapping("toMemberProc.do")
 	@ResponseBody
 	public String toMember(String cbMember) throws Exception {
@@ -77,35 +137,56 @@ public class AdminController {
 		}
 	}
 
-	@RequestMapping("goFeed.do")
-	public String goFeed(String email, Model mod) throws Exception {
-		List<FeedDTO> list = aService.myFeedList(email);
-		mod.addAttribute("list", list);
-		return "feeds/myFeed";
+	//피드관리
+	@RequestMapping("totalFeedList.do")
+	public String totalFeedList(Model mod, String page) throws Exception {
+		int cpage = 1;
+		if(page != null) {
+			cpage = Integer.parseInt(page); 
+		}
+		int start = cpage * Configuration.recordCountPerPage - (Configuration.recordCountPerPage-1);
+		int end =  cpage * Configuration.recordCountPerPage;
+		String pageNavi = aService.getPageNaviFeed(cpage);         
+		if(pageNavi.contains("redirect:totalFeedList.do?page=")) {
+			return pageNavi;
+		}
+		mod.addAttribute("pageNavi", pageNavi);
+		List<FeedDTO> feedList = aService.selectFeedByPage(start, end);
+		mod.addAttribute("feedList", feedList);
+		return "admin/manageFeed";
 	}
-
-	@RequestMapping("deleteFeed.do")
-	public String deleteFeedProc(int feed_seq) throws Exception {
+	@RequestMapping("searchForFeed.do")
+	public String searchForFeed(String searchTag, String search, Model mod, String page) throws Exception {
+		int cpage = 1;
+		if(page != null) {
+			cpage = Integer.parseInt(page); 
+		}
+		int start = cpage * Configuration.recordCountPerPage - (Configuration.recordCountPerPage-1);
+		int end =  cpage * Configuration.recordCountPerPage;
+		String pageNavi = aService.getPageNaviSearchFeed(cpage, searchTag, search);    
+		if(pageNavi.contains("redirect:searchForFeed.do?page=")) {
+			return pageNavi;
+		}
+		System.out.println(pageNavi);
+		mod.addAttribute("pageNavi", pageNavi);
+		List<FeedDTO> feedList = aService.searchForFeedPaging(searchTag, search, start, end);
+		for(FeedDTO tmp : feedList) {
+			System.out.println(tmp.getTitle());
+		}
+		mod.addAttribute("feedList", feedList);
+		return "admin/manageFeed";
+	}
+	@RequestMapping("deleteFeedProc.do")
+	@ResponseBody
+	public String deleteFeedProc(String feed) throws Exception {
+		int feed_seq = Integer.parseInt(feed);
+		System.out.println("controller " + feed_seq);
 		int deleteR = aService.deleteFeed(feed_seq);
 		if (deleteR > 0) {
-			return "deleteFeed success";
+			return feed_seq+"";
 		} else {
 			return "deleteFeed fail";
 		}
-	}
+	} 
 
-	@RequestMapping("search.do")
-	public String searchProc(String searchTag, String search, Model mod) throws Exception {
-		System.out.println(searchTag + ":" + search); 
-		List<MemberDTO> searchList = aService.search(searchTag, search); 
-		mod.addAttribute("memberList",searchList); 
-		return "admin/manageMember";
-	}
-	@RequestMapping("searchForBlack.do")
-	public String searchForBlack(String searchTag, String search, Model mod) throws Exception {
-		System.out.println(searchTag + ":" + search); 
-		List<MemberDTO> searchList = aService.searchForBlack(searchTag, search); 
-		mod.addAttribute("blackList",searchList);
-		return "admin/manageBlack";
-	}
 }
