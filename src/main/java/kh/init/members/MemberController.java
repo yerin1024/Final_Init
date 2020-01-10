@@ -1,5 +1,15 @@
 package kh.init.members;
 
+import java.util.Date;
+import java.util.Properties;
+
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +41,69 @@ public class MemberController {
 			return "error";
 		}
 	}
+	
+	@RequestMapping("/findPw.do")
+	public String toFindPw() {
+		return "members/findPw";
+	}
+	
+	@RequestMapping("/findPwProc.do")
+	public String toFindPwProc(String email) {
+		
+		String host     = "smtp.naver.com";
+	    String user   = "init_manager";
+	    String password  = "initmanager6";
+	    String to     = email;
+	    
+		Properties props = new Properties();
+		props.put("mail.smtp.host", host);
+		props.put("mail.smtp.auth", "true");
+		Session session = Session.getInstance(props, new javax.mail.Authenticator() {
+			protected PasswordAuthentication getPasswordAuthentication() {
+				return new PasswordAuthentication(user, password);
+			}
+		});
+		    try {
+		        MimeMessage msg = new MimeMessage(session);
+		        msg.setFrom(new InternetAddress(user));
+		        msg.setRecipients(Message.RecipientType.TO,
+		                          to);
+		        msg.setSubject("비밀번호 찾기 테스트");
+		        msg.setText("비밀번호 찾자찾자\n");
+		        Transport.send(msg);
+		        System.out.println("message sent successfully...");
+		    } catch (MessagingException mex) {
+		        System.out.println("send failed, exception: " + mex);
+		    }
+		    
+		   return "main"; 
+//		    Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
+//		     protected PasswordAuthentication getPasswordAuthentication() {
+//		      return new PasswordAuthentication(user, password);
+//		     }
+//		    });
+//
+//		    // Compose the message
+//		    try {
+//		     MimeMessage message = new MimeMessage(session);
+//		     message.setFrom(new InternetAddress(user));
+//		     message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
+//
+//		     // Subject
+//		     message.setSubject("[Subject] Java Mail Test");
+//		     
+//		     // Text
+//		     message.setText("Simple mail test..");
+//
+//		     // send the message
+//		     Transport.send(message);
+//		     System.out.println("message sent successfully...");
+//
+//		    } catch (MessagingException e) {
+//		     e.printStackTrace();
+//		    }
+	}
+	
 	@RequestMapping("/goMyInfo")
 	public String goMyInfo(String email, Model model) {
 		System.out.println("개인 정보 CON 도착.");

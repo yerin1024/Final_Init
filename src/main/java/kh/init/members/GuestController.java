@@ -1,5 +1,9 @@
 package kh.init.members;
 
+
+import java.util.HashMap;
+import java.util.Random;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +14,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.JsonObject;
+
+import kh.init.configuration.Utils;
+import net.nurigo.java_sdk.api.Message;
 
 @RequestMapping("/guest")
 @Controller
@@ -39,9 +46,6 @@ public class GuestController {
 			service.insert(dto, profileImg, path);
 		}
 		System.out.println("회원가입 컨트롤러 진입");
-//		model.addAttribute("profile1", service.getProfile("abcdefg@hanmail.net"));
-//		model.addAttribute("profile2", service.getProfile("eunbi_46@naver.com"));
-//		return "testImg";
 		return "main";
 	}
 
@@ -85,7 +89,16 @@ public class GuestController {
 			return obj.toString();
 		}
 	}
-
+	
+	@RequestMapping("/sendVerifCode.do")
+	@ResponseBody
+	public String toSendVerifCode(String phone) {
+		String ranNum = service.sendVerifCode(phone);
+		obj.addProperty("result", ranNum);
+		//이 부분을 사실 클라이언트에 넘길 필요가 없음... 
+		return obj.toString();
+	}
+	
 	@RequestMapping("/verifyUser.do")
 	public String toVerifyUser() {
 		//ajax 비동기로 동작

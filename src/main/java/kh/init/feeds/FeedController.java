@@ -44,12 +44,12 @@ public class FeedController {
 	}
 
 	@RequestMapping("/deleteProc")
-	public String deleteProc(ReplyDTO dto) {
+	public String deleteProc(int feed_seq) {
 		System.out.println("삭제 도착!");
-		System.out.println(dto.getFeed_seq()+dto.getReply_seq());
+		System.out.println(feed_seq + " ㅁㄴㅇㅁㄴ");
 		try {
-			int result =  service.deleteFeed(dto);
-			int replyResult = service.deleteFeedAndReply(dto);
+			int result =  service.deleteFeed(feed_seq);
+			int replyResult = service.deleteReply(feed_seq);
 			System.out.println(result + "행이 삭제되었습니다.");
 			System.out.println(replyResult + "행이 삭제되었습니다.");
 		} catch (Exception e) {
@@ -119,16 +119,13 @@ public class FeedController {
 	@RequestMapping("/detailView")
 	public String detailView(int feed_seq, Model model) {
 		System.out.println("detailView 도착");
-		System.out.println(feed_seq);
 		FeedDTO dto = null;
 		List<ReplyDTO> replyList = null;
 		List<String> list = null;
 		try {
 			dto = service.detailView(feed_seq);
-			replyList = service.viewReply(feed_seq);
+			replyList = service.viewAllReply(feed_seq);
 			list = service.getMediaList(feed_seq);
-			System.out.println(replyList.size() + "리플라이리스트 사이즈입니다.");
-			System.out.println(dto.toString());
 			model.addAttribute("replylist",replyList);
 			model.addAttribute("media", list);
 			model.addAttribute("dto", dto);	
@@ -168,16 +165,22 @@ public class FeedController {
 	// ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 
 	@RequestMapping("/registerReply")
-	public String registerReply(FeedDTO dto) {
+	@ResponseBody
+	public String registerReply(ReplyDTO dto) {
 		System.out.println("댓글 등록도착!");
+		System.out.println("피드시퀀스:"+dto.getFeed_seq());
+		System.out.println("댓글 내용입니다 :"+dto.getContents());
+		String result = null;
+		//나중에 세션값으로 대체
+		dto.setNickname("abd");
 		System.out.println(dto.getFeed_seq()+ " : "+dto.getContents()+" : "+dto.getNickname());
 		try {
-			int result = service.registerReply(dto);
-			System.out.println(result + "개의 댓글이 추가되었습니다");
+			result = service.registerReply(dto);
+			System.out.println(dto.getFeed_seq()+"??????????");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "redirect:myFeed";
+		return result;
 	}
 	@RequestMapping("/modifyReply")
 	public String modifyReply(FeedDTO dto) {
@@ -186,27 +189,25 @@ public class FeedController {
 
 	@RequestMapping("/deleteReply")
 	@ResponseBody
-	public String deleteReply(ReplyDTO dto) {
-		int seq = dto.getReply_seq();
+	public String deleteReply(int reply_seq) {
 		System.out.println("댓글 삭제 도착!!");
-		System.out.println(dto.getFeed_seq()+": 피드 시퀀스~");
-		System.out.println(dto.getReply_seq()+": 댓글피드 시퀀스~");
+		System.out.println(reply_seq+"이 댓글 삭제로 넘어옴!");
 		int result = 0;
 		try {
-			result = service.deleteReply(dto);
+			result = service.deleteReply(reply_seq);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println(seq+"");
-		return seq+"";
+		System.out.println(reply_seq+"");
+		return  reply_seq+"";
 	}
-	@RequestMapping("/viewReply")
+	@RequestMapping("/viewAllReply")
 	@ResponseBody
 	public String viewReply(int feed_seq,Model model) {
 		System.out.println("게시물 댓글 보기 도착!!");
 		System.out.println(feed_seq);
 		try {
-			List<ReplyDTO> list = service.viewReply(feed_seq);
+			List<ReplyDTO> list = service.viewAllReply(feed_seq);
 			model.addAttribute("list", list);
 		} catch (Exception e) {
 			e.printStackTrace();

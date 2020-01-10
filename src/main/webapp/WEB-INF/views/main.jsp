@@ -73,7 +73,7 @@ a {
 								</div>
 							</div>
 							<div class="modal-footer">
-								<a href="" class="findId">아이디 찾기</a> <span> | </span> <a href=""
+								<a href="${pageContext.request.contextPath}/member/findPw.do"
 									class="findPw">비밀번호 찾기</a> <span> | </span> <a
 									href="${pageContext.request.contextPath}/guest/signUp.do"
 									class="signUp">회원가입</a>
