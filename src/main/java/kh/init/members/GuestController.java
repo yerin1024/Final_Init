@@ -1,5 +1,9 @@
 package kh.init.members;
 
+
+import java.util.HashMap;
+import java.util.Random;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +14,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.JsonObject;
+
+import kh.init.configuration.Utils;
+import net.nurigo.java_sdk.api.Message;
 
 @RequestMapping("/guest")
 @Controller
@@ -85,7 +92,38 @@ public class GuestController {
 			return obj.toString();
 		}
 	}
-
+	
+	@RequestMapping("/sendVerifCode.do")
+	@ResponseBody
+	public String toSendVerifCode(String phone) {
+		
+		System.out.println("phone: " + phone);
+		
+		String api_key = "NCSUEKNQT3HPHHH9";
+		String api_secret = "ILQGY1OP8WXQE5ZZ42KAEXVFK5EWA4UZ";
+		Message coolsms = new Message(api_key, api_secret);
+		String ranNum = Utils.generateCertNum();
+		System.out.println(ranNum);
+//		HashMap<String, String> set = new HashMap<String, String>();
+//		set.put("to", "01051922972");
+//		set.put("from", phone);
+//		set.put("text", "[Init] 인증번호는 [" + ranNum + "] 입니다.");
+//		set.put("type", "SMS");
+//		set.put("app_version", "test app 2.2");
+//		System.out.println("[Init] 인증번호는 [" + ranNum + "] 입니다.");
+		
+//		try {
+//			JSONObject result = coolsms.send(set);
+//			System.out.println(result.toString());
+//		} catch (CoolsmsException e) {
+//			e.printStackTrace();
+//		}	
+		obj.addProperty("result", ranNum);
+		return obj.toString();
+	}
+	
+	
+		
 	@RequestMapping("/verifyUser.do")
 	public String toVerifyUser() {
 		//ajax 비동기로 동작

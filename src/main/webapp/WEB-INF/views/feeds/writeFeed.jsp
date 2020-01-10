@@ -52,7 +52,7 @@
 }
 
 .carousel-control-next, .carousel-control-prev {
-	height: 600px;
+
 }
 
 .carousel-inner * {
@@ -147,6 +147,8 @@
 				    });
 					//성공했을때
 					this.on("success",function(file, response) {
+						$(".carousel-control-next").css("height","600px");
+						$(".carousel-control-prev").css("height","600px");
 						console.log(file);
 						console.log(response);
 						if(response.result=="fail"){

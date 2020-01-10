@@ -1,7 +1,9 @@
 package kh.init.feeds;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -58,7 +60,6 @@ public class FeedController {
 	@RequestMapping("/writeFeedProc")
 	public String writeFeedProc(FeedDTO dto) {
 		System.out.println("게시물 등록 도착!");		
-		//임시 이메일과 닉네임 ->이후에 세션으로 변경해야함
 		dto.setEmail(((MemberDTO)session.getAttribute("loginInfo")).getEmail());
 		dto.setNickname(((MemberDTO)session.getAttribute("loginInfo")).getNickname());
 
@@ -66,14 +67,14 @@ public class FeedController {
 		String mediaPath = session.getServletContext().getRealPath("media");
 		String realPath = session.getServletContext().getRealPath("");
 		List<String> mediaList = ((ArrayList<String>)session.getAttribute("mediaList"));
-		
+
 		try {
 			result = service.registerFeed(dto, mediaList, mediaPath, realPath);
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
 		System.out.println(result + "행의 게시물이 등록");
-		
+
 		session.setAttribute("mediaList", null);
 
 		return "redirect:myFeed";
@@ -85,27 +86,29 @@ public class FeedController {
 	public String mediaTmpUpload(MultipartFile file) {
 		System.out.println("mediaTmpUpload 도착");
 		String path = session.getServletContext().getRealPath("mediaTmp");
-		
+
 		String filePath = null;
 		String returnVal = null;
 		if(file.getSize()>10485760) {
 			returnVal = "{\"result\" : \"fail\"}";
 			return returnVal;
 		}
-		
+
 		String fileType = file.getContentType();
-		
+
 		fileType = fileType.split("/")[0];
 		System.out.println("fileType : "+fileType);
-
-		if(fileType.contentEquals("image")||fileType.contentEquals("video")) {
-			filePath = service.mediaTmpUpload(file, path);
-			System.out.println("filePath : " +filePath);
-			((ArrayList<String>)session.getAttribute("mediaList")).add(filePath);
-			
-			returnVal = "{\"result\" : \""+filePath+"\", \"type\" : \""+fileType+"\"}";
-		}else {
-			returnVal = "{\"result\" : \"fail\"}";
+		try {
+			if(fileType.contentEquals("image")||fileType.contentEquals("video")) {
+				filePath = service.mediaTmpUpload(file, path);
+				System.out.println("filePath : " +filePath);
+				((ArrayList<String>)session.getAttribute("mediaList")).add(filePath);
+				returnVal = "{\"result\" : \""+filePath+"\", \"type\" : \""+fileType+"\"}";
+			}else {
+				returnVal = "{\"result\" : \"fail\"}";
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
 		}
 		return returnVal;
 	}
@@ -113,17 +116,60 @@ public class FeedController {
 
 
 	@RequestMapping("/wholeFeed")
-	public String wholeFeed(Model model) {
+	public String wholeFeed(Model model, String keyword) {
 		System.out.println("wholeFeed 도착");
-		List<FeedDTO> list = null;
+		System.out.println(keyword);
+		List<FeedDTO> list = new ArrayList<>();
+		List<MemberDTO> friendList = new ArrayList<>();
+		List<String> cover = new ArrayList<>();
 		try {
-			list = service.selectAll();
-			model.addAttribute("list", list);
+				if(keyword==null || keyword.startsWith("#")) {//해시태그 검색
+					System.out.println("해시태그검색");
+					list = (List<FeedDTO>)service.wholeFeed(keyword).get("dtoList");
+					cover = (List<String>)service.wholeFeed(keyword).get("cover");
+					for(int i=0; i<list.size(); i++) {
+						System.out.println("list("+i+") : " +list.get(i));
+						System.out.println("cover("+i+") : " +cover.get(i));
+					}
+					model.addAttribute("option", "nfriend");
+				}else {
+					cover = null;
+					friendList = service.searchFriend(keyword);
+					model.addAttribute("option", "friend");
+				}
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
+
+		model.addAttribute("list", list);
+		model.addAttribute("friendList", friendList);
+		model.addAttribute("cover", cover);
 		return "/feeds/wholeFeed";
 	}
+
+
+	@RequestMapping("/scrapFeed")
+	public String wholeFeed(Model model) {
+		System.out.println("scrapFeed 도착");
+		String email = ((MemberDTO)session.getAttribute("loginInfo")).getEmail();
+		System.out.println("email : "+email);
+		
+		List<String> cover = new ArrayList<>();
+		List<FeedDTO> scrapList = new ArrayList<>();
+		
+		try {
+			scrapList = (List<FeedDTO>)service.scrapFeed(email).get("scrapList");
+			cover = (List<String>)service.scrapFeed(email).get("cover");
+			System.out.println("list.size : "+scrapList.size());
+			model.addAttribute("list", scrapList);
+			model.addAttribute("cover", cover);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return "/feeds/scrapFeed";
+	}
+	
+	
 
 	@RequestMapping("/detailView") 
 	public String detailView(String feed_seqS, Model model) {
@@ -134,19 +180,24 @@ public class FeedController {
 		int likeCheck = 0; //0은 안한것 1은 한것
 		int bookmarkCheck = 0; //0은 안한것 1은 한것
 		FeedDTO dto = null;
-		List<ReplyDTO> replyList = null;
-		List<String> list = null;
+		List<ReplyDTO> replyList = new ArrayList<>();
+		List<String> list = new ArrayList<>();
 		try {
 			dto = service.detailView(feed_seq);
 			likeCheck = service.likeCheck(feed_seq, ((MemberDTO)session.getAttribute("loginInfo")).getEmail());
 			bookmarkCheck = service.bookmarkCheck(feed_seq, ((MemberDTO)session.getAttribute("loginInfo")).getEmail());
-			
-			replyList = service.viewReply(feed_seq);
-			list = service.getMediaList(feed_seq);
+
+
 			System.out.println(replyList.size() + "리플라이리스트 사이즈입니다.");
 			System.out.println(dto.toString());
 			model.addAttribute("likeCheck", likeCheck);
 			model.addAttribute("bookmarkCheck", bookmarkCheck);
+
+			replyList = service.viewAllReply(feed_seq);
+			list = service.getMediaList(feed_seq);
+			for(String tmp : list) {
+				System.out.println(tmp);
+			}
 			model.addAttribute("replylist",replyList);
 			model.addAttribute("media", list);
 			model.addAttribute("dto", dto);	
@@ -184,6 +235,8 @@ public class FeedController {
 		return "/feeds/modifyFeedView";
 	}
 
+
+
 	//좋아요
 	@RequestMapping(value = "/insertLike", produces="text/html; charset=UTF-8")
 	@ResponseBody
@@ -191,7 +244,7 @@ public class FeedController {
 		System.out.println("insertLike 도착");
 		System.out.println("feed_seq : "+feed_seq);
 		String email = ((MemberDTO)session.getAttribute("loginInfo")).getEmail();
-		
+
 		try {
 			service.insertLike(feed_seq, email);
 		}catch(Exception e) {
@@ -212,10 +265,10 @@ public class FeedController {
 		}
 		return "like";
 	}
-	
-	
-	
-	
+
+
+
+
 	//북마크
 	@RequestMapping(value = "/insertBookmark", produces="text/html; charset=UTF-8")
 	@ResponseBody
@@ -223,7 +276,7 @@ public class FeedController {
 		System.out.println("insertBookmark 도착");
 		System.out.println("feed_seq : "+feed_seq);
 		String email = ((MemberDTO)session.getAttribute("loginInfo")).getEmail();
-		
+
 		try {
 			service.insertBookmark(feed_seq, email);
 		}catch(Exception e) {
@@ -244,29 +297,31 @@ public class FeedController {
 		}
 		return "like";
 	}
-	
-	
-	
-	
+
+
+
+
 	// ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 	//                                             댓글기능
 	// ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 
 	@RequestMapping("/registerReply")
-	public String registerReply(FeedDTO dto) {
+	@ResponseBody
+	public String registerReply(ReplyDTO dto) {
 		System.out.println("댓글 등록도착!");
-		
-		//세션값 대체 임시 닉네임
-		dto.setNickname("yes");
-		
+		System.out.println("피드시퀀스:"+dto.getFeed_seq());
+		System.out.println("댓글 내용입니다 :"+dto.getContents());
+		String result = null;
+		//나중에 세션값으로 대체
+		dto.setNickname("abd");
 		System.out.println(dto.getFeed_seq()+ " : "+dto.getContents()+" : "+dto.getNickname());
 		try {
-			int result = service.registerReply(dto);
-			System.out.println(result + "개의 댓글이 추가되었습니다");
+			result = service.registerReply(dto);
+			System.out.println(dto.getFeed_seq()+"??????????");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "redirect:myFeed";
+		return result;
 	}
 	@RequestMapping("/modifyReply")
 	public String modifyReply(FeedDTO dto) {
@@ -287,13 +342,13 @@ public class FeedController {
 		System.out.println(reply_seq+"");
 		return  reply_seq+"";
 	}
-	@RequestMapping("/viewReply")
+	@RequestMapping("/viewAllReply")
 	@ResponseBody
 	public String viewReply(int feed_seq,Model model) {
 		System.out.println("게시물 댓글 보기 도착!!");
 		System.out.println(feed_seq);
 		try {
-			List<ReplyDTO> list = service.viewReply(feed_seq);
+			List<ReplyDTO> list = service.viewAllReply(feed_seq);
 			model.addAttribute("list", list);
 		} catch (Exception e) {
 			e.printStackTrace();

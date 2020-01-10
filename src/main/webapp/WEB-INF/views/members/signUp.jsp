@@ -72,10 +72,14 @@
                                 <label class="adviseIn" id="adviseInPhone" hidden></label>
                                 <p class="adviseOut" id="advisePhone" readonly></p>
 
-                                <input type="text" id="verif_code" name="verif_code" placeholder="인증번호">
+                                <input type="text" id="verif_code" name="verif_code" placeholder="인증번호 입력" maxlength="6">
                                 <label class="adviseIn" id="adviseInVerifCode" hidden></label>
-                                <button type="button" id="sendCode" onclick="checkPhone();">send</button><br>
+                                <button type="button" id="sendCode" onclick="checkPhone();">인증번호 전송</button>
+                                <span id="showTimer" readonly></span>
+                                <button type="button" id="resendCode" onclick="checkPhone();" hidden>인증번호 재전송</button><br>
+                                <button type="button" id="checkVerifCode" onclick="confirmVerifCode();" hidden>인증번호 확인</button><br>
                                 <p class="adviseOut" id="adviseVerifCode" readonly></p>
+                                <p id="resultVerification" hidden></p>
 
                                 <label>생년월일</label>
                                 <select id="year" class="birthYear">
@@ -129,6 +133,10 @@
         var adviseEmail = doc.getElementById("adviseEmail");
         var sendCode = doc.getElementById("sendCode");
         var verif_code = doc.getElementById("verif_code");
+        var resultVerification = doc.getElementById("resultVerification");
+        var resendCode = doc.getElementById("resendCode");
+        var checkVerifCode = doc.getElementById("checkVerifCode");
+        var showTimer = doc.getElementById("showTimer");
 
         var advisePw = doc.getElementById("advisePw");
         var adviseNickname = doc.getElementById("adviseNickname");
@@ -151,7 +159,6 @@
         function readURL(input) {
             if (input.files && input.files[0]) {
                 var reader = new FileReader();
-                
                 reader.onload = function (e) {
                     console.log(profile_img.value);  // 파일명                
                     setProfile.src = e.target.result; 
@@ -357,30 +364,99 @@
         }
 
         function checkPhone(){
+        	checkVerifCode.hidden = false;
+        	sendCode.hidden = true;        
+        	resendCode.hidden = false;
+        	verif_code.disabled = false;
             phone.value = phone1.value + phone2.value + phone3.value;
+            
+            function TimerStart(){
+            	tid = setInterval('msg_time()',1000);
+            	console.log("1");
+            };
+            
+            var SetTime = 50;
+            showTimer.innerHTML = "05:00";
+            console.log("2");
+            
+    		function msg_time() {
+    			m = Math.floor(SetTime / 60) + ":" + (SetTime % 60);
+    			console.log(m);
+    			console.log("3");
+    			var msg = m;
+    			showTimer.innerHTML = msg;
+    			console.log("4");
+    			SetTime--;	// 1초씩 감소
+    			if (SetTime < 0) {	
+        			console.log("5")
+    				// 시간이 종료 되었으면..
+    				clearInterval(tid);		// 타이머 해제
+    				alert("종료");
+    			}    			
+    		}    		
+    		
+            setTimeout(function () {
+            	adviseVerifCode.innerHTML = "입력시간이 초과되었습니다.";
+        		adviseVerifCode.style.color = "red";
+        		adviseInVerifCode.innerHTML ="사용불가";
+        		checkVerifCode.hidden = true;
+        		verif_code.disabled = true;
+        		
+            }, 30000);
+
             $.ajax({
                 url : "${pageContext.request.contextPath}/guest/checkPhone.do",
                 data : {phone : phone.value},
                 dataType : "json",
-                type : "post"
+                type : "post",
+//                 async : false
                 }).done(function(resp){
                     console.log(resp);
                     if(resp.result == "available"){
                         adviseInPhone.innerHTML = "사용가능";
+                        
+                        $.ajax({
+                        	url: "${pageContext.request.contextPath}/guest/sendVerifCode.do",
+                        	data : {phone : phone.value},
+                        	dataType: "json",
+                        	type : "post"
+                        }).done(function(resp){
+                        	console.log(resp);
+                        	console.log(resp.result);
+                            resultVerification.innerHTML = resp.result;                        
+                            
+                        }).fail(function(a,b,c){
+                        	console.log(a);
+                        	console.log(b);
+                        	console.log(c);
+                        });
                     }else{
                     	advisePhone.innerHTML = "중복된 번호입니다.";
                     	advisePhone.style.color = "red";
                         adviseInPhone.innerHTML = "사용불가";
                         return false;
-                    }                    
+                    }                
                 }).fail(function(a,b,c){
                     console.log(a);
                     console.log(b);
                     console.log(c);
                     return false;
-                });
+                });  
         }
-
+        
+        function confirmVerifCode(){
+        	console.log("verif_code : " + verif_code.value);
+        	
+        	if(verif_code.value == resultVerification.innerHTML){
+        		adviseVerifCode.innerHTML = "인증 완료";
+        		adviseVerifCode.style.color = "green";
+        	}else{
+        		adviseVerifCode.innerHTML = "인증번호 불일치";
+        		adviseVerifCode.style.color = "red";
+        		adviseInVerifCode.innerHTML ="사용불가";
+        	}
+        }    
+        
         function appendYear(){
             var date = new Date();
             var year = date.getFullYear();

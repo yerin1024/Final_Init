@@ -8,6 +8,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import kh.init.members.MemberDTO;
+
 @Repository
 public class FeedDAO {
 
@@ -37,10 +39,22 @@ public class FeedDAO {
 	}
 
 	
-	public List<FeedDTO> selectAll() throws Exception{
-		List<FeedDTO> list = jdbc.selectList("Feed.selectAll");
+	public List<FeedDTO> selectAll(String keyword) throws Exception{
+		List<FeedDTO> list = jdbc.selectList("Feed.selectAll", keyword);
 		return list;
 	}
+	
+	public List<FeedDTO> scrapFeed(String email) throws Exception{
+		List<FeedDTO> list = jdbc.selectList("Feed.scrapFeed", email);
+		return list;
+	}
+
+	public List<MemberDTO> searchFriend(String keyword) throws Exception{
+		List<MemberDTO> list = jdbc.selectList("Feed.searchFriend", keyword);
+		return list;
+	}
+	
+	
 	public int modifyFeed(FeedDTO dto)throws Exception{
 		return jdbc.update("Feed.modifyFeed",dto);		
 	}

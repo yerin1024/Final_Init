@@ -17,8 +17,8 @@
 		$("#myInformation").on("click",function(){
 			location.href = "member/goMyInfo";
 		})
-		$("#fileTest").on("click",function(){
-			location.href = "/fileTest";
+		$("#scrap").on("click",function(){
+			location.href = "feed/scrapFeed";
 		})
 	})
 </script>
@@ -28,6 +28,6 @@
 	<button type="button" id="myInformation">회원 정보 수정</button>
 	
 	
-	<button type="button" id="fileTest">파일테스트</button>
+	<button type="button" id="scrap">나의 스크랩피드</button>
 </body>
 </html>
