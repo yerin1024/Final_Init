@@ -6,28 +6,90 @@
 <head>
 <meta charset="UTF-8">
 <title>Manage Black</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+<style>
+.wdBtn,.cbBtn {
+	box-shadow: 0.5px 0.5px 0.5px 0.5px gray;
+	border-radius: 5px 5px 5px 5px;
+}
+#searchDiv {
+	text-align: right;
+}
+</style>
 </head>
 <body>
-	<c:forEach items="${blackList}" var="mdto">
-		<table>
-			<tr>
-				<th>profile</th>
-				<th>nickname</th>
-				<th>name</th>
-				<th>email</th>
-				<th>edit</th>
-			</tr>
-			<tr>
-				<td>${mdto.profile_img}</td>
-				<td>${mdto.nickname}</td>
-				<td>${mdto.name}</td>
-				<td>${mdto.email}</td>
-				<td><button class="wdBtn" id="${mdto.email}">탈퇴</button>
-					<button class="tmBtn" id="${mdto.email}">되살리기</button></td>
-			</tr>
-		</table>
-	</c:forEach>
+	<div class="container mt-5">
+		<div class="row">
+			<div class="col-sm-12 col-md-2">
+				<div class="panel panel-info">
+					<div class="panel-heading">
+						<h3 class="panel-title">Menu</h3>
+					</div>
+					<!-- 사이드바 메뉴목록1 -->
+					<ul class="list-group">
+						<li class="list-group-item"><a href="${pageContext.request.contextPath}/admin/memberList.do">멤버관리</a></li>
+						<li class="list-group-item"><a href="${pageContext.request.contextPath}/admin/totalFeedList.do">피드관리</a></li>
+						<li class="list-group-item"><a href="${pageContext.request.contextPath}/admin/blackList.do">블랙리스트관리</a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="col-sm-12 col-md-10">
+				<div class="row">
+					<div class="col-xs-12">
+						<h3>블랙리스트 관리</h3>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-12" id="searchDiv">
+						<form action="${pageContext.request.contextPath}/admin/searchForBlack.do" method="post" id="searchF">
+							<select id="searchTag" name="searchTag">
+								<option value="nickname">닉네임</option>
+								<option value="name">이름</option>
+								<option value="email">이메일</option>
+							</select> <input type="text" id="search" name="search">
+							<button type="submit" id="searchBtn" class="btn-secondary">검색</button>
+						</form>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-12">
+						<table class="table table-hover">
+							<thead>
+								<tr>
+									<th>profile</th>
+									<th>nickname</th>
+									<th>name</th>
+									<th>email</th>
+									<th>edit</th>
+								</tr>
+							</thead>
+							<tbody>
+								<c:forEach items="${blackList}" var="mdto">
+									<tr>
+										<td>${mdto.profile_img}</td>
+										<td>${mdto.nickname}</td>
+										<td>${mdto.name}</td>
+										<td>${mdto.email}</td>
+										<td><button type="button" class="wdBtn btn-danger"
+												id="out_${mdto.email}">탈퇴</button>
+											<button type="button" class="cbBtn btn-success"
+												id="cb_${mdto.email}">되살리기</button></td>
+									</tr>
+								</c:forEach>
+								<tr align=center>
+									<td colspan=5>${pageNavi}</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </body>
 <script>
 	$(".wdBtn").on("click", function() {
@@ -39,14 +101,20 @@
 				withdrawal : withdrawal
 			}
 		}).done(function(resp) {
-			//resp.reload();
+			if (resp == withdrawal) {
+				alert("탈퇴되었습니다.");
+			} else {
+				alert("탈퇴시키는 것에 실패하셨습니다.");
+				location.reload();
+			}
+
 		}).fail(function(a, b, c) {
 			console.log(a);
 			console.log(b);
 			console.log(c);
 		});
 	});
-	$(".tmBtn").on("click", function() {
+	$(".cbBtn").on("click", function() {
 		var cbMember = $(this).attr("id");
 		$.ajax({
 			url : "${pageContext.request.contextPath}/admin/toMemberProc.do",
@@ -55,10 +123,14 @@
 				cbMember : cbMember
 			}
 		}).done(function(resp) {
-			//resp.reload();
-// 			if(resp == 'toMember success'){
-// 			}
-	
+			console.log(cbMember);
+			if (resp == cbMember) {
+				alert("멤버로 되살렸습니다.");
+				location.reload();
+			} else {
+				alert("멤버 되살리는 것에 실패하셨습니다.");
+				location.reload();
+			}
 		}).fail(function(a, b, c) {
 			console.log(a);
 			console.log(b);
