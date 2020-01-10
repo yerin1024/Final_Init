@@ -249,18 +249,7 @@ ul { padding-bottom: 10px; }
           
 		<div class="sector">
 <!--           ------------------------------------------------->
-			<c:forEach var="dto" items="${list}">
-        	<div class="pre_line">
-        		<div class="pre_pf"><img src="images/b1.png" class="pre_pf_img"></div>
-        		<div class="pre_text"><b>${dto.fr_id}</b></div>
-                <div class="pre_time">
-<%--                 <a href="${pageContext.request.contextPath}/message/messageView.msg?fr_id=${dto.fr_id}"> --%>
-                <img src="/images/startMsg.png" class="pre_start">
-<!--                 </a> -->
-                </div>
-            </div>
-       		</c:forEach>
-			
+
 <!--             <div class="pre_line"> -->
 <!--                 <div class="pre_pf"><img src="images/b1.png" class="pre_pf_img"></div> -->
 <!--                 <div class="pre_text"><b>yuri</b></div> -->
@@ -287,6 +276,18 @@ ul { padding-bottom: 10px; }
 <!--                 <div class="pre_time"><img src="images/startMsg.png" class="pre_start"></div> -->
 <!--             </div> -->
 
+			<c:forEach var="dto" items="${list}">
+        	<div class="pre_line">
+        		<div class="pre_pf"><img src="images/b1.png" class="pre_pf_img"></div>
+        		<div class="pre_text"><b>${dto.fr_id}</b></div>
+                <div class="pre_time">
+<%--                 <a href="${pageContext.request.contextPath}/message/messageView.msg?fr_id=${dto.fr_id}"> --%>
+                <img src="/images/startMsg.png" class="pre_start" id=${fr_id}">
+<!--                 </a> -->
+                </div>
+            </div>
+       		</c:forEach>
+			
 <!--           ------------------------------------------------->
         <div id="footer">
         </div>
@@ -300,78 +301,69 @@ ul { padding-bottom: 10px; }
 		// 열기 - 접기
 		$("div[class='ac1']").click(function(){ $("div[id='view1']").fadeIn(0); });
 		$("div[id='cross']").click(function(){ $("div[id='view1']").fadeOut(0); });
-	 
-// 	 $(".pre_start").on("click",function(){
-// 		 location.href="${pageContext.request.contextPath}/message/messageView.msg?to_id=${dto.fr_id}";
-// 	 });
-	 
-// 	 $("#pre_start").on("click",function(){
-// 		 $.ajax({
-// 	            url : "start.msg",
-// 	            method : "post",
-// 	            data : {
-// 	               root : "${dto.seq}",
-// 	               comments : $("#commentInput").val(),
-// 	               currentCoPage : $("#hide").html()
-// 	            },
-// 	            dataType : "json"
-// 	         }).done(function(data) {
-// 	            var list = JSON.parse(data.list);
-// 	            $("#hide").html(1);
-// 	            if(list!=null){
-// 	               $("#coNavi").html("");
-// 	               $("#coNavi").html(data.coNavi);
-// 	               $("#commentList").html("");   
-// 	               $("#commentInput").val("");
-	               
-// 	               var login = "${loginInfo.id}";
-// 	               var manager_check = "${loginInfo.manager_check}";
-// 	               $.each(list, function(index, value){   
-	               
-// 	                  if(login==value.writer||manager_check=='Y'){
-// 	                     $("#commentList").append( "<div class='comment' seq="+value.seq+"><span class='coWriter'>"+value.writer+"</span>&nbsp<span class='coDate'>"+value.formed_date+"</span><span class='commentBtns'><a class='coUpdate' seq="+value.seq+">수정</a>&nbsp;<a class='coDelete' seq="+value.seq+">삭제</a></span></div>");
-// 	                  }else{
-// 	                     $("#commentList").append( "<div class='comment' seq="+value.seq+"><span class='coWriter'>"+value.writer+"</span>&nbsp<span class='coDate'>"+value.formed_date+"</span></div>");
-// 	                  }
-// 	                  $(".comment[seq="+value.seq+"]").append("<br><textarea class='coInput' seq="+value.seq+" readonly=true>"+value.contents+"</textarea></div>&nbsp;<div class='upBtns'><a class='upBtn' seq="+value.seq+"></a>&nbsp;<a class='upBtn' seq="+value.seq+">수정완료</a>");
-// 	               })
-// 	            }
-// 	         })
-// 	 });
-	 
 	});
 	
-	$(".pre_start").on("click",function(){
-		 var url = "${pageContext.request.contextPath}/message/messageView.msg?fr_id=${dto.fr_id}";
-		 var url2 = "${pageContext.request.contextPath}/message/messageView.msg?fr_id='098@123.123'";
-		 var url3 = "${pageContext.request.contextPath}/message/messageView.msg?fr_id=098@123.123";
-		 console.log(url);
-		 console.log(url2);
-		 console.log(url3);
-		 
-		 $.ajax({
-			url: "${pageContext.request.contextPath}/message/messageView.msg",
-			method: "get",
-			data: {
-				to_id: "098@123.123"
-			},
-			dataType: "json"
-		 }).done(function(resp){
-			 console.log("성공!!")
-			 console.log(resp.result);
-			 for(var i=0 in resp){
-				 console.log(resp[i].result);
-				 }
+	$(document).ready(function(){
+		$(".pre_start").on("click",function(){
+			
+			var bbsreplll = $(this).attr('id'); 
+			alert(bbsreplll);
+			
+		});
+		
+	});
+	
+	
+	$(document).ready(function(){
+		
+		$(".pre_start").on("click",function(){
+			
+			var matches = document.getElementsByClassName("pre_start");
+			var seq = document.getElementsByClassName("pre_start").value;
+			console.log(this.value);
+			console.log(seq);
+			
+// 			for (var i=0; i<matches.length; i++) {
+// 				  matches[i].classList.remove('colorbox');
+// 				  matches.item(i).classList.add('hueframe');
+// 				  }
+			
+			
+// 			 var url = "${pageContext.request.contextPath}/message/messageView.msg?fr_id=${dto.fr_id}";
+// 			 var url2 = "${pageContext.request.contextPath}/message/messageView.msg?fr_id='098@123.123'";
+// 			 var url3 = "${pageContext.request.contextPath}/message/messageView.msg?fr_id=098@123.123";
+// 			 console.log(url);
+// 			 console.log(url2);
+// 			 console.log(url3);
+			 
+// 			 $.ajax({
+// 				url: "${pageContext.request.contextPath}/message/messageView.msg",
+// 				method: "get",
+// 				data: {
+// 					to_id: "098@123.123"
+// 				},
+// 				dataType: "json"
+// 			 }).done(function(resp){
+// 				 console.log("성공!!")
+// 				 console.log(resp.result);
+// 				 for(var i=0 in resp){
+// 					 console.log(resp[i].result);
+// 					 }
 
-	       	
-		 }).fail(function(a,b,c){
-			 console.log("실패!")
-	        	console.log(a);
-	        	console.log(b);
-	        	console.log(c);
-	      })
-		 
-	 });
+		       	
+// 			 }).fail(function(a,b,c){
+// 				 console.log("실패!")
+// 		        	console.log(a);
+// 		        	console.log(b);
+// 		        	console.log(c);
+// 		      })
+			 
+		 });
+		
+		
+	});
+	
+	
 	
 	</script>
 	

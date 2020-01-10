@@ -31,11 +31,12 @@ public class MessageController {
 		return "messages/messageMain";
 	}
 	
-	@RequestMapping(value="messageView.msg", produces="text/html; charset=UTF-8", method = RequestMethod.GET)
+	@RequestMapping(value="messageView.msg", produces="text/html; charset=utf8")
 	@ResponseBody
 	public Object toView(MessageDTO dto, String fr_id, String to_id, Model model) {
 		System.out.println("message 상세 보기 도착");
-		List<MessageDTO> result = service.selectThirty("123@123.123", fr_id);
+		// 첫 번째 인자 session id로 바꿔야 함
+		List<MessageDTO> result = service.selectThirty("123@123.123", to_id);
 		for(MessageDTO tmp : result) {
 			System.out.println(tmp.getContents() + " : " + tmp.getWrite_date());
 		}
@@ -45,6 +46,21 @@ public class MessageController {
 		
 		return ret;
 	}
+	
+//	@RequestMapping(value="messageView.msg", produces="text/html; charset=UTF-8", method = RequestMethod.GET)
+//	@ResponseBody
+//	public Object toView(MessageDTO dto, String fr_id, String to_id, Model model) {
+//		System.out.println("message 상세 보기 도착");
+//		List<MessageDTO> result = service.selectThirty("123@123.123", fr_id);
+//		for(MessageDTO tmp : result) {
+//			System.out.println(tmp.getContents() + " : " + tmp.getWrite_date());
+//		}
+//		
+//		Map<String, Object> ret= new HashMap<String, Object>();
+//		ret.put("resp", result);
+//		
+//		return ret;
+//	}
 	
 //	@RequestMapping("messageView.msg")
 //	public String toView(MessageDTO dto, String fr_id, String to_id, Model model) {
