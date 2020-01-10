@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import kh.init.members.MemberDTO;
+import kh.init.members.MemberService;
+
 @RequestMapping("/feed")
 @Controller
 public class FeedController {
@@ -19,18 +22,24 @@ public class FeedController {
 	@Autowired
 	private FeedService service;
 	@Autowired
+	private MemberService mservice;
+	@Autowired
 	private HttpSession session;
 
 	@RequestMapping("/myFeed")
+
 	public String myFeed(Model model) {
 		System.out.println("wholeFeed 도착");
 		List<FeedDTO> list = null;
 		try {
+			MemberDTO dto = mservice.getMyPageService("kks@naver.com");
 			list = service.selectAll();
+			model.addAttribute("dto", dto);
 			model.addAttribute("list", list);
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
+
 		return "feeds/myFeed";
 	}
 
