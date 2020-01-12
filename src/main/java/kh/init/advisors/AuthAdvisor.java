@@ -10,7 +10,8 @@ public class AuthAdvisor {
 	@Autowired
 	private HttpSession session;
 	
-	public String loginCheck(ProceedingJoinPoint pjp) {
+	// 회원가입, 로그인을 제외한 모든 페이지 로그인 세션 확인 후 접근 advisor
+	public String loginCheck(ProceedingJoinPoint pjp) { 
 		String user = (String) session.getAttribute("loginInfo");
 		System.out.println(user);
 		

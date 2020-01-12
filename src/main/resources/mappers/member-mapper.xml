@@ -18,6 +18,9 @@
 	<select id="getProfile" resultType="string">
 		select profile_img from tb_member where email=#{email}
 	</select>
+	<update id="resetPw">
+		update tb_member set pw=#{pw}
+	</update>
 	
 	<select id="isLoginOk" parameterType="java.util.Map" resultType="integer">
 		select count(*) from tb_member where email= #{email} and pw= #{pw}

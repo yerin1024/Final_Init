@@ -34,6 +34,10 @@ public class MemberDAO {
 		return jdbc.selectOne("Member.getProfile", email);
 	}
 	
+	public int resetPw(String pw) {
+		return jdbc.update("Member.resetPw", pw);
+	}
+	
 	public int isLoginOk(String email, String pw) {
 		Map<String, String> param = new HashMap<>();
 		param.put("email", email);
