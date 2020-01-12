@@ -17,49 +17,37 @@ public class AlarmController {
 	@Autowired
 	private AlarmService service;
 	
+	// 알림 메인
 	@RequestMapping("alarmMain")
 	public String toAlarm() {
 		System.out.println("alarm main 도착");
 		return "messages/alarm";
 	}
 	
-	@RequestMapping(value="/test.al", produces="text/html; charset=utf8")
+	// 알림 리스트 띄우기
+	@RequestMapping(value="/alarmList.al", produces="text/html; charset=utf8")
 	@ResponseBody
-	public String testAl(String email) {
-		System.out.println("테스트 시작");
+	public String alarmList() {
+		System.out.println("알림 리스트 열기 성공");
 		List<AlarmVO> result = service.alarmList2("123@123.123");
 		// 나중엔 이메일 부분 session id로 받을 것
-		
-//		for(AlarmVO tmp : result) {
-//			System.out.println(tmp.getType() + " : " + tmp.getReg_date() + " : "
-//				+ tmp.getEmail() + " : " + tmp.getNickname_r() + " : " + tmp.getContents() + " : "
-//				+ tmp.getFrom_id() + " : " + tmp.getEmail_lk());
-//		}
 		
 		Gson gs = new Gson();
 		return gs.toJson(result);
 	}
 	
+	// 알림 삭제
 	@RequestMapping(value="/delete.al", produces="text/html; charset=utf8")
 	@ResponseBody
 	public String deleteAlarm(String email, int alarm_seq) {
-		System.out.println("삭제 테스트 시작");
-		System.out.println("알림 시퀀스 : " + alarm_seq);
+		System.out.println("알림 삭제 성공");
 		service.deleteAlarm("123@123.123", alarm_seq);
 		List<AlarmVO> result = service.alarmList2("123@123.123");
 		// 나중엔 이메일 부분 session id로 받을 것
 		
-//		for(AlarmVO tmp : result) {
-//			System.out.println(tmp.getType() + " : " + tmp.getReg_date() + " : "
-//				+ tmp.getEmail() + " : " + tmp.getNickname_r() + " : " + tmp.getContents() + " : "
-//				+ tmp.getFrom_id() + " : " + tmp.getEmail_lk());
-//		}
-		
 		Gson gs = new Gson();
 		return gs.toJson(result);
 	}
-	
-	
 	
 //	@RequestMapping(value="/sendFly.msg", produces="text/html; charset=utf8")
 //	@ResponseBody
