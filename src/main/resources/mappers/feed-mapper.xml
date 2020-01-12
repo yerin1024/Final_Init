@@ -4,10 +4,14 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="Feed">
 	<select id="selectAll" resultType="kh.init.feeds.FeedDTO">
-		select * from tb_feed
+		select * from tb_feed where relation='0'
 		<if test="keyword != null">
-			where hashtag Like #{keyword}
+			and hashtag Like #{keyword}
 		</if>
+	</select>
+	
+	<select id="getMyPage" resultType="kh.init.feeds.FeedDTO">
+		select * from tb_feed where email=#{email}
 	</select>
 	
 	<select id="scrapFeed" resultType="kh.init.feeds.FeedDTO">

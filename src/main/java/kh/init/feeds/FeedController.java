@@ -29,14 +29,13 @@ public class FeedController {
 	private HttpSession session;
 
 	@RequestMapping("/myFeed")
-
 	public String myFeed(Model model) {
 		System.out.println("myFeed 도착");
 		List<FeedDTO> list = null;
 		String email = ((MemberDTO)session.getAttribute("loginInfo")).getEmail();
 		try {
 			MemberDTO dto = mservice.getMyPageService(email);
-			list = service.selectAll();
+			list = service.getMyFeed(email);
 			model.addAttribute("dto", dto);
 			model.addAttribute("list", list);
 		}catch(Exception e) {
@@ -72,8 +71,11 @@ public class FeedController {
 		dto.setNickname(((MemberDTO)session.getAttribute("loginInfo")).getNickname());
 
 		int result = 0;
+		//mediaTmpUpload에서 임시로 mediaTmp폴더에 넣어둔 미디어들을 옮기기 위한 폴더
 		String mediaPath = session.getServletContext().getRealPath("media");
 		String realPath = session.getServletContext().getRealPath("");
+		
+		//mediaTmpUpload에서 사진업로드 될 때마다 사진 경로+이름을 mediaList에 담아둔걸 꺼냄
 		List<String> mediaList = ((ArrayList<String>)session.getAttribute("mediaList"));
 
 		try {
@@ -81,20 +83,23 @@ public class FeedController {
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println(result + "행의 게시물이 등록");
-
+		
+		//등록이 되면 mediaList를 비워둠
 		session.setAttribute("mediaList", null);
 
 		return "redirect:myFeed";
 	}
 
 
+	//writeFeed에서 dropzone을 이용해서 파일업로드를 했을 때의 ajax 통신을 위한 requestMapping
 	@RequestMapping(value="/mediaTmpUpload", produces="application/json; charset=UTF-8")
 	@ResponseBody
 	public String mediaTmpUpload(MultipartFile file) {
 		System.out.println("mediaTmpUpload 도착");
+		
+		//mediaTmpUpload에서는 mediaTmp폴더에 저장해놓음 , media라는 정식폴더에 넣어주는 과정은 writeFeedProc에서 수행
 		String path = session.getServletContext().getRealPath("mediaTmp");
-
+		
 		String filePath = null;
 		String returnVal = null;
 		if(file.getSize()>10485760) {
@@ -110,9 +115,12 @@ public class FeedController {
 			if(fileType.contentEquals("image")||fileType.contentEquals("video")) {
 				filePath = service.mediaTmpUpload(file, path);
 				System.out.println("filePath : " +filePath);
+				
+				//writeFeedProc에서 media들의 경로가 필요해서 session에 넣어둠 , mediaList는 임시로 homeController에서 생성함
 				((ArrayList<String>)session.getAttribute("mediaList")).add(filePath);
 				returnVal = "{\"result\" : \""+filePath+"\", \"type\" : \""+fileType+"\"}";
 			}else {
+				//파일형식이 image나 video가 아닌 경우 업로드가 되지 않도록하고 fail을 리턴해서 alert창으로 불가능한 파일이라고 띄우도록 했음
 				returnVal = "{\"result\" : \"fail\"}";
 			}
 		}catch(Exception e) {
@@ -131,7 +139,7 @@ public class FeedController {
 		List<MemberDTO> friendList = new ArrayList<>();
 		List<String> cover = new ArrayList<>();
 		try {
-				if(keyword==null || keyword.startsWith("#")) {//해시태그 검색
+				if(keyword==null || keyword.startsWith("#")) {//전체피드 가져오기 또는 해시태그 검색
 					System.out.println("해시태그검색");
 					list = (List<FeedDTO>)service.wholeFeed(keyword).get("dtoList");
 					cover = (List<String>)service.wholeFeed(keyword).get("cover");
@@ -140,7 +148,7 @@ public class FeedController {
 						System.out.println("cover("+i+") : " +cover.get(i));
 					}
 					model.addAttribute("option", "nfriend");
-				}else {
+				}else { //친구검색
 					cover = null;
 					friendList = service.searchFriend(keyword);
 					model.addAttribute("option", "friend");
@@ -227,6 +235,7 @@ public class FeedController {
 		}
 		return "/feeds/modifyFeedView";
 	}
+	
 	@RequestMapping("/modifyFeedView")
 	public String modifyFeedView(int feed_seq, Model model) {
 		System.out.println("게시물 수정페이지 도착!");
@@ -284,7 +293,6 @@ public class FeedController {
 		System.out.println("insertBookmark 도착");
 		System.out.println("feed_seq : "+feed_seq);
 		String email = ((MemberDTO)session.getAttribute("loginInfo")).getEmail();
-
 		try {
 			service.insertBookmark(feed_seq, email);
 		}catch(Exception e) {
