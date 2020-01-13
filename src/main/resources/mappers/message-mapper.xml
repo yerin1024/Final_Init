@@ -3,35 +3,61 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace ="Message">
-
-<!-- 	private int msg_seq; -->
-<!-- 	private String from_id; -->
-<!-- 	private String to_id; -->
-<!-- 	private String contents; -->
-<!-- 	private Timestamp write_date; -->
-<!-- 	private String receive_read; -->
 	
 	<!--  -->
-	<insert id="insertMsg"> <!-- 입력 -->
-		insert into tb_message values(meg_seq.nextval, #{from_id}, #{to_id}, #{contents}, sysdate, 'N')
+	<select id="insertMsgSeq">
+		select msg_seq.nextval from dual
+	</select>
+	
+	<!-- 입력 -->
+	<insert id="insertMsg">
+		insert into tb_message values(msg_seq.nextval, #{from_id}, #{to_id}, #{contents}, sysdate, 'N')
 	</insert>
 	
-	<select id="selectFifty" resultType="kh.init.messages.MessageDTO"> <!-- 메시지 최근 50개 -->
+	<!-- 메시지 최근 30개 -->
+	<select id="selectThirty" resultType="kh.init.messages.MessageDTO">
 	<![CDATA[
-		select * from (select * from tb_message order by 1 desc) where ((from_id=#{from_id} and to_id=#{to_id}) or (from_id=#{to_id} and to_id=#{from_id})) and rownum <=50 order by 1
+		select * from (select * from tb_message order by 1 desc) 
+		where ((from_id=#{from_id} and to_id=#{to_id}) or (from_id=#{to_id} and to_id=#{from_id})) and rownum <=30 order by 1
 	]]>
 	</select>
 	
-	<select id="selectAll" resultType="kh.init.messages.MessageDTO"> <!-- 메시지 전부 출력 -->
-		select * from tb_message order by 1
+	<!-- 메시지 전부 출력 -->
+	<select id="selectAll" resultType="kh.init.messages.MessageDTO">
+		select * from tb_message where ((from_id=#{from_id} and to_id=#{to_id}) or (from_id=#{to_id} and to_id=#{from_id})) order by 1 
 	</select>
 	
-	<update id="readCheck"> <!-- 읽음 표시 -->
+	<!-- 읽음 표시 -->
+	<update id="readCheck">
 		update tb_message set receive_read = 'Y' where from_id=#{to_id} and to_id=#{from_id}
 	</update>
 	
-	<select id="previewMsg"> <!-- 미리 보기 -->
-		select * from tb_message
+	<!-- 미리 보기 -->
+	<select id="previewMsg" resultType="kh.init.messages.MessageDTO">
+	<![CDATA[
+		select * from (select * from tb_message where from_id=#{from_id} order by msg_seq desc) 
+		where to_id=#{to_id} and rownum <=1
+	]]>
+	</select>
+	
+	<!-- 읽지 않은 메시지 수 -->
+	<select id="unreadCount" resultType="java.lang.Integer"> 
+		select count(*) from tb_message where (from_id=#{to_id} and to_id=#{from_id}) and receive_read = 'N'
+	</select>
+	
+	<!-- 친구 목록 -->
+	<select id="friendList" resultType="kh.init.friends.FriendDTO"> 
+		select * from tb_friend where my_id=#{my_id}
+	</select>
+	
+	<!-- 검색 -->
+	<select id="searchUser" resultType="kh.init.friends.FriendDTO">
+		select * from tb_friend where my_id=#{my_id} and to_id like '%'||#{fr_id}'%'
+	</select>
+	
+	<!-- 친구 닉네임으로 반환 -->
+	<select id="friendListConvert" resultType="kh.init.members.MemberDTO"> 
+		select nickname from tb_member where email=#{email}
 	</select>
 
 </mapper>

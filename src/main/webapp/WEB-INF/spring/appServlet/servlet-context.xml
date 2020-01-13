@@ -18,6 +18,8 @@
       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
 
 	<mvc:annotation-driven></mvc:annotation-driven>
+	<mvc:resources mapping="/resources/**" location="/resources/" />
+	<mvc:resources location="/resources/images/" mapping="/images/**" />
 	<mvc:resources mapping="/resources/**" location="/resources/"/>
 	<mvc:resources location="/resources/images/" mapping="/guest/resources/**" />
 	<mvc:resources location="/files/" mapping="/files/**"></mvc:resources>
