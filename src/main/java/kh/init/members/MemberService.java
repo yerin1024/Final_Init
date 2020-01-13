@@ -26,38 +26,39 @@ public class MemberService {
 	@Autowired
 	private MemberDAO dao;
 
-
 	// 로그인 유효성 검사
 	public int isLoginOk(String email, String pw) {
+		try {
+			pw = Configuration.encrypt(pw);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return dao.isLoginOk(email, pw);
 	}
 
 	// 비밀번호 찾기 이메일 임시비밀번호 전송
 	@Transactional("txManager")
 	public String findPw(String email) {
-		
 		if(dao.checkEmail(email) > 1) { // 이메일 유효 여부 확인
 			return "invalid";
 		}
-		
 		// 자바 메일 
 		String host = "smtp.naver.com";
-	    String manager = "init_manager"; // 관리자 이메일 아이디
-	    String password = "initmanager6"; // 관리자 이메일 pw
-	    String to = email; // 사용자 이메일
-	    String ranChar = Utils.generateCertChar(); // 임시 비밀번호 생성
-	    String user = null;
+		String manager = "init_manager"; // 관리자 이메일 아이디
+		String password = "initmanager6"; // 관리자 이메일 pw
+		String to = email; // 사용자 이메일
+		String ranChar = Utils.generateCertChar(); // 임시 비밀번호 생성
+		String user = null;
 		try {
 			user = dao.getMyInfo(email).getName();
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
-	    try { // 임시 비밀번호로 DB 변경
-			dao.resetPw(Configuration.encrypt(ranChar));
-		} catch (Exception e) {
+		try { // 임시 비밀번호로 DB 변경
+			dao.resetPw(email, Configuration.encrypt(ranChar));
+		}catch (Exception e) {
 			e.printStackTrace();
-		}	    
-	    
+		}
 		Properties props = new Properties();
 		props.put("mail.smtp.host", host);
 		props.put("mail.smtp.auth", "true");
@@ -66,31 +67,27 @@ public class MemberService {
 				return new PasswordAuthentication(manager, password);
 			}
 		});
-		    try {
-		        MimeMessage msg = new MimeMessage(session);
-		        msg.setFrom(new InternetAddress(manager));
-		        msg.setRecipients(Message.RecipientType.TO, to);
-		        msg.setSubject("[Init] 임시 비밀번호 발급 안내"); // 메일 타이틀
-		        msg.setText(user + "님 Init 임시 비밀번호가 발급되었습니다." // 메일 내용
-		        		+ "아래의 임시 비밀번호로 로그인 하신 후 반드시 비밀번호를 재설정하시기 바랍니다."
-		        		+ "비밀번호 재설정은 MyFeed > 보안 설정 > 비민번호 변경 에서 가능합니다."
-		        		+ "임시 비밀번호 : " + ranChar);
-		        Transport.send(msg); // 메일 전송
-		    } catch (MessagingException mex) {
-		        System.out.println("send failed, exception: " + mex);
-		    }
-		    return ranChar;
+		try {
+			MimeMessage msg = new MimeMessage(session);
+			msg.setFrom(new InternetAddress(manager));
+			msg.setRecipients(Message.RecipientType.TO, to);
+			msg.setSubject("[Init] 임시 비밀번호 발급 안내"); // 메일 타이틀
+			msg.setText(user + "님 Init 임시 비밀번호가 발급되었습니다." // 메일 내용
+					+ "아래의 임시 비밀번호로 로그인 하신 후 반드시 비밀번호를 재설정하시기 바랍니다."
+					+ "비밀번호 재설정은 MyFeed > 보안 설정 > 비민번호 변경 에서 가능합니다."
+					+ "임시 비밀번호 : " + ranChar);
+			Transport.send(msg); // 메일 전송
+		} catch (MessagingException mex) {
+			System.out.println("send failed, exception: " + mex);
+		}
+		return ranChar;
 	}
 
 	@Transactional("txManager")
 	public MemberDTO getMyPageService(String email) throws Exception{
-
-
 		MemberDTO dto = dao.getMyInfo(email);
 		System.out.println("왜값이 안나와"+dto.getEmail());
 		return dto;
-
-
 	}
 
 	@Transactional("txManager")
@@ -99,7 +96,6 @@ public class MemberService {
 		System.out.println("회원 탈퇴 입력된 값은 "+ email);
 		int result = dao.withdrawMem(email);
 		return result;
-
 	}
 
 	@Transactional("txManager")
@@ -108,7 +104,6 @@ public class MemberService {
 
 		int result = dao.changeMyInfo(id,dto);
 		return result;
-
 	}
 
 	@Transactional("txManager")
@@ -130,6 +125,5 @@ public class MemberService {
 
 		int result = dao.changeMyInfo(id,dto);
 		return result;
-
 	}
 }
