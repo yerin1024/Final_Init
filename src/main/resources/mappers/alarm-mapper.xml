@@ -11,9 +11,9 @@
 	<insert id="alarmReply"> <!-- 알림 추가 / 댓글 -->
 		insert into tb_alarm values(alarm_seq.nextval, 'R', #{sharedSeq}, sysdate, 'N', #{email})
 	</insert>
-<!-- 	<select id="alarmReplyWho" resultType="kh.init.feeds.ReplyDTO"> 댓글 작성자 찾기 테스트용 -->
-<!-- 		select al.alarm_seq, al.type, al.applied_seq, al.reg_date, al.alarm_check, al.email, re.nickname from tb_alarm al full outer join tb_reply re on al.applied_seq = re.reply_seq where type='R' and email= #{email} -->
-<!-- 	</select> -->
+	<select id="alarmReplyWho" resultType="kh.init.feeds.ReplyDTO"> 댓글 작성자 찾기 테스트용
+		select al.alarm_seq, al.type, al.applied_seq, al.reg_date, al.alarm_check, al.email, re.nickname from tb_alarm al full outer join tb_reply re on al.applied_seq = re.reply_seq where type='R' and email= #{email}
+	</select>
 	
 	<insert id="alarmLike"> <!-- 알림 추가 / 좋아요 -->
 		insert into tb_alarm values(alarm_seq.nextval, 'L', #{sharedSeq}, sysdate, 'N', #{email})
@@ -25,9 +25,6 @@
 	<insert id="alarmFriend"> <!-- 알림 추가 / 친구 요청 -->
 		insert into tb_alarm values(alarm_seq.nextval, 'F', #{sharedSeq}, sysdate, 'N', #{email})
 	</insert>
-<!-- 	<select id="alarmFriendWho" resultType="kh.init.feeds.ReplyDTO"> 친구 요청 테스트용 -->
-<!-- 		select al.alarm_seq, al.type, al.applied_seq, al.reg_date, al.alarm_check, al.email, fr.from_id from tb_alarm al full outer join tb_friend_request fr on al.applied_seq = fr.friend_seq where type='F' and email=#{email} -->
-<!-- 	</select> -->
 	
 	<select id="alarmList" resultType="kh.init.alarm.AlarmDTO"> <!-- 알림 목록 -->
 		select * from tb_alarm where email= #{email}
