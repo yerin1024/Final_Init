@@ -29,7 +29,6 @@ public class GuestController {
 		return "signUp";
 	}
 
-
 	//아이디 찾기
 		
 		

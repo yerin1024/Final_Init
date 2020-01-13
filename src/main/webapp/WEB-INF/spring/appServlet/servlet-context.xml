@@ -19,8 +19,7 @@
 
    <mvc:annotation-driven />
    <mvc:resources mapping="/resources/**" location="/resources/" />
-   
-   
+      
    <mvc:annotation-driven></mvc:annotation-driven>
    <mvc:resources location="/files/" mapping="/files/**"></mvc:resources>
    <mvc:resources location="/videoFiles/" mapping="/feed/videoFiles/**"></mvc:resources>
