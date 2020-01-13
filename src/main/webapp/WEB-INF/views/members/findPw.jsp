@@ -25,17 +25,18 @@
                 
         
         doc.getElementById("next").addEventListener("click", function(){
-        	var rawStr = email.value;
-        	console.log(rawStr);
-            if(rawStr != ""){
-            	if(regExp.test(rawStr)){
-            		doc.getElementById("findFrm").submit();
-                }else{
-                	alert("올바른 이메일 형식이 아닙니다.");
-                }
-            }else{
-                alert("이메일을 입력해 주세요.");
-            }
+//         	var rawStr = email.value;
+//         	console.log(rawStr);
+//             if(rawStr != ""){
+//             	if(regExp.test(rawStr)){
+//             		doc.getElementById("findFrm").submit();
+//                 }else{
+//                 	alert("올바른 이메일 형식이 아닙니다.");
+//                 }
+//             }else{
+//                 alert("이메일을 입력해 주세요.");
+//             }
+			doc.getElementById("findFrm").submit();
         })
     </script>
 </body>

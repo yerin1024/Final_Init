@@ -18,8 +18,8 @@
 	<select id="getProfile" resultType="string">
 		select profile_img from tb_member where email=#{email}
 	</select>
-	<update id="resetPw">
-		update tb_member set pw=#{pw}
+	<update id="resetPw" parameterType="java.util.Map">
+		update tb_member set pw=#{pw} where email=#{email}
 	</update>
 	
 	<select id="isLoginOk" parameterType="java.util.Map" resultType="integer">
