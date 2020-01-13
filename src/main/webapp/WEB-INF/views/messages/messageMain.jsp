@@ -5,9 +5,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <style>
+
 * {
 	box-sizing: border-box;
 }
@@ -75,12 +77,13 @@
 	.pre_text {
 		float: left;
 		width: 250px;
-		line-height: 55px;
 		font-size: 14px;
 		white-space: nowrap;
 		overflow: hidden;
 		text-overflow: ellipsis;
-		padding-left: 15px; padding-right: 15px;
+		padding-right: 15px;
+		line-height: 60px;
+		padding-left: 10px;
 	}
 	.pre_text_p{
            float: left;
@@ -130,11 +133,7 @@
 		padding: 2px; padding-top: 15px;
 	}
 	.pre_back:hover { cursor: pointer; }
-	.pre_text {
-		float: left;
-		line-height: 60px;
-		padding-left: 10px;
-	}
+	
 /* -- pre 끝 ----------------------------------------- */
 
 li { list-style: none; } 
@@ -214,11 +213,6 @@ ul { padding-bottom: 10px; }
     font-size: 15px;
 }
 
-.search {
-	position: fixed;
-	height: 100px;
-}
-
 .pre_time {
 	float: left;
 	width: 70px;
@@ -242,6 +236,221 @@ ul { padding-bottom: 10px; }
 .pre_start:hover {
 	cursor: pointer;
 }
+
+/* ---------------------------------------------------------------------------------------- */
+
+
+@media ( max-width : 700px ) {
+	.ac2 {
+		position: fixed;
+		bottom: 780px;
+		right: 10px;
+		/*            border: 1px solid black;*/
+		width: 50px;
+		height: 50px;
+	}
+	.pre_top {
+		/*    border: 1px solid red;*/
+		position: fixed;
+		bottom: 680px;
+		width: 100%;
+		height: 75px;
+		background-color: #5d9ef5;
+		color: white;
+	}
+	#view1 {
+		display: none;
+		position: fixed;
+		bottom: 80px;
+		right: 0px;
+		width: 100%;
+		height: 600px;
+		border: 1px solid #5d9ef5;
+		/*            border-radius: 10px;*/
+		overflow: scroll;
+		overflow-x: hidden;
+	}
+	#cross {
+		/*    border: 1px solid red;*/
+		float: right;
+		width: 50px;
+		height: 50px;
+		margin: 10px;
+	}
+	.sector {
+		/*    border: 1px solid #e6abb5;*/
+		min-height: 80px;
+	}
+
+	/* -- pre 시작 ----------------------------------------- */
+	.pre_line {
+		/*        border: 1px solid green;*/
+		padding-top: 5px;
+		height: 80px;
+	}
+	.pre_line:hover {
+		background-color: #e8e8e8;
+		transition-duration: 0.2s;
+	}
+	.pre_pf {
+		/*        border: 1px solid red;*/
+		width: 80px;
+		height: 80px;
+		float: left;
+		margin-left: 15px;
+		padding: 2px;
+		padding-top: 0px;
+	}
+	.pre_pf_img {
+		/*        border: 1px solid red;*/
+		width: 70px;
+		height: 70px;
+		border-radius: 50px;
+	}
+	.pre_text {
+		/*        border: 1px solid blue;*/
+		float: left;
+		width: 50vw;
+		line-height: 60px;
+		font-size: 20px;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		padding-left: 30px;
+		padding-right: 15px;
+	}
+	.pre_text_p {
+		/*            border: 1px solid red;*/
+		float: left;
+		width: 55vw;
+		line-height: 25px;
+		font-size: 15px;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		padding-left: 5px;
+		padding-right: 5px;
+		padding-top: 5px;
+	}
+	.pre_title {
+		text-align: center;
+		font-size: 35px;
+		line-height: 70px;
+	}
+	.pre_top_pf {
+		display: none;
+	}
+	.pre_top_pf_img {
+		display: none;
+	}
+	/* -- pre (messageView) ----------------------------------------- */
+	.pre_top_fr_pf {
+		width: 60px;
+		height: 60px;
+		float: left;
+		margin-left: 3px;
+		padding: 2px;
+		padding-top: 10px;
+	}
+	.pre_top_fr_pf_img {
+		width: 55px;
+		height: 55px;
+		border-radius: 30px;
+	}
+	.pre_back_img {
+		width: 100%;
+		height: 45px;
+	}
+	.pre_back {
+		float: left;
+		width: 30px;
+		margin-left: 10px;
+		margin-right: 10px;
+		padding: 2px;
+		padding-top: 15px;
+	}
+	/* -- pre 끝 ----------------------------------------- */
+	.to_id {
+		background-color: gray;
+		color: white;
+		display: inline-block;
+		padding: 5px;
+		margin-left: -30px;
+		margin-right: 20px;
+		border-radius: 10px;
+		word-break: break-all;
+		font-size: 20px;
+		box-shadow: 2px 2px 2px #777777;
+	}
+	.from_id {
+		background-color: cornflowerblue;
+		color: white;
+		display: inline-block;
+		padding: 5px;
+		margin-right: 10px;
+		border-radius: 10px;
+		float: right;
+		word-break: break-all;
+		font-size: 20px;
+		box-shadow: 2px 2px 2px #777777;
+	}
+	#footer {
+		position: fixed;
+		bottom: 20px;
+		/* 	right: 10px; */
+		width: 100%;
+		height: 60px;
+		float: left;
+		background-color: #5d9ef5;
+	}
+	#inputtxt {
+		width: 75vw;
+		margin-left: 10px;
+		margin-right: 10px;
+		border-radius: 30px;
+		height: 75%;
+		margin-top: 5px;
+		padding-left: 15px;
+		padding-right: 15px;
+		border: none;
+	}
+	#sendfly {
+		float: right;
+		color: white;
+		line-height: 40px;
+		margin-right: 20px;
+		cursor: pointer;
+		height: 100%;
+		background-color: #5d9ef5;
+		border: none;
+		font-size: 18px;
+	}
+	.pre_time {
+		/*    border: 1px solid red;*/
+		float: right;
+		height: 80px;
+		margin-right: 30px;
+		width: 70px;
+		text-align: center;
+		line-height: 60px;
+	}
+	.pre_time_p {
+		/*    border: 1px solid pink;*/
+		float: right;
+		width: 100px;
+		text-align: center;
+		line-height: 60px;
+		font-size: 14px;
+		color: #535353;
+	}
+	.pre_start {
+		/*    border: 1px solid pink;*/
+		width: 65px;
+		height: 60px;
+		margin-top: 5px;
+	}
+}
+
 </style>
 </head>
 <body>
