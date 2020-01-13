@@ -96,4 +96,8 @@ public class FeedService {
 		List<ReplyDTO> list = replyDAO.viewAllReply(feed_seq);
 		return list;
 	}
+	public int updateReply(ReplyDTO dto)throws Exception{
+		int result = replyDAO.updateReply(dto);
+		return result;
+	}
 }

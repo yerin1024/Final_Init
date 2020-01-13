@@ -155,23 +155,25 @@ public class FeedController {
 	//                                             댓글기능
 	// ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 
-	@RequestMapping("/registerReply")
+	@RequestMapping(value ="/registerReply",produces = "text/html; charset=utf8")
 	@ResponseBody
 	public String registerReply(ReplyDTO dto) {
 		System.out.println("댓글 등록도착!");
-		System.out.println("피드시퀀스:"+dto.getFeed_seq());
-		System.out.println("댓글 내용입니다 :"+dto.getContents());
+		if(dto.getContents() == "") {
+			System.out.println("실패함");
+			return "fail";
+		}else {		
 		String result = null;
 		//나중에 세션값으로 대체
 		dto.setNickname("abd");
-		System.out.println(dto.getFeed_seq()+ " : "+dto.getContents()+" : "+dto.getNickname());
+		dto.setDepth(0);
 		try {
 			result = service.registerReply(dto);
-			System.out.println(dto.getFeed_seq()+"??????????");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return result;
+		}
 	}
 	@RequestMapping("/modifyReply")
 	public String modifyReply(FeedDTO dto) {
@@ -191,6 +193,22 @@ public class FeedController {
 		}
 		System.out.println(reply_seq+"");
 		return  reply_seq+"";
+	}
+	@RequestMapping("/updateReply")
+	@ResponseBody
+	public String updateReply(ReplyDTO dto) {
+		System.out.println("댓글 수정 도착!!");
+		System.out.println(dto.getReply_seq()+"댓글시퀀스!");
+		System.out.println(dto.getContents()+"댓글콘텐츠!");
+		int result = 0;
+		try {
+			result = service.updateReply(dto);
+			System.out.println(result + "행이 업데이트되었습니다!");
+			System.out.println("===========================");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result+"";
 	}
 	@RequestMapping("/viewAllReply")
 	@ResponseBody
