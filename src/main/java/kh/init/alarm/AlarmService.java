@@ -25,8 +25,8 @@ public class AlarmService {
 	}
 	
 	@Transactional("txManager")
-	public ReplyDTO alarmReplyWho(int reply_seq){
-		return dao.alarmReplyWho(reply_seq);
+	public String alarmWho(int feed_seq){
+		return dao.alarmWho(feed_seq);
 	}
 	
 	@Transactional("txManager")

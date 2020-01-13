@@ -44,7 +44,6 @@ public class MessageController {
 		List<MessageDTO> result = new ArrayList<>();
 		
 		for(FriendDTO tmp : resultF) {
-			System.out.println(tmp.getFr_id());
 			MessageDTO result2 = service.previewMsg("123@123.123", tmp.getFr_id()); // 123@부분 session id로 바꿔야 함
 			result.add(result2);
 		}
@@ -56,7 +55,6 @@ public class MessageController {
 	@RequestMapping(value="messageView.msg", produces="text/html; charset=UTF-8")
 	@ResponseBody
 	public String toView(MessageDTO dto, String fr_id, String to_id, Model model) {
-		System.out.println("message 상세 보기 도착");
 		List<MessageDTO> result = service.selectAll("123@123.123", to_id); // 123@부분 session id로 바꿔야 함
 		Gson gs = new Gson();
 		return gs.toJson(result);

@@ -22,10 +22,10 @@ public class AlarmDAO {
 		prm.put("shardSeq",sharedSeq);
 		prm.put("email",email);
 		return jdbc.insert("Alarm.alarmReply",prm);
-	} // 댓글 작성자 / 피드seq
-	public ReplyDTO alarmReplyWho(int reply_seq) {
+	} // 댓글 작성자;좋아요 알림 / 피드seq 넣어서 게시물 작성자의 email 리턴 -> 나온 이메일을 alarmReply에 (공유seq, email)
+	public String alarmWho(int feed_seq) {
 		Map<String, Object> prm = new HashMap<>();
-		prm.put("reply_seq", reply_seq);
+		prm.put("feed_seq", feed_seq);
 		return jdbc.selectOne("Alarm.alarmReplyWho",prm);
 	}
 	
@@ -41,7 +41,7 @@ public class AlarmDAO {
 	public int alarmFriend(int sharedSeq, String email) {
 		Map<String, Object> prm = new HashMap<>();
 		prm.put("shardSeq",sharedSeq);
-		prm.put("email",email);
+		prm.put("email", email);	// tb_friend_request의 to_id
 		return jdbc.insert("Alarm.alarmFriend",prm);
 	}
 	
