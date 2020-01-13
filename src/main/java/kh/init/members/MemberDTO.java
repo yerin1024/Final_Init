@@ -34,6 +34,15 @@ public class MemberDTO {
 		this.id_type = id_type;
 		this.black = black;
 	}
+	
+	
+   @Override
+	public String toString() {
+		return "MemberDTO [email=" + email + ", pw=" + pw + ", nickname=" + nickname + ", name=" + name + ", phone="
+				+ phone + ", birth=" + birth + ", profile_img=" + profile_img + ", profile_msg=" + profile_msg
+				+ ", admin=" + admin + ", join_date=" + join_date + ", id_type=" + id_type + ", black=" + black + "]";
+	}
+
    public String getEmail() {return email;}
    public void setEmail(String email) {this.email = email;}
 
