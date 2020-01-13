@@ -166,9 +166,7 @@ ul { padding-bottom: 10px; }
 }
 .time {
 	font-size: 8px;
-	margin-left: 5px;
-	margin-right: 5px;
-	margin-left: -10px;
+	margin-left: -10px; margin-right: 5px;
 }
 .time_right {
 	font-size: 8px;
