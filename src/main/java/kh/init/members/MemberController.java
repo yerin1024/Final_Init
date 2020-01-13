@@ -1,5 +1,6 @@
 package kh.init.members;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,10 +27,18 @@ public class MemberController {
 		}
 		if(service.isLoginOk(email, pw) > 0) { // 로그인 허가
 			session.setAttribute("loginInfo", email); // 세션 로그인정보 담기
-			return "main";
+			return "redirect:/singleTest";
 		}else {
-			return "error";
+			return "main";
 		}
+	}
+	
+	// 로그아웃 세션 삭제
+	@RequestMapping("/logout.do")
+	public String toLogout() {
+		System.out.println("로그아웃 > " + session.getAttribute("loginInfo").toString() + " 세션 삭제");
+		session.removeAttribute("loginInfo");
+		return "main";
 	}
 	
 	// 비밀번호 찾기 페이지 로드
