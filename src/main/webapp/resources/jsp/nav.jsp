@@ -15,10 +15,10 @@
               <a class="nav-link active" href="${pageContext.request.contextPath}/feed/wholeFeed" style="padding-top: 12px;"><img id="total_feed" src="/resources/images/friends.png"></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#" style="padding-top: 15px;"><img id="notification" src="/resources/images/notification.png"></a>
+              <a class="nav-link" href="${pageContext.request.contextPath}/alarm/alarmMain" style="padding-top: 15px;"><img id="notification" src="/resources/images/notification.png"></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#" style="padding-top: 15px;"><img id="msg" src="/resources/images/msg.png"></a>
+              <a class="nav-link" href="${pageContext.request.contextPath}/message/messageMain" style="padding-top: 15px;"><img id="msg" src="/resources/images/msg.png"></a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="${pageContext.request.contextPath}/feed/myFeed" style="padding-top: 12px;"><img id="my_feed" src="/resources/images/user.png"></a>
