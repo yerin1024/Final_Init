@@ -10,14 +10,12 @@
 <script>
 	$(function() {
 		$("#myFeed").on("click", function() {
-			location.href = "feed/myFeed";
+			location.href = "${pageContext.request.contextPath}/feed/myFeed";
 		})
 		$("#wholeFeed").on("click", function() {
-			location.href = "feed/wholeFeed";
+			location.href = "${pageContext.request.contextPath}/feed/wholeFeed";
 		})
-		$("#myInformation").on("click", function() {
-			location.href = "member/goMyInfo";
-		})
+	
 
 		$("#fileTest").on("click", function() {
 			location.href = "/fileTest";
@@ -29,7 +27,7 @@
 <body>
 	<button type="button" id="myFeed">내 피드</button>
 	<button id="wholeFeed">전체피드</button>
-	<button type="button" id="myInformation">회원 정보 수정</button>
+	
 
 
 

@@ -40,17 +40,18 @@ public class MemberDAO {
 		param.put("pw", pw);
 		return jdbc.selectOne("Member.isLoginOk", param);
 	}
-	
+	//내 정보 가져오기
 	public MemberDTO getMyInfo(String email) throws Exception{
     	return jdbc.selectOne("Member.selectById",email);
     	
     }
+	//회원 탈퇴
 	public int withdrawMem(String email) throws Exception {
     	System.out.println("dao 회원탈퇴 인자값은 "+email);
 		
         return jdbc.delete("Member.delete",email);
     }
-    
+    //회원 정보 수정
     public int changeMyInfo(String email,MemberDTO dto) throws Exception {
     	Map<String,String> param= new HashMap<>();
 		param.put("id", email);
@@ -64,6 +65,7 @@ public class MemberDAO {
 
 		return jdbc.update("Member.update",param);
     }
+    //친구 목록에서 친구 정보 가져오기
 	public MemberDTO getMyInfoByFriend(String fr_id) throws Exception{
 		return jdbc.selectOne("Member.selectByFriend",fr_id);
 	}

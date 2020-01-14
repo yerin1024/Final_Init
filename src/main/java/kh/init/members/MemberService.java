@@ -18,7 +18,7 @@ public class MemberService {
 	public int isLoginOk(String email, String pw) {
 		return dao.isLoginOk(email, pw);
 	}
-	
+	// 내 정보 가져오기
 	@Transactional("txManager")
 	public MemberDTO getMyPageService(String email) throws Exception{
 		
@@ -29,7 +29,7 @@ public class MemberService {
 		
 		
 	}
-	
+	//회원 탈퇴
 	@Transactional("txManager")
 	public int withdrawMemService(String email) throws Exception {
 			
@@ -38,7 +38,7 @@ public class MemberService {
 				return result;
 			   
 		}
-	
+	//내 정보 변경하기
 	@Transactional("txManager")
 	public int changeMyInfoService(String id,MemberDTO dto) throws Exception {
 			
@@ -47,7 +47,7 @@ public class MemberService {
 				return result;
 			   
 		}
-	
+	//내 프로필 변경하기
 	@Transactional("txManager")
 	public int changeMyProfileService(String id,MemberDTO dto,MultipartFile profile_img, String path) throws Exception {
 		File filePath = new File(path);
@@ -69,4 +69,13 @@ public class MemberService {
 				return result;
 			   
 		}
+	
+	public MemberDTO identifyMemPwService(String email) throws Exception{
+		
+			MemberDTO dto = dao.getMyInfo(email);
+			return dto;
+		
+			
+		
+	}
 }

@@ -39,12 +39,12 @@
 	<div id="wrapper">
 		<div>
 			<label>프로필 사진</label> <br><img src="${pageContext.request.contextPath}/resources/images/default_profile_img.png"
-				id="setProfile" style="width: 500px;">
+				id="setProfile" style="width: 500px;border-radius:50%;">
 			<br>
 			<br>
-			<label>닉네임</label> <p>${dto.nickname }</p><br>
+			<label>닉네임</label> <p>${dto.nickname } </p><br>
 			
-			<label>상태메세지</label> <p>${dto.profile_msg}</p> 
+			<label>상태메세지</label> <p>${dto.profile_msg} </p> 
 			
 		</div>
 		<button type="button" id="changeProfile">프로필 편집</button>
@@ -92,11 +92,14 @@
 					</button>
 
 				</div>
+				
 				<div class="modal-body">
-					<input type=radio name="friendship" value="1"> 아는 사람<br>
-					<input type=radio name="friendship" value="2"> 친구<br>
-					<input type=radio name="friendship" value="3"> 절친<br>
-					<input type=radio name="friendship" value="4"> x새끼<br>
+				<form action="${pageContext.request.contextPath}/friend/friendRequest?to_id=${dto.email}" method="post" id="goReqFri">
+					<input type=radio name="relation" value="1"> 아는 사람<br>
+					<input type=radio name="relation" value="2"> 친구<br>
+					<input type=radio name="relation" value="3"> 절친<br>
+					<input type=radio name="relation" value="4"> x새끼<br>
+					</form>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-primary" id="identifyModalBtn">확인</button>
@@ -134,6 +137,9 @@
 	<script type="text/javascript">
 	$("#changeProfile").on("click", function() {
 		location.href = "${pageContext.request.contextPath}/member/goMyProfile";
+	})
+	$("#changeInfo").on("click", function() {
+		location.href = "${pageContext.request.contextPath}/member/goMyInfo";
 	})
 		// 친구 모달 버튼에 이벤트를 건다.	
 		$('#friendsList').on('click',function() {
@@ -294,7 +300,7 @@
 			$('#modalBox').modal('hide');
 		});
 		$('#identifyModalBtn').on('click', function() {
-			location.href = "friend/friendRequest";
+			$("#goReqFri").submit();
 			$('#modalBox').modal('hide');
 		});
 
