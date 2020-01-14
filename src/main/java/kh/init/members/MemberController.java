@@ -1,15 +1,6 @@
 package kh.init.members;
 
-import java.util.Date;
-import java.util.Properties;
-
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,55 +20,43 @@ public class MemberController {
 	@Autowired
 	private HttpSession session;
 
-	//로그인	
+	// 로그인	유효성 검사
 	@RequestMapping("/loginProc.do")
 	public String toLogin(String email, String pw) {
-		System.out.println("id : " + email);
-		System.out.println("pw : " + pw);
-
-		if(service.isLoginOk(email, pw) > 0) {
-			session.setAttribute("loginInfo", email);
-			return "main";
+		if(email != null && pw != null) {
+			System.out.println("로그인 시도 : " + email);
+		}
+		if(service.isLoginOk(email, pw) > 0) { // 로그인 허가
+			session.setAttribute("loginInfo", email); // 세션 로그인정보 담기
+			return "redirect:/singleTest";
 		}else {
-			return "error";
+			return "main";
 		}
 	}
 	
+	// 로그아웃 세션 삭제
+	@RequestMapping("/logout.do")
+	public String toLogout() {
+		System.out.println("로그아웃 > " + session.getAttribute("loginInfo").toString() + " 세션 삭제");
+		session.removeAttribute("loginInfo");
+		return "main";
+	}
+	
+	// 비밀번호 찾기 페이지 로드
 	@RequestMapping("/findPw.do")
 	public String toFindPw() {
 		return "members/findPw";
 	}
 	
+	// 비밀번호 찾기
 	@RequestMapping("/findPwProc.do")
 	public String toFindPwProc(String email) {
-		
-		String host     = "smtp.naver.com";
-	    String user   = "init_manager";
-	    String password  = "initmanager6";
-	    String to     = email;
-	    
-		Properties props = new Properties();
-		props.put("mail.smtp.host", host);
-		props.put("mail.smtp.auth", "true");
-		Session session = Session.getInstance(props, new javax.mail.Authenticator() {
-			protected PasswordAuthentication getPasswordAuthentication() {
-				return new PasswordAuthentication(user, password);
-			}
-		});
-		    try {
-		        MimeMessage msg = new MimeMessage(session);
-		        msg.setFrom(new InternetAddress(user));
-		        msg.setRecipients(Message.RecipientType.TO,
-		                          to);
-		        msg.setSubject("비밀번호 찾기 테스트");
-		        msg.setText("비밀번호 찾자찾자\n");
-		        Transport.send(msg);
-		        System.out.println("message sent successfully...");
-		    } catch (MessagingException mex) {
-		        System.out.println("send failed, exception: " + mex);
-		    }
-		    
-		   return "main"; 
+		System.out.println("사용자 이메일  : " + email);
+		if(service.findPw(email) == "invalid") {
+			return "error";
+		}else {
+			return "main";
+		}
 //		    Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
 //		     protected PasswordAuthentication getPasswordAuthentication() {
 //		      return new PasswordAuthentication(user, password);

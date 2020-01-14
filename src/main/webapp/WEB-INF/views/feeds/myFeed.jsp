@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,6 +24,7 @@
 	src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
 	integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
 	crossorigin="anonymous"></script>
+
 <script>
 	$(function() {
 		$("#registerFeed").on("click", function() {
@@ -30,16 +32,20 @@
 		})
 	})
 </script>
+<style>
+	#feedList{
+		border:2px solid red;
+	}
+</style>
 </head>
 <body>
-
-
-
 
 	<div id="wrapper">
 		<div>
 			<label>프로필 사진</label> <br><img src="${pageContext.request.contextPath}/resources/images/default_profile_img.png"
+
 				id="setProfile" style="width: 500px;border-radius:50%;">
+
 			<br>
 			<br>
 			<label>닉네임</label> <p>${dto.nickname } </p><br>
@@ -48,12 +54,14 @@
 			
 		</div>
 		<button type="button" id="changeProfile">프로필 편집</button>
-		<button type="button" id="changeInfo">회원 정보 편집</button>
+		<button type="button" id="changeInfo">회원 정보 편집</button><br>
 		<button type="button" id="friendsList">친구 목록</button>
+		<br><button id="registerFeed">게시물 등록</button>
+		
+		<div id="feedList">
 		<c:choose>
 			<c:when test="${fn:length(list) ==0}">
-				게시물이 없습니다.<br>
-				<button id="registerFeed">게시물 등록</button>
+				게시물이 없습니다.
 			</c:when>
 			<c:otherwise>
 				<table>
@@ -65,14 +73,15 @@
 					<c:forEach items="${list }" var="list">
 						<tr>
 							<td>${list.feed_seq }
-							<td><a href="/feed/detailView?feed_seq=${list.feed_seq }">${list.title }</a>
-							<td>${list.contents }
-							<td><button id="registerFeed">게시물 등록</button>
+							<td><a href="/feed/detailView?feed_seqS=${list.feed_seq }">${list.title }</a>
+							<td><a href="/feed/detailView?feed_seqS=${list.feed_seq }">${list.title }</a>
 						</tr>
 					</c:forEach>
 				</table>
 			</c:otherwise>
 		</c:choose>
+		</div>
+		
 	</div>
 
 

@@ -11,16 +11,18 @@ public class FeedDTO {
     private String contents;
     private String relation;
     private Timestamp write_date;
-    
-	@Override
+    private String hashtag;
+	
+    @Override
 	public String toString() {
 		return "FeedDTO [feed_seq=" + feed_seq + ", email=" + email + ", nickname=" + nickname + ", title=" + title
-				+ ", contents=" + contents + ", relation=" + relation + ", write_date=" + write_date + "]";
+				+ ", contents=" + contents + ", relation=" + relation + ", write_date=" + write_date + ", hashtag="
+				+ hashtag + "]";
 	}
 
 	public FeedDTO() {}
 	public FeedDTO(int feed_seq, String email, String nickname, String title, String contents, String relation,
-			Timestamp write_date) {
+			Timestamp write_date, String hashtag) {
 		super();
 		this.feed_seq = feed_seq;
 		this.email = email;
@@ -29,6 +31,7 @@ public class FeedDTO {
 		this.contents = contents;
 		this.relation = relation;
 		this.write_date = write_date;
+		this.hashtag = hashtag;
 	}
 
 	public int getFeed_seq() {
@@ -86,5 +89,13 @@ public class FeedDTO {
 	public void setWrite_date(Timestamp write_date) {
 		this.write_date = write_date;
 	}
- 
+
+	public String getHashtag() {
+		return hashtag;
+	}
+
+	public void setHashtag(String hashtag) {
+		this.hashtag = hashtag;
+	}
+    
 }
