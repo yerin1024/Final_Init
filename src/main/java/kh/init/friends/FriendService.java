@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import kh.init.alarm.AlarmDAO;
 import kh.init.members.MemberDAO;
 import kh.init.members.MemberDTO;
 
@@ -18,6 +19,9 @@ public class FriendService {
 	
 	@Autowired
 	private MemberDAO mdao;
+	
+	@Autowired
+	private AlarmDAO aldao;
 	
 	@Transactional("txManager") // 친구요청 리스트 가져오기
 	public List<MemberDTO> getRequestMemList(String id) throws Exception{
@@ -107,6 +111,7 @@ public class FriendService {
 			 System.out.println("seq : " + seq);
 			 
 			 result = dao.insertFndRequest(dto,id,seq); //친구 요청
+			 aldao.alarmFriend(seq, dto);	// 친구 요청 알림에 담기
 			System.out.println("결과값은 " + result);
 		 }else {
 			 //이미 친구인지 확인하는 코드
@@ -120,6 +125,7 @@ public class FriendService {
 			 System.out.println("seq : " + seq);
 			 
 			 result = dao.insertFndRequest(dto,id,seq); //친구 요청
+			 aldao.alarmFriend(seq, dto);	// 친구 요청 알림에 담기
 			System.out.println("결과값은 " + result);
 		 }
 		
