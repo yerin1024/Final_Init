@@ -33,7 +33,7 @@ public class FeedController {
 	public String myFeed(Model model) {
 		System.out.println("myFeed 도착");
 		List<FeedDTO> list = null;
-		String email = ((MemberDTO)session.getAttribute("loginInfo")).getEmail();
+		String email = (String)session.getAttribute("loginInfo");
 		try {
 			MemberDTO dto = mservice.getMyPageService(email);
 			list = service.selectAll();
