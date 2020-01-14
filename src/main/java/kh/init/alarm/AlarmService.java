@@ -34,5 +34,10 @@ public class AlarmService {
 		return dao.deleteAlarm(email, alarm_seq);
 	}
 	
+	@Transactional("txManager")
+	public int alarmCheck(String email) {
+		return dao.alarmCheck(email);
+	}
+	
 
 }
