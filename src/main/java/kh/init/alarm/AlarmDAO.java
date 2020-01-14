@@ -63,6 +63,13 @@ public class AlarmDAO {
 		return jdbc.selectList("Alarm.alarmList2",prm);
 	}
 	
+	// 새 알림이 있는지
+	public int isNewAlarm(String email) {
+		Map<String, Object> prm = new HashMap<>();
+		prm.put("email",email);
+		return jdbc.update("Alarm.isNewAlarm", prm);
+	}
+	
 	// 읽음 완료로 표시 변경
 	public int alarmCheck(String email) {
 		Map<String, Object> prm = new HashMap<>();

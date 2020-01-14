@@ -39,5 +39,10 @@ public class AlarmService {
 		return dao.alarmCheck(email);
 	}
 	
+	@Transactional("txManager")
+	public int isNewAlarm(String email) {
+		return dao.isNewAlarm(email);
+	}
+	
 
 }

@@ -65,6 +65,7 @@
 		transition-duration: 0.2s;
 	}
 	.pre_pf {
+/*        border: 1px solid pink;*/
 		width: 50px;
 		float: left;
 		margin-left: 3px;
@@ -86,6 +87,7 @@
 		padding-left: 10px;
 	}
 	.pre_text_p{
+/*        border: 1px solid red;*/
            float: left;
            width: 250px;
            line-height: 25px;
@@ -220,13 +222,37 @@ ul { padding-bottom: 10px; }
 	line-height: 60px;
 }
 .pre_time_p{
+    height: 30px;
+/*    border: 1px solid green;*/
     float: left;
     width: 75px;
     text-align: center;
-    line-height: 60px;
-    font-size: 14px;
+    line-height: 30px;
+    font-size: 12px;
     color: #535353;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
+    /* -----!---------!---------!------!-------!--------!----!-------!-------- */
+.pre_new_p{
+/*    border: 1px solid green;*/
+    height: 30px;
+    float: left;
+    width: 75px;
+    text-align: right;
+    line-height: 30px;
+    font-size: 12px;
+    color: #535353;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.pre_new_inside{
+/*    border: 1px solid black;*/
+    background-color: red;
+    padding: 2px; padding-left: 6px; padding-right: 6px;
+    margin-right: 10px;
+    color: white;
+    border-radius: 10px;
+}
+     /* -----!---------!---------!------!-------!--------!----!-------!-------- */
 .pre_start {
 	width: 55px;
 	height: 50px;
@@ -435,14 +461,36 @@ ul { padding-bottom: 10px; }
 		line-height: 60px;
 	}
 	.pre_time_p {
-		/*    border: 1px solid pink;*/
-		float: right;
+/*        border: 1px solid pink;*/
+		float: left;
 		width: 100px;
 		text-align: center;
-		line-height: 60px;
-		font-size: 14px;
+		line-height: 30px;
+		font-size: 12px;
 		color: #535353;
+		white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 	}
+    /* -----!---------!---------!------!-------!--------!----!-------!-------- */
+    .pre_new_p{
+/*        border: 1px solid green;*/
+        height: 30px;
+        float: left;
+        width: 100px;
+        text-align: right;
+        line-height: 30px;
+        font-size: 12px;
+        color: #535353;
+        white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .pre_new_inside{
+/*        border: 1px solid black;*/
+        background-color: red;
+        padding: 2px; padding-left: 6px; padding-right: 6px;
+        margin-right: 10px;
+        color: white;
+        border-radius: 10px;
+    }
+     /* -----!---------!---------!------!-------!--------!----!-------!-------- */
 	.pre_start {
 		/*    border: 1px solid pink;*/
 		width: 65px;
@@ -450,7 +498,6 @@ ul { padding-bottom: 10px; }
 		margin-top: 5px;
 	}
 }
-
 </style>
 </head>
 <body>
@@ -635,10 +682,22 @@ ul { padding-bottom: 10px; }
  		 				
  		 				$(".sector_in").children().remove();
  						 for(var i=0; i < resp.length; i++){
- 							 $(".sector_in").append("<div class='pre_line'>"
- 									 +"<div class='pre_pf'><img src='/images/default_profile_img.png' class='pre_pf_img'></div>"
- 									 +"<div class='pre_text_p' id='"+resp[i].to_id+"'><b>"+resp[i].to_id+"</b><br>"+resp[i].contents+"</div>"
- 									 +"<div class='pre_time_p'>"+resp[i].write_date+"</div></div>");
+ 							 
+//  							 // 안읽 없음
+//  							 $(".sector_in").append("<div class='pre_line'>"
+//  									 +"<div class='pre_pf'><img src='/images/default_profile_img.png' class='pre_pf_img'></div>"
+//  									 +"<div class='pre_text_p' id='"+resp[i].to_id+"'><b>"+resp[i].to_id+"</b><br>"+resp[i].contents+"</div>"
+//  									 +"<span class='pre_time_p'>"+resp[i].write_date+"</span>"
+//  									 + "<span class='pre_new_p'></span>"
+//  									 +"</div>");
+ 							 
+//  							 // 안읽 있음
+//  							$(".sector_in").append("<div class='pre_line'>"
+// 									 +"<div class='pre_pf'><img src='/images/default_profile_img.png' class='pre_pf_img'></div>"
+// 									 +"<div class='pre_text_p' id='"+resp[i].to_id+"'><b>"+resp[i].to_id+"</b><br>"+resp[i].contents+"</div>"
+// 									 +"<span class='pre_time_p'>"+resp[i].write_date+"</span>"
+// 									 + "<span class='pre_new_p'><span class='pre_new_inside'>"+ "안 읽은 숫자" +"</span></span>"
+// 									 +"</div>");
  						}
  						$("#footer").children().remove();
  						
