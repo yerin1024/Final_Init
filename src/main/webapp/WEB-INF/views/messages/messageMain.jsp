@@ -683,21 +683,24 @@ ul { padding-bottom: 10px; }
  		 				$(".sector_in").children().remove();
  						 for(var i=0; i < resp.length; i++){
  							 
-//  							 // 안읽 없음
-//  							 $(".sector_in").append("<div class='pre_line'>"
-//  									 +"<div class='pre_pf'><img src='/images/default_profile_img.png' class='pre_pf_img'></div>"
-//  									 +"<div class='pre_text_p' id='"+resp[i].to_id+"'><b>"+resp[i].to_id+"</b><br>"+resp[i].contents+"</div>"
-//  									 +"<span class='pre_time_p'>"+resp[i].write_date+"</span>"
-//  									 + "<span class='pre_new_p'></span>"
-//  									 +"</div>");
+ 							 // 안읽 있음
+ 							 if(resp[i].unread_count>0){
+ 								$(".sector_in").append("<div class='pre_line'>"
+ 										 +"<div class='pre_pf'><img src='/images/default_profile_img.png' class='pre_pf_img'></div>"
+ 										 +"<div class='pre_text_p' id='"+resp[i].to_id+"'><b>"+resp[i].to_id+"</b><br>"+resp[i].contents+"</div>"
+ 										 +"<span class='pre_time_p'>"+resp[i].write_date+"</span>"
+ 										 + "<span class='pre_new_p'><span class='pre_new_inside'>"+resp[i].unread_count+"</span></span>"
+ 										 +"</div>");
+ 								// 안읽 없음
+ 							 }else{
+ 								$(".sector_in").append("<div class='pre_line'>"
+ 	 									 +"<div class='pre_pf'><img src='/images/default_profile_img.png' class='pre_pf_img'></div>"
+ 	 									 +"<div class='pre_text_p' id='"+resp[i].to_id+"'><b>"+resp[i].to_id+"</b><br>"+resp[i].contents+"</div>"
+ 	 									 +"<span class='pre_time_p'>"+resp[i].write_date+"</span>"
+ 	 									 + "<span class='pre_new_p'></span>"
+ 	 									 +"</div>");
+ 							 }
  							 
-//  							 // 안읽 있음
-//  							$(".sector_in").append("<div class='pre_line'>"
-// 									 +"<div class='pre_pf'><img src='/images/default_profile_img.png' class='pre_pf_img'></div>"
-// 									 +"<div class='pre_text_p' id='"+resp[i].to_id+"'><b>"+resp[i].to_id+"</b><br>"+resp[i].contents+"</div>"
-// 									 +"<span class='pre_time_p'>"+resp[i].write_date+"</span>"
-// 									 + "<span class='pre_new_p'><span class='pre_new_inside'>"+ "안 읽은 숫자" +"</span></span>"
-// 									 +"</div>");
  						}
  						$("#footer").children().remove();
  						
