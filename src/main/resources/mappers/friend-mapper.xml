@@ -3,24 +3,30 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace ="Friend">
+	<select id="selectByReqSeq" resultType="Integer">
+      select friend_request_seq.nextval from dual
+  </select>
 	<insert id="friendRequest" parameterType="kh.init.friends.FriendRequestDTO">		
-		insert into tb_friend_Request values(seq,#{from_id},#{to_id},#{relation}) 
+		insert into tb_friend_Request values(#{seq}, #{from_id},#{to_id},#{relation}) 
 	</insert>
     <select id="selectById" resultType="kh.init.friends.FriendDTO">
-      select * from tb_friend where my_id = #{id}
+      select b.* from tb_block a,tb_friend b where b.my_id= #{id} and a.from_id= #{id} and a.to_id != b.fr_id
   </select>
   <select id="selectBySearch" parameterType="java.util.Map" resultType="kh.init.friends.FriendDTO">
-      select * from tb_friend 
+      select b.* from tb_block a,tb_friend b
       <trim prefix="where" prefixOverrides="and|or">
     <if test="my_id != null">
-      my_id = #{my_id}
+      b.my_id = #{my_id}
+    </if>
+     <if test="my_id != null">
+      and a.from_id = #{my_id}
     </if>
     <if test="fr_id != null">
-       and fr_id like #{fr_id}
+       and b.fr_id like #{fr_id} 
     </if>
-    
+   
     </trim>
-      
+       and a.to_id != b.fr_id
   </select>
   <select id="selectListReqById" resultType="kh.init.friends.FriendRequestDTO">
       select * from tb_friend_request where to_id = #{id}

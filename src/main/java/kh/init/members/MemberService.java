@@ -36,6 +36,7 @@ public class MemberService {
 		return dao.isLoginOk(email, pw);
 	}
 
+
 	// 비밀번호 찾기 이메일 임시비밀번호 전송
 	@Transactional("txManager")
 	public String findPw(String email) {
@@ -83,6 +84,7 @@ public class MemberService {
 		return ranChar;
 	}
 
+
 	@Transactional("txManager")
 	public MemberDTO getMyPageService(String email) throws Exception{
 		MemberDTO dto = dao.getMyInfo(email);
@@ -90,21 +92,25 @@ public class MemberService {
 		return dto;
 	}
 
+	//회원 탈퇴
 	@Transactional("txManager")
 	public int withdrawMemService(String email) throws Exception {
 
 		System.out.println("회원 탈퇴 입력된 값은 "+ email);
 		int result = dao.withdrawMem(email);
 		return result;
-	}
 
+	}
+	//내 정보 변경하기
 	@Transactional("txManager")
 	public int changeMyInfoService(String id,MemberDTO dto) throws Exception {
 
 
 		int result = dao.changeMyInfo(id,dto);
 		return result;
+
 	}
+	//내 프로필 변경하기
 
 	@Transactional("txManager")
 	public int changeMyProfileService(String id,MemberDTO dto,MultipartFile profile_img, String path) throws Exception {
@@ -123,7 +129,15 @@ public class MemberService {
 			}
 		}
 
+
 		int result = dao.changeMyInfo(id,dto);
 		return result;
+
+	}
+
+	public MemberDTO identifyMemPwService(String email) throws Exception{
+
+		MemberDTO dto = dao.getMyInfo(email);
+		return dto;
 	}
 }
