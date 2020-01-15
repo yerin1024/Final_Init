@@ -13,7 +13,14 @@
 	<insert id="alarmReply"> 
 		insert into tb_alarm values(alarm_seq.nextval, 'R', #{sharedSeq}, sysdate, 'N', #{email})
 	</insert>
-	<select id="alarmWho" resultType="java.lang.String"> <!-- 댓글 게시물 시퀀스로 피드 작성자 찾기 -->
+	
+	<!-- 알림 추가 / 좋아요 -->
+	<insert id="alarmLike"> 
+		insert into tb_alarm values(alarm_seq.nextval, 'L', #{sharedSeq}, sysdate, 'N', #{email})
+	</insert>
+	
+	<!-- 댓글 게시물 시퀀스로 피드 작성자 찾기 -->
+	<select id="alarmWho" resultType="java.lang.String">
 		select
 		    al.email email
 		from tb_alarm al 
@@ -23,25 +30,12 @@
 		where fe.feed_seq=#{feed_seq}
 	</select>
 	
-	<!-- 알림 추가 / 좋아요 -->
-	<insert id="alarmLike"> 
-		insert into tb_alarm values(alarm_seq.nextval, 'L', #{sharedSeq}, sysdate, 'N', #{email})
-	</insert>
-	<select id="alarmFriendWho" resultType="kh.init.feeds.ReplyDTO"> 좋아요 찾기 테스트용
-		select * from tb_alarm al full outer join tb_like lk on al.applied_seq = lk.like_seq where type='L' and email= #{email}
-	</select>
-	
 	<!-- 알림 추가 / 친구 요청 -->
 	<insert id="alarmFriend"> 
 		insert into tb_alarm values(alarm_seq.nextval, 'F', #{sharedSeq}, sysdate, 'N', #{email})
 	</insert>
 	
 	<!-- 알림 목록 -->
-	<select id="alarmList" resultType="kh.init.alarm.AlarmDTO"> 
-		select * from tb_alarm where email= #{email}
-	</select>
-	
-	<!-- 알림 목록 2 -->
 	<select id="alarmList2" resultType="kh.init.alarm.AlarmVO"> 
 		select
 		    alarm_seq, type, applied_seq, reg_date, alarm_check, al.email email, 
