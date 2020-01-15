@@ -58,7 +58,10 @@ public class MemberDAO {
 	}
 	//내 정보 가져오기
 	public MemberDTO getMyInfo(String email) throws Exception{
-    	return jdbc.selectOne("Member.selectById",email);
+		Map<String, String> param = new HashMap<>();
+		param.put("val", email);
+		param.put("col", "email");
+    	return jdbc.selectOne("Member.selectMember",param);
     	
     }
 	//회원 탈퇴
@@ -83,6 +86,9 @@ public class MemberDAO {
     }
     //친구 목록에서 친구 정보 가져오기
 	public MemberDTO getMyInfoByFriend(String fr_id) throws Exception{
-		return jdbc.selectOne("Member.selectByFriend",fr_id);
+		Map<String, String> param = new HashMap<>();
+		param.put("val", fr_id);
+		param.put("col", "email");
+    	return jdbc.selectOne("Member.selectMember",param);
 	}
 }

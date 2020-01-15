@@ -85,10 +85,10 @@ public class MemberController {
 	@RequestMapping("/goMyInfo")  //내 정보 (편집) 가기
 	public String goMyInfo(String email, Model model) {
 		System.out.println("개인 정보 CON 도착.");
-		String id = (String)session.getAttribute("loginInfo");
+		MemberDTO mDto = (MemberDTO)session.getAttribute("loginInfo");
 		try {
 			
-		MemberDTO dto = service.getMyPageService(id);
+		MemberDTO dto = service.getMyPageService(mDto.getEmail());
 		System.out.println(dto.getEmail());
 		System.out.println(dto.getName());
 		String poption1 = dto.getPhone().substring(0, 4);
@@ -115,8 +115,8 @@ public class MemberController {
 	public String goMyProfile(String email, Model model) {
 		System.out.println("개인 프로필 수정 CON 도착.");
 		try {
-			String id = (String)session.getAttribute("loginInfo");
-		MemberDTO dto = service.getMyPageService(id);
+			MemberDTO mDto = (MemberDTO)session.getAttribute("loginInfo");
+		MemberDTO dto = service.getMyPageService(mDto.getEmail());
 		System.out.println(dto.getProfile_img());
 		System.out.println(dto.getNickname());
 		System.out.println(dto.getProfile_msg());
@@ -134,8 +134,8 @@ public class MemberController {
 	public String getout() {
 		System.out.println("회원 탈퇴 CON 도착.");
 		try {
-			String email = (String)session.getAttribute("loginInfo");
-			int result = service.withdrawMemService(email);
+			MemberDTO mDto = (MemberDTO)session.getAttribute("loginInfo");
+			int result = service.withdrawMemService(mDto.getEmail());
 			System.out.println(result);
 			if(result> 0) {
 				session.invalidate();
@@ -161,9 +161,9 @@ public class MemberController {
 		System.out.println("회원 정보 수정 CON 도착.");
 		try {
 			int result = 0;
-			String email = (String)session.getAttribute("loginInfo");
-			if(email != null) {
-				result = service.changeMyInfoService(email, dto);
+			MemberDTO mDto = (MemberDTO)session.getAttribute("loginInfo");
+			if(mDto.getEmail() != null) {
+				result = service.changeMyInfoService(mDto.getEmail(), dto);
 			}else {
 				result = 0;
 			}
@@ -189,13 +189,13 @@ public class MemberController {
 	public String changeMyProfile(MemberDTO dto, MultipartFile profileImg) {
 		System.out.println("회원 정보 수정 CON 도착.");
 		String path = session.getServletContext().getRealPath("files");
-		String email = (String)session.getAttribute("loginInfo");
+		MemberDTO mDto = (MemberDTO)session.getAttribute("loginInfo");
 		int result = 0;
 		try {
 			if(profileImg.getOriginalFilename() == "") {
-				result = service.changeMyProfileService(email, dto,null,path);
+				result = service.changeMyProfileService(mDto.getEmail(), dto,null,path);
 			}else {
-				result = service.changeMyProfileService(email, dto,profileImg,path);
+				result = service.changeMyProfileService(mDto.getEmail(), dto,profileImg,path);
 			}
 			
 			
@@ -222,8 +222,8 @@ public class MemberController {
 		System.out.println("현재 비밀번호 확인 CON 도착"); 
 		   System.out.println("현재 적은 비번은 "+pw);
 		try {
-		    String email =(String)session.getAttribute("loginInfo");
-			MemberDTO dto = service.identifyMemPwService("kks@naver.com");
+			MemberDTO mDto = (MemberDTO)session.getAttribute("loginInfo");
+			MemberDTO dto = service.identifyMemPwService(mDto.getEmail());
 			System.out.println("비번은 "+dto.getPw());
 			if(pw.equalsIgnoreCase(dto.getPw())) {
 				return "yes";
