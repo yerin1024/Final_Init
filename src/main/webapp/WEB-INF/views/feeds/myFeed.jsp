@@ -137,9 +137,21 @@
 			<label style="color:black;">${dto.profile_msg}</label>  
 			
 		<br>
+		<c:choose>
+		
+		<c:when test="${myId ne dto.email}"> 
+			<!-- 친구요청 모달을 열기 위한 버튼 -->
+	<button type="button" class="btn btn-primary btn-lg" id="openModalBtn">
+		친구 요청</button>
+		 </c:when>
+
+        <c:otherwise>
 		<button type="button" id="changeProfile">프로필 편집</button> 
 		<button type="button" id="changeInfo">회원 정보 편집</button> 
 		<button type="button" id="friendsList">친구 목록</button>
+		</c:otherwise>
+	
+		</c:choose>
 			</div>
 			<div class="mainBox">
 				<div class="row">
@@ -187,9 +199,7 @@
 	</div>
 
 
-	<!-- 친구요청 모달을 열기 위한 버튼 -->
-	<button type="button" class="btn btn-primary btn-lg" id="openModalBtn">
-		친구 요청</button>
+	
 	<!-- 친구요청 모달 영역 -->
 	<div id="modalBox" class="modal fade" id="myModal" tabindex="-1"
 		role="dialog" aria-labelledby="myModalLabel" style="margin-top:100px;">
@@ -265,13 +275,13 @@
 									if (res.waitlist != null) {
 										var waitlist = JSON.parse(res.waitlist);
 												for (var j = 0; j < waitlist.length; j++) {
-													$('.modal-body2').append("<div class=frInfo>"+ waitlist[j].email+ "  <button type=button class=frInfo id=acceptfr name="+waitlist[j].email+">친구 추가</button><button type=button class=frInfo id=cancelfr name="+waitlist[j].email+">취소</button></div>");
+													$('.modal-body2').append("<div class=frInfo><a href='${pageContext.request.contextPath}/feed/yourFeed?email="+waitlist[j].email+"'>"+ waitlist[j].email+ " </a> <button type=button class=frInfo id=acceptfr name="+waitlist[j].email+">친구 추가</button><button type=button class=frInfo id=cancelfr name="+waitlist[j].email+">취소</button></div>");
 												}
 											}
 											if (res.list != null) {
 												var list = JSON.parse(res.list);
 												for (var j = 0; j < list.length; j++) {
-													$('.modal-body2').append("<div class=frInfo>"+ list[j].email+ "  <button type=button class=frInfo id=cutfr name="+list[j].email+">친구 끊기</button></div>");
+													$('.modal-body2').append("<div class=frInfo><a href='${pageContext.request.contextPath}/feed/yourFeed?email="+list[j].email+"'>"+ list[j].email+ " </a> <button type=button class=frInfo id=cutfr name="+list[j].email+">친구 끊기</button></div>");
 												}
 											}
 											// get the ajax response data
@@ -356,13 +366,13 @@
 																	if (res.waitlist != null) {
 																		var waitlist = JSON.parse(res.waitlist);
 																				for (var j = 0; j < waitlist.length; j++) {
-																					$('.modal-body2').append("<div class=frInfo>"+ waitlist[j].email+ "  <button type=button class=frInfo id=acceptfr name="+waitlist[j].email+">친구 추가</button><button type=button class=frInfo id=cancelfr name="+waitlist[j].email+">취소</button></div>");
+																					$('.modal-body2').append("<div class=frInfo id=wfrNum"+j+"><a href='${pageContext.request.contextPath}/feed/yourFeed?email="+waitlist[j].email+"'>"+ waitlist[j].email+ " </a> <button type=button class=frInfo id=acceptfr name="+waitlist[j].email+">친구 추가</button><button type=button class=frInfo id=cancelfr name="+waitlist[j].email+">취소</button></div>");
 																				}
 																			}
 																			if (res.list != null) {
 																				var list = JSON.parse(res.list);
 																				for (var j = 0; j < list.length; j++) {
-																					$('.modal-body2').append("<div class=frInfo>"+ list[j].email+ "  <button type=button class=frInfo id=cutfr name="+list[j].email+">친구 끊기</button></div>");
+																					$('.modal-body2').append("<div class=frInfo id=frNum"+j+"><a href='${pageContext.request.contextPath}/feed/yourFeed?email="+list[j].email+"'>"+ list[j].email+ " </a> <button type=button class=frInfo id=cutfr name="+list[j].email+">친구 끊기</button></div>");
 																				}
 																			}
 																			// get the ajax response data
@@ -413,6 +423,9 @@
 		$('#identifyModalBtn').on('click', function() {
 			$("#goReqFri").submit();
 			$('#modalBox').modal('hide');
+		});
+		$('.frInfo').on('click', function() {
+			location.href = "${pageContext.request.contextPath}/feed/yourFeed?email=";
 		});
 
 		//친구추가 ,취소 ,끊기

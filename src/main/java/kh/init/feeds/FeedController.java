@@ -39,6 +39,23 @@ public class FeedController {
 		try {
 			MemberDTO dto = mservice.getMyPageService(mDto.getEmail());
 			list = service.getMyFeed(mDto.getEmail());
+			model.addAttribute("myId",mDto.getEmail());
+			model.addAttribute("dto", dto);
+			model.addAttribute("list", list);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return "feeds/myFeed";
+	}
+	@RequestMapping("/yourFeed")
+	public String yourFeed(String email,Model model) {
+		System.out.println("yourFeed 도착");
+		List<FeedDTO> list = null;
+		MemberDTO mDto = (MemberDTO)session.getAttribute("loginInfo");
+		try {
+			MemberDTO dto = mservice.getMyPageService(email);
+			list = service.getMyFeed(email);
+			model.addAttribute("myId",mDto.getEmail());
 			model.addAttribute("dto", dto);
 			model.addAttribute("list", list);
 		}catch(Exception e) {
