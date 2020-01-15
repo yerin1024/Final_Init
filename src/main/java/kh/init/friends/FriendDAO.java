@@ -27,12 +27,13 @@ public class FriendDAO {
 		String search2 = "%"+search+"%";
 		System.out.println("dao 내의 서치값은"+search);
 		System.out.println("dao 내의 서치값2은"+search2);
+		System.out.println("dao 넘어온 이메일은 "+id);
 		Map<String,String> map = new HashMap<>();
 		map.put("my_id", id);
 		
-		if(search != null) {
+
 			map.put("fr_id", search2);
-		}
+
 		return jdbc.selectList("Friend.selectBySearch", map);
 
 	}

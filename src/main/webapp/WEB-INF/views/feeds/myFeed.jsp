@@ -190,16 +190,15 @@
 		
 </script>
 </head>
-<body>
+<body>	
 <jsp:include page="/resources/jsp/nav.jsp" />
 <div class="container-fluid">
 		<div class="wrapper">
 			<div class="profile" style="background-color:white; text-align:center;">
 				<div>
 			<label style="color:white;"></label> <br><img src="${pageContext.request.contextPath}/resources/images/default_profile_img.png"
-
 				id="setProfile" style="width: 200px;border-radius:50%;">
-</div>
+				</div>
 			
 			<label style="color:black;">${dto.nickname }</label> 
 			
@@ -225,7 +224,7 @@
 			</div>
 		</div>
 	</div>
-	<div id="wrapper">
+	<div id="myFeed">
 		
 		<br><button id="registerFeed">게시물 등록</button>
 		
@@ -482,7 +481,6 @@
 			$("#goReqFri").submit();
 			$('#modalBox').modal('hide');
 		});
-
 		//친구추가 ,취소 ,끊기
 	</script>
 

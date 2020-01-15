@@ -36,6 +36,16 @@ public class MemberService {
 		return dao.isLoginOk(email, pw);
 	}
 
+	public MemberDTO getMemberDTO(String email) {
+		MemberDTO dto;
+		try {
+			dto = dao.getMyInfo(email);
+			return dto;	
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 
 	// 비밀번호 찾기 이메일 임시비밀번호 전송
 	@Transactional("txManager")
@@ -87,6 +97,7 @@ public class MemberService {
 
 	@Transactional("txManager")
 	public MemberDTO getMyPageService(String email) throws Exception{
+		System.out.println(email);
 		MemberDTO dto = dao.getMyInfo(email);
 		System.out.println("왜값이 안나와"+dto.getEmail());
 		return dto;		

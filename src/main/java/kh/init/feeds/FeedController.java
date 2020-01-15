@@ -182,6 +182,7 @@ public class FeedController {
 					friendList = service.searchFriend(keyword);
 					model.addAttribute("option", "friend");
 				}
+				model.addAttribute("option", "nfriend");
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -198,10 +199,10 @@ public class FeedController {
 		System.out.println("scrapFeed 도착");
 		String email = ((MemberDTO)session.getAttribute("loginInfo")).getEmail();
 		System.out.println("email : "+email);
-		
+
 		List<String> cover = new ArrayList<>();
 		List<FeedDTO> scrapList = new ArrayList<>();
-		
+
 		try {
 			scrapList = (List<FeedDTO>)service.scrapFeed(email).get("scrapList");
 			cover = (List<String>)service.scrapFeed(email).get("cover");
@@ -213,14 +214,14 @@ public class FeedController {
 		}
 		return "/feeds/scrapFeed";
 	}
-	
-	
+
+
 
 	@RequestMapping("/detailView") 
-	public String detailView(String feed_seqS, Model model) {
+	public String detailView(int feed_seqS, Model model) {
 
 		System.out.println("detailView 도착");
-		int feed_seq = Integer.parseInt(feed_seqS);
+		int feed_seq = feed_seqS;
 		System.out.println(feed_seq);
 		int likeCheck = 0; //0은 안한것 1은 한것
 		int bookmarkCheck = 0; //0은 안한것 1은 한것
@@ -229,8 +230,8 @@ public class FeedController {
 		List<String> list = new ArrayList<>();
 		try {
 			dto = service.detailView(feed_seq);
-			likeCheck = service.likeCheck(feed_seq, ((MemberDTO)session.getAttribute("loginInfo")).getEmail());
-			bookmarkCheck = service.bookmarkCheck(feed_seq, ((MemberDTO)session.getAttribute("loginInfo")).getEmail());
+			likeCheck = service.likeCheck(feed_seq, (String)session.getAttribute("loginInfo"));
+			bookmarkCheck = service.bookmarkCheck(feed_seq, (String)session.getAttribute("loginInfo"));
 
 
 			System.out.println(replyList.size() + "리플라이리스트 사이즈입니다.");
@@ -437,20 +438,21 @@ public class FeedController {
 	//                                             댓글기능
 	// ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 
-	@RequestMapping("/registerReply")
+	@RequestMapping(value ="/registerReply",produces = "text/html; charset=utf8")
 	@ResponseBody
 	public String registerReply(ReplyDTO dto) {
 		System.out.println("댓글 등록도착!");
-		System.out.println("피드시퀀스:"+dto.getFeed_seq());
-		System.out.println("댓글 내용입니다 :"+dto.getContents());
-		String result = null;
-		//나중에 세션값으로 대체
-		dto.setNickname("abd");
-		System.out.println(dto.getFeed_seq()+ " : "+dto.getContents()+" : "+dto.getNickname());
+		System.out.println(dto.toString());
+		String result =  null;
 		try {
-			result = service.registerReply(dto);
-			System.out.println(dto.getFeed_seq()+"??????????");
-		} catch (Exception e) {
+			if(dto.getDepth() == 0) {
+				System.out.println("댓글");
+				result = service.registerReply(dto);			
+			}else{
+				System.out.println("답글");
+				result = service.registerReply(dto);	
+			}
+		}catch(Exception e) {
 			e.printStackTrace();
 		}
 		return result;
@@ -471,8 +473,24 @@ public class FeedController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println(reply_seq+"");
+		System.out.println(result + "지워짐");
 		return  reply_seq+"";
+	}
+	@RequestMapping("/updateReply")
+	@ResponseBody
+	public String updateReply(ReplyDTO dto) {
+		System.out.println("댓글 수정 도착!!");
+		System.out.println(dto.getReply_seq()+"댓글시퀀스!");
+		System.out.println(dto.getContents()+"댓글콘텐츠!");
+		int result = 0;
+		try {
+			result = service.updateReply(dto);
+			System.out.println(result + "행이 업데이트되었습니다!");
+			System.out.println("===========================");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result+"";
 	}
 	@RequestMapping("/viewAllReply")
 	@ResponseBody

@@ -24,10 +24,7 @@ public class HomeController {
 	public String home() {
 		//임시로 home에 생성하도록 했고 이후에 로그인 성공하는 순간으로 바꿔야함 
 		session.setAttribute("mediaList", new ArrayList<String>());
-
-		MemberDTO tmpInfo = new MemberDTO("yerinEMAIL", "yerinPW", "yerinNICKNAME", "yerin", "010", "19961024", null,null,null,null,null,null);
-		session.setAttribute("loginInfo", tmpInfo);
-		System.out.println("homeController :" + ((MemberDTO)session.getAttribute("loginInfo")).toString());
+		session.setAttribute("loginInfo", new MemberDTO("yerinEMAIL", "PW", "YERIN", "YERIN", "R", "R", null,null, "N", null, "E", "N"));
 		return "home";
 	}
 	

@@ -114,7 +114,7 @@
 
 	<insert id="registerReply" parameterType="kh.init.feeds.ReplyDTO">
 		insert into tb_reply
-		values(#{feed_seq},#{reply_seq},#{nickname},#{contents},sysdate)
+		values(#{feed_seq},#{reply_seq},#{nickname},#{depth},#{parent},#{contents},sysdate)
 	</insert>
 
 	<delete id="deleteReply" parameterType="java.util.Map">
@@ -127,4 +127,7 @@
 	<select id="replyNextSeq" resultType="Integer">
 	 	select reply_seq.nextval from dual
 	</select>
+	<update id="updateReply" parameterType="kh.init.feeds.ReplyDTO">
+		update tb_reply set contents = #{contents} where reply_seq = #{reply_seq}
+	</update>
 </mapper>
