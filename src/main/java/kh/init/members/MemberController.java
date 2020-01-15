@@ -90,7 +90,7 @@ public class MemberController {
 		String id = (String)session.getAttribute("loginInfo");
 		try {
 			
-		MemberDTO dto = service.getMyPageService("kks@naver.com");
+		MemberDTO dto = service.getMyPageService(id);
 		System.out.println(dto.getEmail());
 		System.out.println(dto.getName());
 		String poption1 = dto.getPhone().substring(0, 4);
