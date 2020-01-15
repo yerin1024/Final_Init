@@ -31,6 +31,7 @@ public class FeedService {
 		int feed_seq = dao.getFeedSeq();
 		dto.setFeed_seq(feed_seq);
 		String contents = dto.getContents();
+		
 		//해시태그 찾아냄
 		Pattern p = Pattern.compile("(#[가-히a-zA-Z]*[가-히a-zA-Z])");
 		Matcher m = p.matcher(contents);
@@ -39,10 +40,10 @@ public class FeedService {
 			hashtag += (m.group(0)+",");
 		}
 		dto.setHashtag(hashtag);
-		
-		
+
+
 		int result = dao.registerFeed(dto);
-		
+
 		//임시로 mediaTmp에 넣어뒀던 미디어들을 media폴더로 복사해줌
 		File path = new File(mediaPath);
 		if(!(path.exists())) {
@@ -53,11 +54,11 @@ public class FeedService {
 				System.out.println("mediaList("+i+") -"+mediaList.get(i)+" register");
 
 				File fromFile = new File(realPath+mediaList.get(i));
-				
+
 				//mediaTmp라는 폴더 경로를 Tmp부분을 없애주는 과정을 통해 media폴더로 옮겨줌
 				File toFile = new File(realPath+mediaList.get(i).replace("Tmp", ""));
 				fromFile.renameTo(toFile);
-				
+
 				//기존의 tmp폴더에 있는 파일은 삭제해줌
 				//혹시 이 과정에서 지워지지 않았을 파일들을 매일 정기적으로 지워주는 스케줄러 GarbageDeleteScheduler를 만들어놓음
 				fromFile.delete();
@@ -69,12 +70,12 @@ public class FeedService {
 
 		return result;
 	}
-	
+
 	public String mediaTmpUpload(MultipartFile file, String tmpPath) throws Exception{
 
 		String oriName = file.getOriginalFilename();
 		String sysName = System.currentTimeMillis()+oriName;
-		
+
 		//임시로 mediaTmp폴더에 넣어주는 과정
 		File path = new File(tmpPath);
 		if(!(path.exists())){
@@ -96,7 +97,7 @@ public class FeedService {
 		List<FeedDTO> list = dao.getMyFeed(email);
 		return list;
 	}
-	
+
 	public Map<String, Object> wholeFeed(String keyword) throws Exception{
 		if(keyword!=null) {
 			keyword = "%"+keyword+"%";
@@ -120,7 +121,7 @@ public class FeedService {
 				}
 			}
 		}
-		
+
 		Map<String, Object> map = new HashMap<>();
 		map.put("dtoList", list);
 		map.put("cover", cover);
@@ -132,8 +133,8 @@ public class FeedService {
 		return list;
 	}
 
-	
-	
+
+
 	@Transactional
 	public int deleteFeed(int feed_seq)throws Exception{
 		int feedResult = dao.deleteFeed(feed_seq);
@@ -168,7 +169,7 @@ public class FeedService {
 			}
 			System.out.println(cover);
 		}
-		
+
 		Map<String, Object> map = new HashMap<>();
 		map.put("scrapList", list);
 		map.put("cover", cover);
@@ -181,7 +182,7 @@ public class FeedService {
 		FeedDTO dto = dao.detailView(feed_seq);
 		String contents = dto.getContents();
 		String hashtags = dto.getHashtag();
-		
+
 		if(hashtags!=null) {
 			String[] hashtag = hashtags.split(","); //해쉬태그들을 ,로 연결시켜놨음
 			for(int i=0; i<hashtag.length; i++) {
@@ -194,25 +195,25 @@ public class FeedService {
 		System.out.println(contents);
 		return dto;
 	}
-	
+
 	public List<FeedDTO> getFriendFeed(int page, String email) throws Exception{
 		System.out.println("service page: "+page);
 		int totalFeed = dao.getFriendFeedCount(email);
 		int startNum = 0;
-        int endNum = 0;
-        if (page==1){
-            startNum = 1;
-            endNum = 10;  //데이터를 10개씩 가져오겠다.
-        }else{
-        	startNum = page+(9*(page-1));  //10개씩 가져오고싶다면 19->9로 
-        	endNum = page*10;   //20, 40, 60
-        	if(startNum>totalFeed) {
-        		return null;
-        	}else if(endNum>totalFeed) {
-        		endNum = totalFeed;
-        	}
-        }
-        System.out.println();
+		int endNum = 0;
+		if (page==1){
+			startNum = 1;
+			endNum = 10;  //데이터를 10개씩 가져오겠다.
+		}else{
+			startNum = page+(9*(page-1));  //10개씩 가져오고싶다면 19->9로 
+			endNum = page*10;   //20, 40, 60
+			if(startNum>totalFeed) {
+				return null;
+			}else if(endNum>totalFeed) {
+				endNum = totalFeed;
+			}
+		}
+		System.out.println();
 		List<FeedDTO> list = dao.getFriendFeed(email, startNum, endNum);
 		System.out.println("service getFriendFeed size : "+list.size());
 		System.out.println("service startNum: "+startNum);
@@ -221,7 +222,7 @@ public class FeedService {
 			FeedDTO dto = list.get(z);
 			String contents = dto.getContents();
 			String hashtags = dto.getHashtag();
-			
+
 			if(hashtags!=null) {
 				String[] hashtag = hashtags.split(","); //해쉬태그들을 ,로 연결시켜놨음
 				for(int i=0; i<hashtag.length; i++) {
@@ -236,9 +237,9 @@ public class FeedService {
 		return list;
 	}
 
-	
-	
-	
+
+
+
 	//controller-detailView에서 media 목록을 얻기 위한 service
 	public List<String> getMediaList(int feed_seq) throws Exception{
 		List<String> list = dao.getMediaList(feed_seq);
@@ -254,11 +255,17 @@ public class FeedService {
 		return list;
 	}
 
-	
-	
-	
-//-----------좋아요 & 스크랩----------------------------	
-	
+	//controller-detailView에서 profile_img 목록을 얻기 위한 service
+	public String getProfile_img(String email) throws Exception{
+		String profile_img = dao.getProfile_img(email);
+		return profile_img = "<img src=\"" +profile_img + "\">";
+	}
+
+
+
+
+	//-----------좋아요 & 스크랩----------------------------	
+
 	//feed_seq에 해당하는 게시글을 나의 email이 좋아요를 눌렀는지 확인
 	public int likeCheck(int feed_seq, String email) throws Exception{
 		int result = dao.likeCheck(feed_seq, email);
@@ -269,7 +276,7 @@ public class FeedService {
 		int result = dao.bookmarkCheck(feed_seq, email);
 		return result;
 	}
-	
+
 	//좋아요를 눌렀을때
 	@Transactional
 	public int insertLike(int feed_seq, String email) throws Exception{
@@ -292,11 +299,11 @@ public class FeedService {
 		return result;
 	}
 
-	
-	
-	
-	
-	
+
+
+
+
+
 	//	--------------------------댓글
 	public String registerReply(ReplyDTO dto)throws Exception{
 		Gson gson = new Gson();
@@ -332,4 +339,5 @@ public class FeedService {
 		int result = replyDAO.updateReply(dto);
 		return result;
 	}
+
 }

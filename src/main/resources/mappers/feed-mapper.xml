@@ -54,6 +54,10 @@
 		feed_file_seq
 	</select>
 
+   <!-- for profile_imgList -->
+	<select id="getProfile_img" resultType="String">
+		select profile_img from tb_member where email = #{email}
+	</select>
 
 	<select id="getFriendFeedCount" resultType="Integer">
 		select count(*) from tb_feed p join tb_friend r on p.email = r.my_id
@@ -61,7 +65,6 @@
 		and p.relation >= r.relation
 		or p.email = #{email}
 	</select>
-
 	<select id="getFriendFeed" parameterType="java.util.Map"
 		resultType="kh.init.feeds.FeedDTO">
 		select feed_seq, email, nickname, title, contents, relation, write_date,
@@ -79,8 +82,6 @@
 		#{title}, contents=#{contents} , relation=#{relation} where feed_seq =
 		#{feed_seq}
 	</update>
-
-
 
 	<!--좋아요 기능 -->
 
