@@ -33,7 +33,7 @@
 	background-color: #5d9ef5;
 	color: white;
 }
-#view1 {
+#view1 {	
 	display: none;
 	position: fixed;
 	bottom: 60px; right: 10px;
@@ -139,7 +139,7 @@
 /* -- pre 끝 ----------------------------------------- */
 
 li { list-style: none; } 
-ul { padding-bottom: 10px; }
+ul { padding-bottom: 5px; }
 
 .to_id {
 	background-color: gray;
@@ -261,6 +261,19 @@ ul { padding-bottom: 10px; }
 
 .pre_start:hover {
 	cursor: pointer;
+}
+
+.ul_right{
+    min-width: 380px;
+/*    border: 1px solid black;*/
+    float: right;
+    margin-bottom: -3px;
+}
+.ul_left{
+    min-width: 380px;
+/*    border: 1px solid red;*/
+    float: left;
+    margin-bottom: -3px;
 }
 
 /* ---------------------------------------------------------------------------------------- */
@@ -497,6 +510,18 @@ ul { padding-bottom: 10px; }
 		height: 60px;
 		margin-top: 5px;
 	}
+	.ul_right{
+	    min-width: 500px;
+	/*    border: 1px solid black;*/
+	    float: right;
+	    margin-bottom: -3px;
+	}
+	.ul_left{
+	    min-width: 500px;
+	/*    border: 1px solid red;*/
+	    float: left;
+	    margin-bottom: -3px;
+	}
 }
 </style>
 </head>
@@ -608,11 +633,11 @@ ul { padding-bottom: 10px; }
  						 $(".search").children().remove();
  						 for(var i=0; i < resp.length; i++){
  							 if(resp[i].from_id=='123@123.123'){
- 								 $(".sector_in").append("<ul>"
+ 								 $(".sector_in").append("<ul class='ul_right'>"
  							                +"<li class='from_id'>"+resp[i].contents+"</li><span class=time_right>"
  							                +resp[i].write_date+"</span><br></ul>");
  							 }else{
- 								 $(".sector_in").append("<ul>"
+ 								 $(".sector_in").append("<ul class='ul_left'>"
  							                + "<li class='to_id'>"+resp[i].contents+"</li><span class=time>"
  							                +resp[i].write_date+"</span><br></ul>");
  							 }
@@ -642,7 +667,7 @@ ul { padding-bottom: 10px; }
 		        				 dataType : "json"
  			        		 }).done(function(resp) {
  			        			 $("#inputtxt").val("");
- 			        			 $(".sector_in").append("<ul><li class='from_id'>"
+ 			        			 $(".sector_in").append("<ul class='ul_right'><li class='from_id'>"
  			        					 +resp.contents+"</li><span class=time_right></span><span class=readCheck></span><br></ul>");
  			        			 var objDiv = document.getElementById("view1");
  			        			 objDiv.scrollTop=objDiv.scrollHeight;
@@ -725,11 +750,11 @@ ul { padding-bottom: 10px; }
 		 						 $(".search").children().remove();
 		 						 for(var i=0; i < resp.length; i++){
 		 							 if(resp[i].from_id=='123@123.123'){
-		 								 $(".sector_in").append("<ul><li class='from_id'>"
+		 								 $(".sector_in").append("<ul class='ul_right'><li class='from_id'>"
 		 										 +resp[i].contents+"</li><span class=time_right>"
 		 										 +resp[i].write_date+"</span><br></ul>");
 		 							 }else{
-		 								 $(".sector_in").append("<ul><li class='to_id'>"
+		 								 $(".sector_in").append("<ul class='ul_left'><li class='to_id'>"
 		 										 +resp[i].contents+"</li><span class=time>"
 		 										 +resp[i].write_date+"</span><br></ul>");
 		 							 }
@@ -760,7 +785,7 @@ ul { padding-bottom: 10px; }
 		 			        			 dataType : "json"
 		 			        		 }).done(function(resp) {
 		 			        			 $("#inputtxt").val("");
-		 			        			 $(".sector_in").append("<ul><li class='from_id'>"
+		 			        			 $(".sector_in").append("<ul class='ul_right'><li class='from_id'>"
 		 			        					 +resp.contents+"</li><span class=time_right></span><span class=readCheck></span><br></ul>");
 		 			        			 var objDiv = document.getElementById("view1");
 		 			        			 objDiv.scrollTop=objDiv.scrollHeight;

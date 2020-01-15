@@ -30,10 +30,8 @@ public class FeedService {
 	public int registerFeed(FeedDTO dto, List<String> mediaList, String mediaPath, String realPath) throws Exception{
 		int feed_seq = dao.getFeedSeq();
 		dto.setFeed_seq(feed_seq);
-
 		String contents = dto.getContents();
-
-
+		
 		//해시태그 찾아냄
 		Pattern p = Pattern.compile("(#[가-히a-zA-Z]*[가-히a-zA-Z])");
 		Matcher m = p.matcher(contents);
@@ -323,9 +321,19 @@ public class FeedService {
 		int result = replyDAO.deleteReply("reply_seq",reply_seq);
 		return result;
 	}
-	public List<ReplyDTO> viewAllReply(int feed_seq)throws Exception{
-		List<ReplyDTO> list = replyDAO.viewAllReply(feed_seq);
-		return list;
+	public Map<String, Object> viewAllReply(int feed_seq)throws Exception{
+		List<ReplyDTO> parents = replyDAO.viewAllReply(feed_seq, 0);
+		System.out.println(parents.toString());
+		List<ReplyDTO> childs = null;
+		for(ReplyDTO tmp : parents){
+			int tmpParent = tmp.getReply_seq();
+			childs = replyDAO.viewAllReply(feed_seq, tmpParent);
+			System.out.print("\n"+childs.toString()+"입니다!");
+		}
+		Map<String, Object> map = new HashMap<>();
+		map.put("parents", parents);
+		map.put("childs", childs);
+		return map;
 	}
 	public int updateReply(ReplyDTO dto)throws Exception{
 		int result = replyDAO.updateReply(dto);

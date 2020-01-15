@@ -1,6 +1,7 @@
 package kh.init.messages;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 
 public class MessageDTO {
 	private int msg_seq;
@@ -65,6 +66,29 @@ public class MessageDTO {
 	}
 	public void setUnread_count(int unread_count) {
 		this.unread_count = unread_count;
+	}
+	
+	public String getFormedDate() {
+		SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss");
+		return sdf.format(this.write_date.getTime());
+	}
+	
+	public String getFormedDate1() {
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd");
+		long write_date = this.write_date.getTime();
+		long currrent_date = System.currentTimeMillis();
+		long gapTime = (currrent_date - write_date)/1000;
+		
+		if(gapTime < 300) {
+			return "5분 이내";
+		}else if (300 <= gapTime && gapTime<=3600) {
+			return "1시간 이내";
+		}else if (3600 <= gapTime && gapTime<=86400) {
+			return "오늘";
+		}else {
+			return sdf.format(this.write_date);
+		}
+		
 	}
 	
 }

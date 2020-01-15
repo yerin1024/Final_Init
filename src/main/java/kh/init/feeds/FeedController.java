@@ -52,7 +52,6 @@ public class FeedController {
 		System.out.println("삭제 도착!");
 		try {
 			int result =  service.deleteFeed(feed_seq);
-			int replyResult = service.deleteReply(feed_seq);
 			System.out.println(result + "행이 삭제되었습니다.");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -192,32 +191,33 @@ public class FeedController {
 
 	@RequestMapping("/detailView") 
 	public String detailView(int feed_seqS, Model model) {
-
 		System.out.println("detailView 도착");
 		int feed_seq = feed_seqS;
 		System.out.println(feed_seq);
 		int likeCheck = 0; //0은 안한것 1은 한것
 		int bookmarkCheck = 0; //0은 안한것 1은 한것
 		FeedDTO dto = null;
-		List<ReplyDTO> replyList = new ArrayList<>();
+		List<ReplyDTO> parentReply = new ArrayList<>();
+		List<ReplyDTO> childReply = new ArrayList<>();
 		List<String> list = new ArrayList<>();
 		try {
 			dto = service.detailView(feed_seq);
-			likeCheck = service.likeCheck(feed_seq, (String)session.getAttribute("loginInfo"));
-			bookmarkCheck = service.bookmarkCheck(feed_seq, (String)session.getAttribute("loginInfo"));
-
-
-			System.out.println(replyList.size() + "리플라이리스트 사이즈입니다.");
-			System.out.println(dto.toString());
+			likeCheck = service.likeCheck(feed_seq, ((MemberDTO)session.getAttribute("loginInfo")).getEmail());
+			bookmarkCheck = service.bookmarkCheck(feed_seq, ((MemberDTO)session.getAttribute("loginInfo")).getEmail());
 			model.addAttribute("likeCheck", likeCheck);
 			model.addAttribute("bookmarkCheck", bookmarkCheck);
 
-			replyList = service.viewAllReply(feed_seq);
-			list = service.getMediaList(feed_seq);
-			for(String tmp : list) {
-				System.out.println(tmp);
+			parentReply = (List<ReplyDTO>)service.viewAllReply(feed_seq).get("parents");
+			childReply = (List<ReplyDTO>)service.viewAllReply(feed_seq).get("childs");
+			for(ReplyDTO tmp : childReply) {
+//				System.out.println("\n"+tmp.toString()+"입니다!");
 			}
-			model.addAttribute("replylist",replyList);
+			
+			System.out.println("controller parent댓글"+parentReply.toString());
+			System.out.println("controller child댓글"+childReply.toString());
+			list = service.getMediaList(feed_seq);
+			model.addAttribute("parentReply",parentReply);
+			model.addAttribute("childReply",childReply);
 			model.addAttribute("media", list);
 			model.addAttribute("dto", dto);	
 		}catch(Exception e) {
@@ -245,16 +245,15 @@ public class FeedController {
 			for(FeedDTO tmp : list) {
 				int feed_seq = tmp.getFeed_seq();
 				String tmpEmail = tmp.getEmail();
-				System.out.println("tmpEmail:" + tmpEmail);
 				profile_imgList.add(service.getProfile_img(tmpEmail));
-				System.out.println("profile_img:"+profile_imgList);
 				mediaList.add(service.getMediaList(feed_seq));
-				replyList.add(service.viewAllReply(feed_seq));
+//				replyList.add(service.viewAllReply(feed_seq));
 				likeCheckList.add(service.likeCheck(feed_seq, ((MemberDTO)session.getAttribute("loginInfo")).getEmail()));
 				bookmarkCheckList.add(service.bookmarkCheck(feed_seq, ((MemberDTO)session.getAttribute("loginInfo")).getEmail()));
 			}
 			
 			System.out.println(list);
+			System.out.println(profile_imgList);
 			System.out.println(mediaList);
 			System.out.println(replyList);
 			System.out.println(likeCheckList);
@@ -297,7 +296,7 @@ public class FeedController {
 			for(FeedDTO tmp : list) {
 				int feed_seq = tmp.getFeed_seq();
 				mediaList.add(service.getMediaList(feed_seq));
-				replyList.add(service.viewAllReply(feed_seq));
+//				replyList.add(service.viewAllReply(feed_seq));
 				likeCheckList.add(service.likeCheck(feed_seq, ((MemberDTO)session.getAttribute("loginInfo")).getEmail()));
 				bookmarkCheckList.add(service.bookmarkCheck(feed_seq, ((MemberDTO)session.getAttribute("loginInfo")).getEmail()));
 			}
@@ -332,7 +331,7 @@ public class FeedController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "/feeds/modifyFeedView";
+		return "redirect:detailView?feed_seqS="+dto.getFeed_seq();
 	}
 	
 	@RequestMapping("/modifyFeedView")
@@ -473,18 +472,5 @@ public class FeedController {
 			e.printStackTrace();
 		}
 		return result+"";
-	}
-	@RequestMapping("/viewAllReply")
-	@ResponseBody
-	public String viewReply(int feed_seq,Model model) {
-		System.out.println("게시물 댓글 보기 도착!!");
-		System.out.println(feed_seq);
-		try {
-			List<ReplyDTO> list = service.viewAllReply(feed_seq);
-			model.addAttribute("list", list);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return "feeds/myFeed";
 	}
 }

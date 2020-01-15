@@ -427,98 +427,63 @@ html, body {
 	</div>
 
 	<script>
-		$(document)
-				.on(
-						"click",
-						".like",
-						function() {
-							var seq = $(this).attr("id");
-							var likeCheck = $(".likeBtn[seq=" + seq + "]")
-									.attr("value");
-							console.log(seq);
-							console.log(likeCheck);
-							if (likeCheck == "likeBefore") { //아직 좋아요를 안눌러있는 상태에서 좋아요했을때
-								$
-										.ajax({
-											type : "POST",
-											url : "/feed/insertLike",
-											data : {
-												feed_seq : seq
-											}
-										})
-										.done(
-												function() {
-													$(
-															".likeImg[seq="
-																	+ seq + "]")
-															.html(
-																	"<img class=\"likeBtn\" seq=\""+seq+"\" value=\"likeAfter\" src=\"${pageContext.request.contextPath }/resources/images/likeAfter.png\">");
-												})
-							} else {
-								$
-										.ajax({
-											type : "POST",
-											url : "/feed/deleteLike",
-											data : {
-												feed_seq : seq
-											}
-										})
-										.done(
-												function() {
-													$(
-															".likeImg[seq="
-																	+ seq + "]")
-															.html(
-																	"<img class=\"likeBtn\" seq=\""+seq+"\" value=\"likeBefore\" src=\"${pageContext.request.contextPath }/resources/images/likeBefore.png\">");
-												})
+		$(document).on("click",".like",function() {
+			var seq = $(this).attr("id");
+			var likeCheck = $(".likeBtn[seq=" + seq + "]").attr("value");
+				console.log(seq);
+				console.log(likeCheck);
+			if (likeCheck == "likeBefore") { //아직 좋아요를 안눌러있는 상태에서 좋아요했을때
+				$.ajax({
+					type : "POST",
+					url : "/feed/insertLike",
+					data : {
+						feed_seq : seq
 							}
 						})
+				.done(function() {
+					$(".likeImg[seq="+ seq + "]").html("<img class=\"likeBtn\" seq=\""+seq+"\" value=\"likeAfter\" src=\"${pageContext.request.contextPath }/resources/images/likeAfter.png\">");
+						})
+			} else {
+				$.ajax({
+					type : "POST",
+					url : "/feed/deleteLike",
+					data : {
+						feed_seq : seq
+							}
+						})
+				.done(function() {
+					$(".likeImg[seq="+ seq + "]").html("<img class=\"likeBtn\" seq=\""+seq+"\" value=\"likeBefore\" src=\"${pageContext.request.contextPath }/resources/images/likeBefore.png\">");
+					})
+					}
+			})
 
-		$(document)
-				.on(
-						"click",
-						".bookmark",
-						function() {
-							var seq = $(this).attr("id");
-							var bookmarkCheck = $(
-									".bookmarkBtn[seq=" + seq + "]").attr(
-									"value");
-							if (bookmarkCheck == "bookmarkBefore") { //아직 좋아요를 안눌러있는 상태에서 좋아요했을때
-								$
-										.ajax({
-											type : "POST",
-											url : "/feed/insertBookmark",
-											data : {
-												feed_seq : seq
-											}
-										})
-										.done(
-												function() {
-													$(
-															".bookmarkImg[seq="
-																	+ seq + "]")
-															.html(
-																	"<img class=\"bookmarkBtn\" seq=\""+seq+"\"  value=\"bookmarkAfter\" src=\"${pageContext.request.contextPath }/resources/images/bookmarkAfter.png\">");
-												})
-							} else {
-								$
-										.ajax({
-											type : "POST",
-											url : "/feed/deleteBookmark",
-											data : {
-												feed_seq : seq
-											}
-										})
-										.done(
-												function() {
-													$(
-															".bookmarkImg[seq="
-																	+ seq + "]")
-															.html(
-																	"<img class=\"bookmarkBtn\" seq=\""+seq+"\"  value=\"bookmarkBefore\" src=\"${pageContext.request.contextPath }/resources/images/bookmarkBefore.png\">");
-												})
+		$(document).on("click",".bookmark",function() {
+			var seq = $(this).attr("id");
+			var bookmarkCheck = $(".bookmarkBtn[seq=" + seq + "]").attr("value");
+			if (bookmarkCheck == "bookmarkBefore") { //아직 좋아요를 안눌러있는 상태에서 좋아요했을때
+				$.ajax({
+					type : "POST",
+					url : "/feed/insertBookmark",
+					data : {
+					feed_seq : seq
 							}
 						})
+				.done(function() {
+					$(".bookmarkImg[seq="+ seq + "]").html("<img class=\"bookmarkBtn\" seq=\""+seq+"\"  value=\"bookmarkAfter\" src=\"${pageContext.request.contextPath }/resources/images/bookmarkAfter.png\">");
+					})
+				} else {
+					$.ajax({
+						type : "POST",
+						url : "/feed/deleteBookmark",
+						data : {
+						feed_seq : seq
+								}
+						})
+					.done(function() {
+						$(".bookmarkImg[seq="+ seq + "]").html("<img class=\"bookmarkBtn\" seq=\""+seq+"\"  value=\"bookmarkBefore\" src=\"${pageContext.request.contextPath }/resources/images/bookmarkBefore.png\">");
+						})
+						}
+					})
 	</script>
 </body>
 </html>
