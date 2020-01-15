@@ -1,0 +1,79 @@
+html, body {
+	padding: 0px;
+	margin: 0px;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+.navBar {
+	padding: 0px;
+	position: fixed;
+	z-index: 999999999999;
+	width:100%;
+}
+
+.header {
+	margin: 0px
+}
+
+.nav-left, .nav-center {
+	float: left
+}
+
+.logo {
+	width: 150px;
+	line-height: 60px;
+	font-size: 35px;
+	font-weight: bold;
+	text-transform: uppercase;
+	text-align: center;
+	transition: 1.5s;
+	color: white;
+}
+
+#total_feed, #my_feed, #logout {
+	width: 36px;
+	height: 36px;
+	line-height: 20px;
+}
+
+#notification, #msg {
+	width: 26px;
+	height: 26px;
+	line-height: 20px;
+}
+
+.header {
+	flex: 1 1 auto;
+	padding: 3px;
+	background-size: 200% auto;
+}
+
+.header:hover {
+	background-position: right center;
+	/* change the direction of the change here */
+}
+
+.header {
+	background-image: linear-gradient(to right, #1D4E89 0%, #ffecd2 51%, #1D4E89 100%);
+}
+
+.inner {
+	max-width: 1400px;
+	margin: auto;
+}
+.nav-link{
+    position: relative;
+}
+#redCircle1{
+    position: absolute;
+    top: 13px; right: 9px;
+    
+}
+#redCircle2{
+    position: absolute;
+    top: 14px; right: 2px;
+    
+}

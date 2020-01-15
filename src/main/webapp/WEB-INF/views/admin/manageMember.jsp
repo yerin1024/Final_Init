@@ -23,6 +23,18 @@
 #searchDiv {
 	text-align: right;
 }
+.profileImgBox{
+	border:1px solid black;
+    border-radius: 75px;
+    width: 50px;
+    height: 50px;
+}
+.profileImg{
+    width: 100%;
+    height: 100%;
+    border-radius: 75px;
+}
+
 </style>
 
 </head>
@@ -76,8 +88,11 @@
 							<tbody>
 								<c:forEach items="${memberList}" var="mdto">
 									<tr class="contents">
-										<!-- 									<tr class=${mdto.email} id=""> -->
-										<td>${mdto.profile_img}</td>
+										<td>
+										<div class="profileImgBox">
+											<img class="profileImg" src="${mdto.profile_img}" alt="">
+										</div>
+										</td>
 										<td>${mdto.nickname}</td>
 										<td>${mdto.name}</td>
 										<td>${mdto.email}</td>
