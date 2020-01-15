@@ -74,6 +74,7 @@ public class FriendService {
 	public List<MemberDTO> getFriendsListService(String id) throws Exception{
 		List<MemberDTO> list = new ArrayList<>();
 		List<FriendDTO> flist = dao.getFriendsList(id);
+		System.out.println("flist : " + flist.size());
 		for(int i=0;flist.size()>i;i++) {
 			String fr_id = flist.get(i).getFr_id();
 			list.add(mdao.getMyInfoByFriend(fr_id));
