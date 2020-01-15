@@ -27,7 +27,7 @@ public class MemberController {
 			System.out.println("로그인 시도 : " + email);
 		}
 		if(service.isLoginOk(email, pw) > 0) { // 로그인 허가
-			session.setAttribute("loginInfo", email); // 세션 로그인정보 담기
+			session.setAttribute("loginInfo", service.getMemberDTO(email)); // 세션 로그인정보 담기
 			return "redirect:/singleTest";
 		}else {
 			return "main";
