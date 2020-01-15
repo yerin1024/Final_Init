@@ -26,7 +26,7 @@
 		select count(*) from tb_member where email= #{email} and pw= #{pw}
 	</select>
 	
-	<select id="selectById" resultType="kh.init.members.MemberDTO">
+	<select id="selectById"  resultType="kh.init.members.MemberDTO">
    select * from tb_member where email = #{email}
   </select>
   <select id="selectByFriend" resultType="kh.init.members.MemberDTO">

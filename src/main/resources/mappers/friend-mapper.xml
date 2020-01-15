@@ -14,23 +14,20 @@ select b.* from tb_block a,tb_friend b where b.my_id= #{id} and a.to_id != b.fr_
      
   </select>
   <select id="selectBySearch" parameterType="java.util.Map" resultType="kh.init.friends.FriendDTO">
-      select b.* from tb_block a,tb_friend b
+      select b.* from tb_block a,tb_friend b 
       <trim prefix="where" prefixOverrides="and|or">
-    <if test="my_id != null">
-      b.my_id = #{my_id}
-    </if>
-    <if test="my_id != null">
-      and a.from_id = #{my_id}
-    </if>
-     <if test="my_id != null">
-      or a.from_id = #{my_id}
-    </if>
+    
+      b.my_id = #{my_id} and a.to_id != b.fr_id  
+    
     <if test="fr_id != null">
        and b.fr_id like #{fr_id} 
     </if>
+     
+      or a.from_id = #{my_id}
+     
    
     </trim>
-       and a.to_id != b.fr_id
+       
   </select>
   <select id="selectListReqById" resultType="kh.init.friends.FriendRequestDTO">
       select * from tb_friend_request where to_id = #{id}
