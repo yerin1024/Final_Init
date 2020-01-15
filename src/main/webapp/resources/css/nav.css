@@ -64,3 +64,16 @@ html, body {
 	max-width: 1400px;
 	margin: auto;
 }
+.nav-link{
+    position: relative;
+}
+#redCircle1{
+    position: absolute;
+    top: 13px; right: 9px;
+    
+}
+#redCircle2{
+    position: absolute;
+    top: 14px; right: 2px;
+    
+}

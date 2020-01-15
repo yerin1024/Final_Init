@@ -1,9 +1,6 @@
 package kh.init.members;
 
 
-import java.util.HashMap;
-import java.util.Random;
-
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +12,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.JsonObject;
 
-import kh.init.configuration.Utils;
-import net.nurigo.java_sdk.api.Message;
-
 @RequestMapping("/guest")
 @Controller
 public class GuestController {
@@ -28,7 +22,7 @@ public class GuestController {
 	@Autowired
 	private HttpSession session;
 	
-	JsonObject obj = new JsonObject();
+//	JsonObject obj = new JsonObject();
 	
 	//회원가입	페이지 로드
 	@RequestMapping("/signUp.do")
@@ -53,7 +47,10 @@ public class GuestController {
 	@RequestMapping(value="/checkEmail.do", produces="text/html;charset=UTF-8")
 	@ResponseBody
 	public String toCheckEmail(String email) {
-		System.out.println("이메일 중복확인 : " + email);		
+		System.out.println("이메일 중복확인 : " + email);	
+		
+		JsonObject obj = new JsonObject();
+		
 		if(service.checkEmail(email) <= 0) { //사용 가능 이메일
 			obj.addProperty("result", "available"); 
 			return obj.toString();
@@ -67,7 +64,11 @@ public class GuestController {
 	@RequestMapping(value="/checkNickname.do", produces="text/html;charset=UTF-8")
 	@ResponseBody
 	public String toCheckNickname(String nickname) {
+		
 		System.out.println("닉네임 중복확인 : " + nickname);
+		
+		JsonObject obj = new JsonObject();
+		
 		if(service.checkNickname(nickname) <= 0) { //사용 가능 닉네임
 			obj.addProperty("result", "available");
 			return obj.toString();
@@ -78,10 +79,14 @@ public class GuestController {
 	}
 	
 	//전화번호 중복확인
-	@RequestMapping(value="/checkPhone.do", produces="text/html;charset=UTF-8")
+	@RequestMapping(value="/checkOverlap.do", produces="text/html;charset=UTF-8")
 	@ResponseBody
 	public String toCheckPhone(String phone) {
+		
 		System.out.println("전화번호 중복확인 : " + phone);
+		
+		JsonObject obj = new JsonObject();
+		
 		if(service.checkPhone(phone) <= 0) { //사용 가능 번호
 			obj.addProperty("result", "available");
 			return obj.toString();
@@ -92,18 +97,39 @@ public class GuestController {
 	}
 	
 	//휴대폰 본인인증 인증번호 전송
-	@RequestMapping("/sendVerifCode.do")
+	@RequestMapping(value="/sendVerifCode.do", produces="text/html;charset=UTF-8")
 	@ResponseBody
 	public String toSendVerifCode(String phone) {
-		String ranNum = service.sendVerifCode(phone); //인증번호 생성
-		System.out.println("인증번호 생성 : " + ranNum);
-		obj.addProperty("result", ranNum);
+//		String ranNum = service.sendVerifCode(phone); //인증번호 생성
+//		session.setAttribute("verifyCode", ranNum);
+//		System.out.println("인증번호 생성 : " + ranNum);
+		JsonObject obj = new JsonObject();
+		obj.addProperty("result", "Verify Code sent");
 		return obj.toString();
 		//클라이언트에 넘기지 않고 서버로 다시 값 반환받아 처리 예정
 	}
 	
-	@RequestMapping("/verifyUser.do")
-	public String toVerifyUser() {
-		return "signUp";
-	}		
+	@RequestMapping(value="/verifyUser.do", produces="text/html;charset=UTF-8")
+	@ResponseBody
+	public String toVerifyUser(String verifyCode) {
+		
+		JsonObject obj = new JsonObject();
+		
+		String originCode = (String)session.getAttribute("verifyCode");
+		if(service.verifyUser(verifyCode, originCode)) {
+			obj.addProperty("result", "verified");
+		}else {
+			obj.addProperty("result", "unverified");
+		}
+		return obj.toString();
+	}	
+	
+	@RequestMapping(value="/removeVerifSession.do", produces="text/html;charset=UTF-8")
+	@ResponseBody
+	public String toRemoveVerifSession() {
+		session.removeAttribute("verifyCode");
+		JsonObject obj = new JsonObject();
+		obj.addProperty("result", "Verif Code removed");
+		return obj.toString();
+	}	
 }

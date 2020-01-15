@@ -49,6 +49,17 @@ public class AlarmController {
 		return gs.toJson(result);
 	}
 	
+	// 알림 확인
+	@RequestMapping(value="/alarmCheck.al", produces="text/html; charset=utf8")
+	@ResponseBody
+	public String alarmCheck() {
+		System.out.println("알림 check 확인");
+		service.alarmCheck("123@123.123");
+		// 나중엔 이메일 부분 session id로 받을 것
+		
+		return null;
+	}
+	
 //	@RequestMapping(value="/sendFly.msg", produces="text/html; charset=utf8")
 //	@ResponseBody
 //	public String sendMsg(MessageDTO dto, String to_id) {

@@ -9,10 +9,11 @@ public class MessageDTO {
 	private String contents;
 	private Timestamp write_date;
 	private String receive_read;
+	private int unread_count;
 	
 	public MessageDTO() {}
 	public MessageDTO(int msg_seq, String from_id, String to_id, String contents, Timestamp write_date,
-			String receive_read) {
+			String receive_read, int unread_count) {
 		super();
 		this.msg_seq = msg_seq;
 		this.from_id = from_id;
@@ -20,6 +21,7 @@ public class MessageDTO {
 		this.contents = contents;
 		this.write_date = write_date;
 		this.receive_read = receive_read;
+		this.unread_count = unread_count;
 	}
 	
 	public int getMsg_seq() {
@@ -57,6 +59,12 @@ public class MessageDTO {
 	}
 	public void setReceive_read(String receive_read) {
 		this.receive_read = receive_read;
+	}
+	public int getUnread_count() {
+		return unread_count;
+	}
+	public void setUnread_count(int unread_count) {
+		this.unread_count = unread_count;
 	}
 	
 }

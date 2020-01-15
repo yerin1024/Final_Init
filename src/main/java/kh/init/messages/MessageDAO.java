@@ -64,8 +64,11 @@ public class MessageDAO {
 	}
 	
 	// 읽지 않은 메시지 수
-	public int unreadCount(MessageDTO dto) {
-		int result = jdbc.selectOne("Message.previewMsg");
+	public int unreadCount(String to_id, String from_id) {
+		Map<String, Object> prm = new HashMap<>();
+		prm.put("to_id", to_id);
+		prm.put("from_id", from_id);
+		int result = jdbc.selectOne("Message.unreadCount", prm);
 		return result;
 	}
 	

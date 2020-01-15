@@ -42,7 +42,6 @@ public class FeedController {
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
-
 		return "feeds/myFeed";
 	}
 

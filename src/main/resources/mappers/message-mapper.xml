@@ -33,16 +33,21 @@
 	</update>
 	
 	<!-- 미리 보기 -->
+	<!-- from_id: 보낸 사람 / to_id: 받는 사람 -->	
 	<select id="previewMsg" resultType="kh.init.messages.MessageDTO">
 	<![CDATA[
-		select * from (select * from tb_message where from_id=#{from_id} order by msg_seq desc) 
-		where to_id=#{to_id} and rownum <=1
+		select
+			msg_seq, from_id, to_id, contents, write_date, receive_read, 
+			(select count(*) unread_count
+				from tb_message
+				where (from_id=#{to_id} and to_id=#{from_id}) and receive_read = 'N') unread_count 
+		from tb_message where ((from_id=#{from_id} and to_id=#{to_id}) or (from_id=#{to_id} and to_id=#{from_id})) and rownum <=1 order by 1 desc
 	]]>
 	</select>
 	
 	<!-- 읽지 않은 메시지 수 -->
 	<select id="unreadCount" resultType="java.lang.Integer"> 
-		select count(*) from tb_message where (from_id=#{to_id} and to_id=#{from_id}) and receive_read = 'N'
+		select count(*) unread_count from tb_message where (from_id=#{to_id} and to_id=#{from_id}) and receive_read = 'N'
 	</select>
 	
 	<!-- 친구 목록 -->
