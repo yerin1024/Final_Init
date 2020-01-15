@@ -74,6 +74,7 @@ public class FriendService {
 	public List<MemberDTO> getFriendsListService(String id) throws Exception{
 		List<MemberDTO> list = new ArrayList<>();
 		List<FriendDTO> flist = dao.getFriendsList(id);
+		System.out.println("flist : " + flist.size());
 		for(int i=0;flist.size()>i;i++) {
 			String fr_id = flist.get(i).getFr_id();
 			list.add(mdao.getMyInfoByFriend(fr_id));
@@ -84,9 +85,10 @@ public class FriendService {
 		
 	}
 	@Transactional("txManager") //검색된 친구 리스트 가져오기
-	public List<MemberDTO> searchFriendsListService(String id,String search) throws Exception{
+	public List<MemberDTO> searchFriendsListService(String email,String search) throws Exception{
 		List<MemberDTO> list = new ArrayList<>();
-		List<FriendDTO> flist = dao.getFriendsList(id,search);
+		System.out.println("넘어온 이메일은 "+email);
+		List<FriendDTO> flist = dao.getFriendsList(email,search);
 		System.out.println("검색 친구리스트 사이즈: "+flist.size());
 		
 		for(int i=0;flist.size()>i;i++) {

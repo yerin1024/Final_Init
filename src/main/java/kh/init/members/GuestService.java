@@ -68,14 +68,15 @@ public class GuestService {
 		Message coolsms = new Message(api_key, api_secret);
 		HashMap<String, String> set = new HashMap<String, String>();
 		String ranNum = Utils.generateCertNum(); // 인증번호 생성
-				
+		JSONObject result = null;
+		
         set.put("to", phone); // 수신번호
         set.put("from", "01051922972"); // 발신번호 
         set.put("text", "[Init] 인증번호는 [" + ranNum + "]입니다."); // 문자내용
         set.put("type", "sms"); // 문자 타입
         
         try {
-			JSONObject result = coolsms.send(set); // 전송
+			result = coolsms.send(set); // 전송
 		} catch (CoolsmsException e) {
 			e.printStackTrace();
 		} // 보내기&전송결과받기
@@ -95,6 +96,14 @@ public class GuestService {
 //        } 
         return ranNum;
     }
+	
+	public boolean verifyUser(String verifyCode, String originCode) {
+		System.out.println("verifyCode : " + verifyCode );
+		System.out.println("originCode : " + originCode);
+		if(verifyCode.equals(originCode)) 
+		return true;
+		return false;
+	}
 	
 	public String getProfile(String email) {
 		return dao.getProfile(email);

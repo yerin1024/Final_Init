@@ -33,8 +33,8 @@ public class FriendController {
 	@RequestMapping("/friendRequest") //친구 요청 하기
 	public String friendRequest(FriendRequestDTO dto,Model model) {
 		try { 
-			String email = (String)session.getAttribute("loginInfo");
-		int result = service.friendRequestService(dto,email);
+			MemberDTO mDto = (MemberDTO)session.getAttribute("loginInfo");
+		int result = service.friendRequestService(dto,mDto.getEmail());
 		 if(result > 0) {
 			 return "feeds/myFeed";
 		 }else {
@@ -80,6 +80,7 @@ public class FriendController {
 	public String selectFndList(Model model) {
 		String email = (String)session.getAttribute("loginInfo");
 		System.out.println("친구목록 조회 CON 도착.");
+		System.out.println("세션값 : "+email);
 		try {
 			List<MemberDTO> list = service.getFriendsListService(email);
 			List<MemberDTO> waitlist = service.getRequestMemList(email);

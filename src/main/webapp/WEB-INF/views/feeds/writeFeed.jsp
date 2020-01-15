@@ -51,10 +51,6 @@
 	text-align: center;
 }
 
-.carousel-control-next, .carousel-control-prev {
-
-}
-
 .carousel-inner * {
 	width: 600px;
 	height: 600px;
@@ -95,6 +91,7 @@
 			class="sr-only">Next</span>
 		</a>
 	</div>
+<!-- 	캐러셀에서 첫번째 미디어만 active가 붙어야 정상동작하는데 그떼 사용하기 위해 index div를 만들어놓고 display none을 시켜놨음 -->
 	<span id="index" style="display: none">0</span>
 <form action="writeFeedProc" method="post" enctype="multipart/form-data" id="writeForm">
 	제목:<input type="text" name="title">
@@ -129,20 +126,11 @@
 		});
 		
 		Dropzone.options.myAwesomeDropzone = {
-				// paramName: "file", // The name that will be used to transfer the file
-				//maxFilesize: 2, // MB
-				//accept: function(file, done) {
-				//  if (file.name == "justinbieber.jpg") {
-				//     done("Naha, you don't.");
-				//   }
-				//  else { done(); }
-				// }
-				maxFilesize: 10,
-				init : function(re) {
-					console.log("ajax리턴");
-					
-					//실패했을때
-				     this.on("error", function(file, xhr, form) {
+				maxFilesize: 10,//최대 파일사이즈 10MB
+				
+				init : function(re) {//ajax 통신 이후
+					//파일크기 자체가 10MB를 넘어서 ajax통신자체가 실패했을때
+				    this.on("error", function(file, xhr, form) {
 				    	 alert("불가능한 파일유형입니다. ");
 				    });
 					//성공했을때
@@ -151,10 +139,12 @@
 						$(".carousel-control-prev").css("height","600px");
 						console.log(file);
 						console.log(response);
+						//통신엔 성공했지만 파일유형이 image나 video가 아닌 겨우
 						if(response.result=="fail"){
 							alert("불가능한 파일유형입니다. ");
 							return false;
 						}
+						//통신에 성공했으면서 파일유형이 imager나 video인 경우 정상적으로 태그를 붙여서 넣어줌
 						var result = response.result;
 						var type = response.type;
 						if (type == "image") {
@@ -164,6 +154,7 @@
 						}
 
 						var index = Number($("#index").html());
+						//캐러셀에서 첫번째 미디어만 active가 붙어야 정상동작하는데 그떼 사용하기 위해 index div를 만들어놓고 display none을 시켜놨음
 						if (index == 0) {
 							$(".carousel-indicators").append("<li data-target=\"#carouselExampleIndicators\" data-slide-to=\""+index+"\" class=\"active\"></li>")
 							$(".carousel-inner").append("<div class=\"carousel-item active\">"+ media + "</div>");

@@ -36,6 +36,16 @@ public class MemberService {
 		return dao.isLoginOk(email, pw);
 	}
 
+	public MemberDTO getMemberDTO(String email) {
+		MemberDTO dto;
+		try {
+			dto = dao.getMyInfo(email);
+			return dto;	
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 
 	// 비밀번호 찾기 이메일 임시비밀번호 전송
 	@Transactional("txManager")
@@ -73,10 +83,10 @@ public class MemberService {
 			msg.setFrom(new InternetAddress(manager));
 			msg.setRecipients(Message.RecipientType.TO, to);
 			msg.setSubject("[Init] 임시 비밀번호 발급 안내"); // 메일 타이틀
-			msg.setText(user + "님 Init 임시 비밀번호가 발급되었습니다." // 메일 내용
+			msg.setContent(user + "님 Init 임시 비밀번호가 발급되었습니다." // 메일 내용
 					+ "아래의 임시 비밀번호로 로그인 하신 후 반드시 비밀번호를 재설정하시기 바랍니다."
 					+ "비밀번호 재설정은 MyFeed > 보안 설정 > 비민번호 변경 에서 가능합니다."
-					+ "임시 비밀번호 : " + ranChar);
+					+ "임시 비밀번호 : " + ranChar, "text/html");
 			Transport.send(msg); // 메일 전송
 		} catch (MessagingException mex) {
 			System.out.println("send failed, exception: " + mex);
@@ -89,7 +99,7 @@ public class MemberService {
 	public MemberDTO getMyPageService(String email) throws Exception{
 		MemberDTO dto = dao.getMyInfo(email);
 		System.out.println("왜값이 안나와"+dto.getEmail());
-		return dto;
+		return dto;		
 	}
 
 	//회원 탈퇴

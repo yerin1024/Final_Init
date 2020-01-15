@@ -77,7 +77,7 @@
 								<c:forEach items="${feedList}" var="fdto">
 									<tr class="${fdto.email}">
 										<td><a
-											href="${pageContext.request.contextPath}/admin/goFeed.do?email=${fdto.feed_seq}">${fdto.feed_seq}</a></td>
+											href="${pageContext.request.contextPath}/feed/detailView?feed_seqS=${fdto.feed_seq}">${fdto.feed_seq}</a></td>
 										<td>${fdto.email}</td>
 										<td>${fdto.nickname}</td>
 										<td>${fdto.title}</td>

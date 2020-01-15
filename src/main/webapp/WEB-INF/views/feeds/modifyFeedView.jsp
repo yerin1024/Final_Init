@@ -82,18 +82,18 @@
 					</div>
 					<div class="col-8">
 						관계선택:<select name="relation">
-							<option value=''>-- 관계 선택 --</option>
 							<option value='0'>전체보기</option>
 							<option value='1'>지인</option>
 							<option value='2'>아는친구</option>
 							<option value='3'>절친</option>
-							<option value='4'>나만보기</option>
+							<option value='4' selected>나만보기</option>
 						</select> <button>등록</button>
 					</div>
 					
 				</div>
 
 				<c:choose>
+<!-- 				media(사진이나 영상)이 있을 경우 캐러셀을 이용해서 띄어줌 -->
 					<c:when test="${fn:length(media) >0}">
 						<div class="row media">
 							<div id="carouselExampleIndicators" class="carousel slide"
@@ -158,6 +158,7 @@
 			tabsize : 2,
 			height : 600,
 			width : 900,
+// 			툴바는 글내용 꾸미기만 나오도록 바꿔줌
 			toolbar: [
 	             // [groupName, [list of button]]
 	             ['style', ['bold', 'italic', 'underline', 'clear']],
