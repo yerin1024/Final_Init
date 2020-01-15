@@ -1,13 +1,12 @@
 package kh.init.members;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
-import kh.init.members.MemberDTO;
 
 @Repository
 public class MemberDAO {
@@ -35,6 +34,13 @@ public class MemberDAO {
 		return jdbc.selectOne("Member.getProfile", email);
 	}
 	
+	public int resetPw(String email, String pw) {
+		Map<String, String> param = new HashMap<>();
+		param.put("email", email);
+		param.put("pw", pw);		
+		return jdbc.update("Member.resetPw", param);
+	}
+	
 	public int isLoginOk(String email, String pw) {
 		Map<String, String> param = new HashMap<>();
 		param.put("email", email);
@@ -43,22 +49,29 @@ public class MemberDAO {
 	}
 	
 	public MemberDTO getMyInfo(String email) throws Exception{
-    	return jdbc.selectOne("Members.selectById",email);
+    	return jdbc.selectOne("Member.selectById",email);
     	
     }
 	public int withdrawMem(String email) throws Exception {
-    	Map<String,String> map = new HashMap<>();
-        map.put("email", email);
-        return jdbc.delete("Members.delete",map);
+    	System.out.println("dao 회원탈퇴 인자값은 "+email);
+		
+        return jdbc.delete("Member.delete",email);
     }
     
-    public int changeMyInfo(MemberDTO dto) throws Exception {
+    public int changeMyInfo(String email,MemberDTO dto) throws Exception {
     	Map<String,String> param= new HashMap<>();
-//		param.put("id", dto.getId());
-//		param.put("pw", dto.getPw());
-//		param.put("name", dto.getName());
-//		param.put("phone", dto.getPhone());
-		return jdbc.update("Members.update",param);
+		param.put("id", email);
+		param.put("pw", dto.getPw());
+		param.put("name", dto.getName());
+		param.put("phone", dto.getPhone());
+		param.put("birth", dto.getBirth());
+		param.put("profile_img", dto.getProfile_img());
+		param.put("nickname", dto.getNickname());
+		param.put("profile_msg", dto.getProfile_msg());
+
+		return jdbc.update("Member.update",param);
     }
-	
+	public MemberDTO getMyInfoByFriend(String fr_id) throws Exception{
+		return jdbc.selectOne("Member.selectByFriend",fr_id);
+	}
 }

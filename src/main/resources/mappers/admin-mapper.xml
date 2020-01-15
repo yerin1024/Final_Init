@@ -2,20 +2,156 @@
 <!DOCTYPE mapper
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace ="Admin">
+<mapper namespace="Admin">
+	<!-- 멤버관리 -->
 	<select id="blackList" resultType="kh.init.members.MemberDTO">
-		select * from tb_member where black = 'Y'
+		select * from tb_member where
+		black = 'Y' and admin = 'N'
 	</select>
 	<select id="memberList" resultType="kh.init.members.MemberDTO">
-		select * from tb_member where admin = 'N'
+		select * from tb_member where
+		admin = 'N' and black = 'N'
 	</select>
 	<update id="toBlack" parameterType="String">
-		update tb_member set black = 'Y' where email = #{email}
+		update tb_member set black =
+		'Y' where email = #{email}
 	</update>
 	<delete id="withdrawal" parameterType="String">
-		delete from tb_member where black = 'Y' and email = #{email}
+		delete from tb_member
+		where black = 'Y' and email = #{email}
 	</delete>
 	<update id="toMember" parameterType="String">
-		update tb_member set black = 'N' where email = #{email}
+		update tb_member set black =
+		'N' where email = #{email}
 	</update>
+	<!-- 검색기능 -->
+	<select id="search" resultType="kh.init.members.MemberDTO"
+		parameterType="java.util.Map">
+		select * from tb_member where black = 'N' and admin = 'N'
+		<choose>
+			<when test="search != ''">
+				and ${searchTag} like '%' ||#{search}||'%'
+			</when>
+
+		</choose>
+	</select>
+	<select id="searchForBlack"
+		resultType="kh.init.members.MemberDTO" parameterType="java.util.Map">
+		select * from tb_member where black = 'Y' and admin = 'N'
+		<choose>
+			<when test="search != ''">
+				and ${searchTag} like '%' ||#{search}||'%'
+			</when>
+		</choose>
+	</select>
+
+	<!-- member페이징 -->
+	<select id="dbMember" resultType="integer">
+		select count(*) as seq from
+		tb_member where black = 'N' and admin = 'N'
+	</select>
+	<select id="selectByPage" resultType="kh.init.members.MemberDTO"
+		parameterType="java.util.Map">
+		select * from (select tb_member.*, row_number()over(order by email desc) as
+		rown from tb_member where admin = 'N' and black = 'N') where rown
+		between ${start} and ${end}
+	</select>
+	<!-- 검색했을 때 member페이징 -->
+	<select id="dbsearchForMember" resultType="Integer"
+		parameterType="java.util.Map">
+		select count(*) as seq from tb_member where admin = 'N' and black =
+		'N'
+		<choose>
+			<when test="search != ''">
+				and ${searchTag} like '%' ||#{search}||'%'
+			</when>
+		</choose>
+	</select>
+	<select id="searchForMemberPaging"
+		resultType="kh.init.members.MemberDTO" parameterType="java.util.Map">
+		select * from (select tb_member.*, row_number()over(order by email
+		desc) as rown from tb_member where admin = 'N' and black = 'N'
+		<choose>
+			<when test="search != ''">
+				and ${searchTag} like '%' ||#{search}||'%'
+			</when>
+		</choose>
+		) where rown between ${start} and ${end}
+	</select>
+	<!-- black페이징 -->
+	<select id="dbBlack" resultType="integer">
+		select count(*) as seq from
+		tb_member where black = 'Y' and admin = 'N'
+	</select>
+	<select id="selectBlackByPage"
+		resultType="kh.init.members.MemberDTO" parameterType="java.util.Map">
+		select * from (select tb_member.*, row_number()over(order by email desc) as
+		rown from tb_member where admin = 'N' and black = 'Y') where rown
+		between ${start} and ${end}
+	</select>
+	<!-- 검색했을 때 black페이징 -->
+	<select id="dbsearchForBlack" resultType="Integer"
+		parameterType="java.util.Map">
+		select count(*) as seq from tb_member where admin = 'N' and black =
+		'Y'
+		<choose>
+			<when test="search != ''">
+				and ${searchTag} like '%' ||#{search}||'%'
+			</when>
+		</choose>
+	</select>
+	<select id="searchForBlackPaging"
+		resultType="kh.init.members.MemberDTO" parameterType="java.util.Map">
+		select * from (select tb_member.*, row_number()over(order by email
+		desc) as rown from tb_member where admin = 'N' and black = 'Y'
+		<choose>
+			<when test="search != ''">
+				and ${searchTag} like '%' ||#{search}||'%'
+			</when>
+		</choose>
+		) where rown between ${start} and ${end}
+	</select>
+	<!-- feed관리 -->
+	<select id="totalFeedList" resultType="kh.init.feeds.FeedDTO">
+		select * from tb_feed
+	</select>
+	<select id="myFeedList" resultType="kh.init.feeds.FeedDTO">
+		select * from tb_feed where
+		email = #{email}
+	</select>
+	<delete id="deleteFeed" parameterType="Integer">
+		delete from tb_feed where
+		feed_seq = #{feed_seq}
+	</delete>
+	<!-- feed페이징 -->
+	<select id="dbFeed" resultType="integer">
+		select count(*) as seq from
+		tb_feed
+	</select>
+	<select id="selectFeedByPage" resultType="kh.init.feeds.FeedDTO"
+		parameterType="java.util.Map">
+		select * from (select tb_feed.*, row_number()over(order by feed_seq desc) as
+		rown from tb_feed) where rown between ${start} and ${end}
+	</select>
+	<!-- 검색했을 때 feed페이징 -->
+	<select id="dbsearchForFeed" resultType="Integer"
+		parameterType="java.util.Map">
+		select count(*) as seq from tb_feed where
+		<choose>
+			<when test="search != ''">
+				${searchTag} like '%' ||#{search}||'%'
+			</when>
+		</choose>
+	</select>
+	<select id="searchForFeedPaging"
+		resultType="kh.init.feeds.FeedDTO" parameterType="java.util.Map">
+		select * from (select tb_feed.*, row_number()over(order by feed_seq
+		desc) as rown from tb_feed where
+		<choose>
+			<when test="search != ''">
+				${searchTag} like '%' ||#{search}||'%'
+			</when>
+		</choose>
+		) where rown between ${start} and ${end}
+	</select>
 </mapper>

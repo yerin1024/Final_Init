@@ -5,29 +5,82 @@
 <mapper namespace="Feed">
 	<select id="selectAll" resultType="kh.init.feeds.FeedDTO">
 		select * from tb_feed
+		<if test="keyword != null">
+			where hashtag Like #{keyword}
+		</if>
+	</select>
+	
+	<select id="scrapFeed" resultType="kh.init.feeds.FeedDTO">
+		select * from tb_feed f where f.feed_seq in (select s.feed_seq from tb_scrap s where s.email = #{email})
 	</select>
 
-	<insert id="registerFeed" parameterType="kh.init.feeds.FeedDTO">
-		insert into tb_feed	values(feed_seq.nextval,#{email},#{nickname},#{title},#{contents},#{relation},sysdate)
-	</insert>
+	<select id="searchFriend" resultType="kh.init.members.MemberDTO">
+		select * from tb_member where nickname=#{keyword}
+	</select>
+	
+	<select id="getFeedSeq" resultType="integer">
+		select feed_seq.nextval from dual
+	</select>
 
-	<delete id="deleteFeed">
-		delete from tb_feed where feed_seq = #{feed_seq}
-	</delete>
+   <insert id="registerFeed" parameterType="kh.init.feeds.FeedDTO">      
+      insert into tb_feed values(#{feed_seq},#{email},#{nickname},#{title},#{contents},#{relation},sysdate,#{hashtag}) 
+   </insert>
+   
+   <insert id="registerMedia" parameterType="java.util.Map">
+   	  insert into tb_feed_file values(#{feed_seq}, feed_file_seq.nextval, #{media})
+   </insert>
+   
+   <delete id="deleteFeed">
+      delete from tb_feed where feed_seq = #{seq}
+   </delete>
+   
+   <select id="detailView" resultType="kh.init.feeds.FeedDTO">
+      select * from tb_feed where feed_seq = #{feed_seq}
+   </select>
+   
+   <select id="getMediaList" resultType="String">
+	  select media from tb_feed_file where feed_seq = #{feed_seq} order by feed_file_seq
+   </select>
 	
 	<update id="modifyFeed" parameterType="kh.init.feeds.FeedDTO">
 		update tb_feed set title =
 		#{title}, contents=#{contents} , relation=#{relation} where feed_seq =
 		#{feed_seq}
 	</update>
+
 	
-	<select id="detailView" resultType="kh.init.feeds.FeedDTO">
-		select * from tb_feed where	feed_seq = #{feed_seq}
+	<!--좋아요 기능 -->
+	
+	<select id="getLikeSeq" resultType="integer">
+		select like_seq.nextval from dual
 	</select>
 	
-	<select id="getMediaList" resultType="String">
-		select media from tb_feed_file where feed_file_seq = #{feed_seq}
+	<insert id="insertLike" parameterType="java.util.Map">
+		insert into tb_like values (#{like_seq}, #{feed_seq}, #{email})
+	</insert>
+	<delete id="deleteLike" parameterType="java.util.Map">
+		delete from tb_like where feed_seq=#{feed_seq} and email=#{email}
+	</delete>
+
+	<select id="likeCheck" parameterType="java.util.Map" resultType="integer">
+		select count(*) from tb_like where feed_seq=#{feed_seq} and email=#{email}
 	</select>
+
+	
+	
+	<!-- 북마크 -->
+	
+	<insert id="insertBookmark" parameterType="java.util.Map">
+		insert into tb_scrap values (scrap_seq.nextval, #{email}, #{feed_seq})
+	</insert>
+	<delete id="deleteBookmark" parameterType="java.util.Map">
+		delete from tb_scrap where feed_seq=#{feed_seq} and email=#{email}
+	</delete>
+
+	<select id="bookmarkCheck" parameterType="java.util.Map" resultType="integer">
+		select count(*) from tb_scrap where feed_seq=#{feed_seq} and email=#{email}
+	</select>
+
 	<!-- 댓글 기능 -->
 
 	<insert id="registerReply" parameterType="kh.init.feeds.ReplyDTO">

@@ -67,8 +67,9 @@ public class ReplyDTO {
 	public void setWrite_date(Timestamp write_date) {
 		this.write_date = write_date;
 	}
-	
-	
-	
-	
+	@Override
+	public String toString() {
+		return "ReplyDTO [feed_seq=" + feed_seq + ", reply_seq=" + reply_seq + ", nickname=" + nickname + ", depth="
+				+ depth + ", parent=" + parent + ", contents=" + contents + ", write_date=" + write_date + "]";
+	}	
 }

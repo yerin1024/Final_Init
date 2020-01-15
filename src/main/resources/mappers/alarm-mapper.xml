@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Alarm">
+	<!--  -->
+	<insert id="insertAlarm_m"> <!-- 알림 추가 -->
+		insert into tb_alarm values(alarm_seq.nextval, 'M', #{sharedSeq}, sysdate, 'N', #{email})
+	</insert>
+
+	<insert id="alarmReply"> <!-- 알림 추가 / 댓글 -->
+		insert into tb_alarm values(alarm_seq.nextval, 'R', #{sharedSeq}, sysdate, 'N', #{email})
+	</insert>
+	<select id="alarmWho" resultType="java.lang.String"> <!-- 댓글 게시물 시퀀스로 피드 작성자 찾기 -->
+		select
+		    al.email email
+		from tb_alarm al 
+		full outer join tb_reply re on al.applied_seq = re.reply_seq 
+		full outer join tb_feed fe on fe.feed_seq = re.feed_seq 
+		full outer join tb_like lk on fe.feed_seq = lk.feed_seq 
+		where fe.feed_seq=#{feed_seq}
+	</select>
+	
+	<insert id="alarmLike"> <!-- 알림 추가 / 좋아요 -->
+		insert into tb_alarm values(alarm_seq.nextval, 'L', #{sharedSeq}, sysdate, 'N', #{email})
+	</insert>
+	<select id="alarmFriendWho" resultType="kh.init.feeds.ReplyDTO"> 좋아요 찾기 테스트용
+		select * from tb_alarm al full outer join tb_like lk on al.applied_seq = lk.like_seq where type='L' and email= #{email}
+	</select>
+	
+	<insert id="alarmFriend"> <!-- 알림 추가 / 친구 요청 -->
+		insert into tb_alarm values(alarm_seq.nextval, 'F', #{sharedSeq}, sysdate, 'N', #{email})
+	</insert>
+	
+	<select id="alarmList" resultType="kh.init.alarm.AlarmDTO"> <!-- 알림 목록 -->
+		select * from tb_alarm where email= #{email}
+	</select>
+	
+	<select id="alarmList2" resultType="kh.init.alarm.AlarmVO"> <!-- 알림 목록 2 -->
+		select
+		    alarm_seq, type, applied_seq, reg_date, alarm_check, al.email email, 
+		    re.feed_seq feed_seq_r, reply_seq, re.nickname nickname_r, contents, 
+		    friend_seq, from_id, to_id, 
+		    like_seq, lk.feed_seq feed_seq_l, lk.email email_lk, 
+		    mem.nickname nickname_m
+		from tb_alarm al
+		full outer join tb_reply re on al.applied_seq = re.reply_seq
+		full outer join tb_friend_request fr on al.applied_seq = fr.friend_seq
+		full outer join tb_like lk on al.applied_seq = lk.like_seq
+		full outer join tb_member mem on lk.email = mem.email
+		where al.email= #{email}
+		order by alarm_seq desc
+	</select>
+	
+	<update id="alarmCheck"> <!-- 읽음 완료 -->
+		update tb_alarm set alarm_check='Y' where email= #{email} and alarm_check='N'
+	</update>
+	
+	<delete id="deleteAlarm"> <!-- 알림 삭제 -->
+		delete from tb_alarm where email= #{email} and alarm_seq=#{alarm_seq}
+	</delete>
+    
+</mapper>
