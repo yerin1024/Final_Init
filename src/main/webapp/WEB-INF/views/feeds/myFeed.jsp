@@ -13,18 +13,12 @@
 	type="text/javascript"></script>
 	<link rel="stylesheet" href="/resources/css/nav.css">
 <link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-	integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
-	crossorigin="anonymous">
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 
 <script
-	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-	integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-	crossorigin="anonymous"></script>
+	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
 <script
-	src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-	integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-	crossorigin="anonymous"></script>
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
 <script>
 	$(function() {
@@ -51,6 +45,7 @@
 .container-fluid {
 	position: relative;
 	top: 62px;
+	z-index:-1;
 }
 
 .row {
@@ -121,16 +116,6 @@
 }
 </style>
 </head>
-<<<<<<< HEAD
-<body>	
-	<div id="wrapper">
-		<div>
-			<label>프로필 사진</label> <br><img src="${pageContext.request.contextPath}/resources/images/default_profile_img.png"
-				id="setProfile" style="width:100px;height:100px">
-			<br>
-			<br>
-			<label>닉네임</label> <p>${dto.nickname }</p><br>
-=======
 <body>
 <jsp:include page="/resources/jsp/nav.jsp" />
 <div class="container-fluid">
@@ -140,9 +125,7 @@
 			<label style="color:white;"></label> <br><img src="${pageContext.request.contextPath}/resources/images/default_profile_img.png"
 
 				id="setProfile" style="width: 200px;border-radius:50%;">
-</div>
->>>>>>> 79d98a58b8867ad392746c6d40a14218c885b0e6
-			
+</div>			
 			<label style="color:black;">${dto.nickname }</label> 
 			
 			<label style="color:black;">${dto.profile_msg}</label>  

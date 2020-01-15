@@ -70,7 +70,7 @@ img {
 		$("#replyBtn").on("click", function() {	        
 			var feed_seq = ${dto.feed_seq};
 			var contents = $("#writeReply").html();
-			var nickname = '${loginInfo}';
+			var nickname = '${loginInfo.nickname}';
 			$.ajax({
 				type : "POST",
 				url : "${pageContext.request.contextPath }/feed/registerReply",
@@ -92,10 +92,9 @@ img {
 				    html += "</div>"
 				    html += "</div>"
 					$(".replyList").append(html);
-				    $("#replyContents").val("");
+				   	$("#writeReply").html("");
 			})
 		})
-		
 		//답글 이벤트 ------------------------------------------------------		
 		//답글버튼을 눌렀을 때
 		$(document).on("click",".replyChildBtn", function() {	
@@ -134,7 +133,7 @@ img {
 		$(document).on("click",".childRegisterReply",function(){
 			var reply_seq = $(this).val();      
 			var feed_seq = ${dto.feed_seq};
-			var nickname = '${loginInfo}';
+			var nickname = '${loginInfo.nickname}';
 			var replyWriter = 
 				$("."+reply_seq+"").children(".replyWriter").html().split('님')[0];
 		   	var div = $(this).closest(".childReply");
@@ -301,7 +300,7 @@ img {
 				<div class="col-4 reply">${dto.contents }</div>
 				<div class="col-4 reply">
 					<a
-						href="${pageContext.request.contextPath }/feed/deleteProc?seq=${dto.feed_seq}">
+						href="${pageContext.request.contextPath }/feed/deleteProc?feed_seq=${dto.feed_seq}">
 						<img
 						src="${pageContext.request.contextPath }/resources/images/delete.png">
 					</a>
@@ -350,28 +349,54 @@ img {
 			</div>
 		</div>
 		<div class="replyList">
-			<c:forEach items="${replylist }" var="replylist">
-				<div class="row replyFeed ${replylist.reply_seq }">
-					<div class="col-2 reply replyWriter" style="text-align: center">${replylist.nickname }님의
+			<c:forEach items="${parentReply }" var="parentReply">
+				<div class="row replyFeed ${parentReply.reply_seq }">
+					<div class="col-2 reply replyWriter" style="text-align: center">${parentReply.nickname }님의
 						댓글</div>
 					<div class="col-9 reply contentsDiv">
-						<div class="replyContents" contenteditable="false">${replylist.contents }</div>
+						<div class="replyContents" contenteditable="false">${parentReply.contents }</div>
 					</div>
 					<div class="col-1 reply replyBtn">
 						<button type="button" class="replyDeleteBtn"
 							value="${replylist.reply_seq }" style="width: 30%">삭제</button>
-						<button type="button" class="replyModifyBtn" value="${replylist.reply_seq }" style="width: 50%">수정</button>
-						<button type="button" class="replyChildBtn" value="${replylist.reply_seq }" style="width: 50%">답글</button>
+						<button type="button" class="replyModifyBtn" value="${parentReply.reply_seq }" style="width: 30%">수정</button>
+						<button type="button" class="replyChildBtn" value="${parentReply.reply_seq }" style="width: 30%">답글</button>
 						<button type="button" class="replyModifySuccess"
 							value="${replylist.reply_seq }" style="width: 50%; display:none" >완료</button>
-						<button type="button" class="replyModifyCancel"  value="${replylist.reply_seq }" style="width: 50%; display:none">취소</button>
+						<button type="button" class="replyModifyCancel"  value="${parentReply.reply_seq }" style="width: 50%; display:none">취소</button>
 					</div>
-				</div>
-			</c:forEach>
+				</div>	
+						<c:forEach items="${childReply }" var="childReply">
+						${childReply.parent}<br> 
+						${parentReply.reply_seq }
+							<c:choose>
+								<c:when test="${childReply.parent == parentReply.reply_seq }">
+								<div class="row replyVowel ${childReply.parent } ${parentReply.reply_seq}">
+									<div class="col-1 reply replyWriter" style="text-align: center">└──</div>
+									<div class="col-1 reply replyWriter" style="text-align: center">${childReply.nickname }님의 댓글</div>
+									<div class="col-9 reply contentsDiv">
+										<div class="replyWriter" style="color: gray; font-size: 15px;">@${parentReply.nickname }</div>
+										<div class="writeReply">${childReply.contents }</div>
+									</div>
+									<div class="col-1 reply">
+										<button type="button" class="replyDeleteBtn" value="125"
+											style="width: 50%">삭제</button>
+										<button type="button" class="replyModifyBtn" value="125"
+											style="width: 50%">수정</button>
+										<button type="button" class="replyModifySuccess" value="125"
+											style="width: 50%; display: none">완료</button>
+										<button type="button" class="replyModifyCancel" value="125"
+											style="width: 50%; display: none">취소</button>
+									</div>
+								</div>
+								</c:when>
+							</c:choose>			
+						</c:forEach>
+				</c:forEach>			
 			</div>
 			<div class="replyWindow">
 				<div class="row">
-					<div class="col-2 reply" style="text-align: center; padding:15px;">${loginInfo}님의  <!-- 나중에 세션값으로 대체! -->
+					<div class="col-2 reply" style="text-align: center; padding:15px;">${loginInfo.nickname}님의  <!-- 나중에 세션값으로 대체! -->
 						댓글</div>
 					<div class="col-9 reply">
 						<div class="writeReply" id="writeReply" contenteditable="true"></div>
