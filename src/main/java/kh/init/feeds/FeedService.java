@@ -305,7 +305,7 @@ public class FeedService {
 		Gson gson = new Gson();
 		int reply_seq = replyDAO.replyNextSeq();
 		dto.setReply_seq(reply_seq);
-		int result = replyDAO.registerReply(dto);
+		replyDAO.registerReply(dto);
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("nickname", dto.getNickname());
 		map.put("contents", dto.getContents());
@@ -320,5 +320,9 @@ public class FeedService {
 	public List<ReplyDTO> viewAllReply(int feed_seq)throws Exception{
 		List<ReplyDTO> list = replyDAO.viewAllReply(feed_seq);
 		return list;
+	}
+	public int updateReply(ReplyDTO dto)throws Exception{
+		int result = replyDAO.updateReply(dto);
+		return result;
 	}
 }
