@@ -55,9 +55,9 @@
 			</form>
 			<br><br>
 		</div>
-		
+<!-- 		wholeFeed는 친구검색일 경우와 피드검색일 경우로 나뉘고 default는 검색내용없이 전체피드가 나오도록 했음 -->
 		<div id="contents">
-			<c:if test="${option eq 'friend' }">
+			<c:if test="${option eq 'friend' }"><!-- 		친구검색일 경우 -->
 				<c:choose>
 					<c:when test="${fn:length(friendList) >0 }">
 					<div id="feeds">
@@ -79,7 +79,7 @@
 				</c:choose>
 			</c:if>
 
-			<c:if test="${option eq 'nfriend' }">
+			<c:if test="${option eq 'nfriend' }"><!-- 		피드검색일 경우 -->
 				<c:choose>
 					<c:when test="${fn:length(list) <1}">
 					게시물이 없습니다.
