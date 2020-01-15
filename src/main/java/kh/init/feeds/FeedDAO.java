@@ -22,9 +22,18 @@ public class FeedDAO {
 	}
 
 	
-	public List<FeedDTO> getMyFeed(String email) throws Exception{
-		List<FeedDTO> list = jdbc.selectList("Feed.getMyFeed", email);
+	public List<FeedDTO> getMyFeed(String email, int startNum, int endNum) throws Exception{
+		Map<String, String> param = new HashMap<>();
+		param.put("email", email);
+		param.put("startNum", startNum+"");
+		param.put("endNum", endNum+"");
+		List<FeedDTO> list = jdbc.selectList("Feed.getMyFeed", param);
 		return list;
+	}
+	
+	public int getMyFeedCount(String email) throws Exception{
+		int count = jdbc.selectOne("Feed.getMyFeedCount", email);
+		return count;
 	}
 	
 	//wholeFeed에서 해시태그 검색 또는 그냥 기본wholeFeed뽑을때 
@@ -86,6 +95,8 @@ public class FeedDAO {
 		int result = jdbc.selectOne("Feed.getFriendFeedCount", email);
 		return result;
 	}
+	
+	
 	public List<FeedDTO> getFriendFeed(String email, int startNum, int endNum) throws Exception{
 		Map<String, String> param = new HashMap<>();
 		param.put("email", email);

@@ -16,7 +16,6 @@
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
 	integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
 	crossorigin="anonymous">
-
 <script
 	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
 	integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
@@ -26,14 +25,31 @@
 	integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
 	crossorigin="anonymous"></script>
 
-<script>
-	$(function() {
-		$("#registerFeed").on("click", function() {
-			location.href = "writeFeed";
-		})
-	})
-</script>
 <style>
+	body{
+		background-color:white;
+	}
+	.feed {
+		width: 20vw;
+		height: 20vw;
+		min-height: 150px;
+		min-width: 150px;
+		border: 1px solid red;
+	}
+	
+	.cover {
+		width: 100%;
+		height: 100%;
+	}
+	#contents {
+	border: 2px solid black;
+	width: 60vw;
+	min-width: 470px;
+	margin: auto;
+	text-align: center;
+	}
+	
+
 	#feedList{
 		border:2px solid red;
 	}
@@ -120,6 +136,59 @@
 	}
 }
 </style>
+<script>
+
+	$(function() {
+		$("#registerFeed").on("click", function() {
+			location.href = "writeFeed";
+		})
+	})
+	
+	
+	var page = 1;  //페이징과 같은 방식이라고 생각하면 된다. 
+	
+	$(function(){  //페이지가 로드되면 데이터를 가져오고 page를 증가시킨다.
+	    if(page==1){ 
+	     page++;
+	    }else{
+	    	getList(page);
+	    	page++;
+	    }
+	}); 
+	 
+	$(window).scroll(function(){   //스크롤이 최하단 으로 내려가면 리스트를 조회하고 page를 증가시킨다.
+		if($(window).scrollTop() >= $(document).height() - $(window).height()-5){
+		console.log("스크롤감지");
+			if(page==1){ 
+			     page++;
+			    }else{
+			    	getList(page);
+			    	page++;
+			    }
+	     } 
+	});
+ 
+	function getList(page){
+	    $.ajax({
+	        type : 'POST',  
+	        dataType : 'json', 
+	        data : {"page" : page},
+	        url : "/feed/myFeedAjax",
+	        dataType:"JSON"
+	    }).done(function(data){
+	    	console.log(data);
+	    	if(data.result=='false'){
+	    		console.log("false");
+	    		return 'false';
+	    	}
+	    	var list = JSON.parse(data.list);
+	    	console.log(list);
+		}).fail(function(b){
+	    	console.log(b);
+	    })
+	}
+		
+</script>
 </head>
 <body>
 <jsp:include page="/resources/jsp/nav.jsp" />
@@ -160,28 +229,27 @@
 		
 		<br><button id="registerFeed">게시물 등록</button>
 		
-		<div id="feedList">
-		<c:choose>
-			<c:when test="${fn:length(list) ==0}">
-				게시물이 없습니다.
-			</c:when>
-			<c:otherwise>
-				<table>
-					<tr>
-						<td>글번호
-						<td>글제목
-						<td>글내용
-					</tr>
-					<c:forEach items="${list }" var="list">
-						<tr>
-							<td>${list.feed_seq }
-							<td><a href="/feed/detailView?feed_seqS=${list.feed_seq }">${list.title }</a>
-							<td><a href="/feed/detailView?feed_seqS=${list.feed_seq }">${list.title }</a>
-						</tr>
-					</c:forEach>
-				</table>
-			</c:otherwise>
-		</c:choose>
+		<div id="contents">
+			<c:choose>
+				<c:when test="${fn:length(list) <1}">
+					게시물이 없습니다.
+				</c:when>
+				<c:otherwise>
+					<div id="feeds">
+						<c:forEach items="${list }" var="feed" varStatus="status">
+							<c:if test="${status.count mod 3==1}">
+								<div class="row" style="margin: 0px">
+							</c:if>
+							<div class="col-4 feed">
+								<a href="/feed/detailView?feed_seqS=${feed.feed_seq }">${cover[status.count-1] }</a>
+							</div>
+							<c:if test="${status.count mod 3==0}">
+								</div>
+							</c:if>
+						</c:forEach>
+					</div>
+				</c:otherwise>
+			</c:choose>
 		</div>
 		
 	</div>

@@ -34,19 +34,46 @@ public class FeedController {
 	@RequestMapping("/myFeed")
 	public String myFeed(Model model) {
 		System.out.println("myFeed 도착");
+		int ipage = 1;
 		List<FeedDTO> list = null;
-		String email = (String)session.getAttribute("loginInfo");
+		List<String> cover = new ArrayList<>();
+		String email = ((MemberDTO)session.getAttribute("loginInfo")).getEmail();
 		try {
 			MemberDTO dto = mservice.getMyPageService(email);
-			list = service.getMyFeed(email);
-			model.addAttribute("dto", dto);
+			list = (List<FeedDTO>)service.getMyFeed(ipage, email).get("list");
+			cover = (List<String>)service.getMyFeed(ipage, email).get("cover");
 			model.addAttribute("list", list);
+			model.addAttribute("cover", cover);
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
 		return "feeds/myFeed";
 	}
 
+	@RequestMapping(value = "/myFeedAjax", produces = "application/json; charset=UTF-8")
+	@ResponseBody
+	public String myFeedAjax(String page) {
+		System.out.println("myFeedAjax 도착");
+		int ipage = Integer.parseInt(page);
+		List<FeedDTO> list = null;
+		List<String> cover = new ArrayList<>();
+		String email = ((MemberDTO)session.getAttribute("loginInfo")).getEmail();
+		try {
+			list = (List<FeedDTO>)service.getMyFeed(ipage, email).get("list");
+			if(list==null) {
+				return "{\"result\" : \"false\"}";
+			}
+			cover = (List<String>)service.getMyFeed(ipage, email).get("cover");
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		Gson g = new Gson();
+		JsonObject obj = new JsonObject();
+		obj.addProperty("list", g.toJson(list));
+		obj.addProperty("cover", g.toJson(cover));
+		return obj.toString();
+	}
+	
 	@RequestMapping("/deleteProc")
 	public String deleteProc(int feed_seq) {
 		System.out.println("삭제 도착!");

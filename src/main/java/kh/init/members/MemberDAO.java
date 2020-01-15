@@ -58,8 +58,10 @@ public class MemberDAO {
 	}
 	//내 정보 가져오기
 	public MemberDTO getMyInfo(String email) throws Exception{
-    	return jdbc.selectOne("Member.selectById",email);
-    	
+		Map<String, String> param = new HashMap<>();
+		param.put("col", "email");
+		param.put("val", email);
+    	return jdbc.selectOne("Member.selectMember",param);
     }
 	//회원 탈퇴
 	public int withdrawMem(String email) throws Exception {

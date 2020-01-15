@@ -94,11 +94,58 @@ public class FeedService {
 		return "/mediaTmp/"+sysName;
 	}
 
+	
+	
 	//myFeed를 위한
-	public List<FeedDTO> getMyFeed(String email) throws Exception{
-		List<FeedDTO> list = dao.getMyFeed(email);
-		return list;
+	public Map<String, Object> getMyFeed(int page, String email) throws Exception{
+		int totalFeed = dao.getMyFeedCount(email);
+		int startNum = 0;
+        int endNum = 0;
+        if (page==1){
+            startNum = 1;
+            endNum = 12;  //데이터를 10개씩 가져오겠다.
+        }else{
+        	startNum = page+(11*(page-1));  //10개씩 가져오고싶다면  9로 
+        	endNum = page*12;   //20, 40, 60
+        	if(startNum>totalFeed) {
+        		return null;
+        	}else if(endNum>totalFeed) {
+        		endNum = totalFeed;
+        	}
+        }
+		List<FeedDTO> list = dao.getMyFeed(email, startNum, endNum);
+		List<String> cover = new ArrayList<>();//전체피드의 바둑판 대문사진
+
+		//미디어리스트 체크
+		for(FeedDTO tmp : list) {
+			int feed_seq = tmp.getFeed_seq();
+			List<String> media = dao.getMediaList(feed_seq);
+			if(media.size()==0) { //이미지나 비디오가 없기 때문에 제목으로 커버를 만들어야되는 경우
+				cover.add("<span class='cover'>"+tmp.getTitle()+"</span>");
+			}else {
+				if(media.get(0).endsWith("mp4")) { //파일이 동영상일 경우
+					String video = "<video class='cover' src=\""+media.get(0)+"\">";
+					cover.add(video);
+				}else {//파일이 이미지
+					String img = "<img class='cover' src=\""+media.get(0)+"\">";
+					cover.add(img);
+				}
+			}
+		}
+				
+		Map<String, Object> map = new HashMap<>();
+		map.put("list", list);
+		map.put("cover", cover);
+		return map;
 	}
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	public Map<String, Object> wholeFeed(String keyword) throws Exception{
 		if(keyword!=null) {
