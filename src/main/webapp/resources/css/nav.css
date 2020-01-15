@@ -69,11 +69,11 @@ html, body {
 }
 #redCircle1{
     position: absolute;
-    top: 13px; right: 9px;
-    
+    top: 13px; 
+    right: 9px;
 }
 #redCircle2{
     position: absolute;
-    top: 14px; right: 2px;
-    
+    top: 14px; 
+    right: 2px;  
 }

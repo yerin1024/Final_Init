@@ -46,6 +46,10 @@
 	  select media from tb_feed_file where feed_seq = #{feed_seq} order by feed_file_seq
    </select>
    
+   <!-- for profile_imgList -->
+	<select id="getProfile_img" resultType="String">
+		select profile_img from tb_member where email = #{email}
+	</select>
 	
 	<select id="getFriendFeedCount" resultType="Integer">
 	  select count(*) from tb_feed p join tb_friend r on p.email = r.my_id
@@ -57,7 +61,7 @@
 	<select id="getFriendFeed" parameterType="java.util.Map" resultType="kh.init.feeds.FeedDTO">
 	  select feed_seq, email, nickname, title, contents, relation, write_date, hashtag 
      from (select p.*, ROW_NUMBER() OVER(ORDER BY p.feed_seq) rnum
-               	from tb_feed p join tb_friend r on p.email = r.my_id
+               	from tb_feed p join tb_friend r on p.email = r.my_id 
              	where r.fr_id = #{email} and p.relation >= r.relation
               		or p.email = #{email}) 
       where rnum between #{startNum} and #{endNum}
@@ -69,7 +73,6 @@
 		#{title}, contents=#{contents} , relation=#{relation} where feed_seq =
 		#{feed_seq}
 	</update>
-
 
 	
 	<!--좋아요 기능 -->

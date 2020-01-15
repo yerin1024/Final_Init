@@ -233,26 +233,35 @@ public class FeedController {
 		System.out.println("friendFeed 도착");
 		String email = ((MemberDTO)session.getAttribute("loginInfo")).getEmail();
 		System.out.println("email : "+email);
+		String profile_img = ((MemberDTO)session.getAttribute("loginInfo")).getProfile_img();
 		try {
 			List<FeedDTO> list = service.getFriendFeed(ipage, email);
 			System.out.println("feed size : "+list.size());
+			List<String> profile_imgList = new ArrayList<>();
 			List<List<String>> mediaList = new ArrayList<>();
 			List<List<ReplyDTO>> replyList = new ArrayList<>();
 			List<Integer> likeCheckList = new ArrayList<>();
 			List<Integer> bookmarkCheckList = new ArrayList<>();
 			for(FeedDTO tmp : list) {
 				int feed_seq = tmp.getFeed_seq();
+				String tmpEmail = tmp.getEmail();
+				System.out.println("tmpEmail:" + tmpEmail);
+				profile_imgList.add(service.getProfile_img(tmpEmail));
+				System.out.println("profile_img:"+profile_imgList);
 				mediaList.add(service.getMediaList(feed_seq));
 				replyList.add(service.viewAllReply(feed_seq));
 				likeCheckList.add(service.likeCheck(feed_seq, ((MemberDTO)session.getAttribute("loginInfo")).getEmail()));
 				bookmarkCheckList.add(service.bookmarkCheck(feed_seq, ((MemberDTO)session.getAttribute("loginInfo")).getEmail()));
 			}
+			
 			System.out.println(list);
 			System.out.println(mediaList);
 			System.out.println(replyList);
 			System.out.println(likeCheckList);
 			System.out.println(bookmarkCheckList);
+			
 			model.addAttribute("list", list);
+			model.addAttribute("profile_imgList",profile_imgList);
 			model.addAttribute("mediaList", mediaList);
 			model.addAttribute("replyList", replyList);
 			model.addAttribute("likeCheckList", likeCheckList);
