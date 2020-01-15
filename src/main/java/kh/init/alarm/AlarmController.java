@@ -60,6 +60,17 @@ public class AlarmController {
 		return null;
 	}
 	
+	// new 알림 있는지
+	@RequestMapping(value="/isNewAlarm.al", produces="text/html; charset=utf8")
+	@ResponseBody
+	public String checkNewAlarm(String email) {
+		System.out.println("새 알림이 있니?");
+		String result = Integer.toString(service.isNewAlarm("123@123.123"));
+		System.out.println("알림 개수 : " + result);
+		// 나중엔 이메일 부분 session id로 받을 것
+		return result;
+	}
+	
 //	@RequestMapping(value="/sendFly.msg", produces="text/html; charset=utf8")
 //	@ResponseBody
 //	public String sendMsg(MessageDTO dto, String to_id) {
