@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.google.gson.JsonObject;
+
 @RequestMapping("/member")
 @Controller
 public class MemberController {
@@ -31,7 +33,7 @@ public class MemberController {
 			return "main";
 		}
 	}
-	
+
 	// 로그아웃 세션 삭제
 	@RequestMapping("/logout.do")
 	public String toLogout() {
@@ -39,96 +41,69 @@ public class MemberController {
 		session.removeAttribute("loginInfo");
 		return "main";
 	}
-	
-	// 비밀번호 찾기 페이지 로드
-	@RequestMapping("/findPw.do")
-	public String toFindPw() {
-		return "members/findPw";
-	}
-	
+
 	// 비밀번호 찾기
 	@RequestMapping("/findPwProc.do")
+	@ResponseBody
 	public String toFindPwProc(String email) {
 		System.out.println("사용자 이메일  : " + email);
+		JsonObject obj = new JsonObject();
+		
 		if(service.findPw(email) == "invalid") {
-			return "error";
+			obj.addProperty("result", "invalid");
 		}else {
-			return "main";
+			obj.addProperty("result", email);
 		}
-//		    Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
-//		     protected PasswordAuthentication getPasswordAuthentication() {
-//		      return new PasswordAuthentication(user, password);
-//		     }
-//		    });
-//
-//		    // Compose the message
-//		    try {
-//		     MimeMessage message = new MimeMessage(session);
-//		     message.setFrom(new InternetAddress(user));
-//		     message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
-//
-//		     // Subject
-//		     message.setSubject("[Subject] Java Mail Test");
-//		     
-//		     // Text
-//		     message.setText("Simple mail test..");
-//
-//		     // send the message
-//		     Transport.send(message);
-//		     System.out.println("message sent successfully...");
-//
-//		    } catch (MessagingException e) {
-//		     e.printStackTrace();
-//		    }
+		return obj.toString();		    
 	}
-	
+
 	@RequestMapping("/goMyInfo")  //내 정보 (편집) 가기
 	public String goMyInfo(String email, Model model) {
 		System.out.println("개인 정보 CON 도착.");
 		MemberDTO mDto = (MemberDTO)session.getAttribute("loginInfo");
 		try {			
-		MemberDTO dto = service.getMyPageService(mDto.getEmail());
-		System.out.println(dto.getEmail());
-		System.out.println(dto.getName());
-		String poption1 = dto.getPhone().substring(0, 4);
-		String poption2 = dto.getPhone().substring(3, 7);
-		String poption3 = dto.getPhone().substring(7, 11);
-		String boption1 = dto.getBirth().substring(0, 4);
-		String boption2 = dto.getBirth().substring(5, 6);
-		String boption3 = dto.getBirth().substring(6, 8);
-		model.addAttribute("dto", dto);
-		model.addAttribute("poption1", poption1);
-		model.addAttribute("poption2", poption2);
-		model.addAttribute("poption3", poption3);
-		model.addAttribute("boption1", boption1);
-		model.addAttribute("boption2", boption2);
-		model.addAttribute("boption3", boption3);
-		return "members/myInformation";
+			MemberDTO dto = service.getMyPageService(mDto.getEmail());
+			System.out.println(dto.getEmail());
+			System.out.println(dto.getName());
+			String poption1 = dto.getPhone().substring(0, 4);
+			String poption2 = dto.getPhone().substring(3, 7);
+			String poption3 = dto.getPhone().substring(7, 11);
+			String boption1 = dto.getBirth().substring(0, 4);
+			String boption2 = dto.getBirth().substring(5, 6);
+			String boption3 = dto.getBirth().substring(6, 8);
+			model.addAttribute("dto", dto);
+			model.addAttribute("poption1", poption1);
+			model.addAttribute("poption2", poption2);
+			model.addAttribute("poption3", poption3);
+			model.addAttribute("boption1", boption1);
+			model.addAttribute("boption2", boption2);
+			model.addAttribute("boption3", boption3);
+			return "members/myInformation";
 		}catch(Exception e) {
 			e.printStackTrace();
 			return "error";
 		}
 	}
-     
+
 	@RequestMapping("/goMyProfile") //내 프로필(편집) 가기
 	public String goMyProfile(String email, Model model) {
 		System.out.println("개인 프로필 수정 CON 도착.");
 		try {
 			MemberDTO mDto = (MemberDTO)session.getAttribute("loginInfo");
-		MemberDTO dto = service.getMyPageService(mDto.getEmail());
-		System.out.println(dto.getProfile_img());
-		System.out.println(dto.getNickname());
-		System.out.println(dto.getProfile_msg());
-		
-		model.addAttribute("dto", dto);
-		
-		return "members/myProfile";
+			MemberDTO dto = service.getMyPageService(mDto.getEmail());
+			System.out.println(dto.getProfile_img());
+			System.out.println(dto.getNickname());
+			System.out.println(dto.getProfile_msg());
+
+			model.addAttribute("dto", dto);
+
+			return "members/myProfile";
 		}catch(Exception e) {
 			e.printStackTrace();
 			return "error";
 		}
 	}
-	
+
 	@RequestMapping("/withdrawMem") //회원 탈퇴 하기
 	public String getout() {
 		System.out.println("회원 탈퇴 CON 도착.");
@@ -166,7 +141,7 @@ public class MemberController {
 			}else {
 				result = 0;
 			}
-			
+
 			if(result > 0) {
 
 				System.out.println("정보변경에 성공하셨슴당.");
@@ -183,7 +158,7 @@ public class MemberController {
 			return "redirect:home";
 		}
 	} 
-	
+
 	@RequestMapping("/changeProfile") //프로필 바꿔버리기
 	public String changeMyProfile(MemberDTO dto, MultipartFile profileImg) {
 		System.out.println("회원 정보 수정 CON 도착.");
@@ -196,8 +171,8 @@ public class MemberController {
 			}else {
 				result = service.changeMyProfileService(mDto.getEmail(), dto,profileImg,path);
 			}
-			
-			
+
+
 			if(result> 0) {
 
 				System.out.println("정보변경에 성공하셨슴당.");
@@ -214,12 +189,12 @@ public class MemberController {
 			return "redirect:home";
 		}
 	}
-	
+
 	@RequestMapping("/identifyMemPw")
 	@ResponseBody
 	public String identifyMemPw(String pw) {
 		System.out.println("현재 비밀번호 확인 CON 도착"); 
-		   System.out.println("현재 적은 비번은 "+pw);
+		System.out.println("현재 적은 비번은 "+pw);
 		try {
 			MemberDTO mDto = (MemberDTO)session.getAttribute("loginInfo");
 			MemberDTO dto = service.identifyMemPwService(mDto.getEmail());
@@ -229,12 +204,12 @@ public class MemberController {
 			}else {
 				return "no";
 			}
-			
-		 } catch (Exception e) {
+
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return "error";
 		}
-		
+
 	}
 }
