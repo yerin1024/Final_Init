@@ -197,7 +197,50 @@ public class FeedService {
 		System.out.println(contents);
 		return dto;
 	}
+	
+	public List<FeedDTO> getFriendFeed(int page, String email) throws Exception{
+		System.out.println("service page: "+page);
+		int totalFeed = dao.getFriendFeedCount(email);
+		int startNum = 0;
+        int endNum = 0;
+        if (page==1){
+            startNum = 1;
+            endNum = 10;  //데이터를 10개씩 가져오겠다.
+        }else{
+        	startNum = page+(9*(page-1));  //10개씩 가져오고싶다면 19->9로 
+        	endNum = page*10;   //20, 40, 60
+        	if(startNum>totalFeed) {
+        		return null;
+        	}else if(endNum>totalFeed) {
+        		endNum = totalFeed;
+        	}
+        }
+        System.out.println();
+		List<FeedDTO> list = dao.getFriendFeed(email, startNum, endNum);
+		System.out.println("service getFriendFeed size : "+list.size());
+		System.out.println("service startNum: "+startNum);
+		System.out.println("service endNum: "+endNum);
+		for(int z=0; z<list.size(); z++) {
+			FeedDTO dto = list.get(z);
+			String contents = dto.getContents();
+			String hashtags = dto.getHashtag();
+			
+			if(hashtags!=null) {
+				String[] hashtag = hashtags.split(","); //해쉬태그들을 ,로 연결시켜놨음
+				for(int i=0; i<hashtag.length; i++) {
+					System.out.println(hashtag[i]); 
+					//피드의 내용에 해쉬태그가 있을 경우 눌렀을 때 전체피드에서 그 키워들 검색하는 a태그를 붙여줌
+					contents = contents.replace(hashtag[i], "<a href=\"wholeFeed?keyword=%23"+hashtag[i].replace("#", "")+"\">"+hashtag[i]+"</a>");
+				}
+			}
+			dto.setContents(contents);
+			list.set(z, dto);
+		}
+		return list;
+	}
 
+	
+	
 	
 	//controller-detailView에서 media 목록을 얻기 위한 service
 	public List<String> getMediaList(int feed_seq) throws Exception{
@@ -214,6 +257,11 @@ public class FeedService {
 		return list;
 	}
 
+	
+	
+	
+//-----------좋아요 & 스크랩----------------------------	
+	
 	//feed_seq에 해당하는 게시글을 나의 email이 좋아요를 눌렀는지 확인
 	public int likeCheck(int feed_seq, String email) throws Exception{
 		int result = dao.likeCheck(feed_seq, email);
@@ -247,6 +295,11 @@ public class FeedService {
 		return result;
 	}
 
+	
+	
+	
+	
+	
 	//	--------------------------댓글
 	public String registerReply(ReplyDTO dto)throws Exception{
 		Gson gson = new Gson();

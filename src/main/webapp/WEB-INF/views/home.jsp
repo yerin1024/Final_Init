@@ -15,19 +15,25 @@
 		$("#wholeFeed").on("click", function() {
 			location.href = "feed/wholeFeed";
 		})
-		$("#myInformation").on("click", function() {
-			location.href = "member/goMyInfo";
-		})
 		$("#scrap").on("click",function(){
 			location.href = "feed/scrapFeed";
 		})
+		$("#friendFeed").on("click", function(){
+			location.href = "feed/getFriendFeed";
+		})
+		$("#myInformation").on("click", function() {
+			location.href = "member/goMyInfo";
+		})
+		
 	})
 </script>
 </head>
 <body>
-	<button type="button" id="myFeed">내 피드</button>
-	<button id="wholeFeed">전체피드</button>
-	<button type="button" id="myInformation">회원 정보 수정</button>
-	<button type="button" id="scrap">나의 스크랩피드</button>
+	<button id="myFeed">내 피드</button>
+	<button id="wholeFeed">전체피드</button><br>
+	<button id="scrap">나의 스크랩피드</button>
+	<button id="friendFeed">친구피드</button><br>
+	<button id="myInformation">회원 정보 수정</button>
+	
 </body>
 </html>

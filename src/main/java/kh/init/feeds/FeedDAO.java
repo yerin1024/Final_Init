@@ -81,6 +81,23 @@ public class FeedDAO {
 		return list;
 	}
 	
+	
+	public int getFriendFeedCount(String email) throws Exception{
+		int result = jdbc.selectOne("Feed.getFriendFeedCount", email);
+		return result;
+	}
+	public List<FeedDTO> getFriendFeed(String email, int startNum, int endNum) throws Exception{
+		Map<String, String> param = new HashMap<>();
+		param.put("email", email);
+		param.put("startNum", startNum+"");
+		param.put("endNum", endNum+"");
+		List<FeedDTO> list = jdbc.selectList("Feed.getFriendFeed", param);
+		return list;
+	}
+	
+	
+	
+	
 	//detailView 열때 좋아요체크
 	public int likeCheck(int feed_seq, String email) throws Exception{
 		Map<String, String> param = new HashMap<>();

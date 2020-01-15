@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+
 import kh.init.members.MemberDTO;
 import kh.init.members.MemberService;
 
@@ -223,6 +226,93 @@ public class FeedController {
 		return "/feeds/detailView";
 	}
 
+	@RequestMapping("/getFriendFeed")
+	public String getFriendFeed(Model model, String page) {
+		
+		int ipage = 1;
+		System.out.println("friendFeed 도착");
+		String email = ((MemberDTO)session.getAttribute("loginInfo")).getEmail();
+		System.out.println("email : "+email);
+		try {
+			List<FeedDTO> list = service.getFriendFeed(ipage, email);
+			System.out.println("feed size : "+list.size());
+			List<List<String>> mediaList = new ArrayList<>();
+			List<List<ReplyDTO>> replyList = new ArrayList<>();
+			List<Integer> likeCheckList = new ArrayList<>();
+			List<Integer> bookmarkCheckList = new ArrayList<>();
+			for(FeedDTO tmp : list) {
+				int feed_seq = tmp.getFeed_seq();
+				mediaList.add(service.getMediaList(feed_seq));
+				replyList.add(service.viewAllReply(feed_seq));
+				likeCheckList.add(service.likeCheck(feed_seq, ((MemberDTO)session.getAttribute("loginInfo")).getEmail()));
+				bookmarkCheckList.add(service.bookmarkCheck(feed_seq, ((MemberDTO)session.getAttribute("loginInfo")).getEmail()));
+			}
+			System.out.println(list);
+			System.out.println(mediaList);
+			System.out.println(replyList);
+			System.out.println(likeCheckList);
+			System.out.println(bookmarkCheckList);
+			model.addAttribute("list", list);
+			model.addAttribute("mediaList", mediaList);
+			model.addAttribute("replyList", replyList);
+			model.addAttribute("likeCheckList", likeCheckList);
+			model.addAttribute("bookmarkCheckList", bookmarkCheckList);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return "/feeds/friendFeed";
+	}
+	
+	
+	@RequestMapping(value = "/getFriendFeedAjax", produces = "application/json; charset=UTF-8")
+	@ResponseBody
+	public String getFriendFeedAjax(Model model, String page) {
+		if(page==null) {
+			page="11";
+		}
+		int ipage = Integer.parseInt(page);
+		System.out.println("friendFeed 도착");
+		String email = ((MemberDTO)session.getAttribute("loginInfo")).getEmail();
+		System.out.println("email : "+email);
+		JsonObject obj = new JsonObject();
+		try {
+			List<FeedDTO> list = service.getFriendFeed(ipage, email);
+			if(list==null) {
+				return "{\"result\" : \"false\"}";
+			}
+			System.out.println("feed size : "+list.size());
+			List<List<String>> mediaList = new ArrayList<>();
+			List<List<ReplyDTO>> replyList = new ArrayList<>();
+			List<Integer> likeCheckList = new ArrayList<>();
+			List<Integer> bookmarkCheckList = new ArrayList<>();
+			for(FeedDTO tmp : list) {
+				int feed_seq = tmp.getFeed_seq();
+				mediaList.add(service.getMediaList(feed_seq));
+				replyList.add(service.viewAllReply(feed_seq));
+				likeCheckList.add(service.likeCheck(feed_seq, ((MemberDTO)session.getAttribute("loginInfo")).getEmail()));
+				bookmarkCheckList.add(service.bookmarkCheck(feed_seq, ((MemberDTO)session.getAttribute("loginInfo")).getEmail()));
+			}
+			System.out.println(list);
+			System.out.println(mediaList);
+			System.out.println(replyList);
+			System.out.println(likeCheckList);
+			System.out.println(bookmarkCheckList);
+
+			Gson gson = new Gson();
+
+			obj.addProperty("list", gson.toJson(list));
+			obj.addProperty("mediaList", gson.toJson(mediaList));
+			obj.addProperty("replyList", gson.toJson(replyList));
+			obj.addProperty("likeCheckList", gson.toJson(likeCheckList));
+			obj.addProperty("bookmarkCheckList", gson.toJson(bookmarkCheckList));
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+
+		return obj.toString();
+	}
+	
+	
 	@RequestMapping("/modifyFeedProc")
 	public String modifyFeedProc(FeedDTO dto,Model model) {
 		System.out.println("게시물 수정 시작!");
