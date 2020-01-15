@@ -11,6 +11,7 @@
 <title></title>
 <script src="https://code.jquery.com/jquery-3.4.1.js"
 	type="text/javascript"></script>
+	<link rel="stylesheet" href="/resources/css/nav.css">
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
 	integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
@@ -36,26 +37,127 @@
 	#feedList{
 		border:2px solid red;
 	}
+	html, body {
+	background-color: #1D4E89;
+	margin: 0px;
+	padding: 0px;
+	height: 2000px;
+}
+
+.mainBox {
+	height: 1000px;
+}
+
+.container-fluid {
+	position: relative;
+	top: 62px;
+}
+
+.row {
+	margin: 0px;
+	padding: 0px;
+}
+
+.wrapper {
+	max-width: 1200px;
+	margin: auto;
+	height: 1200px;
+}
+
+.section {
+	border: 1px solid black;
+	height: 430px;
+	background-color: white;
+	margin-bottom: 5px;
+}
+
+.left {
+	margin-right: 5px;
+}
+
+.middle {
+	margin-right: 5px;
+}
+.profile{
+	border:1px solid black;
+	height:300px;
+}
+
+/* All Device */
+/* 모든 해상도를 위한 공통 코드를 작성한다. 모든 해상도에서 이 코드가 실행됨. */
+
+/* Mobile Device */
+/* 768px 미만 해상도의 모바일 기기를 위한 코드를 작성한다. 모든 해상도에서 이 코드가 실행됨. 미디어 쿼리를 지원하지 않는 모바일 기기를 위해 미디어 쿼리 구문을 사용하지 않는다. */
+
+/* Tablet &amp; Desktop Device */
+@media all and (min-width:768px) {
+	/*     사용자 해상도가 768px 이상일 때 이 코드가 실행됨. 테블릿과 데스크톱의 공통 코드를 작성한다. */
+	body {
+		background-color: purple;
+	}
+}
+
+@media all and (max-width:768px) {
+	/*     사용자 해상도가 768px 이하일 때 이 코드가 실행됨. 테블릿과 데스크톱의 공통 코드를 작성한다. */
+	.row>.section {
+		height: 200px;
+	}
+	.left, .right {
+		display: none;
+	}
+}
+
+/* Tablet Device */
+@media all and (min-width:768px) and (max-width:1024px) {
+	/*     사용자 해상도가 768px 이상이고 1024px 이하일 때 이 코드가 실행됨. 아이패드 또는 비교적 작은 해상도의 랩탑이나 데스크톱에 대응하는 코드를 작성한다. */
+}
+
+/* Desktop Device */
+@media all and (min-width:1025px) {
+	/*     사용자 해상도가 1025px 이상일 때 이 코드가 실행됨. 1025px 이상의 랩탑 또는 데스크톱에 대응하는 코드를 작성한다. */
+	body {
+		background-color: blue;
+	}
+}
 </style>
 </head>
 <body>
+<jsp:include page="/resources/jsp/nav.jsp" />
+<div class="container-fluid">
+		<div class="wrapper">
+			<div class="profile" style="background-color:white; text-align:center;">
+				<div>
+			<label style="color:white;"></label> <br><img src="${pageContext.request.contextPath}/resources/images/default_profile_img.png"
 
-	<div id="wrapper">
-		<div>
-			<label>프로필 사진</label> <br><img src="${pageContext.request.contextPath}/resources/images/default_profile_img.png"
-
-				id="setProfile" style="width: 500px;border-radius:50%;">
-
-			<br>
-			<br>
-			<label>닉네임</label> <p>${dto.nickname } </p><br>
+				id="setProfile" style="width: 200px;border-radius:50%;">
+</div>
 			
-			<label>상태메세지</label> <p>${dto.profile_msg} </p> 
+			<label style="color:black;">${dto.nickname }</label> 
 			
-		</div>
-		<button type="button" id="changeProfile">프로필 편집</button>
-		<button type="button" id="changeInfo">회원 정보 편집</button><br>
+			<label style="color:black;">${dto.profile_msg}</label>  
+			
+		<br>
+		<button type="button" id="changeProfile">프로필 편집</button> 
+		<button type="button" id="changeInfo">회원 정보 편집</button> 
 		<button type="button" id="friendsList">친구 목록</button>
+			</div>
+			<div class="mainBox">
+				<div class="row">
+					<div class="col m-20 section left">
+						<p>Contents 1</p>
+					</div>
+					<div class="col m-20 section middle">
+						<p>Contents 2</p>
+					</div>
+					<div class="col m-20 section right">
+						<p>Contents 3</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="wrapper">
+		
 		<br><button id="registerFeed">게시물 등록</button>
 		
 		<div id="feedList">
@@ -90,7 +192,7 @@
 		친구 요청</button>
 	<!-- 친구요청 모달 영역 -->
 	<div id="modalBox" class="modal fade" id="myModal" tabindex="-1"
-		role="dialog" aria-labelledby="myModalLabel">
+		role="dialog" aria-labelledby="myModalLabel" style="margin-top:100px;">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -120,7 +222,7 @@
 
 	<!-- 친구 목록 모달 영역 -->
 	<div id="modalBox2" class="modal fade" id="myModal2" tabindex="-1"
-		role="dialog" aria-labelledby="myModalLabel">
+		role="dialog" aria-labelledby="myModalLabel" style="margin-top:100px;">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">

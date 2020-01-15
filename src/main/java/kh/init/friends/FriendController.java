@@ -80,6 +80,7 @@ public class FriendController {
 	public String selectFndList(Model model) {
 		String email = (String)session.getAttribute("loginInfo");
 		System.out.println("친구목록 조회 CON 도착.");
+		System.out.println("세션값 : "+email);
 		try {
 			List<MemberDTO> list = service.getFriendsListService(email);
 			List<MemberDTO> waitlist = service.getRequestMemList(email);
