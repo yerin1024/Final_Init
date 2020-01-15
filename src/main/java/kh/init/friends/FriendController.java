@@ -33,8 +33,8 @@ public class FriendController {
 	@RequestMapping("/friendRequest") //친구 요청 하기
 	public String friendRequest(FriendRequestDTO dto,Model model) {
 		try { 
-			String email = (String)session.getAttribute("loginInfo");
-		int result = service.friendRequestService(dto,email);
+			MemberDTO mDto = (MemberDTO)session.getAttribute("loginInfo");
+		int result = service.friendRequestService(dto,mDto.getEmail());
 		 if(result > 0) {
 			 return "feeds/myFeed";
 		 }else {

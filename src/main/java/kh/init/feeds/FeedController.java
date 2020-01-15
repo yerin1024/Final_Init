@@ -35,10 +35,10 @@ public class FeedController {
 	public String myFeed(Model model) {
 		System.out.println("myFeed 도착");
 		List<FeedDTO> list = null;
-		String email = (String)session.getAttribute("loginInfo");
+		MemberDTO mDto = (MemberDTO)session.getAttribute("loginInfo");
 		try {
-			MemberDTO dto = mservice.getMyPageService(email);
-			list = service.getMyFeed(email);
+			MemberDTO dto = mservice.getMyPageService(mDto.getEmail());
+			list = service.getMyFeed(mDto.getEmail());
 			model.addAttribute("dto", dto);
 			model.addAttribute("list", list);
 		}catch(Exception e) {
