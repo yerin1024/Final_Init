@@ -35,4 +35,14 @@ public class HomeController {
 	public String test() {
 		return "fileTest";
 	}
+	
+	@RequestMapping("/gridTest")
+	public String toGridJsp() {
+		return "frames/frame_grid";
+	}
+	
+	@RequestMapping("/singleTest")
+	public String toSingleJsp() {
+		return "frames/frame_single";
+	}	
 }

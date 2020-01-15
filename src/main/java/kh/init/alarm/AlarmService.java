@@ -25,13 +25,23 @@ public class AlarmService {
 	}
 	
 	@Transactional("txManager")
-	public ReplyDTO alarmReplyWho(int reply_seq){
-		return dao.alarmReplyWho(reply_seq);
+	public String alarmWho(int feed_seq){
+		return dao.alarmWho(feed_seq);
 	}
 	
 	@Transactional("txManager")
 	public int deleteAlarm(String email, int alarm_seq) {
 		return dao.deleteAlarm(email, alarm_seq);
+	}
+	
+	@Transactional("txManager")
+	public int alarmCheck(String email) {
+		return dao.alarmCheck(email);
+	}
+	
+	@Transactional("txManager")
+	public int isNewAlarm(String email) {
+		return dao.isNewAlarm(email);
 	}
 	
 

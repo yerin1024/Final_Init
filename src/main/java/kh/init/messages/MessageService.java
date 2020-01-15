@@ -45,5 +45,11 @@ public class MessageService {
 		return dao.previewMsg(from_id, to_id);
 	}
 	
+	// 읽지 않은 메시지 수
+	@Transactional("txManager")
+	public int unreadCount(String to_id, String from_id) {
+		return dao.unreadCount(to_id, from_id);
+	}
+	
 	
 }

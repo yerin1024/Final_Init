@@ -33,8 +33,7 @@ public class MemberDTO {
 		this.join_date = join_date;
 		this.id_type = id_type;
 		this.black = black;
-	}
-	
+	}	
 	
    @Override
 	public String toString() {

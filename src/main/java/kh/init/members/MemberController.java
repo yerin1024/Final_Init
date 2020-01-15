@@ -1,11 +1,13 @@
 package kh.init.members;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -26,10 +28,18 @@ public class MemberController {
 		}
 		if(service.isLoginOk(email, pw) > 0) { // 로그인 허가
 			session.setAttribute("loginInfo", email); // 세션 로그인정보 담기
-			return "main";
+			return "redirect:/singleTest";
 		}else {
-			return "error";
+			return "main";
 		}
+	}
+	
+	// 로그아웃 세션 삭제
+	@RequestMapping("/logout.do")
+	public String toLogout() {
+		System.out.println("로그아웃 > " + session.getAttribute("loginInfo").toString() + " 세션 삭제");
+		session.removeAttribute("loginInfo");
+		return "main";
 	}
 	
 	// 비밀번호 찾기 페이지 로드
@@ -74,19 +84,21 @@ public class MemberController {
 //		    }
 	}
 	
-	@RequestMapping("/goMyInfo")
+	@RequestMapping("/goMyInfo")  //내 정보 (편집) 가기
 	public String goMyInfo(String email, Model model) {
 		System.out.println("개인 정보 CON 도착.");
+		String id = (String)session.getAttribute("loginInfo");
 		try {
+			
 		MemberDTO dto = service.getMyPageService("kks@naver.com");
 		System.out.println(dto.getEmail());
 		System.out.println(dto.getName());
-		String poption1 = dto.getPhone().substring(0, 2);
+		String poption1 = dto.getPhone().substring(0, 4);
 		String poption2 = dto.getPhone().substring(3, 7);
 		String poption3 = dto.getPhone().substring(7, 11);
-		String boption1 = dto.getBirth().substring(0, 2);
-		String boption2 = dto.getBirth().substring(3, 4);
-		String boption3 = dto.getBirth().substring(5, 6);
+		String boption1 = dto.getBirth().substring(0, 4);
+		String boption2 = dto.getBirth().substring(5, 6);
+		String boption3 = dto.getBirth().substring(6, 8);
 		model.addAttribute("dto", dto);
 		model.addAttribute("poption1", poption1);
 		model.addAttribute("poption2", poption2);
@@ -101,11 +113,12 @@ public class MemberController {
 		}
 	}
      
-	@RequestMapping("/goMyProfile")
+	@RequestMapping("/goMyProfile") //내 프로필(편집) 가기
 	public String goMyProfile(String email, Model model) {
 		System.out.println("개인 프로필 수정 CON 도착.");
 		try {
-		MemberDTO dto = service.getMyPageService("kks@naver.com");
+			String id = (String)session.getAttribute("loginInfo");
+		MemberDTO dto = service.getMyPageService(id);
 		System.out.println(dto.getProfile_img());
 		System.out.println(dto.getNickname());
 		System.out.println(dto.getProfile_msg());
@@ -119,26 +132,12 @@ public class MemberController {
 		}
 	}
 	
-	@RequestMapping(value = "/getMyPage", produces ="text/html; charset=utf-8")
-	public String getMyPage() {
-		System.out.println("마이페이지 CON 도착.");
-		ModelAndView mav = new ModelAndView();
-		try {
-			MemberDTO dto = service.getMyPageService((String)session.getAttribute("loginInfo"));
-
-			mav.addObject("dto",dto);
-
-			return "good";
-		}catch(Exception e) {
-			e.printStackTrace();
-			return "job";
-		}
-	}
-	@RequestMapping("/withdrawMem")
+	@RequestMapping("/withdrawMem") //회원 탈퇴 하기
 	public String getout() {
 		System.out.println("회원 탈퇴 CON 도착.");
 		try {
-			int result = service.withdrawMemService("kks@naver.com");
+			String email = (String)session.getAttribute("loginInfo");
+			int result = service.withdrawMemService(email);
 			System.out.println(result);
 			if(result> 0) {
 				session.invalidate();
@@ -159,14 +158,19 @@ public class MemberController {
 
 	}
 
-	@RequestMapping("/changeMyInfo")
+	@RequestMapping("/changeMyInfo") //회원 정보 수정하기
 	public String changeInfo(MemberDTO dto) {
 		System.out.println("회원 정보 수정 CON 도착.");
 		try {
+			int result = 0;
+			String email = (String)session.getAttribute("loginInfo");
+			if(email != null) {
+				result = service.changeMyInfoService(email, dto);
+			}else {
+				result = 0;
+			}
 			
-			
-			int result = service.changeMyInfoService("kks@naver.com", dto);
-			if(result> 0) {
+			if(result > 0) {
 
 				System.out.println("정보변경에 성공하셨슴당.");
 				return "home";
@@ -183,16 +187,17 @@ public class MemberController {
 		}
 	} 
 	
-	@RequestMapping("/changeProfile")
+	@RequestMapping("/changeProfile") //프로필 바꿔버리기
 	public String changeMyProfile(MemberDTO dto, MultipartFile profileImg) {
 		System.out.println("회원 정보 수정 CON 도착.");
 		String path = session.getServletContext().getRealPath("files");
+		String email = (String)session.getAttribute("loginInfo");
 		int result = 0;
 		try {
 			if(profileImg.getOriginalFilename() == "") {
-				result = service.changeMyProfileService("kks@naver.com", dto,null,path);
+				result = service.changeMyProfileService(email, dto,null,path);
 			}else {
-				result = service.changeMyProfileService("kks@naver.com", dto,profileImg,path);
+				result = service.changeMyProfileService(email, dto,profileImg,path);
 			}
 			
 			
@@ -211,5 +216,28 @@ public class MemberController {
 			System.out.println("입력실패.");
 			return "redirect:home";
 		}
-	} 
+	}
+	
+	@RequestMapping("/identifyMemPw")
+	@ResponseBody
+	public String identifyMemPw(String pw) {
+		System.out.println("현재 비밀번호 확인 CON 도착"); 
+		   System.out.println("현재 적은 비번은 "+pw);
+		try {
+		    String email =(String)session.getAttribute("loginInfo");
+			MemberDTO dto = service.identifyMemPwService("kks@naver.com");
+			System.out.println("비번은 "+dto.getPw());
+			if(pw.equalsIgnoreCase(dto.getPw())) {
+				return "yes";
+			}else {
+				return "no";
+			}
+			
+		 } catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return "error";
+		}
+		
+	}
 }

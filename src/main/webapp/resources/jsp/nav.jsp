@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
  	
-<div class="container-fluid" >
+<div class="navBar" >
         <div class="header">
            <div class="inner">
             <div class="nav-left">
@@ -12,19 +12,20 @@
         <div class="nav-right">
         <ul class="nav justify-content-end">
             <li class="nav-item">
-              <a class="nav-link active" href="#" style="padding-top: 12px;"><img id="total_feed" src="/resources/images/friends.png"></a>
+              <a class="nav-link active" href="${pageContext.request.contextPath}/feed/wholeFeed" style="padding-top: 12px;"><img id="total_feed" src="/resources/images/friends.png"></a>
+            </li>
+            <li class="nav-item a_ac1_nav" id="a_ac1_1">
+              <a class="nav-link" style="padding-top: 15px;"><img id="notification" src="/resources/images/notification.png"></a>
+            </li>
+			
+            <li class="nav-item">
+              <a class="nav-link" href="${pageContext.request.contextPath}/message/messageMain" style="padding-top: 15px;"><img id="msg" src="/resources/images/msg.png"></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#" style="padding-top: 15px;"><img id="notification" src="/resources/images/notification.png"></a>
+              <a class="nav-link" href="${pageContext.request.contextPath}/feed/myFeed" style="padding-top: 12px;"><img id="my_feed" src="/resources/images/user.png"></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#" style="padding-top: 15px;"><img id="msg" src="/resources/images/msg.png"></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#" style="padding-top: 12px;"><img id="my_feed" src="/resources/images/user.png"></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#" style="padding-top: 12px;"><img id="logout" src="/resources/images/logout.png"></a>
+              <a class="nav-link" href="${pageContext.request.contextPath}/member/logout.do" style="padding-top: 12px;"><img id="logout" src="/resources/images/logout.png"></a>
             </li>
           </ul>
             </div>

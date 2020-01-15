@@ -3,37 +3,46 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="Alarm">
-	<!--  -->
-	<insert id="insertAlarm_m"> <!-- 알림 추가 -->
+
+	<!-- 알림 추가 -->
+	<insert id="insertAlarm_m"> 
 		insert into tb_alarm values(alarm_seq.nextval, 'M', #{sharedSeq}, sysdate, 'N', #{email})
 	</insert>
 
-	<insert id="alarmReply"> <!-- 알림 추가 / 댓글 -->
+	<!-- 알림 추가 / 댓글 -->
+	<insert id="alarmReply"> 
 		insert into tb_alarm values(alarm_seq.nextval, 'R', #{sharedSeq}, sysdate, 'N', #{email})
 	</insert>
-<!-- 	<select id="alarmReplyWho" resultType="kh.init.feeds.ReplyDTO"> 댓글 작성자 찾기 테스트용 -->
-<!-- 		select al.alarm_seq, al.type, al.applied_seq, al.reg_date, al.alarm_check, al.email, re.nickname from tb_alarm al full outer join tb_reply re on al.applied_seq = re.reply_seq where type='R' and email= #{email} -->
-<!-- 	</select> -->
+	<select id="alarmWho" resultType="java.lang.String"> <!-- 댓글 게시물 시퀀스로 피드 작성자 찾기 -->
+		select
+		    al.email email
+		from tb_alarm al 
+		full outer join tb_reply re on al.applied_seq = re.reply_seq 
+		full outer join tb_feed fe on fe.feed_seq = re.feed_seq 
+		full outer join tb_like lk on fe.feed_seq = lk.feed_seq 
+		where fe.feed_seq=#{feed_seq}
+	</select>
 	
-	<insert id="alarmLike"> <!-- 알림 추가 / 좋아요 -->
+	<!-- 알림 추가 / 좋아요 -->
+	<insert id="alarmLike"> 
 		insert into tb_alarm values(alarm_seq.nextval, 'L', #{sharedSeq}, sysdate, 'N', #{email})
 	</insert>
-<!-- 	<select id="alarmFriendWho" resultType="kh.init.feeds.ReplyDTO"> 좋아요 찾기 테스트용 -->
-<!-- 		select * from tb_alarm al full outer join tb_like lk on al.applied_seq = lk.like_seq where type='L' and email= #{email} -->
-<!-- 	</select> -->
+	<select id="alarmFriendWho" resultType="kh.init.feeds.ReplyDTO"> 좋아요 찾기 테스트용
+		select * from tb_alarm al full outer join tb_like lk on al.applied_seq = lk.like_seq where type='L' and email= #{email}
+	</select>
 	
-	<insert id="alarmFriend"> <!-- 알림 추가 / 친구 요청 -->
+	<!-- 알림 추가 / 친구 요청 -->
+	<insert id="alarmFriend"> 
 		insert into tb_alarm values(alarm_seq.nextval, 'F', #{sharedSeq}, sysdate, 'N', #{email})
 	</insert>
-<!-- 	<select id="alarmFriendWho" resultType="kh.init.feeds.ReplyDTO"> 친구 요청 테스트용 -->
-<!-- 		select al.alarm_seq, al.type, al.applied_seq, al.reg_date, al.alarm_check, al.email, fr.from_id from tb_alarm al full outer join tb_friend_request fr on al.applied_seq = fr.friend_seq where type='F' and email=#{email} -->
-<!-- 	</select> -->
 	
-	<select id="alarmList" resultType="kh.init.alarm.AlarmDTO"> <!-- 알림 목록 -->
+	<!-- 알림 목록 -->
+	<select id="alarmList" resultType="kh.init.alarm.AlarmDTO"> 
 		select * from tb_alarm where email= #{email}
 	</select>
 	
-	<select id="alarmList2" resultType="kh.init.alarm.AlarmVO"> <!-- 알림 목록 2 -->
+	<!-- 알림 목록 2 -->
+	<select id="alarmList2" resultType="kh.init.alarm.AlarmVO"> 
 		select
 		    alarm_seq, type, applied_seq, reg_date, alarm_check, al.email email, 
 		    re.feed_seq feed_seq_r, reply_seq, re.nickname nickname_r, contents, 
@@ -49,11 +58,18 @@
 		order by alarm_seq desc
 	</select>
 	
-	<update id="alarmCheck"> <!-- 읽음 완료 -->
+	<!-- 읽음 완료로 변경 -->
+	<update id="alarmCheck"> 
 		update tb_alarm set alarm_check='Y' where email= #{email} and alarm_check='N'
 	</update>
 	
-	<delete id="deleteAlarm"> <!-- 알림 삭제 -->
+	<!-- 새 알림이 있는지 -->
+	<select id="isNewAlarm" resultType="java.lang.Integer"> 
+		select count(*) from tb_alarm where email=#{email} and alarm_check='N'
+	</select>
+	
+	<!-- 알림 삭제 -->
+	<delete id="deleteAlarm"> 
 		delete from tb_alarm where email= #{email} and alarm_seq=#{alarm_seq}
 	</delete>
     
