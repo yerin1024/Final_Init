@@ -29,4 +29,7 @@ public class ReplyDAO {
 	public int replyNextSeq()throws Exception{
 		return jdbc.selectOne("Feed.replyNextSeq");
 	}
+	public int updateReply(ReplyDTO dto)throws Exception{
+		return jdbc.update("Feed.updateReply",dto);
+	}
 }

@@ -121,6 +121,16 @@
 }
 </style>
 </head>
+<<<<<<< HEAD
+<body>	
+	<div id="wrapper">
+		<div>
+			<label>프로필 사진</label> <br><img src="${pageContext.request.contextPath}/resources/images/default_profile_img.png"
+				id="setProfile" style="width:100px;height:100px">
+			<br>
+			<br>
+			<label>닉네임</label> <p>${dto.nickname }</p><br>
+=======
 <body>
 <jsp:include page="/resources/jsp/nav.jsp" />
 <div class="container-fluid">
@@ -131,6 +141,7 @@
 
 				id="setProfile" style="width: 200px;border-radius:50%;">
 </div>
+>>>>>>> 79d98a58b8867ad392746c6d40a14218c885b0e6
 			
 			<label style="color:black;">${dto.nickname }</label> 
 			
@@ -414,7 +425,6 @@
 			$("#goReqFri").submit();
 			$('#modalBox').modal('hide');
 		});
-
 		//친구추가 ,취소 ,끊기
 	</script>
 

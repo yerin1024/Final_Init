@@ -97,6 +97,7 @@ public class MemberService {
 
 	@Transactional("txManager")
 	public MemberDTO getMyPageService(String email) throws Exception{
+		System.out.println(email);
 		MemberDTO dto = dao.getMyInfo(email);
 		System.out.println("왜값이 안나와"+dto.getEmail());
 		return dto;		
