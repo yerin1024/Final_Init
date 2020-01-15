@@ -1,10 +1,11 @@
 package kh.init.members;
 
 import java.io.File;
-import java.net.PasswordAuthentication;
 import java.util.Properties;
 
+import javax.mail.Message;
 import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
@@ -14,8 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
-
-import com.google.inject.spi.Message;
 
 import kh.init.configuration.Configuration;
 import kh.init.configuration.Utils;
