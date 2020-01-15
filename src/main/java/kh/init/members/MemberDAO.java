@@ -19,15 +19,24 @@ public class MemberDAO {
 	}
 	
 	public int checkEmail(String email) {
-		return jdbc.selectOne("Member.checkEmail", email);
+		Map<String, String> param = new HashMap<>();
+		param.put("col", "email");
+		param.put("val", email);
+		return jdbc.selectOne("Member.checkOverlap", param);
 	}
 	
 	public int checkNickname(String nickname) {
-		return jdbc.selectOne("Member.checkNickname", nickname);
+		Map<String, String> param = new HashMap<>();
+		param.put("col", "nickname");
+		param.put("val", nickname);
+		return jdbc.selectOne("Member.checkOverlap", param);
 	}
 	
 	public int checkPhone(String phone) {
-		return jdbc.selectOne("Member.checkPhone", phone);
+		Map<String, String> param = new HashMap<>();
+		param.put("col", "phone");
+		param.put("val", phone);
+		return jdbc.selectOne("Member.checkOverlap", param);
 	}
 	
 	public String getProfile(String email) {
@@ -45,7 +54,7 @@ public class MemberDAO {
 		Map<String, String> param = new HashMap<>();
 		param.put("email", email);
 		param.put("pw", pw);
-		return jdbc.selectOne("Member.isLoginOk", param);
+		return jdbc.selectOne("Member.isLoginAvailable", param);
 	}
 	//내 정보 가져오기
 	public MemberDTO getMyInfo(String email) throws Exception{
