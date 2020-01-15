@@ -26,13 +26,9 @@
 		select count(*) from tb_member where email= #{email} and pw= #{pw}
 	</select>
 	
-	<select id="selectById" resultType="kh.init.members.MemberDTO">
-   select * from tb_member where email = #{email}
-  </select>
-  <select id="selectByFriend" resultType="kh.init.members.MemberDTO">
-   select * from tb_member where email = #{fr_id}
-  </select>
-  
+	<select id="selectMember" parameterType="java.util.Map" resultType="kh.init.members.MemberDTO">
+  		select * from tb_member where ${col} = #{val}
+ 	</select>  
   
   <delete id="delete" >
    delete from tb_member where email = #{email}
