@@ -52,8 +52,8 @@ public class FriendController {
 		System.out.println("친구 수락 CON 도착"); 
 		System.out.println(yr_id);
 		try {
-		    String my_id =(String)session.getAttribute("loginInfo");
-			int result = service.acceptFriendRequest(my_id, yr_id,"1");
+			MemberDTO mDto = (MemberDTO)session.getAttribute("loginInfo");
+			int result = service.acceptFriendRequest(mDto.getEmail(), yr_id,"1");
 			return "ok";
 		 } catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -66,9 +66,9 @@ public class FriendController {
 	@ResponseBody
 	public String cutFndRelation(String yr_id) {
 		System.out.println("친구끊기 CON 도착.");
-		String my_id =(String)session.getAttribute("loginInfo");
+		MemberDTO mDto = (MemberDTO)session.getAttribute("loginInfo");
 		try {
-		int result = service.cutFriendship(my_id, yr_id);
+		int result = service.cutFriendship(mDto.getEmail(), yr_id);
 		return "ok";
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -78,12 +78,12 @@ public class FriendController {
 	@RequestMapping(value ="/selectFndList" ,produces ="application/text; charset=utf-8")
 	@ResponseBody   //친구 목록 조회~
 	public String selectFndList(Model model) {
-		String email = (String)session.getAttribute("loginInfo");
+		MemberDTO mDto = (MemberDTO)session.getAttribute("loginInfo");
 		System.out.println("친구목록 조회 CON 도착.");
-		System.out.println("세션값 : "+email);
+		System.out.println("세션값 : "+mDto.getEmail());
 		try {
-			List<MemberDTO> list = service.getFriendsListService(email);
-			List<MemberDTO> waitlist = service.getRequestMemList(email);
+			List<MemberDTO> list = service.getFriendsListService(mDto.getEmail());
+			List<MemberDTO> waitlist = service.getRequestMemList(mDto.getEmail());
 			System.out.println("waitlist size ="+waitlist.size());
 			
 			System.out.println(list.size());
@@ -112,10 +112,10 @@ public class FriendController {
 	public String searchFndList(Model model,String search) {
 		System.out.println("넘어온 서치값은 "+search);
 		System.out.println("검색 친구목록 조회 CON 도착.");
-		String email = (String)session.getAttribute("loginInfo");
+		MemberDTO mDto = (MemberDTO)session.getAttribute("loginInfo");
 		try {
-			List<MemberDTO> list = service.searchFriendsListService(email,search);
-			List<MemberDTO> waitlist = service.searchRequestMemList(email,search);
+			List<MemberDTO> list = service.searchFriendsListService(mDto.getEmail(),search);
+			List<MemberDTO> waitlist = service.searchRequestMemList(mDto.getEmail(),search);
 			System.out.println("waitlist size ="+waitlist.size());
 			
 			System.out.println(list.size());
