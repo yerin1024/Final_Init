@@ -44,119 +44,149 @@
 		from (SELECT p.*, ROW_NUMBER()OVER(ORDER BY P.FEED_SEQ) as rnum FROM TB_FEED P WHERE email=#{email})
 		where rnum between #{startNum} and #{endNum}
 	</select>
+<<<<<<< HEAD
 	
 	<select id="getMyFeedCount" resultType="Integer">
 		select count(*) from tb_feed where email=#{email}
+=======
+
+	<select id="getMyFeed" resultType="kh.init.feeds.FeedDTO">
+		select * from tb_feed where
+		email=#{email}
+>>>>>>> 76c147d62be0459bdbdf171f19bb328b88e50c20
 	</select>
-	
+
 	<select id="scrapFeed" resultType="kh.init.feeds.FeedDTO">
-		select * from tb_feed f where f.feed_seq in (select s.feed_seq from tb_scrap s where s.email = #{email})
+		select * from tb_feed f where
+		f.feed_seq in (select s.feed_seq from tb_scrap s where s.email =
+		#{email})
 	</select>
 
 	<select id="searchFriend" resultType="kh.init.members.MemberDTO">
-		select * from tb_member where nickname=#{keyword}
-	</select>
-	
-	<select id="getFeedSeq" resultType="integer">
-		select feed_seq.nextval from dual
+		select * from tb_member
+		where nickname=#{keyword}
 	</select>
 
-   <insert id="registerFeed" parameterType="kh.init.feeds.FeedDTO">      
-      insert into tb_feed values(#{feed_seq},#{email},#{nickname},#{title},#{contents},#{relation},sysdate,#{hashtag}) 
-   </insert>
-   
-   <insert id="registerMedia" parameterType="java.util.Map">
-   	  insert into tb_feed_file values(#{feed_seq}, feed_file_seq.nextval, #{media})
-   </insert>
-   
-   <delete id="deleteFeed">
-      delete from tb_feed where feed_seq = #{seq}
-   </delete>
-   
-   <select id="detailView" resultType="kh.init.feeds.FeedDTO">
-      select * from tb_feed where feed_seq = #{feed_seq}
-   </select>
-   
-   <select id="getMediaList" resultType="String">
-	  select media from tb_feed_file where feed_seq = #{feed_seq} order by feed_file_seq
-   </select>
-   
-	
+	<select id="getFeedSeq" resultType="integer">
+		select feed_seq.nextval from
+		dual
+	</select>
+
+	<insert id="registerFeed" parameterType="kh.init.feeds.FeedDTO">
+		insert into tb_feed
+		values(#{feed_seq},#{email},#{nickname},#{title},#{contents},#{relation},sysdate,#{hashtag})
+	</insert>
+
+	<insert id="registerMedia" parameterType="java.util.Map">
+		insert into tb_feed_file values(#{feed_seq}, feed_file_seq.nextval,
+		#{media})
+	</insert>
+
+	<delete id="deleteFeed">
+		delete from tb_feed where feed_seq = #{seq}
+	</delete>
+
+	<select id="detailView" resultType="kh.init.feeds.FeedDTO">
+		select * from tb_feed where feed_seq = #{feed_seq}
+	</select>
+
+	<select id="getMediaList" resultType="String">
+		select media from tb_feed_file where feed_seq = #{feed_seq} order by
+		feed_file_seq
+	</select>
+
+   <!-- for profile_imgList -->
+	<select id="getProfile_img" resultType="String">
+		select profile_img from tb_member where email = #{email}
+	</select>
+
 	<select id="getFriendFeedCount" resultType="Integer">
-	  select count(*) from tb_feed p join tb_friend r on p.email = r.my_id
-    												where r.fr_id = #{email} 
-										    		and p.relation >= r.relation
-										   			or p.email = #{email}
+		select count(*) from tb_feed p join tb_friend r on p.email = r.my_id
+		where r.fr_id = #{email}
+		and p.relation >= r.relation
+		or p.email = #{email}
 	</select>
-	
-	<select id="getFriendFeed" parameterType="java.util.Map" resultType="kh.init.feeds.FeedDTO">
-	  select feed_seq, email, nickname, title, contents, relation, write_date, hashtag 
-     from (select p.*, ROW_NUMBER() OVER(ORDER BY p.feed_seq) rnum
-               	from tb_feed p join tb_friend r on p.email = r.my_id
-             	where r.fr_id = #{email} and p.relation >= r.relation
-              		or p.email = #{email}) 
-      where rnum between #{startNum} and #{endNum}
+	<select id="getFriendFeed" parameterType="java.util.Map"
+		resultType="kh.init.feeds.FeedDTO">
+		select feed_seq, email, nickname, title, contents, relation, write_date,
+		hashtag
+		from (select p.*, ROW_NUMBER() OVER(ORDER BY p.feed_seq) rnum
+		from tb_feed p join tb_friend r on p.email = r.my_id
+		where r.fr_id = #{email} and p.relation >= r.relation
+		or p.email = #{email})
+		where rnum between #{startNum} and #{endNum}
 	</select>
-	
-	
+
+
 	<update id="modifyFeed" parameterType="kh.init.feeds.FeedDTO">
 		update tb_feed set title =
 		#{title}, contents=#{contents} , relation=#{relation} where feed_seq =
 		#{feed_seq}
 	</update>
 
-
-	
 	<!--좋아요 기능 -->
-	
+
 	<select id="getLikeSeq" resultType="integer">
-		select like_seq.nextval from dual
+		select like_seq.nextval from
+		dual
 	</select>
-	
+
 	<insert id="insertLike" parameterType="java.util.Map">
-		insert into tb_like values (#{like_seq}, #{feed_seq}, #{email})
+		insert into tb_like values
+		(#{like_seq}, #{feed_seq}, #{email})
 	</insert>
 	<delete id="deleteLike" parameterType="java.util.Map">
-		delete from tb_like where feed_seq=#{feed_seq} and email=#{email}
+		delete from tb_like where
+		feed_seq=#{feed_seq} and email=#{email}
 	</delete>
 
-	<select id="likeCheck" parameterType="java.util.Map" resultType="integer">
-		select count(*) from tb_like where feed_seq=#{feed_seq} and email=#{email}
+	<select id="likeCheck" parameterType="java.util.Map"
+		resultType="integer">
+		select count(*) from tb_like where feed_seq=#{feed_seq} and
+		email=#{email}
 	</select>
 
-	
-	
+
+
 	<!-- 북마크 -->
-	
+
 	<insert id="insertBookmark" parameterType="java.util.Map">
-		insert into tb_scrap values (scrap_seq.nextval, #{email}, #{feed_seq})
+		insert into tb_scrap
+		values (scrap_seq.nextval, #{email}, #{feed_seq})
 	</insert>
 	<delete id="deleteBookmark" parameterType="java.util.Map">
-		delete from tb_scrap where feed_seq=#{feed_seq} and email=#{email}
+		delete from tb_scrap
+		where feed_seq=#{feed_seq} and email=#{email}
 	</delete>
 
-	<select id="bookmarkCheck" parameterType="java.util.Map" resultType="integer">
-		select count(*) from tb_scrap where feed_seq=#{feed_seq} and email=#{email}
+	<select id="bookmarkCheck" parameterType="java.util.Map"
+		resultType="integer">
+		select count(*) from tb_scrap where feed_seq=#{feed_seq}
+		and email=#{email}
 	</select>
 
 	<!-- 댓글 기능 -->
 
-	<insert id="registerReply" parameterType="kh.init.feeds.ReplyDTO">
+	<insert id="registerReply"
+		parameterType="kh.init.feeds.ReplyDTO">
 		insert into tb_reply
 		values(#{feed_seq},#{reply_seq},#{nickname},#{depth},#{parent},#{contents},sysdate)
 	</insert>
 
 	<delete id="deleteReply" parameterType="java.util.Map">
-		delete from tb_reply where ${col} = #{val}
+		delete from tb_reply
+		where ${col} = #{val}
 	</delete>
-	<select id="viewAllReply" resultType="kh.init.feeds.ReplyDTO">
-		select * from tb_reply where feed_seq = #{feed_seq} order by 2 asc
+	<select id="viewAllReply" parameterType="java.util.Map" resultType="kh.init.feeds.ReplyDTO">
+		select * from tb_reply
+		where feed_seq = #{feed_seq} and parent = #{parent} order by 7 desc
 	</select>
-	
+
 	<select id="replyNextSeq" resultType="Integer">
-	 	select reply_seq.nextval from dual
+		select reply_seq.nextval from dual
 	</select>
 	<update id="updateReply" parameterType="kh.init.feeds.ReplyDTO">
-		update tb_reply set contents = #{contents} where reply_seq = #{reply_seq}
+		update tb_reply set
+		contents = #{contents} where reply_seq = #{reply_seq}
 	</update>
 </mapper>

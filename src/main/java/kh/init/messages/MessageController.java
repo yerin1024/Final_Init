@@ -70,6 +70,16 @@ public class MessageController {
 		return obj.toString();
 	}
 	
+	// new 알림 있는지
+	@RequestMapping(value="/isNewMsg.msg", produces="text/html; charset=utf8")
+	@ResponseBody
+	public String checkNewMsg(String from_id) {
+		String result = Integer.toString(service.isNewMsg("123@123.123"));
+		System.out.println("알림 개수 : " + result);
+		// 나중엔 이메일 부분 session id로 받을 것
+		return result;
+	}
+	
 //	@RequestMapping(value="messageView.msg", produces="text/html; charset=UTF-8", method = RequestMethod.GET)
 //	@ResponseBody
 //	public Object toView(MessageDTO dto, String fr_id, String to_id, Model model) {

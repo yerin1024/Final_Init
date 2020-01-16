@@ -27,7 +27,7 @@
 		select * from tb_message where ((from_id=#{from_id} and to_id=#{to_id}) or (from_id=#{to_id} and to_id=#{from_id})) order by 1 
 	</select>
 	
-	<!-- 읽음 표시 -->
+	<!-- 읽음으로 변경 -->
 	<update id="readCheck">
 		update tb_message set receive_read = 'Y' where from_id=#{to_id} and to_id=#{from_id}
 	</update>
@@ -48,6 +48,11 @@
 	<!-- 읽지 않은 메시지 수 -->
 	<select id="unreadCount" resultType="java.lang.Integer"> 
 		select count(*) unread_count from tb_message where (from_id=#{to_id} and to_id=#{from_id}) and receive_read = 'N'
+	</select>
+	
+	<!-- 새 메시지가 존재하는지 -->
+	<select id="isNewMsg" resultType="java.lang.Integer"> 
+		select count(*) from tb_message where to_id=#{from_id} and receive_read='N'
 	</select>
 	
 	<!-- 친구 목록 -->

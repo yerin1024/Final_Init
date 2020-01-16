@@ -7,6 +7,13 @@
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"> 
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script> 
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" ></script> 
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script> 
+	<link rel="stylesheet" href="/resources/css/nav.css">
+	<link rel="stylesheet" href="/resources/css/alr.css">
+	<link rel="stylesheet" href="/resources/css/msg.css">
 <script>
 	$(function() {
 		$("#myFeed").on("click", function() {
@@ -19,7 +26,7 @@
 							location.href = "${pageContext.request.contextPath}/feed/wholeFeed";
 						})
 		$("#messenger").on("click", function() {
-			location.href = "message/startMsg.msg"
+			
 		})
 
 		$("#alarm").on("click", function() {
@@ -43,6 +50,9 @@
 </script>
 </head>
 <body>
+	<jsp:include page="/resources/jsp/nav_test.jsp"/>
+	<jsp:include page="/resources/jsp/alr.jsp"/>
+	<jsp:include page="/resources/jsp/msg.jsp"/>
 
 	<button type="button" id="myFeed">내 피드</button>
 	<button id="friendFeed">친구피드</button><br>

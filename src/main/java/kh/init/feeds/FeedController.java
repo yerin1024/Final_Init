@@ -91,7 +91,6 @@ public class FeedController {
 		System.out.println("삭제 도착!");
 		try {
 			int result =  service.deleteFeed(feed_seq);
-			int replyResult = service.deleteReply(feed_seq);
 			System.out.println(result + "행이 삭제되었습니다.");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -275,32 +274,29 @@ public class FeedController {
 
 	@RequestMapping("/detailView") 
 	public String detailView(int feed_seqS, Model model) {
-
 		System.out.println("detailView 도착");
 		int feed_seq = feed_seqS;
 		System.out.println(feed_seq);
 		int likeCheck = 0; //0은 안한것 1은 한것
 		int bookmarkCheck = 0; //0은 안한것 1은 한것
 		FeedDTO dto = null;
-		List<ReplyDTO> replyList = new ArrayList<>();
+		List<ReplyDTO> parentReply = new ArrayList<>();
+		List<ReplyDTO> childReply = new ArrayList<>();
 		List<String> list = new ArrayList<>();
 		try {
 			dto = service.detailView(feed_seq);
 			likeCheck = service.likeCheck(feed_seq, ((MemberDTO)session.getAttribute("loginInfo")).getEmail());
 			bookmarkCheck = service.bookmarkCheck(feed_seq, ((MemberDTO)session.getAttribute("loginInfo")).getEmail());
-
-
-			System.out.println(replyList.size() + "리플라이리스트 사이즈입니다.");
-			System.out.println(dto.toString());
 			model.addAttribute("likeCheck", likeCheck);
 			model.addAttribute("bookmarkCheck", bookmarkCheck);
 
-			replyList = service.viewAllReply(feed_seq);
+			parentReply = (List<ReplyDTO>)service.viewAllReply(feed_seq).get("parents");
+			childReply = (List<ReplyDTO>)service.viewAllReply(feed_seq).get("childs");
+			
+			System.out.println("controller parent댓글"+parentReply.toString());
 			list = service.getMediaList(feed_seq);
-			for(String tmp : list) {
-				System.out.println(tmp);
-			}
-			model.addAttribute("replylist",replyList);
+			model.addAttribute("parentReply",parentReply);
+			model.addAttribute("childReply",childReply);
 			model.addAttribute("media", list);
 			model.addAttribute("dto", dto);	
 		}catch(Exception e) {
@@ -316,26 +312,34 @@ public class FeedController {
 		System.out.println("friendFeed 도착");
 		String email = ((MemberDTO)session.getAttribute("loginInfo")).getEmail();
 		System.out.println("email : "+email);
+		String profile_img = ((MemberDTO)session.getAttribute("loginInfo")).getProfile_img();
 		try {
 			List<FeedDTO> list = service.getFriendFeed(ipage, email);
 			System.out.println("feed size : "+list.size());
+			List<String> profile_imgList = new ArrayList<>();
 			List<List<String>> mediaList = new ArrayList<>();
 			List<List<ReplyDTO>> replyList = new ArrayList<>();
 			List<Integer> likeCheckList = new ArrayList<>();
 			List<Integer> bookmarkCheckList = new ArrayList<>();
 			for(FeedDTO tmp : list) {
 				int feed_seq = tmp.getFeed_seq();
+				String tmpEmail = tmp.getEmail();
+				profile_imgList.add(service.getProfile_img(tmpEmail));
 				mediaList.add(service.getMediaList(feed_seq));
-				replyList.add(service.viewAllReply(feed_seq));
+//				replyList.add(service.viewAllReply(feed_seq));
 				likeCheckList.add(service.likeCheck(feed_seq, ((MemberDTO)session.getAttribute("loginInfo")).getEmail()));
 				bookmarkCheckList.add(service.bookmarkCheck(feed_seq, ((MemberDTO)session.getAttribute("loginInfo")).getEmail()));
 			}
+			
 			System.out.println(list);
+			System.out.println(profile_imgList);
 			System.out.println(mediaList);
 			System.out.println(replyList);
 			System.out.println(likeCheckList);
 			System.out.println(bookmarkCheckList);
+			
 			model.addAttribute("list", list);
+			model.addAttribute("profile_imgList",profile_imgList);
 			model.addAttribute("mediaList", mediaList);
 			model.addAttribute("replyList", replyList);
 			model.addAttribute("likeCheckList", likeCheckList);
@@ -371,7 +375,7 @@ public class FeedController {
 			for(FeedDTO tmp : list) {
 				int feed_seq = tmp.getFeed_seq();
 				mediaList.add(service.getMediaList(feed_seq));
-				replyList.add(service.viewAllReply(feed_seq));
+//				replyList.add(service.viewAllReply(feed_seq));
 				likeCheckList.add(service.likeCheck(feed_seq, ((MemberDTO)session.getAttribute("loginInfo")).getEmail()));
 				bookmarkCheckList.add(service.bookmarkCheck(feed_seq, ((MemberDTO)session.getAttribute("loginInfo")).getEmail()));
 			}
@@ -405,7 +409,7 @@ public class FeedController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "/feeds/modifyFeedView";
+		return "redirect:detailView?feed_seqS="+dto.getFeed_seq();
 	}
 	
 	@RequestMapping("/modifyFeedView")
@@ -546,18 +550,5 @@ public class FeedController {
 			e.printStackTrace();
 		}
 		return result+"";
-	}
-	@RequestMapping("/viewAllReply")
-	@ResponseBody
-	public String viewReply(int feed_seq,Model model) {
-		System.out.println("게시물 댓글 보기 도착!!");
-		System.out.println(feed_seq);
-		try {
-			List<ReplyDTO> list = service.viewAllReply(feed_seq);
-			model.addAttribute("list", list);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return "feeds/myFeed";
 	}
 }
