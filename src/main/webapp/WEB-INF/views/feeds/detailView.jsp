@@ -94,11 +94,7 @@ img {
 				    html += "</div>"
 				    html += "</div>"
 					$(".replyList").append(html);
-<<<<<<< HEAD
-				    $("#writeReply").html("");
-=======
 				   	$("#writeReply").html("");
->>>>>>> 76c147d62be0459bdbdf171f19bb328b88e50c20
 			})
 		})
 		//답글 이벤트 ------------------------------------------------------		
@@ -139,11 +135,7 @@ img {
 		$(document).on("click",".childRegisterReply",function(){
 			var reply_seq = $(this).val();      
 			var feed_seq = ${dto.feed_seq};
-<<<<<<< HEAD
-			var nickname = "${loginInfo.nickname}";
-=======
 			var nickname = '${loginInfo.nickname}';
->>>>>>> 76c147d62be0459bdbdf171f19bb328b88e50c20
 			var replyWriter = 
 				$("."+reply_seq+"").children(".replyWriter").html().split('님')[0];
 		   	var div = $(this).closest(".childReply");
