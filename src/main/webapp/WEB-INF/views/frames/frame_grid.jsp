@@ -17,8 +17,9 @@
 <link rel="stylesheet" href="/resources/css/nav.css">
 
 <style>
+
 html, body {
-	background-color: #1D4E89;
+	background-color: white;
 	margin: 0px;
 	padding: 0px;
 	height: 2000px;
@@ -29,7 +30,23 @@ html, body {
 }
 
 .mainBox {
-	height: 1000px;
+	margin-bottom: 20px;
+}
+
+.feedBox {
+	display: flex;
+	height: 100%;
+	margin-bottom: 20px;
+}
+
+.sectionImg {
+	border: 1px solid black;
+	width: 100%;
+	height: 100%;
+}
+
+.feed {
+	flex: 1;
 }
 
 .container-fluid {
@@ -39,32 +56,45 @@ html, body {
 	padding: 60px 20px 0;
 }
 
-.row {
-	margin: 0px;
-	padding: 0px;
-}
-
 .wrapper {
 	max-width: 1200px;
 	margin: auto;
 	height: 1200px;
 }
 
-.section {
-	border: 1px solid black;
-	height: 300px;
-	padding: 0px;
-	margin-bottom:20px;
+.left, .middle {
+	margin-right: 20px;
 }
 
-.left, .middle{
-	margin-right: 20px;
+.left, .middle, .right {
+	width: 33%;
 }
 /* 프로필 */
 .profile {
-	margin: auto;
-	margin-bottom: 44px;
+	position: relative;
+}
+
+.profileMessageLayout {
+	position: relative;
+}
+
+.report {
+	position: relative;
+	text-align: right;
+	border: none;
+	background-color: none;
+}
+
+.profileLayout {
 	display: flex;
+}
+
+.profileLayoutLeft, .profileLayoutRight {
+	margin: auto
+}
+
+.profileLayoutCenter {
+	position: relative;
 }
 
 .profileImageLayOut {
@@ -73,81 +103,117 @@ html, body {
 }
 
 .profileImageBox {
-	height: 150px;
-	width: 150px;
+	height: 300px;
+	width: 300px;
 	display: block;
-	margin-left: auto;
-	margin-right: auto;
 }
 
 .profileImg {
 	height: 100%;
 	width: 100%;
-	border-radius: 75px;
+	border-radius: 160px;
 	border: 1px solid black;
-	transition-duration: 500ms;
-}
-
-.profileImg:hover {
-	border: 1px solid pink;
-}
-
-.profileInfoLayOut {
-	width: 70%;
-}
-
-.userName {
-	font-size: 28px;
-	line-height: 32px;
-	font-weight: 600;
-}
-
-.myNames {
-	font-weight: 600;
-	font-size: 1.45rem;
-}
-
-.firstBox {
-	display: flex;
-	margin-bottom: 20px;
-}
-
-.friendSpan {
-	margin-left: 20px;
-}
-
-ul {
-	margin-bottom: 20px;
-	display: flex;
-	list-style: none;
-	padding: 0px;
-}
-
-li {
-	font-size: 16px;
-	margin-right: 40px;
 }
 
 .friendRequest {
-	border: 1px solid #3897f0;
-	padding: 0px 24px;
-	background-color: #3897f0;
-	color: #fff;
-	-webkit-appearance: none;
-	border-radius: 3px;
-	font-size: 14px;
-	font-weight: 600;
-	line-height: 26px;
+	width: 125px;
+	height: 125px;
+	border-radius: 80px;
+	border: 1px solid black;
+	background-color: white;
 }
 
-.btns {
-	margin-top: 7px;
+#profileEdit {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: -10px;
+    border-radius: 20px;
+    padding: 5px 20px;
+    font-weight: bold;
+    font-size: 13px;
+    background-color: white;
+}
+#reportBtn{
+    background-color: transparent;
+    border: none;
+}
+/*This is coded CSS rainbow*/
+
+#profileEdit:hover {
+-webkit-animation:rainbow 1s infinite;
+-ms-animation:rainbow 1s infinite;
+-o-animation:rainbow 1s infinite;
+animation:rainbow 1s infinite;
+}
+@-webkit-keyframes rainbow {
+0% {color: #ff0000;}
+10% {color: #ff8000;}
+20% {color: #ffff00;}
+30% {color: #80ff00;}
+40% {color: #00ff00;}
+50% {color: #00ff80;}
+60% {color: #00ffff;}
+70% {color: #0080ff;}
+80% {color: #0000ff;}
+90% {color: #8000ff;}
+100% {color: #ff0080;}
+}
+@-ms-keyframes rainbow {
+0% {color: #ff0000;}
+10% {color: #ff8000;}
+20% {color: #ffff00;}
+30% {color: #80ff00;}
+40% {color: #00ff00;}
+50% {color: #00ff80;}
+60% {color: #00ffff;}
+70% {color: #0080ff;}
+80% {color: #0000ff;}
+90% {color: #8000ff;}
+100% {color: #ff0080;}
+}
+@-o-keyframes rainbow {
+0% {color: #ff0000;}
+10% {color: #ff8000;}
+20% {color: #ffff00;}
+30% {color: #80ff00;}
+40% {color: #00ff00;}
+50% {color: #00ff80;}
+60% {color: #00ffff;}
+70% {color: #0080ff;}
+80% {color: #0000ff;}
+90% {color: #8000ff;}
+100% {color: #ff0080;}
+}
+@keyframes rainbow {
+0% {color: #ff0000;}
+10% {color: #ff8000;}
+20% {color: #ffff00;}
+30% {color: #80ff00;}
+40% {color: #00ff00;}
+50% {color: #00ff80;}
+60% {color: #00ffff;}
+70% {color: #0080ff;}
+80% {color: #0000ff;}
+90% {color: #8000ff;}
+100% {color: #ff0080;}
 }
 
-.sectionImg {
-	width: 100%;
-	height: 100%;
+.profileName {
+	text-align: center;
+	font-size: 70px;
+	font-weight: bold;
 }
+
+.profileMessageLayout {
+	margin-bottom: 50px;
+}
+
+.profileMessage {
+	text-align: center;
+}
+
+
 /* All Device */
 /* 모든 해상도를 위한 공통 코드를 작성한다. 모든 해상도에서 이 코드가 실행됨. */
 
@@ -165,17 +231,25 @@ li {
 @media all and (max-width:768px) {
 	/*     사용자 해상도가 768px 이하일 때 이 코드가 실행됨. 테블릿과 데스크톱의 공통 코드를 작성한다. */
 	.section {
-    	height: 150px;
-    	margin:0px;
+		height: 150px;
+		margin: 0px;
 		padding: 0px;
 	}
 }
 /* Tablet Device */
-@media all and (min-width:768px) and (max-width:1024px) {
+@media all and (max-width:1024px) {
 	/*     사용자 해상도가 768px 이상이고 1024px 이하일 때 이 코드가 실행됨. 아이패드 또는 비교적 작은 해상도의 랩탑이나 데스크톱에 대응하는 코드를 작성한다. */
 	.section {
-    	height: 250px;
+		height: 250px;
 		padding: 0px;
+	}	
+	.profileImageBox {
+		height: 200px;
+		width: 200px;
+	}
+	.friendRequest{
+		width: 80px;
+		height: 80px;
 	}
 }
 
@@ -192,87 +266,70 @@ li {
 	<jsp:include page="/resources/jsp/nav.jsp" />
 	<div class="container-fluid">
 		<div class="profile">
-			<div class="profileImageLayOut">
-				<div class="profileImageBox">
-					<img class="profileImg"
-						src="${pageContext.request.contextPath }/resources/images/sadCat.jpg"
-						alt="">
-				</div>
+			<div class="report">
+				<button type="button" id="reportBtn">ㆍㆍㆍ</button>
 			</div>
-			<div class="profileInfoLayOut">
-				<div class="firstBox">
-					<span class="userName">insta.pig</span>
-					<div class="btns">
-						<span class="friendSpan">
-							<button class="friendRequest">친구 추가</button>
-						</span> <span class="friendSpan">
-							<button class="friendRequest">친구 추가</button>
-						</span>
+			<div class="profileLayout">
+				<div class="profileLayoutLeft">
+					<button class="friendRequest">＋</button>
+					<div class="btnText">친구요청</div>
+				</div>
+				<div class="profileLayoutCenter">
+					<div class="profileImageBox">
+						<img class="profileImg"
+							src="${pageContext.request.contextPath }/resources/images/sadCat.jpg"
+							alt="">
+						<button id="profileEdit">프로필 편집</button>
 					</div>
 				</div>
-				<ul>
-					<li><span>게시물 <span>265</span></span></li>
-					<li><span>팔로워 <span>856</span></span></li>
-					<li><span>팔로우 <span>200</span></span></li>
-				</ul>
-				<div class="nameAndMsg">
-					<span class="myName">Anna</span><br> <span> 8만원의기적.행복콩이
-						부싼언니라인 이비<br> SNS마케팅그룹 부싼언니라인<br> 👑8만원으로 부업하기<br>
-						👑극초기부업!! 초기선점중요해요⏰<br> 👑든든한 부싼언니와 함께할 멤버모집중<br> .<br>
-						.<br> ⠀👇문의는 아래로👇<br> open.kakao.com/o/sG380kSb
-					</span>
+				<div class="profileLayoutRight">
+					<button class="friendRequest">＋</button>
+					<div class="btnText">친구요청</div>
+				</div>
+			</div>
+			<div class="profileMessageLayout">
+				<div class="profileName">KimKangSik</div>
+				<div class="profileMessage">
+					8만원의기적.행복콩이 부싼언니라인 이비<br> SNS마케팅그룹 부싼언니라인<br> 👑8만원으로
+					부업하기<br> 👑극초기부업!! 초기선점중요해요⏰<br> 👑든든한 부싼언니와 함께할 멤버모집중<br>
+					.<br> .<br> ⠀👇문의는 아래로👇<br>
+					open.kakao.com/o/sG380kSb
 				</div>
 			</div>
 		</div>
 		<div class="wrapper">
 			<div class="profile"></div>
 			<div class="mainBox">
-				<div class="row">
-					<div class="col section left">
+				<div class="feedBox">
+					<div class="left feed">
 						<img class="sectionImg"
 							src="${pageContext.request.contextPath }/resources/images/sadCat.jpg"
 							alt="">
 					</div>
-					<div class="col section middle">
+					<div class="middle feed">
 						<img class="sectionImg"
 							src="${pageContext.request.contextPath }/resources/images/sadCat.jpg"
 							alt="">
 					</div>
-					<div class="col section right">
-						<img class="sectionImg"
-							src="${pageContext.request.contextPath }/resources/images/sadCat.jpg"
-							alt="">
-					</div>
-				</div>
-				<div class="row">
-					<div class="col section left">
-						<img class="sectionImg"
-							src="${pageContext.request.contextPath }/resources/images/sadCat.jpg"
-							alt="">
-					</div>
-					<div class="col section middle">
-						<img class="sectionImg"
-							src="${pageContext.request.contextPath }/resources/images/sadCat.jpg"
-							alt="">
-					</div>
-					<div class="col section right">
+					<div class="right feed">
 						<img class="sectionImg"
 							src="${pageContext.request.contextPath }/resources/images/sadCat.jpg"
 							alt="">
 					</div>
 				</div>
-				<div class="row">
-					<div class="col section left">
+
+				<div class="feedBox">
+					<div class="left feed">
 						<img class="sectionImg"
 							src="${pageContext.request.contextPath }/resources/images/sadCat.jpg"
 							alt="">
 					</div>
-					<div class="col section middle">
+					<div class="middle feed">
 						<img class="sectionImg"
 							src="${pageContext.request.contextPath }/resources/images/sadCat.jpg"
 							alt="">
 					</div>
-					<div class="col section right">
+					<div class="right feed">
 						<img class="sectionImg"
 							src="${pageContext.request.contextPath }/resources/images/sadCat.jpg"
 							alt="">
