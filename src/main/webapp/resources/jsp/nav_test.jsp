@@ -95,7 +95,6 @@
     	         dataType : "json",
     	         contentType:"application/json"
     	     }).done(function(resp){
-    	    	 console.log(resp);
     	    	 if(resp != '0'){
     	    		 $("#alarm_exist").children().remove();
     	    		 $("#alarm_exist").append("<img id='notification' src='/resources/images/notification.png'>");
@@ -117,7 +116,6 @@
     	         dataType : "json",
     	         contentType:"application/json"
     	     }).done(function(resp){
-    	    	 console.log(resp);
     	    	 if(resp != '0'){
     	    		 $("#msg_exist").children().remove();
     	    		 $("#msg_exist").append("<img id='msg' src='/resources/images/msg.png'>");

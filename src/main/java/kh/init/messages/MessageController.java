@@ -75,7 +75,7 @@ public class MessageController {
 	@ResponseBody
 	public String checkNewMsg(String from_id) {
 		String result = Integer.toString(service.isNewMsg("123@123.123"));
-		System.out.println("알림 개수 : " + result);
+//		System.out.println("메시지 알림 개수 : " + result);
 		// 나중엔 이메일 부분 session id로 받을 것
 		return result;
 	}
