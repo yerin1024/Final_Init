@@ -44,6 +44,85 @@
 	height: 100%;
 }
 </style>
+<script>
+var page = 1;  //페이징과 같은 방식이라고 생각하면 된다. 
+
+$(function(){  //페이지가 로드되면 데이터를 가져오고 page를 증가시킨다.
+    if(page==1){ 
+     page++;
+    }else{
+    	getList(page);
+    	page++;
+    }
+}); 
+ 
+$(window).scroll(function(){   //스크롤이 최하단 으로 내려가면 리스트를 조회하고 page를 증가시킨다.
+	if($(window).scrollTop() >= $(document).height() - $(window).height()-5){
+	console.log("스크롤감지");
+		if(page==1){ 
+		     page++;
+		    }else{
+		    	getList(page);
+		    	page++;
+		    }
+     } 
+});
+
+function getList(page){
+    $.ajax({
+        type : 'POST',  
+        dataType : 'json', 
+        data : {"page" : page},
+        url : "/feed/wholeFeedAjax",
+        dataType:"JSON"
+    }).done(function(data){
+    	console.log("data.result : "+data.result);
+    	if(data.result=="false"){
+    		console.log("false");
+    		return 'false';
+    	}
+		var rnum = JSON.parse(data.rnum);
+		console.log("rnum : "+rnum);
+    	var list = JSON.parse(data.list);
+    	var cover = JSON.parse(data.cover);
+    	console.log(list);
+    	var i =Number(rnum[0]);
+    	console.log("rnum[0] : " +i);
+    	var end = (Number(i)+list.length);
+    	var index=0;
+    	var data = "";
+    	
+    	for(i; i<end; i++){
+			data = data + "<div class='col-4 feed'><a href='/feed/detailView?feed_seqS="+list[index].feed_seq+"'>"+cover[index]+"</a></div>";
+			console.log(data);
+			if(i%3==1){
+				data = "<div class='row' style='margin:0px'>" +data;
+			}
+			if(i%3==0){
+				data = data + "</div>";
+			}
+			
+			index++;
+    	}
+    	$("#feeds").append(data); 
+//			for(i; i<end; i++){
+//				console.log(i);
+//		    	var data = $("<div class='col-4 feed'></div>");
+//		    	var a = $("<a href='/feed/detailView?feed_seqS="+list[index].feed_seq+"'>");
+//		    	a.append(cover[index]);
+//		    	data.append(a);
+//		    	if(i%3==1){
+//		    		data.before("<div class='row' style='margin:0px'>")
+//		    		console.log(data);
+//		    	}else if(i%3==0){
+//		    		data.after("</div>");
+//		    	}
+//		    	$("#feeds").append(data);
+//		    	index++;
+//			}
+	})
+}
+</script>
 </head>
 <body>
 	<div id="wrapper">

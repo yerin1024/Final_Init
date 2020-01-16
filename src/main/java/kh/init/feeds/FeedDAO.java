@@ -22,15 +22,47 @@ public class FeedDAO {
 	}
 
 
-	public List<FeedDTO> getMyFeed(String email) throws Exception{
-		List<FeedDTO> list = jdbc.selectList("Feed.getMyFeed", email);
-		return list;
+	
+	public Map<String, Object> getMyFeed(String email, int startNum, int endNum) throws Exception{
+		Map<String, String> param = new HashMap<>();
+		param.put("email", email);
+		param.put("startNum", startNum+"");
+		param.put("endNum", endNum+"");
+		List<FeedDTO> list = jdbc.selectList("Feed.getMyFeed", param);
+		List<Integer> rnum = jdbc.selectList("Feed.getMyFeedRnum", param);
+		Map<String, Object> result = new HashMap<>();
+		result.put("list", list);
+		result.put("rnum", rnum);
+		return result;
+	}
+	
+	public int getMyFeedCount(String email) throws Exception{
+		int count = jdbc.selectOne("Feed.getMyFeedCount", email);
+		return count;
+
 	}
 
 	//wholeFeed에서 해시태그 검색 또는 그냥 기본wholeFeed뽑을때 
-	public List<FeedDTO> selectAll(String keyword) throws Exception{
-		List<FeedDTO> list = jdbc.selectList("Feed.selectAll", keyword);
-		return list;
+	public Map<String, Object> selectAll(String keyword,  int startNum, int endNum) throws Exception{
+		Map<String, String> param = new HashMap<>();
+		param.put("keyword", keyword);
+		param.put("startNum", startNum+"");
+		param.put("endNum", endNum+"");
+		System.out.println("keyword : "+keyword);
+		System.out.println("dao sNum : "+startNum);
+		System.out.println("dao eNum : "+endNum);
+		List<FeedDTO> list = jdbc.selectList("Feed.selectAll", param);
+		System.out.println("dao list : "+list.toString());
+		List<Integer> rnum = jdbc.selectList("Feed.selectAllRnum", param);
+		Map<String, Object> result = new HashMap<>();
+		result.put("list", list);
+		result.put("rnum", rnum);
+		return result;
+	}
+	
+	public int selectAllCount(String keyword) throws Exception{
+		int result = jdbc.selectOne("Feed.selectAllCount", keyword);
+		return result;
 	}
 
 	//wholeFeed에서 친구검색했을 경우
@@ -91,6 +123,8 @@ public class FeedDAO {
 		int result = jdbc.selectOne("Feed.getFriendFeedCount", email);
 		return result;
 	}
+	
+	
 	public List<FeedDTO> getFriendFeed(String email, int startNum, int endNum) throws Exception{
 		Map<String, String> param = new HashMap<>();
 		param.put("email", email);
