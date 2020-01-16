@@ -15,14 +15,16 @@
               <a class="nav-link active" href="${pageContext.request.contextPath}/feed/wholeFeed" style="padding-top: 12px;"><img id="total_feed" src="/resources/images/friends.png"></a>
             </li>
             <li class="nav-item a_ac1_nav" id="a_ac1_1">
-              <a class="nav-link" style="padding-top: 15px;"><img id="notification" src="/resources/images/notification.png"></a>
+              <a class="nav-link" id="alarm_exist" style="padding-top: 15px;">
+              <img id="notification" src="/resources/images/notification.png"></a>
             </li>
 			
-            <li class="nav-item">
-              <a class="nav-link" href="${pageContext.request.contextPath}/message/messageMain" style="padding-top: 15px;"><img id="msg" src="/resources/images/msg.png"></a>
+            <li class="nav-item ac1_nav" id="ac1_1">
+              <a class="nav-link" id="msg_exist" style="padding-top: 15px;">
+              <img id="msg" src="/resources/images/msg.png"></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="${pageContext.request.contextPath}/feed/myFeed?email=${loginInfo.email}" style="padding-top: 12px;"><img id="my_feed" src="/resources/images/user.png"></a>
+              <a class="nav-link" href="${pageContext.request.contextPath}/feed/myFeed" style="padding-top: 12px;"><img id="my_feed" src="/resources/images/user.png"></a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="${pageContext.request.contextPath}/member/logout.do" style="padding-top: 12px;"><img id="logout" src="/resources/images/logout.png"></a>
@@ -78,7 +80,59 @@
     });
      $("#logout").mouseleave(function(){
          $("#logout").attr("src", $("#logout").attr("src").replace("/resources/images/logout3.png", "/resources/images/logout2.png"));  
-    }); 
-    
+    });
+     
+     
+     
+     $(function() {
+    	 timer = setInterval(function() {
+    		 console.log("타이머 시작");
+
+    	     $.ajax ({
+    	         url : "${pageContext.request.contextPath}/alarm/isNewAlarm.al",
+    	         method : "post",
+    	         cache : false,
+    	         dataType : "json",
+    	         contentType:"application/json"
+    	     }).done(function(resp){
+    	    	 console.log(resp);
+    	    	 if(resp != '0'){
+    	    		 $("#alarm_exist").children().remove();
+    	    		 $("#alarm_exist").append("<img id='notification' src='/resources/images/notification.png'>");
+    	    		 $("#alarm_exist").append("<img id='redCircle1' src='/resources/images/red_circle.png'>");
+    	    	 }else if(resp == '0'){
+    	    		 $("#alarm_exist").children().remove();
+    	    		 $("#alarm_exist").append("<img id='notification' src='/resources/images/notification.png'>");
+    	    	 }
+    	    	 
+    	     }).fail(function(a,b,c){
+    	    	 console.log(a); console.log(b); console.log(c);
+    	     })
+    	     
+    	     
+    	     $.ajax ({
+    	         url : "${pageContext.request.contextPath}/message/isNewMsg.msg",
+    	         method : "post",
+    	         cache : false,
+    	         dataType : "json",
+    	         contentType:"application/json"
+    	     }).done(function(resp){
+    	    	 console.log(resp);
+    	    	 if(resp != '0'){
+    	    		 $("#msg_exist").children().remove();
+    	    		 $("#msg_exist").append("<img id='msg' src='/resources/images/msg.png'>");
+    	    		 $("#msg_exist").append("<img id='redCircle2' src='/resources/images/red_circle.png'>");
+    	    	 }else if(resp == '0'){
+    	    		 $("#msg_exist").children().remove();
+    	    		 $("#msg_exist").append("<img id='msg' src='/resources/images/msg.png'>");
+    	    		 
+    	    	 }
+    	    	 
+    	     }).fail(function(a,b,c){
+    	    	 console.log(a); console.log(b); console.log(c);
+    	     })
+    	     
+    	     }, 3000);
+    	 });
      
     </script>

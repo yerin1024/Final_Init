@@ -11,7 +11,7 @@ html, body {
 	padding: 0px;
 	position: fixed;
 	z-index: 999999999999;
-	width:100%;
+	width: 100%;
 }
 
 .header {
@@ -64,16 +64,20 @@ html, body {
 	max-width: 1400px;
 	margin: auto;
 }
-.nav-link{
-    position: relative;
+
+/* ------------------------------------------- */
+.nav-link {
+	position: relative;
 }
-#redCircle1{
-    position: absolute;
-    top: 13px; right: 9px;
-    
+
+#redCircle1 {
+	position: absolute;
+	top: 13px;
+	right: 9px;
 }
-#redCircle2{
-    position: absolute;
-    top: 14px; right: 2px;
-    
+
+#redCircle2 {
+	position: absolute;
+	top: 14px;
+	right: 2px;
 }

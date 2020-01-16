@@ -12,33 +12,45 @@
 <script src="https://code.jquery.com/jquery-3.4.1.js"
 	type="text/javascript"></script>
 <link rel="stylesheet" href="/resources/css/nav.css">
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-	integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
-	crossorigin="anonymous">
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 
 <script
-	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-	integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-	crossorigin="anonymous"></script>
+	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
 <script
-	src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-	integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-	crossorigin="anonymous"></script>
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
-<script>
-	$(function() {
-		$("#registerFeed").on("click", function() {
-			location.href = "writeFeed";
-		})
-	})
-</script>
 <style>
-#feedList {
-	border: 2px solid red;
-}
 
-html, body {
+	body{
+		background-color:white;
+	}
+	.feed {
+		width: 20vw;
+		height: 20vw;
+		min-height: 150px;
+		min-width: 150px;
+		border: 1px solid red;
+	}
+	
+	.cover {
+		width: 100%;
+		height: 100%;
+	}
+	#contents {
+	border: 2px solid black;
+	width: 60vw;
+	min-width: 470px;
+	margin: auto;
+	text-align: center;
+	}
+	
+
+	#feedList{
+		border:2px solid red;
+	}
+	
+	html, body {
 	background-color: #1D4E89;
 	margin: 0px;
 	padding: 0px;
@@ -52,8 +64,8 @@ html, body {
 .container-fluid {
 	position: relative;
 	top: 62px;
-    max-width: 935px;
-    padding: 60px 20px 0;
+	z-index: -1;
+
 }
 
 .row {
@@ -84,6 +96,7 @@ html, body {
 
 .profile {
 	border: 1px solid black;
+
 	height: 500px;
 }
 
@@ -92,6 +105,8 @@ html, body {
 }
 .profileOutline{
 	border:1px solid black;
+	height: 500px;
+
 }
 
 /* All Device */
@@ -131,17 +146,117 @@ html, body {
 	}
 }
 </style>
+<script>
+
+	$(function() {
+		$("#registerFeed").on("click", function() {
+			location.href = "writeFeed";
+		})
+	})
+	
+	
+	var page = 1;  //페이징과 같은 방식이라고 생각하면 된다. 
+	
+	$(function(){  //페이지가 로드되면 데이터를 가져오고 page를 증가시킨다.
+	    if(page==1){ 
+	     page++;
+	    }else{
+	    	getList(page);
+	    	page++;
+	    }
+	}); 
+	 
+	$(window).scroll(function(){   //스크롤이 최하단 으로 내려가면 리스트를 조회하고 page를 증가시킨다.
+		if($(window).scrollTop() >= $(document).height() - $(window).height()-5){
+		console.log("스크롤감지");
+			if(page==1){ 
+			     page++;
+			    }else{
+			    	getList(page);
+			    	page++;
+			    }
+	     } 
+	});
+ 
+	function getList(page){
+	    $.ajax({
+	        type : 'POST',  
+	        dataType : 'json', 
+	        data : {"page" : page},
+	        url : "/feed/myFeedAjax",
+	        dataType:"JSON"
+	    }).done(function(data){
+	    	console.log("data.result : "+data.result);
+	    	if(data.result=="false"){
+	    		console.log("false");
+	    		return 'false';
+	    	}
+			var rnum = JSON.parse(data.rnum);
+			console.log("rnum : "+rnum);
+	    	var list = JSON.parse(data.list);
+	    	var cover = JSON.parse(data.cover);
+	    	console.log(list);
+	    	var i =Number(rnum[0]);
+	    	console.log("rnum[0] : " +i);
+	    	var end = (Number(i)+list.length);
+	    	var index=0;
+	    	var data = "";
+	    	
+	    	for(i; i<end; i++){
+				data = data + "<div class='col-4 feed'><a href='/feed/detailView?feed_seqS="+list[index].feed_seq+"'>"+cover[index]+"</a></div>";
+				console.log(data);
+				if(i%3==1){
+					data = "<div class='row' style='margin:0px'>" +data;
+				}
+				if(i%3==0){
+					data = data + "</div>";
+				}
+				
+				index++;
+	    	}
+	    	$("#feeds").append(data); 
+// 			for(i; i<end; i++){
+// 				console.log(i);
+// 		    	var data = $("<div class='col-4 feed'></div>");
+// 		    	var a = $("<a href='/feed/detailView?feed_seqS="+list[index].feed_seq+"'>");
+// 		    	a.append(cover[index]);
+// 		    	data.append(a);
+// 		    	if(i%3==1){
+// 		    		data.before("<div class='row' style='margin:0px'>")
+// 		    		console.log(data);
+// 		    	}else if(i%3==0){
+// 		    		data.after("</div>");
+// 		    	}
+// 		    	$("#feeds").append(data);
+// 		    	index++;
+// 			}
+		})
+	}
+		
+</script>
 </head>
 
 <body>
 	<jsp:include page="/resources/jsp/nav.jsp" />
 	<div class="container-fluid">
 		<div class="wrapper">
+          ${mvo.email}
 			<div class="profile" style="text-align:center; margin:auto;">
 				
 				<c:choose>
 
-					<c:when test="${myId ne dto.email}">
+					<c:when test="${loginInfo.email ne mvo.email}">
+						
+						<div class=verticalProfile style="width: 30%; margin-top: 3%; ">
+							<label style="color: white;"></label> <br> <img
+								src="${pageContext.request.contextPath}/resources/images/default_profile_img.png"
+								id="setProfile" style="width: 80%; border-radius: 50%;"> <br>
+
+
+							<label style="color: black; font-size: 40px; font-weight: bold;">${mvo.nickname }</label><br>
+							<label style="color: black;">${mvo.profile_msg}</label><br>
+							
+						</div>
 						<!-- 친구요청 모달을 열기 위한 버튼 -->
 						 	
 						<button type="button" class="btn btn-primary btn-lg"
@@ -163,8 +278,8 @@ html, body {
 								id="setProfile" style="width: 80%; border-radius: 50%;"> <br>
 
 
-							<label style="color: black; font-size: 40px; font-weight: bold;">${dto.nickname }</label><br>
-							<label style="color: black;">${dto.profile_msg}</label><br>
+							<label style="color: black; font-size: 40px; font-weight: bold;">${mvo.nickname }</label><br>
+							<label style="color: black;">${mvo.profile_msg}</label><br>
 							<button type="button" id="changeProfile">프로필 편집</button>
 						</div>
 						<div class=verticalProfile style="width: 15%; margin-top: 10%;">
@@ -180,6 +295,7 @@ html, body {
 
 				</c:choose>
 				
+
 			</div>
 			<div class="mainBox">
 				<div class="row">
@@ -196,10 +312,13 @@ html, body {
 			</div>
 		</div>
 	</div>
-	<div id="wrapper">
+
+	<div id="contents">
+
 
 		<br>
 		<button id="registerFeed">게시물 등록</button>
+
 
 		<div id="feedList">
 			<c:choose>
@@ -221,6 +340,28 @@ html, body {
 							</tr>
 						</c:forEach>
 					</table>
+					</c:otherwise>
+</c:choose>
+		<div id="myFeed">
+			<c:choose>
+				<c:when test="${fn:length(list) ==0}">
+				게시물이 없습니다.
+				</c:when>
+				<c:otherwise>
+				<div id="feeds">
+						<c:forEach items="${list }" var="feed" varStatus="status">
+							<c:if test="${status.count mod 3==1}">
+								<div class="row" style="margin: 0px">
+							</c:if>
+							<div class="col-4 feed">
+								<a href="/feed/detailView?feed_seqS=${feed.feed_seq }">${cover[status.count-1] }</a>
+							</div>
+							<c:if test="${status.count mod 3==0}">
+								</div>
+							</c:if>
+						</c:forEach>
+					</div>
+
 				</c:otherwise>
 			</c:choose>
 		</div>
@@ -322,11 +463,13 @@ html, body {
 												for (var j = 0; j < waitlist.length; j++) {
 													$('.modal-body2')
 															.append(
+
 																	"<div class=frInfo><a href='${pageContext.request.contextPath}/feed/yourFeed?email="
 																			+ waitlist[j].email
 																			+ "'>"
 																			+ waitlist[j].email
 																			+ " </a> <button type=button class=frInfo id=acceptfr name="+waitlist[j].email+">친구 추가</button><button type=button class=frInfo id=cancelfr name="+waitlist[j].email+">취소</button></div>");
+
 												}
 											}
 											if (res.list != null) {
@@ -334,11 +477,13 @@ html, body {
 												for (var j = 0; j < list.length; j++) {
 													$('.modal-body2')
 															.append(
+
 																	"<div class=frInfo><a href='${pageContext.request.contextPath}/feed/yourFeed?email="
 																			+ list[j].email
 																			+ "'>"
 																			+ list[j].email
 																			+ " </a> <button type=button class=frInfo id=cutfr name="+list[j].email+">친구 끊기</button></div>");
+
 												}
 											}
 											// get the ajax response data
@@ -472,12 +617,12 @@ html, body {
 																					for (var j = 0; j < waitlist.length; j++) {
 																						$(
 																								'.modal-body2')
-																								.append(
-																										"<div class=frInfo id=wfrNum"+j+"><a href='${pageContext.request.contextPath}/feed/yourFeed?email="
+																								.append("<div class=frInfo id=wfrNum"+j+"><a href='${pageContext.request.contextPath}/feed/yourFeed?email="
 																												+ waitlist[j].email
 																												+ "'>"
 																												+ waitlist[j].email
 																												+ " </a> <button type=button class=frInfo id=acceptfr name="+waitlist[j].email+">친구 추가</button><button type=button class=frInfo id=cancelfr name="+waitlist[j].email+">취소</button></div>");
+
 																					}
 																				}
 																				if (res.list != null) {
@@ -487,11 +632,13 @@ html, body {
 																						$(
 																								'.modal-body2')
 																								.append(
+
 																										"<div class=frInfo id=frNum"+j+"><a href='${pageContext.request.contextPath}/feed/yourFeed?email="
 																												+ list[j].email
 																												+ "'>"
 																												+ list[j].email
 																												+ " </a> <button type=button class=frInfo id=cutfr name="+list[j].email+">친구 끊기</button></div>");
+
 																					}
 																				}
 																				// get the ajax response data

@@ -18,7 +18,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kh.init.configuration.Configuration;
 import kh.init.configuration.Utils;
-import kh.init.members.MemberDTO;
 
 @Service
 public class MemberService {
@@ -50,7 +49,7 @@ public class MemberService {
 	// 비밀번호 찾기 이메일 임시비밀번호 전송
 	@Transactional("txManager")
 	public String findPw(String email) {
-		if(dao.checkEmail(email) > 1) { // 이메일 유효 여부 확인
+		if(dao.checkEmail(email) < 1) { // 이메일 유효 여부 확인
 			return "invalid";
 		}
 		// 자바 메일 
