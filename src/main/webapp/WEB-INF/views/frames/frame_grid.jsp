@@ -278,6 +278,18 @@ li {
 							alt="">
 					</div>
 				</div>
+				<div class="row">
+					<div class="col section left">
+						<img class="sectionImg"
+							src="${pageContext.request.contextPath }/resources/images/sadCat.jpg"
+							alt="">
+					</div>
+					<div class="col section middle">
+						<img class="sectionImg"
+							src="${pageContext.request.contextPath }/resources/images/sadCat.jpg"
+							alt="">
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>

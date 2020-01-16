@@ -349,7 +349,7 @@ img {
 			</div>
 		</div>
 		<div class="replyList">
-			<c:forEach items="${parentReply }" var="parentReply">
+			<c:forEach items="${parentReply }" var="parentReply"   varStatus="status">
 				<div class="row replyFeed ${parentReply.reply_seq }">
 					<div class="col-2 reply replyWriter" style="text-align: center">${parentReply.nickname }님의
 						댓글</div>
@@ -366,12 +366,10 @@ img {
 						<button type="button" class="replyModifyCancel"  value="${parentReply.reply_seq }" style="width: 50%; display:none">취소</button>
 					</div>
 				</div>	
-						<c:forEach items="${childReply }" var="childReply"> 
-						${parentReply.reply_seq}<br>
-						${childReply.parent}<br>
-						${childReply.contents}<br>
+						<c:forEach items="${childReply[status.count-1] }" var="childReply"> 
 							<c:choose>
-								<c:when test="${childReply.parent == parentReply.reply_seq }">
+								<c:when test="${childReply.parent==parentReply}">
+								같습니다.
 								<div class="row replyVowel ${childReply.parent } ${parentReply.reply_seq}">
 									<div class="col-1 reply replyWriter" style="text-align: center">└──</div>
 									<div class="col-1 reply replyWriter" style="text-align: center">${childReply.nickname }님의 댓글</div>
@@ -406,7 +404,7 @@ img {
 						<button type="button" id="replyBtn" style="width: 30%">등록</button>
 					</div>
 				</div>
-		</div>
+			</div>
 	</div>
 
 
