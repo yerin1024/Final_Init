@@ -69,12 +69,20 @@
         background-color: #0f4c81;
         color: #fffefc;
     }
+    
+    #tab1_kakaoLoginBtn {
+    	width: 400px;
+        height: 50px;
+        margin: 10px;
+        border: none;
+        border-radius: 8px;
+    }
 
     #tab1_saveIdCheck {
         margin: 10px;
         padding: 10px;
     }
-
+    
     .tab1_footer {
         margin-top: 10px;
     }
@@ -155,10 +163,6 @@
         overflow:hidden;
     }
 
-    /* font-family: 'Do Hyeon', sans-serif;
-font-family: 'Noto Serif KR', serif;
-font-family: 'Noto Sans KR', sans-serif;
-font-family: 'Nanum Gothic Coding', monospace; */
 </style>
 
 <body>
@@ -184,25 +188,22 @@ font-family: 'Nanum Gothic Coding', monospace; */
                     <div>
                         <!--tab 컨텐츠 start-->
                         <div class="tab-content">
-
                             <div role="tabpanel" class="tab-pane active" id="main">
                                 <div class="tab1_container">
-                                    <form action="${pageContext.request.contextPath}/member/loginProc.do" method="post"
-                                        id="tab1_loginForm">
+                                    <form action="${pageContext.request.contextPath}/member/loginProc.do" method="post" id="tab1_loginForm">
                                         <div class="tab1_loginContainer">
                                             <div class="tab1_body">
-                                                <input type="text" class="userInput" id="tab1_email" name="email"
-                                                    placeholder="아이디 입력"><br>
-                                                <input type="password" class="userInput" id="tab1_pw" name="pw"
-                                                    placeholder="비밀번호 입력"><br>
-                                                <button type="button" id="tab1_loginBtn"
-                                                    onclick="toLogin();">로그인</button>
-                                                <br>
-                                                <div class="saveId">
-                                                    <input type="checkbox" id="tab1_saveIdCheck"
-                                                        onChange="toCheckCbox();">
-                                                    <span>아이디 저장</span>
-                                                </div>
+                                                <input type="text" class="userInput" id="tab1_email" name="email" placeholder="아이디 입력"><br>
+                                                <input type="password" class="userInput" id="tab1_pw" name="pw" placeholder="비밀번호 입력"><br>
+                                                <button type="button" id="tab1_loginBtn" onclick="toLogin();">로그인</button><br>
+                                                <a href="https://kauth.kakao.com/oauth/authorize?client_id=4f039db4ba705950489f1f29405d6c6c
+&redirect_uri=http://localhost/member/kakaoLoginProc&response_type=code">
+                                                	<img src="resources/images/kakao_login_btn.png" id="tab1_kakaoLoginBtn"><br>
+	                                            </a>
+	                                            <div class="saveId">
+	                                            	<input type="checkbox" id="tab1_saveIdCheck" onChange="toCheckCbox();">
+	                                                <span>아이디 저장</span>
+	                                            </div>
                                             </div>
                                             <div class="tab1_footer">
                                                 <a href="#findPw" id="goFindPW">비밀번호 찾기 </a>
@@ -213,14 +214,12 @@ font-family: 'Nanum Gothic Coding', monospace; */
                                     </form>
                                 </div>
                             </div>
-
                             <div role="tabpanel" class="tab-pane" id="findPw">
                                 <div class="tab2_container">
                                     <div class="tab2_body">
                                         <label>비밀번호 찾기</label><br>
                                         <p>비밀번호를 찾고자 하는 이메일주소를 입력해 주세요.</p>
-                                        <input type="text" class="userInput" id="tab2_email" name="email"
-                                            placeholder="Init 이메일"><br>
+                                        <input type="text" class="userInput" id="tab2_email" name="email" placeholder="Init 이메일"><br>
                                         <button type="button" id="tab2_previous">이전</button>
                                         <button type="button" id="tab2_next">다음</button>
                                     </div>
@@ -231,11 +230,11 @@ font-family: 'Nanum Gothic Coding', monospace; */
                                 <div class="tab3_container">
                                     <div class="tab3_body">
                                         <div class="tab3_imgBox">
-                                            <img id="tab3_emailImg" src="email.png">
+                                            <img id="tab3_emailImg" src="${pageContext.request.contextPath}/resources/images/email.png">
                                         </div>
                                         <div class="tab3_textBox">
                                             <span id="tab3_userEmail"></span><br>
-                                            임시비밀번호 발송이 완료되었습니다.
+                                           	<span>임시비밀번호 발송이 완료되었습니다.</span>
                                         </div>
                                         <div class="tab3_btnBox">
                                             <button type="button" id="tab3_goMain">확인</button>
@@ -253,13 +252,10 @@ font-family: 'Nanum Gothic Coding', monospace; */
                                         </div>
                                         <div class="tab4_body">
                                             <!-- 이메일 -->
-                                            <label>이메일</label><span class="required">*</span><br> <input type="text"
-                                                class="userInput" id="tab4_email1"> <span
-                                                style="font-weight: bold;">@</span>
-                                            <input type="text" class="userInput" id="tab4_email2" list="tab4_emailSelect"
-                                                placeholder="직접 입력">
-                                            <input type="text" id="tab4_email" name="email" hidden
-                                                class="userInput">
+                                            <label>이메일</label><span class="required">*</span><br> <input type="text" class="userInput" id="tab4_email1"> 
+                                                <span style="font-weight: bold;">@</span>
+                                            <input type="text" class="userInput" id="tab4_email2" list="tab4_emailSelect" placeholder="직접 입력">
+                                            <input type="text" id="tab4_email" name="email" class="userInput" hidden>
                                             <datalist id="tab4_emailSelect">
                                                 <option value="naver.com">naver.com</option>
                                                 <option value="daum.net">daum.net</option>
@@ -273,18 +269,15 @@ font-family: 'Nanum Gothic Coding', monospace; */
                                             <br>
                                             <p class="hiddenResp" id="hiddenRespEmail" hidden></p>
                                             <!-- 비밀번호 -->
-                                            <label>비밀번호</label><span class="required">*</span><br> <input
-                                                type="password" class="userInput" id="tab4_pw" name="pw" maxlength="12"
-                                                placeholder="비밀번호(영문 대소문자, 숫자 6~15자리)">
+                                            <label>비밀번호</label><span class="required">*</span><br> 
+                                            <input type="password" class="userInput" id="tab4_pw" name="pw" maxlength="12" placeholder="비밀번호(영문 대소문자, 숫자 6~15자리)">
                                             <!-- 비밀번호 확인 -->
-                                            <input type="password" class="userInput" id="tab4_confirmPw" maxlength="12"
-                                                placeholder="비밀번호 재입력"><br>
+                                            <input type="password" class="userInput" id="tab4_confirmPw" maxlength="12" placeholder="비밀번호 재입력"><br>
                                             <p class="advise" id="advisePw" readonly></p>
                                             <p class="hiddenResp" id="hiddenRespPw" hidden></p>
                                             <!-- 이름 -->
-                                            <label>이름</label><span class="required">*</span class="required"><br> <input
-                                                type="text" class="userInput" id="tab4_name" name="name"
-                                                maxlength="70">
+                                            <label>이름</label><span class="required">*</span class="required"><br>
+                                            <input type="text" class="userInput" id="tab4_name" name="name" maxlength="70">
                                             <p class="advise" id="adviseName" readonly></p>
                                             <p class="hiddenResp" id="hiddenRespName" hidden></p>
                                             <!-- 닉네임 -->
@@ -313,21 +306,17 @@ font-family: 'Nanum Gothic Coding', monospace; */
                                                 <option value="017">017</option>
                                                 <option value="018">018</option>
                                                 <option value="019">019</option>
-                                            </select> - <input type="text" id="tab4_phone2" maxlength="4"
-                                                style="text-align:center;width:80px;"> -
-                                            <input type="text" id="tab4_phone3" maxlength="4"
-                                                style="text-align:center;width:80px;">
+                                            </select> - 
+                                            <input type="text" id="tab4_phone2" maxlength="4" style="text-align:center;width:80px;"> - 
+                                            <input type="text" id="tab4_phone3" maxlength="4" style="text-align:center;width:80px;">
                                             <input type="text" id="tab4_phone" name="phone" maxlength="11" hidden>
                                             <p class="advise" id="advisePhone" readonly></p>
                                             <p class="hiddenResp" id="hiddenRespPhone" hidden></p>
                                             <!-- 인증번호 -->
-                                            <input type="text" id="tab4_verifyCode" name="verifyCode" placeholder="인증번호 입력"
-                                                maxlength="6" style="text-align:center;">
-                                            <button type="button" id="tab4_sendCode" onclick="checkOverlap();">인증번호
-                                                전송</button>
+                                            <input type="text" id="tab4_verifyCode" name="verifyCode" placeholder="인증번호 입력" maxlength="6" style="text-align:center;">
+                                            <button type="button" id="tab4_sendCode" onclick="checkOverlap();">인증번호 전송</button>
                                             <span id="tab4_timer" readonly></span>
-                                            <button type="button" id="tab4_resendCode" onclick="checkOverlap();" hidden>인증번호
-                                                재전송</button>
+                                            <button type="button" id="tab4_resendCode" onclick="checkOverlap();" hidden>인증번호 재전송</button>
                                             <br>
                                             <button type="button" id="tab4_confirmVerifyCode" onclick="confirmVerifCode();"
                                                 hidden>인증번호 확인</button>
@@ -336,9 +325,8 @@ font-family: 'Nanum Gothic Coding', monospace; */
                                             <p class="hiddenResp" id="hiddenRespVerifCode" hidden></p>
                                             <!-- 프로필 사진 -->
                                             <label>프로필 사진</label><br>
-                                            <p class="advise" id="adviseProfile" readonly>*프로필 사진 미등록시
-                                                기본이미지로 등록됩니다.</p>
-                                            <img src="resources/default_profile_img.png" id="tab4_setProfile" style="width: 50px;">
+                                            <p class="advise" id="adviseProfile" readonly>*프로필 사진 미등록시 기본이미지로 등록됩니다.</p>
+                                            <img src="resources/images/default_profile_img.png" id="tab4_setProfile" style="width: 50px;">
                                             <button type="button" id="tab4_deleteProfile">X</button>
                                             <input type="file" id="tab4_profileImg" name="profileImg"><br>
                                         </div>
@@ -384,8 +372,7 @@ font-family: 'Nanum Gothic Coding', monospace; */
         window.onload = function () {
             toCheckCookie();
             $("#indexModal").modal({backdrop: 'static', keyboard: false, show: true});//일단 예제로 띄우기
-            doc.getElementById("mainTab").click(); //예제 연습
-            
+            doc.getElementById("mainTab").click(); //예제 연습            
         }
 
         //tab1_로그인 start

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -32,6 +33,24 @@ public class MemberController {
 		}else {
 			return "main";
 		}
+	}
+	
+	// 로그인	유효성 검사
+	@RequestMapping("/kakaoLoginProc")
+	public String toKaKaoLogin(@RequestParam("code") String code) {
+		System.out.println("code : " + code);
+		String authorized_code = service.getAccessToken(code);
+		System.out.println("authorized_code : " + authorized_code);
+//		if(email != null && pw != null) {
+//			System.out.println("로그인 시도 : " + email);
+//		}
+//		if(service.isLoginOk(email, pw) > 0) { // 로그인 허가
+//			session.setAttribute("loginInfo", service.getMemberDTO(email)); // 세션 로그인정보 담기
+//			return "redirect:/feed/getFriendFeed";
+//		}else {
+//			return "main";
+//		}
+		return "main";
 	}
 
 	// 로그아웃 세션 삭제
