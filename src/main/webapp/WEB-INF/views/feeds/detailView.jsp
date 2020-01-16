@@ -70,7 +70,8 @@ img {
 		$("#replyBtn").on("click", function() {	        
 			var feed_seq = ${dto.feed_seq};
 			var contents = $("#writeReply").html();
-			var nickname = '${loginInfo}';
+			var nickname = "${loginInfo.nickname}";
+			console.log(nickname);
 			$.ajax({
 				type : "POST",
 				url : "${pageContext.request.contextPath }/feed/registerReply",
@@ -92,7 +93,7 @@ img {
 				    html += "</div>"
 				    html += "</div>"
 					$(".replyList").append(html);
-				    $("#replyContents").val("");
+				    $("#writeReply").html("");
 			})
 		})
 		
@@ -134,7 +135,7 @@ img {
 		$(document).on("click",".childRegisterReply",function(){
 			var reply_seq = $(this).val();      
 			var feed_seq = ${dto.feed_seq};
-			var nickname = '${loginInfo}';
+			var nickname = "${loginInfo.nickname}";
 			var replyWriter = 
 				$("."+reply_seq+"").children(".replyWriter").html().split('님')[0];
 		   	var div = $(this).closest(".childReply");
@@ -371,7 +372,7 @@ img {
 			</div>
 			<div class="replyWindow">
 				<div class="row">
-					<div class="col-2 reply" style="text-align: center; padding:15px;">${loginInfo}님의  <!-- 나중에 세션값으로 대체! -->
+					<div class="col-2 reply" style="text-align: center; padding:15px;">${loginInfo.nickname}님의  <!-- 나중에 세션값으로 대체! -->
 						댓글</div>
 					<div class="col-9 reply">
 						<div class="writeReply" id="writeReply" contenteditable="true"></div>

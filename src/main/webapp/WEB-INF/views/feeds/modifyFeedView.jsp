@@ -92,8 +92,7 @@
 					
 				</div>
 
-				<c:choose>
-<!-- 				media(사진이나 영상)이 있을 경우 캐러셀을 이용해서 띄어줌 -->
+				<c:choose>             
 					<c:when test="${fn:length(media) >0}">
 						<div class="row media">
 							<div id="carouselExampleIndicators" class="carousel slide"

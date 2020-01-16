@@ -55,22 +55,34 @@ public class FeedController {
 	public String myFeedAjax(String page) {
 		System.out.println("myFeedAjax 도착");
 		int ipage = Integer.parseInt(page);
-		List<FeedDTO> list = null;
+		System.out.println("ipage :  "+ipage);
+		List<FeedDTO> list = new ArrayList<>();
+		List<Integer> rnum = new ArrayList<>();
 		List<String> cover = new ArrayList<>();
 		String email = ((MemberDTO)session.getAttribute("loginInfo")).getEmail();
 		try {
+//			if((List<FeedDTO>)service.getMyFeed(ipage, email)==null) {
+//				System.out.println("list는 null입니다.");
+//				return "{\"result\" : \"false\"}";
+//			}
 			list = (List<FeedDTO>)service.getMyFeed(ipage, email).get("list");
-			if(list==null) {
-				return "{\"result\" : \"false\"}";
-			}
+			rnum = (List<Integer>)service.getMyFeed(ipage, email).get("rnum");
 			cover = (List<String>)service.getMyFeed(ipage, email).get("cover");
+			System.out.println("1 : "+service);
+			System.out.println("2 : "+service.getMyFeed(ipage, email));
+			System.out.println("3 : "+service.getMyFeed(ipage, email).get("list"));
+			System.out.println("3 : "+service.getMyFeed(ipage, email).get("rnum"));
+			
 		}catch(Exception e) {
-			e.printStackTrace();
+			return "{\"result\" : \"false\"}";
 		}
 		Gson g = new Gson();
+		
 		JsonObject obj = new JsonObject();
 		obj.addProperty("list", g.toJson(list));
+		obj.addProperty("rnum", g.toJson(rnum));
 		obj.addProperty("cover", g.toJson(cover));
+		
 		return obj.toString();
 	}
 	
@@ -164,14 +176,15 @@ public class FeedController {
 	public String wholeFeed(Model model, String keyword) {
 		System.out.println("wholeFeed 도착");
 		System.out.println(keyword);
+		int ipage = 1;
 		List<FeedDTO> list = new ArrayList<>();
 		List<MemberDTO> friendList = new ArrayList<>();
 		List<String> cover = new ArrayList<>();
 		try {
 				if(keyword==null || keyword.startsWith("#")) {//전체피드 가져오기 또는 해시태그 검색
 					System.out.println("해시태그검색");
-					list = (List<FeedDTO>)service.wholeFeed(keyword).get("dtoList");
-					cover = (List<String>)service.wholeFeed(keyword).get("cover");
+					list = (List<FeedDTO>)service.wholeFeed(ipage, keyword).get("list");
+					cover = (List<String>)service.wholeFeed(ipage, keyword).get("cover");
 					for(int i=0; i<list.size(); i++) {
 						System.out.println("list("+i+") : " +list.get(i));
 						System.out.println("cover("+i+") : " +cover.get(i));
@@ -179,10 +192,10 @@ public class FeedController {
 					model.addAttribute("option", "nfriend");
 				}else { //친구검색
 					cover = null;
+					System.out.println("wholeFeed controller- 친구검색");
 					friendList = service.searchFriend(keyword);
 					model.addAttribute("option", "friend");
 				}
-				model.addAttribute("option", "nfriend");
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -193,6 +206,49 @@ public class FeedController {
 		return "/feeds/wholeFeed";
 	}
 
+	@RequestMapping(value = "/wholeFeedAjax", produces = "application/json; charset=UTF-8")
+	@ResponseBody
+	public String wholeFeedAjax(Model model, String keyword, String page) {
+		System.out.println("wholeFeedAjax 도착");
+		System.out.println(keyword);
+		int ipage = Integer.parseInt(page);
+		List<FeedDTO> list = new ArrayList<>();
+		List<Integer> rnum = new ArrayList<>();
+		List<MemberDTO> friendList = new ArrayList<>();
+		List<String> cover = new ArrayList<>();
+		
+		System.out.println("rnum : "+rnum.toString());
+		Gson g = new Gson();
+		
+		JsonObject obj = new JsonObject();
+		try {
+				if(keyword==null || keyword.startsWith("#")) {//전체피드 가져오기 또는 해시태그 검색
+					System.out.println("해시태그검색");
+					list = (List<FeedDTO>)service.wholeFeed(ipage, keyword).get("list");
+					rnum = (List<Integer>)service.wholeFeed(ipage, keyword).get("rnum");
+					cover = (List<String>)service.wholeFeed(ipage, keyword).get("cover");
+					for(int i=0; i<list.size(); i++) {
+						System.out.println("list("+i+") : " +list.get(i));
+						System.out.println("rnum("+i+") : " +rnum.get(i));
+						System.out.println("cover("+i+") : " +cover.get(i));
+					}
+					obj.addProperty("option", "nfriend");
+				}else { //친구검색
+					cover = null;
+					friendList = service.searchFriend(keyword);
+					obj.addProperty("option", "friend");
+				}
+				obj.addProperty("option", "nfriend");
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		obj.addProperty("list", g.toJson(list));
+		obj.addProperty("rnum", g.toJson(rnum));
+		obj.addProperty("cover", g.toJson(cover));
+		
+		return obj.toString();
+	}
 
 	@RequestMapping("/scrapFeed")
 	public String scrapFeed(Model model) {
@@ -230,8 +286,8 @@ public class FeedController {
 		List<String> list = new ArrayList<>();
 		try {
 			dto = service.detailView(feed_seq);
-			likeCheck = service.likeCheck(feed_seq, (String)session.getAttribute("loginInfo"));
-			bookmarkCheck = service.bookmarkCheck(feed_seq, (String)session.getAttribute("loginInfo"));
+			likeCheck = service.likeCheck(feed_seq, ((MemberDTO)session.getAttribute("loginInfo")).getEmail());
+			bookmarkCheck = service.bookmarkCheck(feed_seq, ((MemberDTO)session.getAttribute("loginInfo")).getEmail());
 
 
 			System.out.println(replyList.size() + "리플라이리스트 사이즈입니다.");
@@ -335,7 +391,6 @@ public class FeedController {
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
-
 		return obj.toString();
 	}
 	

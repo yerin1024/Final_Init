@@ -113,7 +113,8 @@ public class FeedService {
         		endNum = totalFeed;
         	}
         }
-		List<FeedDTO> list = dao.getMyFeed(email, startNum, endNum);
+		List<FeedDTO> list = (List<FeedDTO>)dao.getMyFeed(email, startNum, endNum).get("list");
+		List<Integer> rnum = (List<Integer>)dao.getMyFeed(email, startNum, endNum).get("rnum");
 		List<String> cover = new ArrayList<>();//전체피드의 바둑판 대문사진
 
 		//미디어리스트 체크
@@ -135,23 +136,37 @@ public class FeedService {
 				
 		Map<String, Object> map = new HashMap<>();
 		map.put("list", list);
+		map.put("rnum", rnum);
 		map.put("cover", cover);
+		map.put("startNum", startNum);
+		map.put("endtNum", endNum);
 		return map;
 	}
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	public Map<String, Object> wholeFeed(String keyword) throws Exception{
+	public Map<String, Object> wholeFeed(int page, String keyword) throws Exception{
+		int totalFeed = dao.selectAllCount(keyword);
+		int startNum = 0;
+        int endNum = 0;
+        if (page==1){
+            startNum = 1;
+            endNum = 12;  //데이터를 10개씩 가져오겠다.
+        }else{
+        	startNum = page+(11*(page-1));  //10개씩 가져오고싶다면  9로 
+        	endNum = page*12;   //20, 40, 60
+        	if(startNum>totalFeed) {
+        		return null;
+        	}else if(endNum>totalFeed) {
+        		endNum = totalFeed;
+        	}
+        }
 		if(keyword!=null) {
 			keyword = "%"+keyword+"%";
 		}
-		List<FeedDTO> list = dao.selectAll(keyword);
+		List<FeedDTO> list = (List<FeedDTO>)dao.selectAll(keyword, startNum, endNum).get("list");
+		System.out.println("service list : "+list.toString());
+		List<Integer> rnum = (List<Integer>)dao.selectAll(keyword, startNum, endNum).get("rnum");
 		List<String> cover = new ArrayList<>();//전체피드의 바둑판 대문사진
 
 		//미디어리스트 체크
@@ -172,7 +187,8 @@ public class FeedService {
 		}
 		
 		Map<String, Object> map = new HashMap<>();
-		map.put("dtoList", list);
+		map.put("list", list);
+		map.put("rnum", rnum);
 		map.put("cover", cover);
 		return map;
 	}

@@ -176,16 +176,51 @@
 	        url : "/feed/myFeedAjax",
 	        dataType:"JSON"
 	    }).done(function(data){
-	    	console.log(data);
-	    	if(data.result=='false'){
+	    	console.log("data.result : "+data.result);
+	    	if(data.result=="false"){
 	    		console.log("false");
 	    		return 'false';
 	    	}
+			var rnum = JSON.parse(data.rnum);
+			console.log("rnum : "+rnum);
 	    	var list = JSON.parse(data.list);
+	    	var cover = JSON.parse(data.cover);
 	    	console.log(list);
-		}).fail(function(b){
-	    	console.log(b);
-	    })
+	    	var i =Number(rnum[0]);
+	    	console.log("rnum[0] : " +i);
+	    	var end = (Number(i)+list.length);
+	    	var index=0;
+	    	var data = "";
+	    	
+	    	for(i; i<end; i++){
+				data = data + "<div class='col-4 feed'><a href='/feed/detailView?feed_seqS="+list[index].feed_seq+"'>"+cover[index]+"</a></div>";
+				console.log(data);
+				if(i%3==1){
+					data = "<div class='row' style='margin:0px'>" +data;
+				}
+				if(i%3==0){
+					data = data + "</div>";
+				}
+				
+				index++;
+	    	}
+	    	$("#feeds").append(data); 
+// 			for(i; i<end; i++){
+// 				console.log(i);
+// 		    	var data = $("<div class='col-4 feed'></div>");
+// 		    	var a = $("<a href='/feed/detailView?feed_seqS="+list[index].feed_seq+"'>");
+// 		    	a.append(cover[index]);
+// 		    	data.append(a);
+// 		    	if(i%3==1){
+// 		    		data.before("<div class='row' style='margin:0px'>")
+// 		    		console.log(data);
+// 		    	}else if(i%3==0){
+// 		    		data.after("</div>");
+// 		    	}
+// 		    	$("#feeds").append(data);
+// 		    	index++;
+// 			}
+		})
 	}
 		
 </script>
