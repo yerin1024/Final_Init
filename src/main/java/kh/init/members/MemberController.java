@@ -86,8 +86,7 @@ public class MemberController {
 	public String goMyInfo(String email, Model model) {
 		System.out.println("개인 정보 CON 도착.");
 		MemberDTO mDto = (MemberDTO)session.getAttribute("loginInfo");
-		try {
-			
+		try {			
 		MemberDTO dto = service.getMyPageService(mDto.getEmail());
 		System.out.println(dto.getEmail());
 		System.out.println(dto.getName());

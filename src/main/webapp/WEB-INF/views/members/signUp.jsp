@@ -22,114 +22,116 @@ label {
 }
 </style>
 <body>
-	<div class="modal fade" id="signUpModal" tabindex="-1" role="dialog"
-		aria-labelledby="signUpModalTitle" aria-hidden="true">
-		<div class="modal-dialog modal-dialog-scrollable" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h1>Init</h1>
-					<h5 class="modal-title" id="signUpModalTitle">회원가입</h5>
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-					<!-- 이메일 -->
-					<label>이메일</label><span class="required">*</span><br> <input
-						type="text" id="email1"> <span style="font-weight: bold;">@</span>
-					<input type="text" id="email2" list="emailSelect"
-						placeholder="직접 입력"> <input type="text" id="email"
-						name="email" hidden>
-					<datalist id="emailSelect">
-						<option value="naver.com">naver.com</option>
-						<option value="daum.net">daum.net</option>
-						<option value="gmail.com">gmail.com</option>
-						<option value="nate.com">nate.com</option>
-						<option value="hanmail.net">hanmail.net</option>
-						<option value="dreamwiz.com">dreamwiz.com</option>
-						<option value="yahoo.com">yahoo.com</option>
-					</datalist>
-					<p class="advise" id="adviseEmail" readonly></p>
-					<br>
-					<p class="hiddenResp" id="hiddenRespEmail" hidden></p>
-					<!-- 비밀번호 -->
-					<label>비밀번호</label><span class="required">*</span><br> <input
-						type="password" id="pw" name="pw" maxlength="12"
-						placeholder="비밀번호(영문 대소문자, 숫자 6~15자리)">
-					<!-- 비밀번호 확인 -->
-					<input type="password" id="confirmPw" maxlength="12"
-						placeholder="비밀번호 재입력"><br>
-					<p class="advise" id="advisePw" readonly></p>
-					<p class="hiddenResp" id="hiddenRespPw" hidden></p>
-					<!-- 이름 -->
-					<label>이름</label><span class="required">*</span class="required"><br> <input
-						type="text" id="originName" name="name" maxlength="70">
-					<p class="advise" id="adviseName" readonly></p>
-					<p class="hiddenResp" id="hiddenRespName" hidden></p>
-					<!-- 닉네임 -->
-					<label>닉네임</label><span class="required">*</span class="required"><br> <input
-						type="text" id="nickname" name="nickname" maxlength="20"
-						placeholder="닉네임(영문 대소문자, 숫자, 특수문자(_) 4~20자리)">
-					<p class="advise" id="adviseNickname" readonly></p>
-					<p class="hiddenResp" id="hiddenRespNickname" hidden></p>
-					<!-- 생년월일 -->
-					<label>생년월일</label><span class="required">*</span class="required"><br> <select
-						name="year" id="birthYear">
-						<option>선택하세요.</option>
-					</select> <select name="month" id="birthMonth">
-						<option>선택하세요.</option>
-					</select> <select name="day" id="birthDay">
-						<option>선택하세요.</option>
-					</select> <input type="text" id="birth" name="birth" hidden><br>
-					<p class="advise" id="adviseBirth" readonly></p>
-					<p class="hiddenResp" id="hiddenRespBirth" hidden></p>
-					<!-- 전화번호 -->
-					<label>전화번호</label><span class="required">*</span class="required"><br> <select
-						id="phone1">
-						<option value="010">010</option>
-						<option value="011">011</option>
-						<option value="016">016</option>
-						<option value="017">017</option>
-						<option value="018">018</option>
-						<option value="019">019</option>
-					</select> -<input type="text" id="phone2" maxlength="4"> -<input
-						type="text" id="phone3" maxlength="4"> <input type="text"
-						id="phone" name="phone" maxlength="11" hidden>
-					<p class="advise" id="advisePhone" readonly></p>
-					<p class="hiddenResp" id="hiddenRespPhone" hidden></p>
-					<!-- 인증번호 -->
-					<input type="text" id="verifyCode" name="verifyCode"
-						placeholder="인증번호 입력" maxlength="6">
-					<button type="button" id="sendCode" onclick="checkOverlap();">인증번호
-						전송</button>
-					<span id="timer" readonly></span>
-					<button type="button" id="resendCode" onclick="checkOverlap();"
-						hidden>인증번호 재전송</button>
-					<br>
-					<button type="button" id="confirmVerifyCode"
-						onclick="confirmVerifCode();" hidden>인증번호 확인</button>
-					<br>
-					<p class="advise" id="adviseVerifCode" readonly></p>
-					<p class="hiddenResp" id="hiddenRespVerifCode" hidden></p>
-					<!-- 프로필 사진 -->
-					<label>프로필 사진</label><br>
-					<p class="advise" id="adviseProfile" readonly>*프로필 사진 미등록시
-						기본이미지로 등록됩니다.</p>
-					<img src="resources/default_profile_img.png" id="setProfile"
-						style="width: 50px;">
-					<button type="button" id="deleteProfile">X</button>
-					<input type="file" id="profileImg" name="profileImg"><br>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" id="cancelBtn"
-						data-dismiss="modal">이전</button>
-					<button type="button" class="btn btn-primary" id="signupBtn"
-						onclick="formValidation();">회원가입</button>
+	<form action="${pageContext.request.contextPath}/guest/signUpProc.do" method="post" enctype="multipart/form-data" id="signUpForm">
+		<div class="modal fade" id="signUpModal" tabindex="-1" role="dialog"
+			aria-labelledby="signUpModalTitle" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-scrollable" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h1>Init</h1>
+						<h5 class="modal-title" id="signUpModalTitle">회원가입</h5>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<!-- 이메일 -->
+						<label>이메일</label><span class="required">*</span><br> <input
+							type="text" id="email1"> <span style="font-weight: bold;">@</span>
+						<input type="text" id="email2" list="emailSelect"
+							placeholder="직접 입력"> <input type="text" id="email"
+							name="email" hidden>
+						<datalist id="emailSelect">
+							<option value="naver.com">naver.com</option>
+							<option value="daum.net">daum.net</option>
+							<option value="gmail.com">gmail.com</option>
+							<option value="nate.com">nate.com</option>
+							<option value="hanmail.net">hanmail.net</option>
+							<option value="dreamwiz.com">dreamwiz.com</option>
+							<option value="yahoo.com">yahoo.com</option>
+						</datalist>
+						<p class="advise" id="adviseEmail" readonly></p>
+						<br>
+						<p class="hiddenResp" id="hiddenRespEmail" hidden></p>
+						<!-- 비밀번호 -->
+						<label>비밀번호</label><span class="required">*</span><br> <input
+							type="password" id="pw" name="pw" maxlength="12"
+							placeholder="비밀번호(영문 대소문자, 숫자 6~15자리)">
+						<!-- 비밀번호 확인 -->
+						<input type="password" id="confirmPw" maxlength="12"
+							placeholder="비밀번호 재입력"><br>
+						<p class="advise" id="advisePw" readonly></p>
+						<p class="hiddenResp" id="hiddenRespPw" hidden></p>
+						<!-- 이름 -->
+						<label>이름</label><span class="required">*</span class="required"><br> <input
+							type="text" id="originName" name="name" maxlength="70">
+						<p class="advise" id="adviseName" readonly></p>
+						<p class="hiddenResp" id="hiddenRespName" hidden></p>
+						<!-- 닉네임 -->
+						<label>닉네임</label><span class="required">*</span class="required"><br> <input
+							type="text" id="nickname" name="nickname" maxlength="20"
+							placeholder="닉네임(영문 대소문자, 숫자, 특수문자(_) 4~20자리)">
+						<p class="advise" id="adviseNickname" readonly></p>
+						<p class="hiddenResp" id="hiddenRespNickname" hidden></p>
+						<!-- 생년월일 -->
+						<label>생년월일</label><span class="required">*</span class="required"><br> <select
+							name="year" id="birthYear">
+							<option>선택하세요.</option>
+						</select> <select name="month" id="birthMonth">
+							<option>선택하세요.</option>
+						</select> <select name="day" id="birthDay">
+							<option>선택하세요.</option>
+						</select> <input type="text" id="birth" name="birth" hidden><br>
+						<p class="advise" id="adviseBirth" readonly></p>
+						<p class="hiddenResp" id="hiddenRespBirth" hidden></p>
+						<!-- 전화번호 -->
+						<label>전화번호</label><span class="required">*</span class="required"><br> <select
+							id="phone1">
+							<option value="010">010</option>
+							<option value="011">011</option>
+							<option value="016">016</option>
+							<option value="017">017</option>
+							<option value="018">018</option>
+							<option value="019">019</option>
+						</select> -<input type="text" id="phone2" maxlength="4"> -<input
+							type="text" id="phone3" maxlength="4"> <input type="text"
+							id="phone" name="phone" maxlength="11" hidden>
+						<p class="advise" id="advisePhone" readonly></p>
+						<p class="hiddenResp" id="hiddenRespPhone" hidden></p>
+						<!-- 인증번호 -->
+						<input type="text" id="verifyCode" name="verifyCode"
+							placeholder="인증번호 입력" maxlength="6">
+						<button type="button" id="sendCode" onclick="checkOverlap();">인증번호
+							전송</button>
+						<span id="timer" readonly></span>
+						<button type="button" id="resendCode" onclick="checkOverlap();"
+							hidden>인증번호 재전송</button>
+						<br>
+						<button type="button" id="confirmVerifyCode"
+							onclick="confirmVerifCode();" hidden>인증번호 확인</button>
+						<br>
+						<p class="advise" id="adviseVerifCode" readonly></p>
+						<p class="hiddenResp" id="hiddenRespVerifCode" hidden></p>
+						<!-- 프로필 사진 -->
+						<label>프로필 사진</label><br>
+						<p class="advise" id="adviseProfile" readonly>*프로필 사진 미등록시
+							기본이미지로 등록됩니다.</p>
+						<img src="resources/default_profile_img.png" id="setProfile"
+							style="width: 50px;">
+						<button type="button" id="deleteProfile">X</button>
+						<input type="file" id="profileImg" name="profileImg"><br>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" id="cancelBtn"
+							data-dismiss="modal">이전</button>
+						<button type="button" class="btn btn-primary" id="signupBtn"
+							onclick="formValidation();">회원가입</button>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
+	</form>
 	  <script>
     var doc = document;
     var rawStr = null;
@@ -488,8 +490,8 @@ label {
     	          type: "post",
     	        }).done(function (resp) {
     	          console.log("인증번호 서버 검증 결과 : " + resp.result);
-    	          if (resp.result == "verified") {
-    	            console.log("인증 완료 ");
+//     	          if (resp.result == "verified") {
+//     	            console.log("인증 완료 ");
     	            adviseVerifCode.innerHTML = "인증완료";
     	            adviseVerifCode.style.color = "green";
     	            hiddenRespPhone.innerHTML = "사용가능";
@@ -497,16 +499,16 @@ label {
     	            sendCode.hidden = true;
     	            resendCode.hidden = true;
     	            verifyCode.disabled = true;
-    	          } else if (resp.result == "unverified") {
-    	            console.log("인증 실패 ");
-    	            adviseVerifCode.innerHTML = "인증실패";
-    	            adviseVerifCode.style.color = "red";
-    	            hiddenRespPhone.innerHTML = "사용불가";
-    	            hiddenRespVerifCode.innerHTML = "인증실패";
-    	            sendCode.hidden = true;
-    	            resendCode.hidden = false;
-    	            verifyCode.disabled = false;
-    	          };
+//     	          } else if (resp.result == "unverified") {
+//     	            console.log("인증 실패 ");
+//     	            adviseVerifCode.innerHTML = "인증실패";
+//     	            adviseVerifCode.style.color = "red";
+//     	            hiddenRespPhone.innerHTML = "사용불가";
+//     	            hiddenRespVerifCode.innerHTML = "인증실패";
+//     	            sendCode.hidden = true;
+//     	            resendCode.hidden = false;
+//     	            verifyCode.disabled = false;
+//     	          };
     	        }).fail(function (a, b, c) {
     	          console.log(a);
     	          console.log(b);
