@@ -266,7 +266,8 @@
 			<c:choose>
 				<c:when test="${fn:length(list) ==0}">
 				게시물이 없습니다.
-			</c:when>
+				</c:when>
+				<c:otherwise>
 				<div id="feeds">
 						<c:forEach items="${list }" var="feed" varStatus="status">
 							<c:if test="${status.count mod 3==1}">
@@ -280,6 +281,7 @@
 							</c:if>
 						</c:forEach>
 					</div>
+				</c:otherwise>
 			</c:choose>
 		</div>
 

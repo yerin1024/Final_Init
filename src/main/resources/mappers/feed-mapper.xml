@@ -44,16 +44,9 @@
 		from (SELECT p.*, ROW_NUMBER()OVER(ORDER BY P.FEED_SEQ) as rnum FROM TB_FEED P WHERE email=#{email})
 		where rnum between #{startNum} and #{endNum}
 	</select>
-<<<<<<< HEAD
 	
 	<select id="getMyFeedCount" resultType="Integer">
 		select count(*) from tb_feed where email=#{email}
-=======
-
-	<select id="getMyFeed" resultType="kh.init.feeds.FeedDTO">
-		select * from tb_feed where
-		email=#{email}
->>>>>>> 76c147d62be0459bdbdf171f19bb328b88e50c20
 	</select>
 
 	<select id="scrapFeed" resultType="kh.init.feeds.FeedDTO">
