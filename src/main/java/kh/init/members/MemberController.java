@@ -28,7 +28,7 @@ public class MemberController {
 		}
 		if(service.isLoginOk(email, pw) > 0) { // 로그인 허가
 			session.setAttribute("loginInfo", service.getMemberDTO(email)); // 세션 로그인정보 담기
-			return "redirect:/singleTest";
+			return "redirect:/feed/getFriendFeed";
 		}else {
 			return "main";
 		}

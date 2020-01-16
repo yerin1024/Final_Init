@@ -223,6 +223,8 @@ a:hover{
         var userInput = doc.querySelectorAll(".userInput");
 
         window.onload = function(){
+        	$("#indexModal").modal("show");
+//         	doc.getElementById("indexModal").modal('show');
 			toCheckCookie();
 		}    
 
