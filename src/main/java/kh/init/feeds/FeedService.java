@@ -325,13 +325,18 @@ public class FeedService {
 		List<ReplyDTO> parents = replyDAO.viewAllReply(feed_seq, 0);
 		System.out.println(parents.toString());
 		List<ReplyDTO> childs = null;
-		for(ReplyDTO tmp : parents){
-			int tmpParent = tmp.getReply_seq();
-			childs = replyDAO.viewAllReply(feed_seq, tmpParent);
-			System.out.print("\n"+childs.toString()+"입니다!");
-		}
 		Map<String, Object> map = new HashMap<>();
 		map.put("parents", parents);
+		for(ReplyDTO tmp : parents){
+			int tmpParent = tmp.getReply_seq();
+//			try {
+				childs = replyDAO.viewAllReply(feed_seq, tmpParent);
+				System.out.print("\n"+childs.toString()+"입니다!");
+//			}catch(Exception e) {
+//				e.printStackTrace();
+//				return map;
+//			}
+		}
 		map.put("childs", childs);
 		return map;
 	}

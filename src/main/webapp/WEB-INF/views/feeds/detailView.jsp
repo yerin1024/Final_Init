@@ -366,9 +366,10 @@ img {
 						<button type="button" class="replyModifyCancel"  value="${parentReply.reply_seq }" style="width: 50%; display:none">취소</button>
 					</div>
 				</div>	
-						<c:forEach items="${childReply }" var="childReply">
-						${childReply.parent}<br> 
-						${parentReply.reply_seq }
+						<c:forEach items="${childReply }" var="childReply"> 
+						${parentReply.reply_seq}<br>
+						${childReply.parent}<br>
+						${childReply.contents}<br>
 							<c:choose>
 								<c:when test="${childReply.parent == parentReply.reply_seq }">
 								<div class="row replyVowel ${childReply.parent } ${parentReply.reply_seq}">

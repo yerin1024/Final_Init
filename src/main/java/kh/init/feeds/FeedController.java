@@ -209,12 +209,8 @@ public class FeedController {
 
 			parentReply = (List<ReplyDTO>)service.viewAllReply(feed_seq).get("parents");
 			childReply = (List<ReplyDTO>)service.viewAllReply(feed_seq).get("childs");
-			for(ReplyDTO tmp : childReply) {
-//				System.out.println("\n"+tmp.toString()+"입니다!");
-			}
 			
 			System.out.println("controller parent댓글"+parentReply.toString());
-			System.out.println("controller child댓글"+childReply.toString());
 			list = service.getMediaList(feed_seq);
 			model.addAttribute("parentReply",parentReply);
 			model.addAttribute("childReply",childReply);
