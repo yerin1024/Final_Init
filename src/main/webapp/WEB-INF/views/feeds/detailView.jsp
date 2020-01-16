@@ -94,11 +94,8 @@ img {
 				    html += "</div>"
 				    html += "</div>"
 					$(".replyList").append(html);
-<<<<<<< HEAD
 				    $("#writeReply").html("");
-=======
-				   	$("#writeReply").html("");
->>>>>>> 76c147d62be0459bdbdf171f19bb328b88e50c20
+
 			})
 		})
 		//답글 이벤트 ------------------------------------------------------		
@@ -139,11 +136,7 @@ img {
 		$(document).on("click",".childRegisterReply",function(){
 			var reply_seq = $(this).val();      
 			var feed_seq = ${dto.feed_seq};
-<<<<<<< HEAD
 			var nickname = "${loginInfo.nickname}";
-=======
-			var nickname = '${loginInfo.nickname}';
->>>>>>> 76c147d62be0459bdbdf171f19bb328b88e50c20
 			var replyWriter = 
 				$("."+reply_seq+"").children(".replyWriter").html().split('님')[0];
 		   	var div = $(this).closest(".childReply");
@@ -309,50 +302,40 @@ img {
 			<div class="row">
 				<div class="col-4 reply">${dto.contents }</div>
 				<div class="col-4 reply">
-					<a
-						href="${pageContext.request.contextPath }/feed/deleteProc?feed_seq=${dto.feed_seq}">
-						<img
-						src="${pageContext.request.contextPath }/resources/images/delete.png">
+					<a href="${pageContext.request.contextPath }/feed/deleteProc?feed_seq=${dto.feed_seq}">
+						<img src="${pageContext.request.contextPath }/resources/images/delete.png">
 					</a>
 				</div>
 				<div class="col-4 reply">
-					<a
-						href="${pageContext.request.contextPath }/feed/modifyFeedView?feed_seq=${dto.feed_seq}">
-						<img
-						src="${pageContext.request.contextPath }/resources/images/improvement.png">
+					<a href="${pageContext.request.contextPath }/feed/modifyFeedView?feed_seq=${dto.feed_seq}">
+						<img src="${pageContext.request.contextPath }/resources/images/improvement.png">
 					</a>
 				</div>
 				<div class="col-3 feed btnss like">
 					<c:choose>
 						<c:when test="${likeCheck==0 }">
-							<a href="#" id="like" class="${dto.feed_seq }"> <span
-								id="likeImg"><img class="likeBefore" id="likeBtn"
-									src="${pageContext.request.contextPath }/resources/images/likeBefore.png"></span>
-							</a>
+							<a href="#" id="like" class="${dto.feed_seq }"> <span id="likeImg">
+								<img class="likeBefore" id="likeBtn" src="${pageContext.request.contextPath }/resources/images/likeBefore.png">
+							</span></a>
 						</c:when>
 						<c:otherwise>
-							<a href="#" id="like" class="${dto.feed_seq }"> <span
-								id="likeImg"><img class="likeAfter" id="likeBtn"
-									src="${pageContext.request.contextPath }/resources/images/likeAfter.png"></span>
-							</a>
+							<a href="#" id="like" class="${dto.feed_seq }"> <span id="likeImg">
+							<img class="likeAfter" id="likeBtn" src="${pageContext.request.contextPath }/resources/images/likeAfter.png">
+							</span></a>
 						</c:otherwise>
 					</c:choose>
 				</div>
 				<div class="col-3 feed btnss bookmark">
 					<c:choose>
 						<c:when test="${bookmarkCheck==0 }">
-							<a href="#" id="bookmark" class="${dto.feed_seq }"> <span
-								id="bookmarkImg"><img class="bookmarkBefore"
-									id="bookmarkBtn"
-									src="${pageContext.request.contextPath }/resources/images/bookmarkBefore.png"></span>
-							</a>
+							<a href="#" id="bookmark" class="${dto.feed_seq }"> <span id="bookmarkImg">
+								<img class="bookmarkBefore" id="bookmarkBtn" src="${pageContext.request.contextPath }/resources/images/bookmarkBefore.png">
+							</span> </a>
 						</c:when>
 						<c:otherwise>
-							<a href="#" id="bookmark" class="${dto.feed_seq }"> <span
-								id="bookmarkImg"><img class="bookmarkAfter"
-									id="bookmarkBtn"
-									src="${pageContext.request.contextPath }/resources/images/bookmarkAfter.png"></span>
-							</a>
+							<a href="#" id="bookmark" class="${dto.feed_seq }"> <span id="bookmarkImg">
+								<img class="bookmarkAfter" id="bookmarkBtn" src="${pageContext.request.contextPath }/resources/images/bookmarkAfter.png">
+							</span> </a>
 						</c:otherwise>
 					</c:choose>
 				</div>

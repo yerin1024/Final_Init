@@ -272,7 +272,8 @@ public class FeedController {
 
 
 
-	@RequestMapping("/detailView") 
+	@RequestMapping(value = "/detailView", produces = "text/html; charset=UTF-8") 
+	@ResponseBody
 	public String detailView(int feed_seqS, Model model) {
 		System.out.println("detailView 도착");
 		int feed_seq = feed_seqS;
@@ -283,26 +284,31 @@ public class FeedController {
 		List<ReplyDTO> parentReply = new ArrayList<>();
 		List<ReplyDTO> childReply = new ArrayList<>();
 		List<String> list = new ArrayList<>();
+		JsonObject obj = new JsonObject();
+		Gson g = new Gson();
 		try {
 			dto = service.detailView(feed_seq);
 			likeCheck = service.likeCheck(feed_seq, ((MemberDTO)session.getAttribute("loginInfo")).getEmail());
 			bookmarkCheck = service.bookmarkCheck(feed_seq, ((MemberDTO)session.getAttribute("loginInfo")).getEmail());
-			model.addAttribute("likeCheck", likeCheck);
-			model.addAttribute("bookmarkCheck", bookmarkCheck);
+			
 
 			parentReply = (List<ReplyDTO>)service.viewAllReply(feed_seq).get("parents");
 			childReply = (List<ReplyDTO>)service.viewAllReply(feed_seq).get("childs");
 			
 			System.out.println("controller parent댓글"+parentReply.toString());
 			list = service.getMediaList(feed_seq);
-			model.addAttribute("parentReply",parentReply);
-			model.addAttribute("childReply",childReply);
-			model.addAttribute("media", list);
-			model.addAttribute("dto", dto);	
+			
+			obj.addProperty("likeCheck", g.toJson(likeCheck));
+			obj.addProperty("bookmarkCheck", g.toJson(bookmarkCheck));
+			obj.addProperty("parentReply",g.toJson(parentReply));
+			obj.addProperty("childReply",g.toJson(childReply));
+			obj.addProperty("media", g.toJson(list));
+			obj.addProperty("dto", g.toJson(dto));	
+
 		}catch(Exception e) {
 			e.printStackTrace();
 		}			
-		return "/feeds/detailView";
+		return obj.toString();
 	}
 
 	@RequestMapping("/getFriendFeed")
@@ -433,13 +439,13 @@ public class FeedController {
 	//좋아요
 	@RequestMapping(value = "/insertLike", produces="text/html; charset=UTF-8")
 	@ResponseBody
-	public String insertLike(int feed_seq) {
+	public String insertLike(String feed_seq) {
 		System.out.println("insertLike 도착");
 		System.out.println("feed_seq : "+feed_seq);
 		String email = ((MemberDTO)session.getAttribute("loginInfo")).getEmail();
 
 		try {
-			service.insertLike(feed_seq, email);
+			service.insertLike(Integer.parseInt(feed_seq), email);
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -447,12 +453,12 @@ public class FeedController {
 	}
 	@RequestMapping(value = "/deleteLike", produces="text/html; charset=UTF-8")
 	@ResponseBody
-	public String deleteLike(int feed_seq) {
+	public String deleteLike(String feed_seq) {
 		System.out.println("deleteLike 도착");
 		System.out.println("feed_seq : "+feed_seq);
 		String email = ((MemberDTO)session.getAttribute("loginInfo")).getEmail();
 		try {
-			service.deleteLike(feed_seq, email);
+			service.deleteLike(Integer.parseInt(feed_seq), email);
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
