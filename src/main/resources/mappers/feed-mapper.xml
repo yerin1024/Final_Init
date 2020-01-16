@@ -3,16 +3,50 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="Feed">
-	<select id="selectAll" resultType="kh.init.feeds.FeedDTO">
-		select * from tb_feed where relation='0'
-		<if test="keyword != null">
+	<select id="selectAll" resultType="kh.init.feeds.FeedDTO" parameterType="java.util.Map">
+		select feed_seq, email, nickname, title, contents, relation, write_date, hashtag
+		from (select p.*, row_number()over(order by p.feed_seq) rnum
+	        from tb_feed p where relation='0'
+	        <if test="keyword != null">
+				and hashtag Like #{keyword}
+			</if>
+			)where rnum between #{startNum} and #{endNum}	
+	</select>
+	
+	<select id="selectAllRnum" resultType="Integer" parameterType="java.util.Map">
+		select rnum
+		from (select p.*, row_number()over(order by p.feed_seq) rnum
+        from tb_feed p where relation='0'
+        <if test="keyword != null">
 			and hashtag Like #{keyword}
 		</if>
+		)where rnum between #{startNum} and #{endNum}	
 	</select>
-
-	<select id="getMyFeed" resultType="kh.init.feeds.FeedDTO">
-		select * from tb_feed where
-		email=#{email}
+	
+	<select id="selectAllCount" resultType="Integer">
+		select count(*)
+		from (select p.*, row_number()over(order by p.feed_seq) rnum
+        from tb_feed p where relation='0'
+        <if test="keyword != null">
+			and hashtag Like #{keyword}
+		</if>
+		)
+	</select>
+	
+	<select id="getMyFeed" resultType="kh.init.feeds.FeedDTO" parameterType="java.util.Map">
+		select feed_seq, email, nickname, title, contents, relation, write_date, hashtag
+		from (SELECT p.*, ROW_NUMBER()OVER(ORDER BY P.FEED_SEQ) as rnum FROM TB_FEED P WHERE email=#{email})
+		where rnum between #{startNum} and #{endNum}
+	</select>
+	
+	<select id="getMyFeedRnum" resultType="Integer" parameterType="java.util.Map">
+		select rnum
+		from (SELECT p.*, ROW_NUMBER()OVER(ORDER BY P.FEED_SEQ) as rnum FROM TB_FEED P WHERE email=#{email})
+		where rnum between #{startNum} and #{endNum}
+	</select>
+	
+	<select id="getMyFeedCount" resultType="Integer">
+		select count(*) from tb_feed where email=#{email}
 	</select>
 
 	<select id="scrapFeed" resultType="kh.init.feeds.FeedDTO">
