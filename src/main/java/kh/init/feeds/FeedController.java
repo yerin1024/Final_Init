@@ -281,7 +281,7 @@ public class FeedController {
 		int bookmarkCheck = 0; //0은 안한것 1은 한것
 		FeedDTO dto = null;
 		List<ReplyDTO> parentReply = new ArrayList<>();
-		List<List<ReplyDTO>> childReply = new ArrayList<>();
+		List<ReplyDTO> childReply = new ArrayList<>();
 		List<String> list = new ArrayList<>();
 		try {
 			dto = service.detailView(feed_seq);
@@ -291,8 +291,8 @@ public class FeedController {
 			model.addAttribute("bookmarkCheck", bookmarkCheck);
 
 			parentReply = (List<ReplyDTO>)service.viewAllReply(feed_seq).get("parents");
-			childReply = (List<List<ReplyDTO>>)service.viewAllReply(feed_seq).get("childs");
-//			System.out.println(childReply.toString());
+			childReply = (List<ReplyDTO>)service.viewAllReply(feed_seq).get("childs");
+			
 			System.out.println("controller parent댓글"+parentReply.toString());
 			list = service.getMediaList(feed_seq);
 			model.addAttribute("parentReply",parentReply);
@@ -302,7 +302,7 @@ public class FeedController {
 		}catch(Exception e) {
 			e.printStackTrace();
 		}			
-		return "/feeds/detailViewTest";
+		return "/feeds/detailView";
 	}
 
 	@RequestMapping("/getFriendFeed")
