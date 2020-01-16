@@ -84,7 +84,7 @@
 					
 				</div>
 
-				<c:choose>
+				<c:choose>             
 					<c:when test="${fn:length(media) >0}">
 						<div class="row media">
 							<div id="carouselExampleIndicators" class="carousel slide"
