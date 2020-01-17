@@ -37,10 +37,8 @@ public class FeedController {
 		int ipage = 1;
 		List<FeedDTO> list = null;
 		List<String> cover = new ArrayList<>();
-		//로그인 세션 테스트 코드 시작
 		String email = ((MemberDTO)session.getAttribute("loginInfo")).getEmail();
 		System.out.println("로그인 세션 값 확인 : " + email);
-		//로그인 세션 테스트 코드 끝
 		try {
 			MemberDTO dto = mservice.getMyPageService(email);
 			list = (List<FeedDTO>)service.getMyFeed(ipage, email).get("list");
@@ -62,10 +60,7 @@ public class FeedController {
 		List<FeedDTO> list = new ArrayList<>();
 		List<Integer> rnum = new ArrayList<>();
 		List<String> cover = new ArrayList<>();
-		//로그인 세션 테스트 코드 시작
 		String email = ((MemberDTO)session.getAttribute("loginInfo")).getEmail();
-		System.out.println("로그인 세션 값 확인 : " + email);
-		//로그인 세션 테스트 코드 끝
 		try {
 //			if((List<FeedDTO>)service.getMyFeed(ipage, email)==null) {
 //				System.out.println("list는 null입니다.");
@@ -95,10 +90,6 @@ public class FeedController {
 	@RequestMapping("/deleteProc")
 	public String deleteProc(int feed_seq) {
 		System.out.println("삭제 도착!");
-		//로그인 세션 테스트 코드 시작
-		String email = ((MemberDTO)session.getAttribute("loginInfo")).getEmail();
-		System.out.println("로그인 세션 값 확인 : " + email);
-		//로그인 세션 테스트 코드 끝
 		try {
 			int result =  service.deleteFeed(feed_seq);
 			System.out.println(result + "행이 삭제되었습니다.");
@@ -118,10 +109,6 @@ public class FeedController {
 	public String writeFeedProc(FeedDTO dto) {
 		System.out.println("게시물 등록 도착!");		
 		dto.setEmail(((MemberDTO)session.getAttribute("loginInfo")).getEmail());
-		//로그인 세션 테스트 코드 시작
-		String email = ((MemberDTO)session.getAttribute("loginInfo")).getEmail();
-		System.out.println("로그인 세션 값 확인 : " + email);
-		//로그인 세션 테스트 코드 끝
 		dto.setNickname(((MemberDTO)session.getAttribute("loginInfo")).getNickname());
 
 		int result = 0;
@@ -150,10 +137,6 @@ public class FeedController {
 	@ResponseBody
 	public String mediaTmpUpload(MultipartFile file) {
 		System.out.println("mediaTmpUpload 도착");
-		//로그인 세션 테스트 코드 시작
-		String email = ((MemberDTO)session.getAttribute("loginInfo")).getEmail();
-		System.out.println("로그인 세션 값 확인 : " + email);
-		//로그인 세션 테스트 코드 끝
 		//mediaTmpUpload에서는 mediaTmp폴더에 저장해놓음 , media라는 정식폴더에 넣어주는 과정은 writeFeedProc에서 수행
 		String path = session.getServletContext().getRealPath("mediaTmp");
 		
@@ -192,10 +175,6 @@ public class FeedController {
 	public String wholeFeed(Model model, String keyword) {
 		System.out.println("wholeFeed 도착");
 		System.out.println("keyword : " + keyword);
-		//로그인 세션 테스트 코드 시작
-		String email = ((MemberDTO)session.getAttribute("loginInfo")).getEmail();
-		System.out.println("로그인 세션 값 확인 : " + email);
-		//로그인 세션 테스트 코드 끝
 		int ipage = 1;
 		List<FeedDTO> list = new ArrayList<>();
 		List<MemberDTO> friendList = new ArrayList<>();
@@ -231,10 +210,6 @@ public class FeedController {
 	public String wholeFeedAjax(Model model, String keyword, String page) {
 		System.out.println("wholeFeedAjax 도착");
 		System.out.println("keyword : " + keyword);
-		//로그인 세션 테스트 코드 시작
-		String email = ((MemberDTO)session.getAttribute("loginInfo")).getEmail();
-		System.out.println("로그인 세션 값 확인 : " + email);
-		//로그인 세션 테스트 코드 끝
 		int ipage = Integer.parseInt(page);
 		List<FeedDTO> list = new ArrayList<>();
 		List<Integer> rnum = new ArrayList<>();
@@ -277,10 +252,7 @@ public class FeedController {
 	@RequestMapping("/scrapFeed")
 	public String scrapFeed(Model model) {
 		System.out.println("scrapFeed 도착");
-		//로그인 세션 테스트 코드 시작
 		String email = ((MemberDTO)session.getAttribute("loginInfo")).getEmail();
-		System.out.println("로그인 세션 값 확인 : " + email);
-		//로그인 세션 테스트 코드 끝
 
 		List<String> cover = new ArrayList<>();
 		List<FeedDTO> scrapList = new ArrayList<>();
@@ -297,17 +269,11 @@ public class FeedController {
 		return "/feeds/scrapFeed";
 	}
 
-
-
 	@RequestMapping("/detailView") 
 	public String detailView(int feed_seqS, Model model) {
 		System.out.println("detailView 도착");
 		int feed_seq = feed_seqS;
 		System.out.println("feed_seq : " + feed_seq);
-		//로그인 세션 테스트 코드 시작
-		String email = ((MemberDTO)session.getAttribute("loginInfo")).getEmail();
-		System.out.println("로그인 세션 값 확인 : " + email);
-		//로그인 세션 테스트 코드 끝
 		int likeCheck = 0; //0은 안한것 1은 한것
 		int bookmarkCheck = 0; //0은 안한것 1은 한것
 		FeedDTO dto = null;
@@ -341,10 +307,7 @@ public class FeedController {
 		
 		int ipage = 1;
 		System.out.println("friendFeed 도착");
-		//로그인 세션 테스트 코드 시작
 		String email = ((MemberDTO)session.getAttribute("loginInfo")).getEmail();
-		System.out.println("로그인 세션 값 확인 : " + email);
-		//로그인 세션 테스트 코드 끝
 
 		String profile_img = ((MemberDTO)session.getAttribute("loginInfo")).getProfile_img();
 		try {
@@ -393,10 +356,7 @@ public class FeedController {
 		}
 		int ipage = Integer.parseInt(page);
 		System.out.println("friendFeed 도착");
-		//로그인 세션 테스트 코드 시작
 		String email = ((MemberDTO)session.getAttribute("loginInfo")).getEmail();
-		System.out.println("로그인 세션 값 확인 : " + email);
-		//로그인 세션 테스트 코드 끝
 		JsonObject obj = new JsonObject();
 		try {
 			List<FeedDTO> list = service.getFriendFeed(ipage, email);
@@ -439,10 +399,6 @@ public class FeedController {
 	public String modifyFeedProc(FeedDTO dto,Model model) {
 		System.out.println("게시물 수정 시작!");
 		System.out.println(dto.getFeed_seq());
-		//로그인 세션 테스트 코드 시작
-		String email = ((MemberDTO)session.getAttribute("loginInfo")).getEmail();
-		System.out.println("로그인 세션 값 확인 : " + email);
-		//로그인 세션 테스트 코드 끝
 		try {
 			int result = service.modifyFeed(dto);
 			System.out.println(result + "행이 수정되었습니다!");
@@ -455,10 +411,6 @@ public class FeedController {
 	@RequestMapping("/modifyFeedView")
 	public String modifyFeedView(int feed_seq, Model model) {
 		System.out.println("게시물 수정페이지 도착!");
-		//로그인 세션 테스트 코드 시작
-		String email = ((MemberDTO)session.getAttribute("loginInfo")).getEmail();
-		System.out.println("로그인 세션 값 확인 : " + email);
-		//로그인 세션 테스트 코드 끝
 		FeedDTO dto = null;
 		List<String> list = null;
 		try {
@@ -481,9 +433,6 @@ public class FeedController {
 		System.out.println("insertLike 도착");
 		System.out.println("feed_seq : "+feed_seq);
 		String email = ((MemberDTO)session.getAttribute("loginInfo")).getEmail();
-		//로그인 세션 테스트 코드 시작
-		System.out.println("로그인 세션 값 확인 : " + email);
-		//로그인 세션 테스트 코드 끝
 		try {
 			service.insertLike(feed_seq, email);
 		}catch(Exception e) {
@@ -497,9 +446,6 @@ public class FeedController {
 		System.out.println("deleteLike 도착");
 		System.out.println("feed_seq : "+feed_seq);
 		String email = ((MemberDTO)session.getAttribute("loginInfo")).getEmail();
-		//로그인 세션 테스트 코드 시작
-		System.out.println("로그인 세션 값 확인 : " + email);
-		//로그인 세션 테스트 코드 끝
 		try {
 			service.deleteLike(feed_seq, email);
 		}catch(Exception e) {
