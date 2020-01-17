@@ -398,7 +398,7 @@ img {
 						<button type="button" id="replyBtn" style="width: 30%">등록</button>
 					</div>
 				</div>
-		</div>
+			</div>
 	</div>
 
 
