@@ -32,7 +32,7 @@ public class FeedController {
 	private HttpSession session;
 
 	@RequestMapping("/myFeed")
-	public String myFeed(String email,Model model) {
+	public String myFeed(String email, Model model) {
 		System.out.println("myFeed 도착");
 		int ipage = 1;
 		List<FeedDTO> list = null;

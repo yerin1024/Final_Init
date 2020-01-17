@@ -13,7 +13,8 @@
 	type="text/javascript"></script>
 <link rel="stylesheet" href="/resources/css/nav.css">
 
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 
 <script
 	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
@@ -21,56 +22,42 @@
 	src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
 <style>
-
-	body{
-		background-color:white;
-	}
-	.feed {
-		width: 20vw;
-		height: 20vw;
-		min-height: 150px;
-		min-width: 150px;
-		border: 1px solid red;
-	}
-	
-	.cover {
-		width: 100%;
-		height: 100%;
-	}
-	#contents {
-	border: 2px solid black;
-	width: 60vw;
-	min-width: 470px;
-	margin: auto;
-	text-align: center;
-	}
-	
-
-	#feedList{
-		border:2px solid red;
-	}
-	
-	html, body {
-	background-color: #1D4E89;
+html, body {
+	background-color: white;
 	margin: 0px;
 	padding: 0px;
 	height: 2000px;
 }
 
+* {
+	box-sizing: border-box;
+}
+
 .mainBox {
-	height: 1000px;
+	margin-bottom: 20px;
+}
+
+.feedBox {
+	display: flex;
+	height: 100%;
+	margin-bottom: 20px;
+}
+
+.sectionImg {
+	border: 1px solid black;
+	width: 100%;
+	height: 100%;
+}
+
+.feed {
+	flex: 1;
 }
 
 .container-fluid {
 	position: relative;
 	top: 62px;
-	z-index: -1;
-
-}
-
-.row {
-	margin: 0px;
-	padding: 0px;
+	max-width: 935px;
+	padding: 60px 20px 0;
 }
 
 .wrapper {
@@ -79,34 +66,163 @@
 	height: 1200px;
 }
 
-.section {
-	border: 1px solid black;
-	height: 430px;
-	background-color: white;
-	margin-bottom: 5px;
+.left, .middle {
+	margin-right: 20px;
 }
 
-.left {
-	margin-right: 5px;
+.left, .middle, .right {
+	width: 33%;
 }
-
-.middle {
-	margin-right: 5px;
-}
-
+/* 프로필 */
 .profile {
+	position: relative;
+}
+
+.profileMessageLayout {
+	position: relative;
+}
+
+.report {
+	position: relative;
+	text-align: right;
+	border: none;
+	background-color: none;
+}
+
+.profileLayout {
+	display: flex;
+}
+
+.profileLayoutLeft, .profileLayoutRight {
+	margin: auto
+}
+
+.profileLayoutCenter {
+	position: relative;
+}
+
+.profileImageLayOut {
+	margin-right: 30px;
+	width: 30%;
+}
+
+.profileImageBox {
+	height: 300px;
+	width: 300px;
+	display: block;
+}
+
+.profileImg {
+	height: 100%;
+	width: 100%;
+	border-radius: 160px;
 	border: 1px solid black;
-
-	height: 500px;
 }
 
-.verticalProfile {
-	float: left;
+.profileButton {
+	width: 125px;
+	height: 125px;
+	border-radius: 80px;
+	border: 1px solid black;
+	background-color: white;
 }
-.profileOutline{
-	border:1px solid black;
-	height: 500px;
 
+.btn btn-primary btn-lg {
+	width: 125px;
+	height: 125px;
+	border-radius: 80px;
+	border: 1px solid black;
+	background-color: white;
+}
+
+#changeProfile {
+	position: absolute;
+	left: 50%;
+	transform: translateX(-50%);
+	bottom: -10px;
+	border-radius: 20px;
+	padding: 5px 20px;
+	font-weight: bold;
+	font-size: 13px;
+	background-color: white;
+}
+
+#reportBtn {
+	background-color: transparent;
+	border: none;
+}
+/*This is coded CSS rainbow*/
+#changeProfile:hover {
+	-webkit-animation: rainbow 1s infinite;
+	-ms-animation: rainbow 1s infinite;
+	-o-animation: rainbow 1s infinite;
+	animation: rainbow 1s infinite;
+}
+
+@-webkit-keyframes rainbow {
+0% {color: #ff0000;}
+10% {color: #ff8000;}
+20% {color: #ffff00;}
+30% {color: #80ff00;}
+40% {color: #00ff00;}
+50% {color: #00ff80;}
+60% {color: #00ffff;}
+70% {color: #0080ff;}
+80% {color: #0000ff;}
+90% {color: #8000ff;}
+100% {color: #ff0080;}
+}
+@-ms-keyframes rainbow {
+0% {color: #ff0000;}
+10% {color: #ff8000;}
+20% {color: #ffff00;}
+30% {color: #80ff00;}
+40% {color: #00ff00;}
+50% {color: #00ff80;}
+60% {color: #00ffff;}
+70% {color: #0080ff;}
+80% {color: #0000ff;}
+90% {color: #8000ff;}
+100% {color: #ff0080;}
+}
+@-o-keyframes rainbow {
+0% {color: #ff0000;}
+10% {color: #ff8000;}
+20% {color: #ffff00;}
+30% {color: #80ff00;}
+40% {color: #00ff00;}
+50% {color: #00ff80;}
+60% {color: #00ffff;}
+70% {color: #0080ff;}
+80% {color: #0000ff;}
+90% {color: #8000ff;}
+100% {color: #ff0080;}
+}
+@keyframes rainbow {
+0% {color: #ff0000;}
+10% {color: #ff8000;}
+20% {color: #ffff00;}
+30% {color: #80ff00;}
+40% {color: #00ff00;}
+50% {color: #00ff80;}
+60% {color: #00ffff;}
+70% {color: #0080ff;}
+80% {color: #0000ff;}
+90% {color: #8000ff;}
+100% {color: #ff0080;}
+}
+.profileName {
+	text-align: center;
+	font-size: 70px;
+	font-weight: bold;
+}
+
+.profileMessageLayout {
+	margin-bottom: 50px;
+}
+
+.profileMessage {
+	text-align: center;
 }
 
 /* All Device */
@@ -125,247 +241,241 @@
 
 @media all and (max-width:768px) {
 	/*     사용자 해상도가 768px 이하일 때 이 코드가 실행됨. 테블릿과 데스크톱의 공통 코드를 작성한다. */
-	.row>.section {
-		height: 200px;
-	}
-	.left, .right {
-		display: none;
+	.section {
+		height: 150px;
+		margin: 0px;
+		padding: 0px;
 	}
 }
-
 /* Tablet Device */
-@media all and (min-width:768px) and (max-width:1024px) {
+@media all and (max-width:1024px) {
 	/*     사용자 해상도가 768px 이상이고 1024px 이하일 때 이 코드가 실행됨. 아이패드 또는 비교적 작은 해상도의 랩탑이나 데스크톱에 대응하는 코드를 작성한다. */
+	.section {
+		height: 250px;
+		padding: 0px;
+	}
+	.profileImageBox {
+		height: 200px;
+		width: 200px;
+	}
+	.friendRequest {
+		width: 80px;
+		height: 80px;
+	}
 }
 
 /* Desktop Device */
 @media all and (min-width:1025px) {
 	/*     사용자 해상도가 1025px 이상일 때 이 코드가 실행됨. 1025px 이상의 랩탑 또는 데스크톱에 대응하는 코드를 작성한다. */
 	body {
-		background-color: blue;
+		background-color: pink;
 	}
 }
 </style>
 <script>
-
 	$(function() {
 		$("#registerFeed").on("click", function() {
 			location.href = "writeFeed";
 		})
 	})
-	
-	
-	var page = 1;  //페이징과 같은 방식이라고 생각하면 된다. 
-	
-	$(function(){  //페이지가 로드되면 데이터를 가져오고 page를 증가시킨다.
-	    if(page==1){ 
-	     page++;
-	    }else{
-	    	getList(page);
-	    	page++;
-	    }
-	}); 
-	 
-	$(window).scroll(function(){   //스크롤이 최하단 으로 내려가면 리스트를 조회하고 page를 증가시킨다.
-		if($(window).scrollTop() >= $(document).height() - $(window).height()-5){
-		console.log("스크롤감지");
-			if(page==1){ 
-			     page++;
-			    }else{
-			    	getList(page);
-			    	page++;
-			    }
-	     } 
+
+	var page = 1; //페이징과 같은 방식이라고 생각하면 된다. 
+
+	$(function() { //페이지가 로드되면 데이터를 가져오고 page를 증가시킨다.
+		if (page == 1) {
+			page++;
+		} else {
+			getList(page);
+			page++;
+		}
 	});
- 
-	function getList(page){
-	    $.ajax({
-	        type : 'POST',  
-	        dataType : 'json', 
-	        data : {"page" : page},
-	        url : "/feed/myFeedAjax",
-	        dataType:"JSON"
-	    }).done(function(data){
-	    	console.log("data.result : "+data.result);
-	    	if(data.result=="false"){
-	    		console.log("false");
-	    		return 'false';
-	    	}
-			var rnum = JSON.parse(data.rnum);
-			console.log("rnum : "+rnum);
-	    	var list = JSON.parse(data.list);
-	    	var cover = JSON.parse(data.cover);
-	    	console.log(list);
-	    	var i =Number(rnum[0]);
-	    	console.log("rnum[0] : " +i);
-	    	var end = (Number(i)+list.length);
-	    	var index=0;
-	    	var data = "";
-	    	
-	    	for(i; i<end; i++){
-				data = data + "<div class='col-4 feed'><a href='/feed/detailView?feed_seqS="+list[index].feed_seq+"'>"+cover[index]+"</a></div>";
-				console.log(data);
-				if(i%3==1){
-					data = "<div class='row' style='margin:0px'>" +data;
+
+	$(window).scroll(
+			function() { //스크롤이 최하단 으로 내려가면 리스트를 조회하고 page를 증가시킨다.
+				if ($(window).scrollTop() >= $(document).height()
+						- $(window).height() - 5) {
+					console.log("스크롤감지");
+					if (page == 1) {
+						page++;
+					} else {
+						getList(page);
+						page++;
+					}
 				}
-				if(i%3==0){
-					data = data + "</div>";
-				}
-				
-				index++;
-	    	}
-	    	$("#feeds").append(data); 
-// 			for(i; i<end; i++){
-// 				console.log(i);
-// 		    	var data = $("<div class='col-4 feed'></div>");
-// 		    	var a = $("<a href='/feed/detailView?feed_seqS="+list[index].feed_seq+"'>");
-// 		    	a.append(cover[index]);
-// 		    	data.append(a);
-// 		    	if(i%3==1){
-// 		    		data.before("<div class='row' style='margin:0px'>")
-// 		    		console.log(data);
-// 		    	}else if(i%3==0){
-// 		    		data.after("</div>");
-// 		    	}
-// 		    	$("#feeds").append(data);
-// 		    	index++;
-// 			}
-		})
+			});
+
+	function getList(page) {
+		$
+				.ajax({
+					type : 'POST',
+					dataType : 'json',
+					data : {
+						"page" : page
+					},
+					url : "/feed/myFeedAjax",
+					dataType : "JSON"
+				})
+				.done(
+						function(data) {
+							console.log("data.result : " + data.result);
+							if (data.result == "false") {
+								console.log("false");
+								return 'false';
+							}
+							var rnum = JSON.parse(data.rnum);
+							console.log("rnum : " + rnum);
+							var list = JSON.parse(data.list);
+							var cover = JSON.parse(data.cover);
+							console.log(list);
+							var i = Number(rnum[0]);
+							console.log("rnum[0] : " + i);
+							var end = (Number(i) + list.length);
+							var index = 0;
+							var data = "";
+
+							for (i; i < end; i++) {
+								data = data
+										+ "<div class='col-4 feed'><a href='/feed/detailView?feed_seqS="
+										+ list[index].feed_seq + "'>"
+										+ cover[index] + "</a></div>";
+								console.log(data);
+								if (i % 3 == 1) {
+									data = "<div class='row' style='margin:0px'>"
+											+ data;
+								}
+								if (i % 3 == 0) {
+									data = data + "</div>";
+								}
+
+								index++;
+							}
+							$("#feeds").append(data);
+							// 			for(i; i<end; i++){
+							// 				console.log(i);
+							// 		    	var data = $("<div class='col-4 feed'></div>");
+							// 		    	var a = $("<a href='/feed/detailView?feed_seqS="+list[index].feed_seq+"'>");
+							// 		    	a.append(cover[index]);
+							// 		    	data.append(a);
+							// 		    	if(i%3==1){
+							// 		    		data.before("<div class='row' style='margin:0px'>")
+							// 		    		console.log(data);
+							// 		    	}else if(i%3==0){
+							// 		    		data.after("</div>");
+							// 		    	}
+							// 		    	$("#feeds").append(data);
+							// 		    	index++;
+							// 			}
+						})
 	}
-		
 </script>
 </head>
 
 <body>
-	<jsp:include page="/resources/jsp/nav.jsp" />
+    <jsp:include page="/resources/jsp/nav.jsp" />
 	<div class="container-fluid">
+		<div class="profile">
+			<c:choose>
+				<c:when test="${loginInfo.email ne mvo.email}">
+					<div class="profileLayoutLeft">
+						<button class="btn btn-primary btn-lg" id="openModalBtn">＋</button>
+						<div class="btnText">친구요청</div>
+					</div>
+					<div class="profileLayoutCenter">
+						<div class="profileImageBox">
+							<img class="profileImg" src="${mvo.profile_img}" alt="">
+
+						</div>
+					</div>
+					<div class="profileMessageLayout">
+						<div class="profileName">${mvo.nickname }</div>
+						<div class="profileMessage">8${mvo.profile_msg}</div>
+					</div>
+					<div class="profileLayoutRight">
+						<button class="friendRequest">＋</button>
+						<div class="btnText">메세지</div>
+					</div>
+
+				</c:when>
+				<c:otherwise>
+					<div class="report">
+						<button type="button" id="reportBtn">ㆍㆍㆍ</button>
+					</div>
+					<div class="profileLayout">
+						<div class="profileLayoutLeft">
+							<button class="profileButton" id="friendsList">＋</button>
+							<div class="btnText">친구목록</div>
+						</div>
+						<div class="profileLayoutCenter">
+							<div class="profileImageBox">
+								<img class="profileImg" src="${mvo.profile_img}" alt="">
+								<button type="button" id="changeProfile">프로필 편집</button>
+							</div>
+						</div>
+						<div class="profileLayoutRight">
+							<button class="profileButton" id="changeInfo">＋</button>
+							<div class="btnText">회원정보</div>
+						</div>
+					</div>
+					<div class="profileMessageLayout">
+						<div class="profileName">${mvo.nickname }</div>
+						<div class="profileMessage">8${mvo.profile_msg}</div>
+					</div>
+				</c:otherwise>
+
+			</c:choose>
+		</div>
 		<div class="wrapper">
-          ${mvo.email}
-			<div class="profile" style="text-align:center; margin:auto;">
-				
-				<c:choose>
-
-					<c:when test="${loginInfo.email ne mvo.email}">
-						
-						<div class=verticalProfile style="width: 30%; margin-top: 3%; ">
-							<label style="color: white;"></label> <br> <img
-								src="${pageContext.request.contextPath}/resources/images/default_profile_img.png"
-								id="setProfile" style="width: 80%; border-radius: 50%;"> <br>
-
-
-							<label style="color: black; font-size: 40px; font-weight: bold;">${mvo.nickname }</label><br>
-							<label style="color: black;">${mvo.profile_msg}</label><br>
-							
-						</div>
-						<!-- 친구요청 모달을 열기 위한 버튼 -->
-						 	
-						<button type="button" class="btn btn-primary btn-lg"
-								id="openModalBtn">친구 요청</button>
-					</c:when>
-					<c:otherwise>
-						<div class=verticalProfile
-							style="width: 15%; margin-top: 10%; margin-left:20%; ">
-
-
-
-
-							<button type="button" id="friendsList">친구 목록</button>
-
-						</div>
-						<div class=verticalProfile style="width: 30%; margin-top: 3%; ">
-							<label style="color: white;"></label> <br> <img
-								src="${pageContext.request.contextPath}/resources/images/default_profile_img.png"
-								id="setProfile" style="width: 80%; border-radius: 50%;"> <br>
-
-
-							<label style="color: black; font-size: 40px; font-weight: bold;">${mvo.nickname }</label><br>
-							<label style="color: black;">${mvo.profile_msg}</label><br>
-							<button type="button" id="changeProfile">프로필 편집</button>
-						</div>
-						<div class=verticalProfile style="width: 15%; margin-top: 10%;">
-
-
-
-
-							<button type="button" id="changeInfo">회원 정보 편집</button>
-
-
-						</div>
-					</c:otherwise>
-
-				</c:choose>
-				
-
-			</div>
+			<div class="profile"></div>
 			<div class="mainBox">
+				<div class="feedBox">
+					<div class="left feed">
+						<img class="sectionImg"
+							src="${pageContext.request.contextPath }/resources/images/sadCat.jpg"
+							alt="">
+					</div>
+					<div class="middle feed">
+						<img class="sectionImg"
+							src="${pageContext.request.contextPath }/resources/images/sadCat.jpg"
+							alt="">
+					</div>
+					<div class="right feed">
+						<img class="sectionImg"
+							src="${pageContext.request.contextPath }/resources/images/sadCat.jpg"
+							alt="">
+					</div>
+				</div>
+
+				<div class="feedBox">
+					<div class="left feed">
+						<img class="sectionImg"
+							src="${pageContext.request.contextPath }/resources/images/sadCat.jpg"
+							alt="">
+					</div>
+					<div class="middle feed">
+						<img class="sectionImg"
+							src="${pageContext.request.contextPath }/resources/images/sadCat.jpg"
+							alt="">
+					</div>
+					<div class="right feed">
+						<img class="sectionImg"
+							src="${pageContext.request.contextPath }/resources/images/sadCat.jpg"
+							alt="">
+					</div>
+				</div>
 				<div class="row">
-					<div class="col m-20 section left">
-						<p>Contents 1</p>
+					<div class="col section left">
+						<img class="sectionImg"
+							src="${pageContext.request.contextPath }/resources/images/sadCat.jpg"
+							alt="">
 					</div>
-					<div class="col m-20 section middle">
-						<p>Contents 2</p>
-					</div>
-					<div class="col m-20 section right">
-						<p>Contents 3</p>
+					<div class="col section middle">
+						<img class="sectionImg"
+							src="${pageContext.request.contextPath }/resources/images/sadCat.jpg"
+							alt="">
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-
-	<div id="contents">
-
-
-		<br>
-		<button id="registerFeed">게시물 등록</button>
-
-
-		<div id="feedList">
-			<c:choose>
-				<c:when test="${fn:length(list) ==0}">
-				게시물이 없습니다.
-			</c:when>
-				<c:otherwise>
-					<table>
-						<tr>
-							<td>글번호
-							<td>글제목
-							<td>글내용
-						</tr>
-						<c:forEach items="${list }" var="list">
-							<tr>
-								<td>${list.feed_seq }
-								<td><a href="/feed/detailView?feed_seqS=${list.feed_seq }">${list.title }</a>
-								<td><a href="/feed/detailView?feed_seqS=${list.feed_seq }">${list.title }</a>
-							</tr>
-						</c:forEach>
-					</table>
-					</c:otherwise>
-</c:choose>
-		<div id="myFeed">
-			<c:choose>
-				<c:when test="${fn:length(list) ==0}">
-				게시물이 없습니다.
-				</c:when>
-				<c:otherwise>
-				<div id="feeds">
-						<c:forEach items="${list }" var="feed" varStatus="status">
-							<c:if test="${status.count mod 3==1}">
-								<div class="row" style="margin: 0px">
-							</c:if>
-							<div class="col-4 feed">
-								<a href="/feed/detailView?feed_seqS=${feed.feed_seq }">${cover[status.count-1] }</a>
-							</div>
-							<c:if test="${status.count mod 3==0}">
-								</div>
-							</c:if>
-						</c:forEach>
-					</div>
-
-				</c:otherwise>
-			</c:choose>
-		</div>
-
 	</div>
 
 
@@ -617,7 +727,8 @@
 																					for (var j = 0; j < waitlist.length; j++) {
 																						$(
 																								'.modal-body2')
-																								.append("<div class=frInfo id=wfrNum"+j+"><a href='${pageContext.request.contextPath}/feed/yourFeed?email="
+																								.append(
+																										"<div class=frInfo id=wfrNum"+j+"><a href='${pageContext.request.contextPath}/feed/yourFeed?email="
 																												+ waitlist[j].email
 																												+ "'>"
 																												+ waitlist[j].email
