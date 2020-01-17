@@ -567,18 +567,6 @@ ul { padding-bottom: 5px; }
 <!--                 <div class="pre_text"><b>whoru</b></div> -->
 <!--                 <div class="pre_time"><img src="images/startMsg.png" class="pre_start"></div> -->
 <!--             </div> -->
-
-<%-- 			<c:forEach var="dto" items="${list}"> --%>
-<!--         	<div class="pre_line"> -->
-<!--         		<div class="pre_pf"><img src="images/b1.png" class="pre_pf_img"></div> -->
-<%--         		<div class="pre_text"><b>${dto.fr_id}</b></div> --%>
-<!--                 <div class="pre_time"> -->
-<%--                 <a href="${pageContext.request.contextPath}/message/messageView.msg?fr_id=${dto.fr_id}"> --%>
-<%--                 <img src="/images/startMsg.png" class="pre_start" id="${dto.fr_id}"> --%>
-<!--                 </a> --> 
-<!--                 </div> -->
-<!--             </div> -->
-<%--        		</c:forEach> --%>
 			
 			</div>
 <!--           ------------------------------------------------->

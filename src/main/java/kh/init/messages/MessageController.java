@@ -44,7 +44,6 @@ public class MessageController {
 		List<MessageDTO> result = new ArrayList<>();
 		
 		for(MessageDTO tmp : resultF) {
-			System.out.println(tmp.getFr_id());
 			MessageDTO result2 = service.previewMsg("123@123.123", tmp.getFr_id()); // 123@부분 session id로 바꿔야 함
 			result.add(result2);
 		}
@@ -57,12 +56,7 @@ public class MessageController {
 	@RequestMapping(value="messageView.msg", produces="text/html; charset=UTF-8")
 	@ResponseBody
 	public String toView(MessageDTO dto, String fr_id, String to_id, Model model) {
-		System.out.println("상세 보기 가는 중");
-		System.out.println(to_id);
 		List<MessageDTO> result = service.selectAll("123@123.123", to_id); // 123@부분 session id로 바꿔야 함
-		for(MessageDTO tmp : result) {
-			System.out.println(tmp.getContents());
-		}
 		Gson gs = new Gson();
 		return gs.toJson(result);
 	}
@@ -82,7 +76,6 @@ public class MessageController {
 	@ResponseBody
 	public String checkNewMsg(String from_id) {
 		String result = Integer.toString(service.isNewMsg("123@123.123"));
-//		System.out.println("메시지 알림 개수 : " + result);
 		// 나중엔 이메일 부분 session id로 받을 것
 		return result;
 	}
