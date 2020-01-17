@@ -33,24 +33,26 @@ html, body {
 	box-sizing: border-box;
 }
 
-.mainBox {
-	margin-bottom: 20px;
-}
 
-.feedBox {
-	display: flex;
-	height: 100%;
-	margin-bottom: 20px;
-}
 
-.sectionImg {
+
+
+.cover {
 	border: 1px solid black;
 	width: 100%;
 	height: 100%;
 }
 
 .feed {
-	flex: 1;
+	width: 20vw;
+      height: 20vw;
+      min-height: 150px;
+      min-width: 150px;
+	
+}
+#likeBtn, #bookmarkBtn{
+   width:20px;
+   height:20px;
 }
 
 .container-fluid {
@@ -59,20 +61,45 @@ html, body {
 	max-width: 935px;
 	padding: 60px 20px 0;
 }
+#carouselExampleIndicators{
+   width:100%;
+}
+.carousel-item {
+   margin: auto;
+   text-align: center;
+}
+
+.carousel-inner {
+   width: 100%;
+}
+
+.carousel-item * {
+   width: 200px;
+   height: 200px;
+}
 
 .wrapper {
 	max-width: 1200px;
 	margin: auto;
 	height: 1200px;
 }
-
-.left, .middle {
-	margin-right: 20px;
+.btn-primary1:hover, .btn-primary1:hover{
+   background-color:white;
+}
+.btn-primary1:not(:disabled):not(.disabled).active, .btn-primary1:not(:disabled):not(.disabled):active, .show>.btn-primary1.dropdown-toggle{
+   border:none;
+   background-color:white;
 }
 
-.left, .middle, .right {
-	width: 33%;
+.btn-primary1{
+   width:100%;
+   height:100%;
+   border-color:white;
+   background-color:white;
+   padding:0px;
+   color:black;
 }
+
 /* 프로필 */
 .profile {
 	position: relative;
@@ -296,77 +323,75 @@ html, body {
 						- $(window).height() - 5) {
 					console.log("스크롤감지");
 					if (page == 1) {
+						console.log(page);
 						page++;
 					} else {
+						console.log(page);
 						getList(page);
 						page++;
 					}
 				}
 			});
 
-	function getList(page) {
-		$
-				.ajax({
-					type : 'POST',
-					dataType : 'json',
-					data : {
-						"page" : page
-					},
-					url : "/feed/myFeedAjax",
-					dataType : "JSON"
-				})
-				.done(
-						function(data) {
-							console.log("data.result : " + data.result);
-							if (data.result == "false") {
-								console.log("false");
-								return 'false';
-							}
-							var rnum = JSON.parse(data.rnum);
-							console.log("rnum : " + rnum);
-							var list = JSON.parse(data.list);
-							var cover = JSON.parse(data.cover);
-							console.log(list);
-							var i = Number(rnum[0]);
-							console.log("rnum[0] : " + i);
-							var end = (Number(i) + list.length);
-							var index = 0;
-							var data = "";
+	 function getList(page){
+	       $.ajax({
+	           type : 'POST',  
+	           dataType : 'json', 
+	           data : {"page" : page},
+	           url : "/feed/myFeedAjax",
+	           dataType:"JSON"
+	       }).done(function(data){
+	          console.log("data.result : "+data.result);
+	          if(data.result=="false"){
+	             console.log("false");
+	             return 'false';
+	          }
+	         var rnum = JSON.parse(data.rnum);
+	         console.log("rnum : "+rnum);
+	          var list = JSON.parse(data.list);
+	          var cover = JSON.parse(data.cover);
+	          console.log(list);
+	          var i =Number(rnum[0]);
+	          console.log("rnum[0] : " +i);
+	          var end = (Number(i)+list.length);
+	          var index=0;
+	          var data = "";
+	          
+	          for(i; i<end; i++){
+	              data = data + "<div class='col-4 feed'><a class='btn btn-primary' data-toggle='modal' data-target='#exampleModal' href='#' data-id='"+list[index].feed_seq+"'>"+cover[index]+"</a></div>";
+	              console.log(i);
+	              if(i%3==1){
+	                 console.log(i+"는 1");
+	                 data = "<div class='row' style='margin:0px'>" +data;
+	              }
+	              if(i%3==0){
+	                 console.log(i+"는0");
+	                 data = data + "</div>";
 
-							for (i; i < end; i++) {
-								data = data
-										+ "<div class='col-4 feed'><a href='/feed/detailView?feed_seqS="
-										+ list[index].feed_seq + "'>"
-										+ cover[index] + "</a></div>";
-								console.log(data);
-								if (i % 3 == 1) {
-									data = "<div class='row' style='margin:0px'>"
-											+ data;
-								}
-								if (i % 3 == 0) {
-									data = data + "</div>";
-								}
+	                  $("#feeds").append(data); 
+	                  var data = "";
+	              }
+	              
+	            }
+	            $("#feeds").append(data); 
+//	          for(i; i<end; i++){
+//	             console.log(i);
+//	              var data = $("<div class='col-4 feed'></div>");
+//	              var a = $("<a href='/feed/detailView?feed_seqS="+list[index].feed_seq+"'>");
+//	              a.append(cover[index]);
+//	              data.append(a);
+//	              if(i%3==1){
+//	                 data.before("<div class='row' style='margin:0px'>")
+//	                 console.log(data);
+//	              }else if(i%3==0){
+//	                 data.after("</div>");
+//	              }
+//	              $("#feeds").append(data);
+//	              index++;
+//	          }
+	      })
+	   }
 
-								index++;
-							}
-							$("#feeds").append(data);
-							// 			for(i; i<end; i++){
-							// 				console.log(i);
-							// 		    	var data = $("<div class='col-4 feed'></div>");
-							// 		    	var a = $("<a href='/feed/detailView?feed_seqS="+list[index].feed_seq+"'>");
-							// 		    	a.append(cover[index]);
-							// 		    	data.append(a);
-							// 		    	if(i%3==1){
-							// 		    		data.before("<div class='row' style='margin:0px'>")
-							// 		    		console.log(data);
-							// 		    	}else if(i%3==0){
-							// 		    		data.after("</div>");
-							// 		    	}
-							// 		    	$("#feeds").append(data);
-							// 		    	index++;
-							// 			}
-						})
-	}
 </script>
 </head>
 
@@ -388,7 +413,7 @@ html, body {
 					</div>
 					<div class="profileMessageLayout">
 						<div class="profileName">${mvo.nickname }</div>
-						<div class="profileMessage">8${mvo.profile_msg}</div>
+						<div class="profileMessage">${mvo.profile_msg}</div>
 					</div>
 					<div class="profileLayoutRight">
 						<button class="friendRequest">＋</button>
@@ -418,67 +443,50 @@ html, body {
 					</div>
 					<div class="profileMessageLayout">
 						<div class="profileName">${mvo.nickname }</div>
-						<div class="profileMessage">8${mvo.profile_msg}</div>
+						<div class="profileMessage">${mvo.profile_msg}</div>
 					</div>
 				</c:otherwise>
 
 			</c:choose>
 		</div>
-		<div class="wrapper">
-			<div class="profile"></div>
-			<div class="mainBox">
-				<div class="feedBox">
-					<div class="left feed">
-						<img class="sectionImg"
-							src="${pageContext.request.contextPath }/resources/images/sadCat.jpg"
-							alt="">
-					</div>
-					<div class="middle feed">
-						<img class="sectionImg"
-							src="${pageContext.request.contextPath }/resources/images/sadCat.jpg"
-							alt="">
-					</div>
-					<div class="right feed">
-						<img class="sectionImg"
-							src="${pageContext.request.contextPath }/resources/images/sadCat.jpg"
-							alt="">
-					</div>
-				</div>
-
-				<div class="feedBox">
-					<div class="left feed">
-						<img class="sectionImg"
-							src="${pageContext.request.contextPath }/resources/images/sadCat.jpg"
-							alt="">
-					</div>
-					<div class="middle feed">
-						<img class="sectionImg"
-							src="${pageContext.request.contextPath }/resources/images/sadCat.jpg"
-							alt="">
-					</div>
-					<div class="right feed">
-						<img class="sectionImg"
-							src="${pageContext.request.contextPath }/resources/images/sadCat.jpg"
-							alt="">
-					</div>
-				</div>
-				<div class="row">
-					<div class="col section left">
-						<img class="sectionImg"
-							src="${pageContext.request.contextPath }/resources/images/sadCat.jpg"
-							alt="">
-					</div>
-					<div class="col section middle">
-						<img class="sectionImg"
-							src="${pageContext.request.contextPath }/resources/images/sadCat.jpg"
-							alt="">
-					</div>
-				</div>
-			</div>
+		<div class=menubar style="height:200px;">
+		<button type="button">Personal feed</button>
+		<button type="button">scrap feed</button>
+		
+		<button type="button" id="registerFeed">게시물 등록</button>
+	
 		</div>
-	</div>
+		<div class="wrapper">
+			
+			<div id="myFeed">
+         <c:choose>
+            <c:when test="${fn:length(list) ==0}">
+            게시물이 없습니다.
+            </c:when>
+            <c:otherwise>
+            <div id="feeds">
+                  <c:forEach items="${list }" var="feed" varStatus="status">
+                     <c:if test="${status.count mod 3==1}">
+                        <div class="row" style="margin: 0px">
+                     </c:if>
+                     <div class="col-4 feed">
+                        <a class="btn btn-primary1" data-toggle="modal" data-target="#exampleModal" href="#" data-id="${feed.feed_seq }">${cover[status.count-1] }</a>
+                     </div>
+                     <c:if test="${status.count mod 3==0}">
+                        </div>
+                     </c:if>
+                  </c:forEach>
+                  </div>
+              
+            </c:otherwise>
+         </c:choose>
+          </div>
+         </div>
+      
+		
+		
 
-
+</div>
 
 	<!-- 친구요청 모달 영역 -->
 	<div id="modalBox" class="modal fade" id="myModal" tabindex="-1"
@@ -541,6 +549,13 @@ html, body {
 		</div>
 	</div>
 	<script type="text/javascript">
+	
+	    $("#registerFeed")
+				.on(
+						"click",
+						function() {
+							location.href = "${pageContext.request.contextPath}/feed/writeFeed";
+						})
 		$("#changeProfile")
 				.on(
 						"click",

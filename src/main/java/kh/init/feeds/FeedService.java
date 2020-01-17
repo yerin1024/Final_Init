@@ -7,6 +7,8 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.servlet.http.HttpSession;
+
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -120,13 +122,13 @@ public class FeedService {
 			int feed_seq = tmp.getFeed_seq();
 			List<String> media = dao.getMediaList(feed_seq);
 			if(media.size()==0) { //이미지나 비디오가 없기 때문에 제목으로 커버를 만들어야되는 경우
-				cover.add("<span class='cover'>"+tmp.getTitle()+"</span>");
+				cover.add("<span class='cover' style='width:100%;height:100%'>"+tmp.getTitle()+"</span>");
 			}else {
 				if(media.get(0).endsWith("mp4")) { //파일이 동영상일 경우
-					String video = "<video class='cover' src=\""+media.get(0)+"\">";
+					String video = "<video class='cover' style='width:100%;height:100%' src=\""+media.get(0)+"\">";
 					cover.add(video);
 				}else {//파일이 이미지
-					String img = "<img class='cover' src=\""+media.get(0)+"\">";
+					String img = "<img class='cover' style='width:100%;height:100%' src=\""+media.get(0)+"\">";
 					cover.add(img);
 				}
 			}
