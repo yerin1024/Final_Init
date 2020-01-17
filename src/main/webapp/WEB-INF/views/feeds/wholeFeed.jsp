@@ -9,10 +9,19 @@
 <meta charset="UTF-8">
 <title>Whole Feed</title>
 <link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script
-	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
 <style>
 #wrapper {
 	margin: auto;
@@ -58,20 +67,27 @@
 	padding:0px;
 	color:black;
 }
-.likeBtn, .bookmarkBtn{
+#likeBtn, #bookmarkBtn{
 	width:20px;
 	height:20px;
 }
-.modal-contents{
-	height:300px;
-}
-.modal-contents div{
+#carouselExampleIndicators{
 	width:100%;
 }
-.row{
-	margin:0px;
-	margin-left:10px;
+.carousel-item {
+	margin: auto;
+	text-align: center;
 }
+
+.carousel-inner {
+	width: 100%;
+}
+
+.carousel-item * {
+	width: 200px;
+	height: 200px;
+}
+
 </style>
 <script>
 var page = 1;  //페이징과 같은 방식이라고 생각하면 된다. 
@@ -223,12 +239,11 @@ function getList(page){
 	          <span aria-hidden="true">&times;</span>
 	        </button>
 	      </div>
-	      <div class="modal-contents">
-
+	      <div class="modal-body">
+			
 	      </div>
 	      <div class="modal-footer">
-
-			<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				
 	      </div>
 	    </div>
 	  </div>
@@ -250,121 +265,96 @@ function getList(page){
 			var bookmarkCheck = data.bookmarkCheck;
 			var mediaList = JSON.parse(data.media);
 			var dto = JSON.parse(data.dto);
+			console.log(mediaList.length);
 			
-			$("#dtoContents").html(dto.contents);
-			if(mediaList.length>0){
-				console.log("media.length>0");
-				var media = $("<div class='row media'></div>");
-			}
-			
-			var feed = $("<div class='feedDetail'></div>");
-			var nick = $("<div class='row nickname'></div>");
-			nick.append(dto.nickname);
-
-			var media = $("<div class='row media'></div>");
-
-			var CEI = $("<div id='carouselExampleIndicators' class='carousel slide' data-interval='false'></div>");
-
-			var olCEI = $("<ol class='carousel-indicators'></ol>");
-
-			for (var m = 0; m < mediaList.length; m++) {
-				var liCEI = $("<li data-target='#carouselExampleIndicators'></li>");
-				if (m == 0) {
-					liCEI.attr("data-slide-to", 0);
-					liCEI.addClass("active");
-				} else {
-					liCEI.attr("data-slide-to", m);
+			//디테일뷰 미디어
+			if(mediaList.length>0){ //미디어가 존재하므로 캐러셀 만들어줌
+				console.log("캐러셀 시작");
+				var mediaRow = $("<div class='row media'></div>");
+				var cei = $("<div id='carouselExampleIndicators' class='carousel slide' data-interval='false'></div>");
+				var ol = $("<ol class='carousel-indicators'></ol>");
+				for(var i=0; i<mediaList.length; i++){
+					console.log(i);
+					if(i==0){
+						ol.append("<li data-target='#carouselExampleIndicators' data-slide-to='0' class='active'><li>");
+						console.log("i는 0");
+					}else{
+						ol.append("<li data-targer='#carouselExampleIndicators' data-slide-to='"+i+"'><li>");
+					}
 				}
-				olCEI.append(liCEI);
-			}
-			CEI.append(olCEI);
-
-			var ci = $("<div class='carousel-inner'>");
-
-			for (var m = 0; m < mediaList.length; m++) {
-				var divCI = $("<div class='carousel-item'></div>");
-				if (m == 0) {
-					divCI.addClass("active");
-					divCI.append(mediaList[m]);
-				} else {
-					divCI.append(mediaList[m]);
+				cei.append(ol);
+				
+				var cInner = $("<div class='carousel-inner'></div>");
+				for(var i=0; i<mediaList.length; i++){
+					if(i==0){
+						var cItem = $("<div class='carousel-item active'>"+mediaList[i]+"</div>");
+					}else{
+						var cItem = $("<div class='carousel-item'>"+mediaList[i]+"</div>");
+					}
+					cInner.append(cItem);
 				}
-				ci.append(divCI);
+				var prevA = $("<a class='carousel-control-prev' href='#carouselExampleIndicators' role='button' data-slide='prev'></a>");
+				prevA.append("<span class='carousel-control-prev-icon' aria-hidden='ture'></span>");
+				prevA.append("<span class='sr-only'>Previous</span>");
+				var nextA = $("<a class='carousel-control-next' href='#carouselExampleIndicators' role='button' data-slide='next'></a>");
+				nextA.append("<span class='carousel-control-next-icon' aria-hidden='ture'></span>");
+				nextA.append("<span class='sr-only'>Next</span>");
+				
+				cInner.append(prevA);
+				cInner.append(nextA);
+				
+				cei.append(cInner);
+				mediaRow.append(cei);
+				
+				$(".modal-body").html(mediaRow);
 			}
-			ci.append("<a class='carousel-control-prev' href='#carouselExampleIndicators' role='button' data-slide='prev'>");
-			ci.append("<span class='carousel-control-prev-icon' aria-hidden='true'></span> <span class='sr-only'>Previous</span></a>");
-			ci.append("<a class='carousel-control-next' href='#carouselExampleIndicators' role='button' data-slide='next'>");
-			ci.append("<span class='carousel-control-next-icon' aria-hidden='true'></span> <span class='sr-only'>Next</span></a>");
-
-			media.append(ci);
-			feed.append(nick);
-			feed.append(media);
-
-			var contents = $("<div class='row contents' style='height:100px'></div>");
-			contents.append(dto.contents);
-
-			feed.append(contents);
-
-			var btns = $("<div class='row btns'></div>");
-
-			if (likeCheck == 0) {
-				var imgBTNS = $("<img class='likeBtn' value='likeBefore' src='${pageContext.request.contextPath }/resources/images/likeBefore.png'>");
-				var spanBTNS = $("<span class='likeImg' ></span>");
-				imgBTNS.attr("seq", seq);
-				spanBTNS.append(imgBTNS);
-				spanBTNS.attr("seq", seq);
-
-				var aBTNS = $("<a href='#' class='like' onclick='return false'></a>");
-				aBTNS.attr("id", seq);
-				aBTNS.append(spanBTNS);
-				btns.append(aBTNS);
-			} else {
-				var imgBTNS = $("<img class='likeBtn' value='likeAfter' src='${pageContext.request.contextPath }/resources/images/likeAfter.png'>");
-				var spanBTNS = $("<span class='likeImg'></span>");
-				imgBTNS.attr("seq", seq);
-				spanBTNS.append(imgBTNS);
-				spanBTNS.attr("seq", seq);
-
-				var aBTNS = $("<a href='#' class='like' onclick='return false'></a>");
-				aBTNS.attr("id", seq);
-				aBTNS.append(spanBTNS);
-				btns.append(aBTNS);
-			}
-
-			if (bookmarkCheck == 0) {
-				var imgBTNS = $("<img class='bookmarkBtn' value='bookmarkBefore' src='${pageContext.request.contextPath }/resources/images/bookmarkBefore.png'>");
-				var spanBTNS = $("<span class='bookmarkImg' ></span>");
-				imgBTNS.attr("seq", seq);
-				spanBTNS.append(imgBTNS);
-				spanBTNS.attr("seq", seq);
-
-				var aBTNS = $("<a href='#' class='bookmark' onclick='return false'></a>");
-				aBTNS.attr("id", seq);
-				aBTNS.append(spanBTNS);
-				btns.append(aBTNS);
-			} else {
-				var imgBTNS = $("<img class='bookmarkBtn' value='bookmarkAfter' src='${pageContext.request.contextPath }/resources/images/bookmarkAfter.png'>");
-				var spanBTNS = $("<span class='bookmarkImg' ></span>");
-				imgBTNS.attr("seq", seq);
-				spanBTNS.append(imgBTNS);
-				spanBTNS.attr("seq", seq);
-
-				var aBTNS = $("<a href='#' class='bookmark' onclick='return false'></a>");
-				aBTNS.attr("id", seq);
-				aBTNS.append(spanBTNS);
-				btns.append(aBTNS);
-			}
-			feed.append(btns);
-			$(".modal-contents").append(feed);
 			
-
+			
+			//디테일뷰 글
+			var textRow = $("<div class='row text'></div>");
+			textRow.append(dto.contents);
+			$(".modal-body").append(textRow);
+			
+			
+			//디테일뷰 좋아요, 스크랩, 수정, 삭제 버튼
+			//좋아요버튼
+			if(likeCheck==0){
+				var likeA = $("<a href='#' id='like' class='"+dto.feed_seq+"'></a>");
+				var likeS = $("<span id='likeImg'></span>");
+				var likeI = $("<img id='likeBtn' class='likeBefore' src='${pageContext.request.contextPath}/resources/images/likeBefore.png'>");
+			}else{
+				var likeA = $("<a href='#' id='like' class='"+dto.feed_seq+"'></a>");
+				var likeS = $("<span id='likeImg'></span>");
+				var likeI = $("<img id='likeBtn' class='likeAfter' src='${pageContext.request.contextPath}/resources/images/likeAfter.png'>");
+			}
+			likeA.append(likeS);
+			likeS.append(likeI); 
+		
+			//스크랩버튼
+			if(bookmarkCheck==0){
+				var bookmarkA = $("<a href='#' id='bookmark' class='"+dto.feed_seq+"'></a>");
+				var bookmarkS = $("<span id='bookmarkImg'></span>");
+				var bookmarkI = $("<img id='bookmarkBtn' class='bookmarkBefore' src='${pageContext.request.contextPath}/resources/images/bookmarkBefore.png'>");
+			}else{
+				var bookmarkA = $("<a href='#' id='bookmark' class='"+dto.feed_seq+"'></a>");
+				var bookmarkS = $("<span id='bookmarkImg'></span>");
+				var bookmarkI = $("<img id='bookmarkBtn' class='bookmarkAfter' src='${pageContext.request.contextPath}/resources/images/bookmarkAfter.png'>");
+			}
+			bookmarkA.append(bookmarkS);
+			bookmarkS.append(bookmarkI); 
+			
+			$(".modal-footer").html(likeA);
+			$(".modal-footer").append(bookmarkA);
+			
 		})
 		
+		
 		$('#myInput').trigger('focus');
+		
 	})
 
-		$(document).on("click", ".like", function(){
-			var seq = $(this).attr("id");
+			$(document).on("click", "#like", function(){
+			var seq = $(this).attr("class");
 			var likeCheck = $("#likeBtn").attr("class");
 			if(likeCheck=="likeBefore"){ //아직 좋아요를 안눌러있는 상태에서 좋아요했을때
 				$.ajax({
@@ -372,7 +362,7 @@ function getList(page){
 					url : "/feed/insertLike",
 					data : {feed_seq : seq}
 				}).done(function(){
-					$(".likeImg").html("<img class=\"likeAfter\" id=\"likeBtn\" src=\"${pageContext.request.contextPath }/resources/images/likeAfter.png\">");
+					$("#likeImg").html("<img class=\"likeAfter\" id=\"likeBtn\" src=\"${pageContext.request.contextPath }/resources/images/likeAfter.png\">");
 				})
 			}else{
 				$.ajax({
@@ -380,13 +370,13 @@ function getList(page){
 					url : "/feed/deleteLike",
 					data : {feed_seq : seq}
 				}).done(function(){
-					$(".likeImg").html("<img class=\"likeBefore\" id=\"likeBtn\" src=\"${pageContext.request.contextPath }/resources/images/likeBefore.png\">");
+					$("#likeImg").html("<img class=\"likeBefore\" id=\"likeBtn\" src=\"${pageContext.request.contextPath }/resources/images/likeBefore.png\">");
 				})
 			}
 		})
 		
-		$(document).on("click", ".bookmark", function(){
-			var seq = $(this).attr("id");
+		$(document).on("click","#bookmark", function(){
+			var seq = $(this).attr("class");
 			var bookmarkCheck = $("#bookmarkBtn").attr("class");
 			if(bookmarkCheck=="bookmarkBefore"){ //아직 좋아요를 안눌러있는 상태에서 좋아요했을때
 				$.ajax({
@@ -394,7 +384,7 @@ function getList(page){
 					url : "/feed/insertBookmark",
 					data : {feed_seq : seq}
 				}).done(function(){
-					$(".bookmarkImg").html("<img class=\"bookmarkAfter\" id=\"bookmarkBtn\" src=\"${pageContext.request.contextPath }/resources/images/bookmarkAfter.png\">");
+					$("#bookmarkImg").html("<img class=\"bookmarkAfter\" id=\"bookmarkBtn\" src=\"${pageContext.request.contextPath }/resources/images/bookmarkAfter.png\">");
 				})
 			}else{
 				$.ajax({
@@ -402,9 +392,10 @@ function getList(page){
 					url : "/feed/deleteBookmark",
 					data : {feed_seq : seq}
 				}).done(function(){
-					$(".bookmarkImg").html("<img class=\"bookmarkBefore\" id=\"bookmarkBtn\" src=\"${pageContext.request.contextPath }/resources/images/bookmarkBefore.png\">");
+					$("#bookmarkImg").html("<img class=\"bookmarkBefore\" id=\"bookmarkBtn\" src=\"${pageContext.request.contextPath }/resources/images/bookmarkBefore.png\">");
 				})
 			}
+				
 		})
 	</script>
 </body>

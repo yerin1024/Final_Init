@@ -286,10 +286,12 @@ img {
 								</c:forEach>
 
 								<a class="carousel-control-prev"
-									href="#carouselExampleIndicators" role="button"
-									data-slide="prev"> <span class="carousel-control-prev-icon"
-									aria-hidden="true"></span> <span class="sr-only">Previous</span>
-								</a> <a class="carousel-control-next"
+									href="#carouselExampleIndicators" role="button" data-slide="prev"> 
+									<span class="carousel-control-prev-icon"
+									aria-hidden="true"></span> 
+									<span class="sr-only">Previous</span>
+								</a> 
+								<a class="carousel-control-next"
 									href="#carouselExampleIndicators" role="button"
 									data-slide="next"> <span class="carousel-control-next-icon"
 									aria-hidden="true"></span> <span class="sr-only">Next</span>
@@ -298,6 +300,11 @@ img {
 						</div>
 					</div>
 				</c:when>
+				
+				
+				
+				
+				
 			</c:choose>
 			<div class="row">
 				<div class="col-4 reply">${dto.contents }</div>
@@ -446,6 +453,7 @@ img {
 					$("#bookmarkImg").html("<img class=\"bookmarkBefore\" id=\"bookmarkBtn\" src=\"${pageContext.request.contextPath }/resources/images/bookmarkBefore.png\">");
 				})
 			}
+				
 		})
 	</script>
 </body>
