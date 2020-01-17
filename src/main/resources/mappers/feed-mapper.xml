@@ -172,7 +172,7 @@
 	</delete>
 	<select id="viewAllReply" parameterType="java.util.Map" resultType="kh.init.feeds.ReplyDTO">
 		select * from tb_reply
-		where feed_seq = #{feed_seq} and parent = #{parent} order by 7 desc
+		where feed_seq = #{feed_seq} and parent = #{parent} order by 7 asc
 	</select>
 
 	<select id="replyNextSeq" resultType="Integer">
