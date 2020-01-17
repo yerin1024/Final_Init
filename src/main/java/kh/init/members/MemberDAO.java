@@ -62,7 +62,6 @@ public class MemberDAO {
 		param.put("val", email);
 		param.put("col", "email");
     	return jdbc.selectOne("Member.selectMember",param);
-    	
     }
 	//회원 탈퇴
 	public int withdrawMem(String email) throws Exception {

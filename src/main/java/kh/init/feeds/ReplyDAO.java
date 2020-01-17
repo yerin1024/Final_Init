@@ -23,9 +23,14 @@ public class ReplyDAO {
 		param.put("val", val);
 		return jdbc.delete("Feed.deleteReply",param);
 	}
-	public List<ReplyDTO> viewAllReply(int feed_seq)throws Exception{
-		return jdbc.selectList("Feed.viewAllReply",feed_seq);
+	public List<ReplyDTO> viewAllReply(int Feed_seq){
+		return jdbc.selectList("Feed.viewAllReply", Feed_seq);
 	}
+	
+	public List<ReplyDTO> viewAllReplyTest(int feed_seq)throws Exception{
+		return jdbc.selectList("Feed.viewAllReplyTest",feed_seq);
+	}
+	
 	public int replyNextSeq()throws Exception{
 		return jdbc.selectOne("Feed.replyNextSeq");
 	}
