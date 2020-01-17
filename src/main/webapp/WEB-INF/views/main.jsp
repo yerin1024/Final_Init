@@ -696,7 +696,7 @@
                     email1.focus();
                     console.log("email1 유효성 검사결과: invalidate");
                 }
-        }
+        	}
         });
         email2.addEventListener("blur", function () {
             rawStr = email2.value;
