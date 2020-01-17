@@ -87,6 +87,10 @@
 	width: 200px;
 	height: 200px;
 }
+#writerProfile{
+	width:50px;
+	height:50px;
+}
 
 </style>
 <script>
@@ -138,17 +142,22 @@ function getList(page){
     	var data = "";
     	for(i; i<end; i++){
 			data = data + "<div class='col-4 feed'><a class='btn btn-primary' data-toggle='modal' data-target='#exampleModal' href='#' data-id='"+list[index].feed_seq+"'>"+cover[index]+"</a></div>";
-			console.log(data);
+			console.log(i);
 			if(i%3==1){
+				console.log(i+"는 1");
 				data = "<div class='row' style='margin:0px'>" +data;
 			}
 			if(i%3==0){
+				console.log(i+"는0");
 				data = data + "</div>";
+
+		    	$("#feeds").append(data); 
+		    	var data = "";
 			}
 			
-			index++;
     	}
     	$("#feeds").append(data); 
+    	
 //			for(i; i<end; i++){
 //				console.log(i);
 //		    	var data = $("<div class='col-4 feed'></div>");
@@ -235,6 +244,7 @@ function getList(page){
 	    <div class="modal-content">
 	      <div class="modal-header">
 	        <h5 class="modal-title" id="exampleModalLabel">DETAIL VIEW</h5>
+	        <span class="writerProfile"></span>
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 	          <span aria-hidden="true">&times;</span>
 	        </button>
@@ -261,6 +271,8 @@ function getList(page){
 			dataType:"json"
 		}).done(function(data){
 			console.log(data);
+			var writerProfile = data.writerProfile;
+			console.log(writerProfile)
 			var likeCheck = data.likeCheck;
 			var bookmarkCheck = data.bookmarkCheck;
 			var mediaList = JSON.parse(data.media);
@@ -276,10 +288,10 @@ function getList(page){
 				for(var i=0; i<mediaList.length; i++){
 					console.log(i);
 					if(i==0){
-						ol.append("<li data-target='#carouselExampleIndicators' data-slide-to='0' class='active'><li>");
+						ol.append("<li data-target='#carouselExampleIndicators' data-slide-to='0' class='active'></li>");
 						console.log("i는 0");
 					}else{
-						ol.append("<li data-targer='#carouselExampleIndicators' data-slide-to='"+i+"'><li>");
+						ol.append("<li data-targer='#carouselExampleIndicators' data-slide-to='"+i+"'></li>");
 					}
 				}
 				cei.append(ol);
@@ -343,9 +355,10 @@ function getList(page){
 			bookmarkA.append(bookmarkS);
 			bookmarkS.append(bookmarkI); 
 			
+			$(".modal-footer1").html("");
 			$(".modal-footer").html(likeA);
 			$(".modal-footer").append(bookmarkA);
-			
+			$(".writerProfile").html("<img src="+writerProfile+" id='writerProfile'>");
 		})
 		
 		

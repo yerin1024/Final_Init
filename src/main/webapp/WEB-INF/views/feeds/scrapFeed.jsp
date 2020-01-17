@@ -89,6 +89,10 @@
 	width: 200px;
 	height: 200px;
 }
+#writerProfile{
+	width:50px;
+	height:50px;
+}
 </style>
 </head>
 <body>
@@ -122,6 +126,7 @@
 	    <div class="modal-content">
 	      <div class="modal-header">
 	        <h5 class="modal-title" id="exampleModalLabel">DETAIL VIEW</h5>
+	         <span class="writerProfile"></span>
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 	          <span aria-hidden="true">&times;</span>
 	        </button>
@@ -148,6 +153,7 @@
 			dataType:"json"
 		}).done(function(data){
 			console.log(data);
+			var writerProfile = data.writerProfile;
 			var likeCheck = data.likeCheck;
 			var bookmarkCheck = data.bookmarkCheck;
 			var mediaList = JSON.parse(data.media);
@@ -163,10 +169,10 @@
 				for(var i=0; i<mediaList.length; i++){
 					console.log(i);
 					if(i==0){
-						ol.append("<li data-target='#carouselExampleIndicators' data-slide-to='0' class='active'><li>");
+						ol.append("<li data-target='#carouselExampleIndicators' data-slide-to='0' class='active'></li>");
 						console.log("i는 0");
 					}else{
-						ol.append("<li data-targer='#carouselExampleIndicators' data-slide-to='"+i+"'><li>");
+						ol.append("<li data-targer='#carouselExampleIndicators' data-slide-to='"+i+"'></li>");
 					}
 				}
 				cei.append(ol);
@@ -230,8 +236,11 @@
 			bookmarkA.append(bookmarkS);
 			bookmarkS.append(bookmarkI); 
 			
+			$(".modal-footer1").html("");
 			$(".modal-footer").html(likeA);
 			$(".modal-footer").append(bookmarkA);
+
+			$(".writerProfile").html("<img src="+writerProfile+" id='writerProfile'>");
 			
 		})
 		

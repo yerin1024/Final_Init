@@ -17,13 +17,14 @@ public class HomeController {
 	
 	@RequestMapping("/main")
 	public String toMain() {
+		session.setAttribute("mediaList", new ArrayList<String>());
 		return "main";
 	}
 
 	@RequestMapping("/home")
 	public String home() {
 		session.setAttribute("mediaList", new ArrayList<String>());
-		session.setAttribute("loginInfo", new MemberDTO("yerinEMAIL", "PW", "YERIN", "YERIN", "R", "R", null,null, "N", null, "E", "N"));
+		session.setAttribute("loginInfo", new MemberDTO("aa@naver.com", "PW", "YERIN", "YERIN", "R", "R", null,null, "N", null, "E", "N"));
 		return "home";
 	}
 	

@@ -173,6 +173,10 @@
 		background-color: blue;
 	}
 }
+#writerProfile{
+	width:50px;
+	height:50px;
+}
 </style>
 <script>
 
@@ -231,16 +235,20 @@
 	    	var data = "";
 	    	
 	    	for(i; i<end; i++){
-				data = data + "<div class='col-4 feed'><a href='/feed/detailView?feed_seqS="+list[index].feed_seq+"'>"+cover[index]+"</a></div>";
-				console.log(data);
+				data = data + "<div class='col-4 feed'><a class='btn btn-primary' data-toggle='modal' data-target='#exampleModal' href='#' data-id='"+list[index].feed_seq+"'>"+cover[index]+"</a></div>";
+				console.log(i);
 				if(i%3==1){
+					console.log(i+"는 1");
 					data = "<div class='row' style='margin:0px'>" +data;
 				}
 				if(i%3==0){
+					console.log(i+"는0");
 					data = data + "</div>";
+
+			    	$("#feeds").append(data); 
+			    	var data = "";
 				}
 				
-				index++;
 	    	}
 	    	$("#feeds").append(data); 
 // 			for(i; i<end; i++){
@@ -396,6 +404,7 @@
 	    <div class="modal-content">
 	      <div class="modal-header">
 	        <h5 class="modal-title" id="exampleModalLabel">DETAIL VIEW</h5>
+	         <span class="writerProfile"></span>
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 	          <span aria-hidden="true">&times;</span>
 	        </button>
@@ -424,6 +433,7 @@
 			dataType:"json"
 		}).done(function(data){
 			console.log(data);
+			var writerProfile = data.writerProfile;
 			var likeCheck = data.likeCheck;
 			var bookmarkCheck = data.bookmarkCheck;
 			var mediaList = JSON.parse(data.media);
@@ -513,6 +523,8 @@
 			$(".modal-footer1").html("");
 			$(".modal-footer1").append(likeA);
 			$(".modal-footer1").append(bookmarkA);
+
+			$(".writerProfile").html("<img src="+writerProfile+" id='writerProfile'>");
 			
 		})
 		
