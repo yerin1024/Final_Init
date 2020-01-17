@@ -23,11 +23,8 @@ public class ReplyDAO {
 		param.put("val", val);
 		return jdbc.delete("Feed.deleteReply",param);
 	}
-	public List<ReplyDTO> viewAllReply(int feed_seq, int parent)throws Exception{
-		Map<String,Object> param = new HashMap<>();
-		param.put("feed_seq", feed_seq);
-		param.put("parent", parent);
-		return jdbc.selectList("Feed.viewAllReply",param);
+	public List<ReplyDTO> viewAllReply(int Feed_seq){
+		return jdbc.selectList("Feed.viewAllReply", Feed_seq);
 	}
 	
 	public List<ReplyDTO> viewAllReplyTest(int feed_seq)throws Exception{

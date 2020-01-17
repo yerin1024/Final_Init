@@ -312,31 +312,27 @@ public class FeedController {
 		int likeCheck = 0; //0은 안한것 1은 한것
 		int bookmarkCheck = 0; //0은 안한것 1은 한것
 		FeedDTO dto = null;
-		List<ReplyDTO> parentReply = new ArrayList<>();
-		List<ReplyDTO> childReply = new ArrayList<>();
 		List<String> list = new ArrayList<>();
+
 		JsonObject obj = new JsonObject();
 		Gson g = new Gson();
+
+		List<ReplyDTO> replyList = new ArrayList<>();
 		try {
 			dto = service.detailView(feed_seq);
 			likeCheck = service.likeCheck(feed_seq, ((MemberDTO)session.getAttribute("loginInfo")).getEmail());
 			bookmarkCheck = service.bookmarkCheck(feed_seq, ((MemberDTO)session.getAttribute("loginInfo")).getEmail());
-			
 
-			parentReply = (List<ReplyDTO>)service.viewAllReply(feed_seq).get("parents");
-			childReply = (List<ReplyDTO>)service.viewAllReply(feed_seq).get("childs");
-			
-			System.out.println("controller parent댓글"+parentReply.toString());
+
 			list = service.getMediaList(feed_seq);
-			
+			replyList = service.viewAllReply(feed_seq);
 //			System.out.println("Email : "+dto.getEmail());
 //			System.out.println("memberDTO : "+mservice.getMemberDTO(dto.getEmail()));
 			obj.addProperty("writerProfile", g.toJson((mservice.getMemberDTO(dto.getEmail())).getProfile_img()));
 			obj.addProperty("likeCheck", g.toJson(likeCheck));
 			obj.addProperty("likeCheck", g.toJson(likeCheck));
 			obj.addProperty("bookmarkCheck", g.toJson(bookmarkCheck));
-			obj.addProperty("parentReply",g.toJson(parentReply));
-			obj.addProperty("childReply",g.toJson(childReply));
+			obj.addProperty("replyList",  g.toJson(replyList));
 			obj.addProperty("media", g.toJson(list));
 			obj.addProperty("dto", g.toJson(dto));	
 
@@ -344,6 +340,7 @@ public class FeedController {
 			e.printStackTrace();
 		}			
 		return obj.toString();
+
 	}
 
 	@RequestMapping("/getFriendFeed")
