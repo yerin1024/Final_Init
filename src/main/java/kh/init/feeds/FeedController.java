@@ -280,28 +280,22 @@ public class FeedController {
 		int likeCheck = 0; //0은 안한것 1은 한것
 		int bookmarkCheck = 0; //0은 안한것 1은 한것
 		FeedDTO dto = null;
-		List<ReplyDTO> parentReply = new ArrayList<>();
-		List<ReplyDTO> childReply = new ArrayList<>();
 		List<String> list = new ArrayList<>();
+		List<ReplyDTO> replyList = new ArrayList<>();
 		try {
 			dto = service.detailView(feed_seq);
 			likeCheck = service.likeCheck(feed_seq, ((MemberDTO)session.getAttribute("loginInfo")).getEmail());
 			bookmarkCheck = service.bookmarkCheck(feed_seq, ((MemberDTO)session.getAttribute("loginInfo")).getEmail());
-			model.addAttribute("likeCheck", likeCheck);
-			model.addAttribute("bookmarkCheck", bookmarkCheck);
-
-			parentReply = (List<ReplyDTO>)service.viewAllReply(feed_seq).get("parents");
-			childReply = (List<ReplyDTO>)service.viewAllReply(feed_seq).get("childs");
-			
-			System.out.println("controller parent댓글"+parentReply.toString());
 			list = service.getMediaList(feed_seq);
-			model.addAttribute("parentReply",parentReply);
-			model.addAttribute("childReply",childReply);
+			replyList = service.viewAllReply(feed_seq);
 			model.addAttribute("media", list);
 			model.addAttribute("dto", dto);	
+			model.addAttribute("likeCheck", likeCheck);
+			model.addAttribute("bookmarkCheck", bookmarkCheck);
+			model.addAttribute("replyList", replyList);
 		}catch(Exception e) {
 			e.printStackTrace();
-		}			
+		}
 		return "/feeds/detailView";
 	}
 

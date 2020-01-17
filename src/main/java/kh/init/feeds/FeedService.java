@@ -1,6 +1,7 @@
 package kh.init.feeds;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.Gson;
 
+import edu.emory.mathcs.backport.java.util.Collections;
 import kh.init.members.MemberDTO;
 
 
@@ -384,24 +386,9 @@ public class FeedService {
 		int result = replyDAO.deleteReply("reply_seq",reply_seq);
 		return result;
 	}
-	public Map<String, Object> viewAllReply(int feed_seq)throws Exception{
-		List<ReplyDTO> parents = replyDAO.viewAllReply(feed_seq, 0);
-		System.out.println(parents.toString());
-		List<ReplyDTO> childs = null;
-		Map<String, Object> map = new HashMap<>();
-		map.put("parents", parents);
-		for(ReplyDTO tmp : parents){
-			int tmpParent = tmp.getReply_seq();
-//			try {
-				childs = replyDAO.viewAllReply(feed_seq, tmpParent);
-				System.out.print("\n"+childs.toString()+"입니다!");
-//			}catch(Exception e) {
-//				e.printStackTrace();
-//				return map;
-//			}
-		}
-		map.put("childs", childs);
-		return map;
+	public List<ReplyDTO> viewAllReply(int feed_seq)throws Exception{
+		List<ReplyDTO> list = replyDAO.viewAllReply(feed_seq);
+		return list;
 	}
 	public int updateReply(ReplyDTO dto)throws Exception{
 		int result = replyDAO.updateReply(dto);
