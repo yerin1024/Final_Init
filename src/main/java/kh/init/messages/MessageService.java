@@ -17,8 +17,8 @@ public class MessageService {
 	
 	// 친구 목록
 	@Transactional("txManager")
-	public List<FriendDTO> friendList(FriendDTO fdto, String myId){
-		return dao.friendList(fdto, myId);
+	public List<MessageDTO> friendList(String my_id){
+		return dao.friendList(my_id);
 	}
 	
 	// 메시지 30개 출력
