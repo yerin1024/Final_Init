@@ -29,6 +29,11 @@ public class ReplyDAO {
 		param.put("parent", parent);
 		return jdbc.selectList("Feed.viewAllReply",param);
 	}
+	
+	public List<ReplyDTO> viewAllReplyTest(int feed_seq)throws Exception{
+		return jdbc.selectList("Feed.viewAllReplyTest",feed_seq);
+	}
+	
 	public int replyNextSeq()throws Exception{
 		return jdbc.selectOne("Feed.replyNextSeq");
 	}

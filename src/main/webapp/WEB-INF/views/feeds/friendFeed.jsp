@@ -34,6 +34,56 @@
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
 <style>
+<<<<<<< HEAD
+	#wrapper{
+		border:1px solid red;
+		margin:auto;
+		width:70vw;
+	}
+
+	.feed{
+		border:1px solid blue;
+	}
+	.dz-default {
+		border: 2px solid black;
+	}
+	
+	.dz-preview {
+		display: none;
+	}
+	
+	.carousel-item {
+		margin: auto;
+		text-align: center;
+	}
+	
+/* 	.carousel-inner { */
+/* 		width: 100vw; */
+/* 	} */
+	
+	.carousel-item * {
+		width: 600px;
+		height: 600px;
+	}
+	
+	.btnss * {
+		width: 100px;
+		height: 100px;
+	}
+	.likeImg>img{
+		width:50px;
+		height:50px;
+	}
+	.bookmarkImg>img{
+		width:50px;
+		height:50px;
+	}
+	.row{
+		width:100%;
+		margin:0px;
+	}
+	
+=======
 #wrapper {
 	border: 1px solid red;
 	margin: auto;
@@ -196,18 +246,31 @@ html, body {
 	}
 }
 </style>
-
-
 <script>
-	var page = 1; //페이징과 같은 방식이라고 생각하면 된다. 
-
-	$(function() { //페이지가 로드되면 데이터를 가져오고 page를 증가시킨다.
-		if (page == 1) {
-			page++;
-		} else {
-			getList(page);
-			page++;
-		}
+	var page = 1;  //페이징과 같은 방식이라고 생각하면 된다. 
+	
+	$(function(){  //페이지가 로드되면 데이터를 가져오고 page를 증가시킨다.
+	    if(page==1){ 
+	     page++;
+	    }else{
+	    	getList(page);
+	    	page++;
+	    }
+	}); 
+	 
+	$(window).scroll(function(){   //스크롤이 최하단 으로 내려가면 리스트를 조회하고 page를 증가시킨다.
+		console.log($(window).scrollTop());
+		console.log($(document).height());
+		console.log($(window).height());
+		if($(window).scrollTop() >= $(document).height()-$(window).height()- 5 ){
+			console.log("스크롤 감지");
+			if(page==1){ 
+			     page++;
+			    }else{
+			    	getList(page);
+			    	page++;
+			    }
+	     } 
 	});
 
 	$(window).scroll(

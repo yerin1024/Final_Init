@@ -20,46 +20,44 @@
 		select count(*) from tb_member where email= #{email} and pw= #{pw}
 	</select>
 	
-
 	<select id="selectMember" parameterType="java.util.Map" resultType="kh.init.members.MemberDTO">
   		select * from tb_member where ${col} = #{val}
  	</select>  
 
-  
-  <delete id="delete" >
-   delete from tb_member where email = #{email}
-  </delete>
-  
-  <update id="update" parameterType="java.util.Map">
-  update tb_member
-  <trim prefix="set" prefixOverrides=",">
-    <if test=" pw!= null">
-       pw = #{pw}
-    </if>
-    <if test="name != null">
-       ,name = #{name}
-    </if>
-    <if test="phone != null">
-       ,phone = #{phone}
-    </if>
-     <if test="birth != null">
-       ,birth = #{birth}
-    </if>
-    <if test="profile_img != null">
-       ,profile_img = #{profile_img}
-    </if>
-    <if test="nickname != null">
-       ,nickname = #{nickname}
-    </if>
-    <if test="profile_msg != null">
-       ,profile_msg = #{profile_msg}
-    </if>
-    <if test="id != null">
-       where email = #{id}
-    </if>
-     
-    
-    </trim>
-  </update>
+	  <delete id="delete" >
+	   delete from tb_member where email = #{email}
+	  </delete>
+	  
+	  <update id="update" parameterType="java.util.Map">
+	  update tb_member
+	  <trim prefix="set" prefixOverrides=",">
+	    <if test=" pw!= null">
+	       pw = #{pw}
+	    </if>
+	    <if test="name != null">
+	       ,name = #{name}
+	    </if>
+	    <if test="phone != null">
+	       ,phone = #{phone}
+	    </if>
+	     <if test="birth != null">
+	       ,birth = #{birth}
+	    </if>
+	    <if test="profile_img != null">
+	       ,profile_img = #{profile_img}
+	    </if>
+	    <if test="nickname != null">
+	       ,nickname = #{nickname}
+	    </if>
+	    <if test="profile_msg != null">
+	       ,profile_msg = #{profile_msg}
+	    </if>
+	    <if test="id != null">
+	       where email = #{id}
+	    </if>
+	     
+	    
+	    </trim>
+	  </update>
 </mapper>
 
