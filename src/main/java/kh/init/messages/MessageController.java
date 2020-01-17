@@ -30,8 +30,8 @@ public class MessageController {
 	// 친구 목록
 	@RequestMapping(value="friendList.msg", produces="text/html; charset=UTF-8")
 	@ResponseBody
-	public String toFriendList(FriendDTO fdto, String id, Model model) {
-		List<FriendDTO> result = service.friendList(fdto, "123@123.123"); // 123@부분 session id로 바꿔야 함
+	public String toFriendList(String my_id, Model model) {
+		List<MessageDTO> result = service.friendList("123@123.123"); // 123@부분 session id로 바꿔야 함
 		Gson gs = new Gson();
 		return gs.toJson(result);
 	}
@@ -39,14 +39,16 @@ public class MessageController {
 	// 메시지 미리 보기 목록
 	@RequestMapping(value="previewList.msg", produces="text/html; charset=UTF-8")
 	@ResponseBody
-	public String toPreviewList(FriendDTO fdto, MessageDTO dto, String to_id, Model model) {
-		List<FriendDTO> resultF = service.friendList(fdto, "123@123.123"); // 123@부분 session id로 바꿔야 함
+	public String toPreviewList(MessageDTO dto, String to_id, Model model) {
+		List<MessageDTO> resultF = service.friendList("123@123.123"); // 123@부분 session id로 바꿔야 함
 		List<MessageDTO> result = new ArrayList<>();
 		
-		for(FriendDTO tmp : resultF) {
+		for(MessageDTO tmp : resultF) {
+			System.out.println(tmp.getFr_id());
 			MessageDTO result2 = service.previewMsg("123@123.123", tmp.getFr_id()); // 123@부분 session id로 바꿔야 함
 			result.add(result2);
 		}
+		
 		Gson gs = new Gson();
 		return gs.toJson(result);
 	}
@@ -55,7 +57,12 @@ public class MessageController {
 	@RequestMapping(value="messageView.msg", produces="text/html; charset=UTF-8")
 	@ResponseBody
 	public String toView(MessageDTO dto, String fr_id, String to_id, Model model) {
+		System.out.println("상세 보기 가는 중");
+		System.out.println(to_id);
 		List<MessageDTO> result = service.selectAll("123@123.123", to_id); // 123@부분 session id로 바꿔야 함
+		for(MessageDTO tmp : result) {
+			System.out.println(tmp.getContents());
+		}
 		Gson gs = new Gson();
 		return gs.toJson(result);
 	}

@@ -49,18 +49,18 @@ public class AlarmDAO {
 		return jdbc.insert("Alarm.alarmFriend",prm);
 	}
 	
-	// 알림 목록
-	public List<AlarmDTO> alarmList(String email){
+//	// 알림 목록
+//	public List<AlarmDTO> alarmList(String email){
+//		Map<String, Object> prm = new HashMap<>();
+//		prm.put("email",email);
+//		return jdbc.selectList("Alarm.alarmList",prm);
+//	}
+	
+	// 알림 목록 2
+	public List<AlarmVO> alarmList(String email){
 		Map<String, Object> prm = new HashMap<>();
 		prm.put("email",email);
 		return jdbc.selectList("Alarm.alarmList",prm);
-	}
-	
-	// 알림 목록 2
-	public List<AlarmVO> alarmList2(String email){
-		Map<String, Object> prm = new HashMap<>();
-		prm.put("email",email);
-		return jdbc.selectList("Alarm.alarmList2",prm);
 	}
 	
 	// 새 알림이 있는지

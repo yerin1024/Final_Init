@@ -35,6 +35,7 @@
         </div>
     </div>
 <script>
+$(function() {
      $(".header").mouseenter(function(){
         $("#total_feed").attr("src", $("#total_feed").attr("src").replace("/resources/images/friends.png", "/resources/images/friends2.png"));  
         $("#notification").attr("src", $("#notification").attr("src").replace("/resources/images/notification.png", "/resources/images/notification2.png"));  
@@ -81,7 +82,7 @@
      $("#logout").mouseleave(function(){
          $("#logout").attr("src", $("#logout").attr("src").replace("/resources/images/logout3.png", "/resources/images/logout2.png"));  
     });
-     
+});
      
      
      $(function() {

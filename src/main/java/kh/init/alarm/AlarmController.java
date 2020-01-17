@@ -29,7 +29,7 @@ public class AlarmController {
 	@ResponseBody
 	public String alarmList() {
 		System.out.println("알림 리스트 열기 성공");
-		List<AlarmVO> result = service.alarmList2("123@123.123");
+		List<AlarmVO> result = service.alarmList("123@123.123");
 		// 나중엔 이메일 부분 session id로 받을 것
 		
 		Gson gs = new Gson();
@@ -42,7 +42,7 @@ public class AlarmController {
 	public String deleteAlarm(String email, int alarm_seq) {
 		System.out.println("알림 삭제 성공");
 		service.deleteAlarm("123@123.123", alarm_seq);
-		List<AlarmVO> result = service.alarmList2("123@123.123");
+		List<AlarmVO> result = service.alarmList("123@123.123");
 		// 나중엔 이메일 부분 session id로 받을 것
 		
 		Gson gs = new Gson();
