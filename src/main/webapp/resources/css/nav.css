@@ -81,3 +81,7 @@ html, body {
 	top: 14px;
 	right: 2px;
 }
+
+#notification{
+	z-index:99;
+}

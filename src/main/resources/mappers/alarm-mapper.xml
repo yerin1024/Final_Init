@@ -36,12 +36,12 @@
 	</insert>
 	
 	<!-- 알림 목록 -->
-	<select id="alarmList2" resultType="kh.init.alarm.AlarmVO"> 
+	<select id="alarmList" resultType="kh.init.alarm.AlarmVO"> 
 		select
 		    alarm_seq, type, applied_seq, reg_date, alarm_check, al.email email, 
-		    re.feed_seq feed_seq_r, reply_seq, re.nickname nickname_r, contents, 
+		    re.feed_seq feed_seq_r, reply_seq, re.email email_r, contents, 
 		    friend_seq, from_id, to_id, 
-		    like_seq, lk.feed_seq feed_seq_l, lk.email email_lk, 
+		    like_seq, lk.feed_seq feed_seq_l, lk.email email_l, 
 		    mem.nickname nickname_m
 		from tb_alarm al
 		full outer join tb_reply re on al.applied_seq = re.reply_seq

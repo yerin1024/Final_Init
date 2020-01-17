@@ -81,9 +81,9 @@ public class MessageDAO {
 	}
 	
 	// 친구 목록
-	public List<FriendDTO> friendList(FriendDTO dto, String myId){ 
+	public List<MessageDTO> friendList(String my_id){ 
 		Map<String, String> prm = new HashMap<>();
-		prm.put("my_id", myId);
+		prm.put("my_id", my_id);
 		return jdbc.selectList("Message.friendList", prm);
 	}
 	
