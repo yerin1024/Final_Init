@@ -31,6 +31,7 @@
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
 <style>
+
 #wrapper {
 	border: 1px solid red;
 	margin: auto;

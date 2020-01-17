@@ -35,14 +35,18 @@
 	<!-- 미리 보기 -->
 	<!-- from_id: 보낸 사람 / to_id: 받는 사람 -->	
 	<select id="previewMsg" resultType="kh.init.messages.MessageDTO">
-	<![CDATA[
-		select
-			msg_seq, from_id, to_id, contents, write_date, receive_read, 
-			(select count(*) unread_count
-				from tb_message
-				where (from_id=#{to_id} and to_id=#{from_id}) and receive_read = 'N') unread_count 
-		from tb_message where ((from_id=#{from_id} and to_id=#{to_id}) or (from_id=#{to_id} and to_id=#{from_id})) and rownum <=1 order by 1 desc
-	]]>
+		<![CDATA[
+		select * from (
+			select 
+			    msg_seq, from_id, to_id, contents, write_date, receive_read,
+			    (select count(*) unread_count from tb_message where (from_id=#{to_id} and to_id=#{from_id}) and receive_read = 'N') unread_count,
+			    nickname, profile_img, email
+			from tb_message msg
+			full outer join tb_friend fr on fr.fr_id = msg.from_id or fr.fr_id = msg.to_id
+			full outer join tb_member mem on mem.email = fr.fr_id
+			where my_id =#{from_id} and fr_id=#{to_id} and contents is not null
+			order by 1 desc ) where rownum <= 1
+		]]>
 	</select>
 	
 	<!-- 읽지 않은 메시지 수 -->
@@ -55,19 +59,19 @@
 		select count(*) from tb_message where to_id=#{from_id} and receive_read='N'
 	</select>
 	
-	<!-- 친구 목록 -->
-	<select id="friendList" resultType="kh.init.friends.FriendDTO"> 
-		select * from tb_friend where my_id=#{my_id}
+	<!-- 친구 목록 --><!-- return : fr_id, nickname -->
+	<select id="friendList" resultType="kh.init.messages.MessageDTO">
+		select 
+			f.my_id my_id, f.fr_id fr_id, m.nickname nickname, m.profile_img
+		from tb_friend f 
+		full outer join tb_member m on f.fr_id = m.email
+		where f.my_id = #{my_id}
+			and f.fr_id not in (select b.to_id from tb_block b where b.from_id = #{my_id})
 	</select>
 	
 	<!-- 검색 -->
 	<select id="searchUser" resultType="kh.init.friends.FriendDTO">
 		select * from tb_friend where my_id=#{my_id} and to_id like '%'||#{fr_id}'%'
-	</select>
-	
-	<!-- 친구 닉네임으로 반환 -->
-	<select id="friendListConvert" resultType="kh.init.members.MemberDTO"> 
-		select nickname from tb_member where email=#{email}
 	</select>
 
 </mapper>
