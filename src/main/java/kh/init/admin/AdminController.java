@@ -1,6 +1,9 @@
 package kh.init.admin;
 
+import java.sql.Timestamp;
 import java.util.List;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,6 +20,9 @@ import kh.init.members.MemberDTO;
 public class AdminController {
 	@Autowired
 	private AdminService aService;
+	@Autowired
+	private HttpSession session;
+
 
 	@RequestMapping("adminHome.do")
 	public String adminHome() throws Exception {
@@ -187,18 +193,69 @@ public class AdminController {
 		}
 	}
 	//신고
-	@RequestMapping("declareProc.do")
+	@RequestMapping(value = "/declareReasonProc.do", produces="text/html; charset=UTF-8")
 	@ResponseBody
-	public String declareProc(int feed_seq, String to_id, String from_reason, String from_id, int declaration_cnt) throws Exception {
-		System.out.println(cbMember);
-		String email = cbMember.substring(cbMember.lastIndexOf("_") + 1);
-		System.out.println(email);
-		int toMemberR = aService.toMember(email);
-		if (toMemberR > 0) {
-			return cbMember;
-		} else {
-			return "toMember fail";
+	public String declareReasonProc(String dr_seq, String declare_reason, Timestamp decalre_date) throws Exception {
+		System.out.println("declareResonProc 도착!");
+		
+		int feed_seq = Integer.parseInt(dr_seq.substring(dr_seq.lastIndexOf("_") + 1));
+		System.out.println("feed_seq : " +feed_seq);
+		String from_id = ((MemberDTO)session.getAttribute("loginInfo")).getEmail();
+		System.out.println("from_id : " + from_id);
+		System.out.println("declare_reason : " + declare_reason);
+		String to_id = aService.getReportedEmail(feed_seq);
+		System.out.println("to_id : " + to_id);
+		DeclareDTO ddto = new DeclareDTO(feed_seq, to_id, declare_reason, from_id, null);
+		try {
+			aService.declare(ddto);
+		}catch(Exception e) {
+			e.printStackTrace();
 		}
+		return "declare";
 	}
+	//신고관리
+	@RequestMapping("/declarationList.do")
+	public String declarationList(Model mod, String page) throws Exception {
+		System.out.println("현재 넘어온 페이지 값  : " + page);
+		int cpage = 1;
+		if(page != null) {
+			cpage = Integer.parseInt(page); 
+		}
 
+		int start = cpage * Utils.recordCountPerPage - (Utils.recordCountPerPage-1);
+		int end =  cpage * Utils.recordCountPerPage;
+		String pageNavi = aService.getPageNaviDeclare(cpage);
+		if(pageNavi.contains("redirect:declarationList.do?page=")) {
+			return pageNavi;
+		}
+		System.out.println(pageNavi);
+		mod.addAttribute("pageNavi", pageNavi);
+		List<DeclareDTO> declarationList = aService.selectDeclareByPage(start, end);
+		for(DeclareDTO tmp : declarationList) {
+			System.out.println(tmp.getFrom_id());
+		}
+		mod.addAttribute("declarationList", declarationList );
+		return "admin/manageDeclaration";
+	}
+	@RequestMapping("searchForDeclare.do")
+	public String searchForDeclare(String searchTag, String search, Model mod, String page) throws Exception {
+		int cpage = 1;
+		if(page != null) {
+			cpage = Integer.parseInt(page); 
+		}
+		int start = cpage * Utils.recordCountPerPage - (Utils.recordCountPerPage-1);
+		int end =  cpage * Utils.recordCountPerPage;
+		String pageNavi = aService.getPageNaviSearchDeclare(cpage, searchTag, search);    
+		if(pageNavi.contains("redirect:searchForDeclare.do?page=")) {
+			return pageNavi;
+		}
+		System.out.println(pageNavi);
+		mod.addAttribute("pageNavi", pageNavi);
+		List<DeclareDTO> DeclarationList = aService.searchForDeclarePaging(searchTag, search, start, end);
+		for(DeclareDTO tmp : DeclarationList) {
+			System.out.println(tmp.getDeclare_reason());
+		}
+		mod.addAttribute("DeclarationList", DeclarationList);
+		return "admin/manageDeclare";
+	}
 }

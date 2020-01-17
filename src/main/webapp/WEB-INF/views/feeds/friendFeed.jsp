@@ -11,7 +11,7 @@
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <script
 	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
 <script
@@ -24,66 +24,13 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.css">
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.js"></script>
-<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+
 
 <link rel="stylesheet" href="/resources/css/nav.css">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
 <style>
-<<<<<<< HEAD
-	#wrapper{
-		border:1px solid red;
-		margin:auto;
-		width:70vw;
-	}
-
-	.feed{
-		border:1px solid blue;
-	}
-	.dz-default {
-		border: 2px solid black;
-	}
-	
-	.dz-preview {
-		display: none;
-	}
-	
-	.carousel-item {
-		margin: auto;
-		text-align: center;
-	}
-	
-/* 	.carousel-inner { */
-/* 		width: 100vw; */
-/* 	} */
-	
-	.carousel-item * {
-		width: 600px;
-		height: 600px;
-	}
-	
-	.btnss * {
-		width: 100px;
-		height: 100px;
-	}
-	.likeImg>img{
-		width:50px;
-		height:50px;
-	}
-	.bookmarkImg>img{
-		width:50px;
-		height:50px;
-	}
-	.row{
-		width:100%;
-		margin:0px;
-	}
-	
-=======
 #wrapper {
 	border: 1px solid red;
 	margin: auto;
@@ -192,10 +139,30 @@ html, body {
 	right: 20px;
 }
 
-.sirenBtn {
+.sirenImg {
 	width: 30px;
 	height: 30px;
 }
+
+.sirenBtn {
+	border: none;
+	background: none;
+}
+/* .modal {
+          text-align: center;
+        } */
+/* @@media screen and (min-width: 768px) {
+            display: inline-block;
+            vertical-align: middle;
+            content: " ";
+            height: 100%;
+          }
+        } */
+/* .modal-dialog {
+     display: inline-block;
+     text-align: left;
+     vertical-align: middle;
+} */
 
 /* All Device */
 /* 모든 해상도를 위한 공통 코드를 작성한다. 모든 해상도에서 이 코드가 실행됨. */
@@ -348,14 +315,10 @@ html, body {
 									}
 									ci.append(divCI);
 								}
-								ci
-										.append("<a class='carousel-control-prev' href='#carouselExampleIndicators' role='button' data-slide='prev'>");
-								ci
-										.append("<span class='carousel-control-prev-icon' aria-hidden='true'></span> <span class='sr-only'>Previous</span></a>");
-								ci
-										.append("<a class='carousel-control-next' href='#carouselExampleIndicators' role='button' data-slide='next'>");
-								ci
-										.append("<span class='carousel-control-next-icon' aria-hidden='true'></span> <span class='sr-only'>Next</span></a>");
+								ci.append("<a class='carousel-control-prev' href='#carouselExampleIndicators' role='button' data-slide='prev'>");
+								ci.append("<span class='carousel-control-prev-icon' aria-hidden='true'></span> <span class='sr-only'>Previous</span></a>");
+								ci.append("<a class='carousel-control-next' href='#carouselExampleIndicators' role='button' data-slide='next'>");
+								ci.append("<span class='carousel-control-next-icon' aria-hidden='true'></span> <span class='sr-only'>Next</span></a>");
 
 								media.append(ci);
 								feed.append(nick);
@@ -435,15 +398,6 @@ html, body {
 	<jsp:include page="/resources/jsp/nav.jsp" />
 	<div id="wrapper" style="position: relative; top: 62px">
 		<!-- <h1>친구피드</h1> -->
-		
-		
-  <div id="selectBtn">
-      <button type="button" id="createTask" role="button"
-         class="btn btn-info p opover-test align-right" data-toggle="modal"
-         data-target="#declareModal" data-backdrop="static">네</button>
-      <button type="button" id="deleteBtn" role="button" class="btn btn-info p opover-test align-right">아니오</button>
-   </div>
-   
 		<c:choose>
 			<c:when test="${fn:length(list) <1}">
 				<div>게시물이 없습니다.</div>
@@ -454,10 +408,15 @@ html, body {
 						<div class="row profile">
 							<div class="row profileImg">
 								${profile_imgList[status.index]}</div>
-							<div class="row profileNickname">${feed.nickname }</div>
+							<div class="row profileNickname">${feed.nickname}</div>
+
 							<div class="row profilefeedDeclartion">
-								<img class="sirenBtn" seq="${feed.feed_seq}"
-									src="${pageContext.request.contextPath }/resources/images/siren.png">
+								<button type="button" id="srB_${feed.feed_seq}" role="button"
+									class="sirenBtn" data-toggle="modal"
+									data-target="#declareModal" data-backdrop="static">
+									<img class="sirenImg" id="srI_${feed.feed_seq}"
+										src="${pageContext.request.contextPath }/resources/images/siren.png">
+								</button>
 							</div>
 						</div>
 						<div class="row media">
@@ -547,41 +506,126 @@ html, body {
 							</c:choose>
 						</div>
 					</div>
+
+
+					<!--  신고확인 기능 모달-->
+					<div class="modal fade" id="declareModal" role="dialog"
+						aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+						<div class="modal-dialog modal-dialog-centered" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h3 class="modal-title" id="exampleModalCenterTitle">신고알림창</h3>
+									<button type="button" class="close" data-dismiss="modal"
+										aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<div class="modal-body">
+									<div class="form-group">
+										<div class="declareQ">정말로 신고하시겠습니까?</div>
+									</div>
+								</div>
+								<div class="modal-footer">
+									<button type="button" id="declareCheck" role="button"
+										class="btn btn-primary" data-toggle="modal"
+										data-target="#declareReasonModal" data-backdrop="static"
+										seq="${feed.feed_seq}">네</button>
+									<button type="button" class="btn btn-secondary"
+										data-dismiss="modal">아니오</button>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!--  신고사유 기능 모달-->
+					<div class="modal fade" id="declareReasonModal" role="dialog"
+						aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+						<div class="modal-dialog modal-dialog-centered" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h3 class="modal-title" id="exampleModalCenterTitle">신고사유</h3>
+									<button type="button" class="close" data-dismiss="modal"
+										aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<div class="modal-body">
+									<div class="form-group">
+										<div class="declareR">
+											<input type="radio" name=declare_reason
+												value="권리침해 및 왕따/약자에 대한 사이버 괴롭힘">권리침해 및 왕따/약자에 대한
+											사이버 괴롭힘 <br> <input type="radio" name=declare_reason
+												value="명의 도용">명의 도용<br> <input type="radio"
+												name=declare_reason value="폭력적 위협">폭력적 위협<br> <input
+												type="radio" name=declare_reason value="아동 학대">아동 학대<br>
+											<input type="radio" name=declare_reason
+												value="보호집단에 대한 증오심 표현">보호집단에 대한 증오심 표현<br> <input
+												type="radio" name=declare_reason value="스팸 및 사기">스팸
+											및 사기<br> <input type="radio" name=declare_reason
+												value="사생활 침해">사생활 침해<br> <input type="radio"
+												name=declare_reason value="해당사항 없음">해당사항 없음<br>
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="declareN">반복적으로 신고가 들어올 경우 계정 해지 조치가 취해질 수
+											있습니다.</div>
+									</div>
+								</div>
+								<%--             	 id="dr_${feed.feed_seq}" --%>
+								<div class="modal-footer">
+									<button type="button" role="button"
+										class="btn btn-danger declareReason" id="dr">신고</button>
+									<button type="button" class="btn btn-secondary" id="cancelBtn"
+										data-dismiss="modal">취소</button>
+								</div>
+							</div>
+						</div>
+					</div>
+
 				</c:forEach>
 			</c:otherwise>
 		</c:choose>
-		
-		<div class="modal fade" id="declareModal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      		<div class="modal-dialog" role="document">
-         		<div class="modal-content">
-            		<div class="modal-header">
-              		 <h5 class="modal-title" id="exampleModalLabel">신고알림창</h5>
-               			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  		<span aria-hidden="true">&times;</span>
-               			</button>
-            		</div>
-            	<div class="modal-body">
-            	<div class="form-group" >
-            	<div class="declareQ">
-            		신고하시겠습니까?
-            	</div>           
-            	</div>
-               <div class="modal-footer">
-                  <input type="button" role="button" class="btn btn-info p opover-test align-right" onclick="declare(); return false;" value="신고">
-                  <input type="button" role="button" class="btn btn-info p opover-test align-right" onclick="nonDeclare(); return false;" value="노신고">
-               </div>
-            </div>
-         </div>
-      </div>
-   </div>
-		
+
+
+
 	</div>
+
+	<script>	
+	//신고확인 기능 모달
+	 $(".sirenBtn").on("click", function(){
+		 var seq = $(this).attr("id");
+		 $("#dr").val(seq);
+		 console.log(seq);
+		$("#declareModal").modal('show');
+		$(".profileDisplay").html(seq);
+	}) 
+	//신고사유 기능 모달
+	$("#declareCheck").on("click", function(){
+		$("#declareModal").modal('hide');
+		$("#declareReasonModal").modal('show');
+	})
+	//사유데이터 처리
+	$(".declareReason").on("click", function(){
+		var seq = $("#dr").val();
+		var reason = $("input:radio[name=declare_reason]:checked").val();
+		 console.log(seq);
+		 console.log(reason);
+
+			$.ajax({
+				type:"post",
+				url:"${pageContext.request.contextPath}/admin/declareReasonProc.do",
+				data : {
+					dr_seq : seq,
+					declare_reason : reason
+				}
+			}).done(function(resp){
+				if(resp = 'declare'){
+					$(".profilefeedDeclartion").html("<img class=\"sirenImg\" seq=\""+seq+"\" src=\"${pageContext.request.contextPath }/resources/images/siren2.png\">");
+					$("#declareReasonModal").modal('hide');
+				}
+			})	 
+		})
 	
-	<div id="ex1" class="modal">
-  	<p>안녕하세요. 모달창안의 내용부분입니다.</p>
-  	<a href="#" rel="modal:close">닫기</a>
-	</div>
-	<script>
 		$(document).on("click",".like",function() {
 			var seq = $(this).attr("id");
 			var likeCheck = $(".likeBtn[seq=" + seq + "]").attr("value");
@@ -635,20 +679,6 @@ html, body {
 						})
 						}
 				})
-		$(document).on("click",".sirenBtn",function() {
-			<p><a href="#ex1" rel="modal:open">모달창띄우기</a></p>
-			
-			var seq = $(this).attr("seq");
-			$.ajax({
-				type:"post",
-				url:"/admin/declareProc.do",
-				data : {
-					seq : seq
-				}
-			}).done(function(){
-				$(".profilefeedDeclartion[seq="+ seq + "]").html("<img class=\"sirenBtn\" seq=\""+seq+"\" src=\"${pageContext.request.contextPath }/resources/images/siren2.png\">");
-			})
-		})
 	</script>
 </body>
 </html>

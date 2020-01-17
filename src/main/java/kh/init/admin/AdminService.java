@@ -1,12 +1,12 @@
 package kh.init.admin;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import kh.init.configuration.Configuration;
 import kh.init.configuration.Utils;
 import kh.init.feeds.FeedDTO;
 import kh.init.members.MemberDTO;
@@ -15,12 +15,26 @@ import kh.init.members.MemberDTO;
 public class AdminService {
 	@Autowired
 	private AdminDAO adao;
-
+	@Autowired
+	private DeclareDAO ddao;
+	//신고 관리
+	public int declare(DeclareDTO ddto) throws Exception{
+		System.out.println(ddto.toString());
+		return ddao.insertDeclare(ddto);
+	}
+	//신고 당한 사람
+	public String getReportedEmail(int feed_seq) throws Exception{
+		return ddao.getReportedEmail(feed_seq);
+	}
+	
 	public List<MemberDTO> memberList() throws Exception{
 		return adao.memberList();
 	}
 	public List<MemberDTO> blackList() throws Exception{
 		return adao.blackList();
+	}
+	public List<DeclareDTO> declarationList() throws Exception{
+		return ddao.declarationList();
 	}
 	public int toBlack(String email) throws Exception{
 		return adao.toBlack(email);
@@ -334,6 +348,102 @@ public class AdminService {
 	}
 	public List<FeedDTO> searchForFeedPaging(String searchTag, String search, int start, int end) throws Exception{
 		return adao.searchForFeedPaging(searchTag, search, start, end);
+	}
+	//신고 게시물 관리
+	@Transactional("txManager")
+	public String getPageNaviDeclare(int currentPage) throws Exception{ 
+		int recordTotalCount = ddao.recordDeclare();
+		System.out.println(recordTotalCount);
+		int pageTotalCount  = 0;
+		if(recordTotalCount % Utils.recordCountPerPage > 0) {
+			pageTotalCount = recordTotalCount /  Utils.recordCountPerPage + 1;
+		}else {
+			pageTotalCount = recordTotalCount /  Utils.recordCountPerPage;
+		}
+		if(currentPage < 1) {
+			currentPage = 1;
+		}else if(currentPage > pageTotalCount) {
+			currentPage = pageTotalCount;
+			return "redirect:declarationList.do?page="+currentPage;
+		}
+
+		int startNavi = 0;
+		startNavi = (( currentPage - 1 )/  Utils.naviCountPerPage) *  Utils.naviCountPerPage + 1;
+		int endNavi = startNavi+( Utils.naviCountPerPage-1);
+
+		if(endNavi > pageTotalCount) {
+			endNavi = pageTotalCount;
+		}
+
+		boolean needPrev = true;
+		boolean needNext = true;
+		if(startNavi == 1 ) {
+			needPrev = false;
+		}
+		if(endNavi == pageTotalCount) {
+			needNext = false;
+		}
+		StringBuilder sb = new StringBuilder(); 
+		if(needPrev)sb.append("<a href='declarationList.do?page="+ (startNavi-1) +"'> < </a>");
+		for(int i = startNavi; i <= endNavi; i++) {
+			System.out.println("i:" + i);
+			sb.append("<a href='declarationList.do?page="+i+"' id="+ i +">"); 
+			sb.append(i + " "); 
+			sb.append("</a>");
+		}
+		if(needNext)sb.append("<a href='declarationList.do?page="+ (endNavi+1) +"'> > </a>"); 
+		return sb.toString();
+	}
+	public List<DeclareDTO> selectDeclareByPage(int start, int end) throws Exception{
+		return ddao.selectDeclareByPage(start,end);
+	}
+	//검색했을 때 Delcare페이징
+	@Transactional("txManager")
+	public String getPageNaviSearchDeclare(int currentPage,String searchTag, String search) throws Exception{ 
+		int recordTotalCount = ddao.recordSearchForDeclare(searchTag, search);
+		int pageTotalCount  = 0;
+		if(recordTotalCount % Utils.recordCountPerPage > 0) {
+			pageTotalCount = recordTotalCount /  Utils.recordCountPerPage + 1;
+		}else {
+			pageTotalCount = recordTotalCount /  Utils.recordCountPerPage;
+		}
+
+		if(currentPage < 1) {
+			currentPage = 1;
+		}else if(currentPage > pageTotalCount) {
+			currentPage = pageTotalCount;
+			return "redirect:searchForDeclare.do?page="+currentPage+"&searchTag="+searchTag+"&search="+search;
+		}
+
+		int startNavi = 0;
+
+		startNavi = (( currentPage - 1 )/  Utils.naviCountPerPage) *  Utils.naviCountPerPage + 1; //딱 떨어지는 숫자면 오동작 ->1을 빼면 동작
+		int endNavi = startNavi+( Utils.naviCountPerPage-1);
+
+		if(endNavi > pageTotalCount) {
+			endNavi = pageTotalCount;
+		}
+
+		boolean needPrev = true;
+		boolean needNext = true;
+		if(startNavi == 1 ) {
+			needPrev = false;
+		}
+		if(endNavi == pageTotalCount) {
+			needNext = false;
+		}
+		StringBuilder sb = new StringBuilder(); 
+		if(needPrev)sb.append("<a href='searchForDeclare.do?page="+ (startNavi-1) +"&searchTag="+searchTag+"&search="+search+"'> < </a>");
+		for(int i = startNavi; i <= endNavi; i++) {
+			sb.append("<a href='searchForDeclare.do?page="+i+"&searchTag="+searchTag+"&search="+search+"'>"); 
+			sb.append(i + " ");
+			sb.append("</a>");
+		}
+		if(needNext)sb.append("<a href='searchForDeclare.do?page="+ (endNavi+1) +"&searchTag="+searchTag+"&search="+search +"'> > </a>"); 
+		return sb.toString();
+	}
+	public List<DeclareDTO> searchForDeclarePaging(String searchTag, String search, int start, int end) throws Exception{
+		return ddao.searchForDeclarePaging(searchTag, search, start, end);
 	}
 
 }

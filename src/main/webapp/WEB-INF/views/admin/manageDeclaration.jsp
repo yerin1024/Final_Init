@@ -51,12 +51,12 @@
 				<div class="row">
 					<div class="col-sm-12" id="searchDiv">
 						<form
-							action="${pageContext.request.contextPath}/admin/searchForDeclarationFeed.do"
+							action="${pageContext.request.contextPath}/admin/searchForDeclare.do"
 							method="post" id="searchF">
 							<select id="searchTag" name="searchTag">
-								<option value="nickname">닉네임</option>
-								<option value="name">이름</option>
-								<option value="title">제목</option>
+								<option value="to_id">신고당한사람</option>
+								<option value="from_id">신고자</option>
+								<option value="declare_reason">이유</option>
 							</select> <input type="text" id="search" name="search">
 							<button type="submit" id="searchBtn" class="btn-secondary">검색</button>
 						</form>
@@ -68,22 +68,21 @@
 							<thead>
 								<tr>
 									<th>feed_seq</th>
-									<th>email</th>
-									<th>nickname</th>
-									<th>title</th>
+									<th>reported person</th>
+									<th>declare_reason</th>
+									<th>reporter</th>
 									<th>delete</th>
 								</tr>
 							</thead>
 							<tbody>
-								<c:forEach items="${feedList}" var="fdto">
-									<tr class="${fdto.email}">
-										<td><a
-											href="${pageContext.request.contextPath}/feed/detailView?feed_seqS=${fdto.feed_seq}">${fdto.feed_seq}</a></td>
-										<td>${fdto.email}</td>
-										<td>${fdto.nickname}</td>
-										<td>${fdto.title}</td>
+								<c:forEach items="${declarationList}" var="ddto">
+									<tr>
+										<td><a href="${pageContext.request.contextPath}/feed/detailView?feed_seqS=${ddto.feed_seq}">${ddto.feed_seq}</a></td>
+										<td>${ddto.to_id}</td>
+										<td>${ddto.declare_reason}</td>
+										<td>${ddto.from_id}</td>
 										<td><button type="button" class="dBtn btn-dark"
-												id="${fdto.feed_seq}">삭제</button></td>
+												id="${ddto.feed_seq}">삭제</button></td>
 									</tr>
 								</c:forEach>
 								<tr align=center>

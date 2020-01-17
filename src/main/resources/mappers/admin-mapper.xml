@@ -3,6 +3,13 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="Admin">
+<!-- 신고게시물 관리 -->
+<insert id="declare" parameterType="kh.init.admin.DeclareDTO">
+	insert into tb_declare values(#{feed_seq},#{to_id},#{declare_reason},#{from_id},sysdate)
+</insert>
+<select id="declarationList" resultType="kh.init.admin.DeclareDTO">
+		select * from tb_declare
+</select>
 	<!-- 멤버관리 -->
 	<select id="blackList" resultType="kh.init.members.MemberDTO">
 		select * from tb_member where
@@ -125,8 +132,7 @@
 	</delete>
 	<!-- feed페이징 -->
 	<select id="dbFeed" resultType="integer">
-		select count(*) as seq from
-		tb_feed
+		select count(*) as seq from tb_feed
 	</select>
 	<select id="selectFeedByPage" resultType="kh.init.feeds.FeedDTO"
 		parameterType="java.util.Map">
@@ -150,6 +156,36 @@
 		<choose>
 			<when test="search != ''">
 				${searchTag} like '%' ||#{search}||'%'
+			</when>
+		</choose>
+		) where rown between ${start} and ${end}
+	</select>
+	
+	
+	<!-- declare페이징 -->
+	<select id="dbDeclare" resultType="integer">
+		select count(*) as seq from tb_declare
+	</select>
+	<select id="selectDeclareByPage" resultType="kh.init.admin.DeclareDTO" parameterType="java.util.Map">
+		select * from (select tb_declare.*, row_number()over(order by to_id desc) as
+		rown from tb_declare) where rown
+		between ${start} and ${end}
+	</select>
+	<!-- 검색했을 때 declare페이징 -->
+	<select id="dbsearchForDeclare" resultType="Integer" parameterType="java.util.Map">
+		select count(*) as seq from tb_declare
+		<choose>
+			<when test="search != ''">
+				where ${searchTag} like '%' ||#{search}||'%'
+			</when>
+		</choose>
+	</select>
+	<select id="searchForDeclarePaging" resultType="kh.init.admin.DeclareDTO" parameterType="java.util.Map">
+		select * from (select tb_declare.*, row_number()over(order by to_id
+		desc) as rown from tb_declare 
+		<choose>
+			<when test="search != ''">
+				where ${searchTag} like '%' ||#{search}||'%'
 			</when>
 		</choose>
 		) where rown between ${start} and ${end}

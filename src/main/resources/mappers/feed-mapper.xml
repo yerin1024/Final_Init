@@ -109,7 +109,10 @@
 		or p.email = #{email})
 		where rnum between #{startNum} and #{endNum}
 	</select>
-
+<!--  신고게시물의 주인-->
+<select id="getReportedEmail" resultType="String">
+	select email from tb_feed where feed_seq = #{feed_seq}
+</select>
 
 	<update id="modifyFeed" parameterType="kh.init.feeds.FeedDTO">
 		update tb_feed set title =
