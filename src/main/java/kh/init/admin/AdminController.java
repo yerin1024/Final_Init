@@ -185,6 +185,20 @@ public class AdminController {
 		} else {
 			return "deleteFeed fail";
 		}
-	} 
+	}
+	//신고
+	@RequestMapping("declareProc.do")
+	@ResponseBody
+	public String declareProc(int feed_seq, String to_id, String from_reason, String from_id, int declaration_cnt) throws Exception {
+		System.out.println(cbMember);
+		String email = cbMember.substring(cbMember.lastIndexOf("_") + 1);
+		System.out.println(email);
+		int toMemberR = aService.toMember(email);
+		if (toMemberR > 0) {
+			return cbMember;
+		} else {
+			return "toMember fail";
+		}
+	}
 
 }

@@ -25,6 +25,9 @@
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.js"></script>
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
 
 <link rel="stylesheet" href="/resources/css/nav.css">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -36,6 +39,7 @@
 	margin: auto;
 	/* width: 50vw; */
 }
+
 html, body {
 	padding: 0px;
 	margin: 0px;
@@ -44,6 +48,7 @@ html, body {
 * {
 	box-sizing: border-box;
 }
+
 .feed {
 	border: 1px solid blue;
 }
@@ -65,8 +70,20 @@ html, body {
 /* 		width: 100vw; */
 /* 	} */
 .carousel-item * {
-	width: 677px;
-	height: 677px;
+	width: 100%;
+	height: 100%;
+}
+
+/* .carousel-inner{
+	width: 100%;
+	height: 100%;
+} */
+/* .carousel-inner>img{
+	width: 100%;
+	height: 100%;
+} */
+.slide {
+	width: 99.5%;
 }
 
 .btnss * {
@@ -89,23 +106,47 @@ html, body {
 .row {
 	margin: 0px;
 }
-.profile{
-	display:flex;
+
+.profileNickname {
+	position: absolute;
+	left: 80px;
 }
-.profileImg{
-	width:50px;
-	height:50px;
+
+.profile {
+	justify-content: center;
+	flex-direction: column;
+	height: 50px;
+	display: flex;
 }
-.profileImg>img{
+
+.profileImg {
+	border: 1px solid black;
+	border-radius: 75px;
+	width: 50px;
+	height: 50px;
+}
+
+.profileImg>img {
 	width: 100%;
-	height:100%;
+	height: 100%;
+	border-radius: 75px;
 	margin: 0px;
 }
-.contents,.profile{
-	margin-top:10px; 
-	margin-left:10px;
-	margin-bottom:10px;
+
+.contents, .profile {
+	margin: 10px;
 }
+
+.profilefeedDeclartion {
+	position: absolute;
+	right: 20px;
+}
+
+.sirenBtn {
+	width: 30px;
+	height: 30px;
+}
+
 /* All Device */
 /* 모든 해상도를 위한 공통 코드를 작성한다. 모든 해상도에서 이 코드가 실행됨. */
 
@@ -114,33 +155,45 @@ html, body {
 
 /* Tablet &amp; Desktop Device */
 @media all and (min-width:768px) {
-   /*     사용자 해상도가 768px 이상일 때 이 코드가 실행됨. 테블릿과 데스크톱의 공통 코드를 작성한다. */
-   #wrapper{
-    	width: 100%;
-    }
+	/*     사용자 해상도가 768px 이상일 때 이 코드가 실행됨. 테블릿과 데스크톱의 공통 코드를 작성한다. */
+	#wrapper {
+		width: 720px;
+	}
+	.media {
+		width: 720px;
+	}
 }
 
 @media all and (max-width:500px) {
-   /*     사용자 해상도가 768px 이하일 때 이 코드가 실행됨. 테블릿과 데스크톱의 공통 코드를 작성한다. */
- 	#wrapper{
-    	max-width: 750px;
-    }
+	/*     사용자 해상도가 768px 이하일 때 이 코드가 실행됨. 테블릿과 데스크톱의 공통 코드를 작성한다. */
+	#wrapper {
+		max-width: 720px;
+	}
+	.media {
+		max-width: 720px;
+	}
 }
 
 /* Tablet Device */
 @media all and (min-width:500px) and (max-width:768px) {
-   /*     사용자 해상도가 768px 이상이고 1024px 이하일 때 이 코드가 실행됨. 아이패드 또는 비교적 작은 해상도의 랩탑이나 데스크톱에 대응하는 코드를 작성한다. */
-    #wrapper{
-    	max-width: 700px;
-    }
+	/*     사용자 해상도가 768px 이상이고 1024px 이하일 때 이 코드가 실행됨. 아이패드 또는 비교적 작은 해상도의 랩탑이나 데스크톱에 대응하는 코드를 작성한다. */
+	#wrapper {
+		max-width: 720px;
+	}
+	.media {
+		max-width: 720px;
+	}
 }
 
 /* Desktop Device */
 @media all and (min-width:1025px) {
-   /*     사용자 해상도가 1025px 이상일 때 이 코드가 실행됨. 1025px 이상의 랩탑 또는 데스크톱에 대응하는 코드를 작성한다. */
-    #wrapper{
-    	max-width: 680px;
-    }
+	/*     사용자 해상도가 1025px 이상일 때 이 코드가 실행됨. 1025px 이상의 랩탑 또는 데스크톱에 대응하는 코드를 작성한다. */
+	#wrapper {
+		max-width: 720px;
+	}
+	.media {
+		max-width: 720px;
+	}
 }
 </style>
 
@@ -319,6 +372,15 @@ html, body {
 	<jsp:include page="/resources/jsp/nav.jsp" />
 	<div id="wrapper" style="position: relative; top: 62px">
 		<!-- <h1>친구피드</h1> -->
+		
+		
+  <div id="selectBtn">
+      <button type="button" id="createTask" role="button"
+         class="btn btn-info p opover-test align-right" data-toggle="modal"
+         data-target="#declareModal" data-backdrop="static">네</button>
+      <button type="button" id="deleteBtn" role="button" class="btn btn-info p opover-test align-right">아니오</button>
+   </div>
+   
 		<c:choose>
 			<c:when test="${fn:length(list) <1}">
 				<div>게시물이 없습니다.</div>
@@ -327,12 +389,13 @@ html, body {
 				<c:forEach items="${list}" var="feed" varStatus="status">
 					<div class="feed">
 						<div class="row profile">
-						<div class="row profileImg">
-							${profile_imgList[status.index]} 
-						</div>
-						<div class="row profileNickname" style="margin-left: 11px; margin-top: 11px;">							
-							${feed.nickname }						
-						</div>
+							<div class="row profileImg">
+								${profile_imgList[status.index]}</div>
+							<div class="row profileNickname">${feed.nickname }</div>
+							<div class="row profilefeedDeclartion">
+								<img class="sirenBtn" seq="${feed.feed_seq}"
+									src="${pageContext.request.contextPath }/resources/images/siren.png">
+							</div>
 						</div>
 						<div class="row media">
 							<div id="carouselExampleIndicators" class="carousel slide"
@@ -424,8 +487,37 @@ html, body {
 				</c:forEach>
 			</c:otherwise>
 		</c:choose>
+		
+		<div class="modal fade" id="declareModal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      		<div class="modal-dialog" role="document">
+         		<div class="modal-content">
+            		<div class="modal-header">
+              		 <h5 class="modal-title" id="exampleModalLabel">신고알림창</h5>
+               			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  		<span aria-hidden="true">&times;</span>
+               			</button>
+            		</div>
+            	<div class="modal-body">
+            	<div class="form-group" >
+            	<div class="declareQ">
+            		신고하시겠습니까?
+            	</div>           
+            	</div>
+               <div class="modal-footer">
+                  <input type="button" role="button" class="btn btn-info p opover-test align-right" onclick="declare(); return false;" value="신고">
+                  <input type="button" role="button" class="btn btn-info p opover-test align-right" onclick="nonDeclare(); return false;" value="노신고">
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+		
 	</div>
-
+	
+	<div id="ex1" class="modal">
+  	<p>안녕하세요. 모달창안의 내용부분입니다.</p>
+  	<a href="#" rel="modal:close">닫기</a>
+	</div>
 	<script>
 		$(document).on("click",".like",function() {
 			var seq = $(this).attr("id");
@@ -439,8 +531,7 @@ html, body {
 					data : {
 						feed_seq : seq
 							}
-						})
-				.done(function() {
+						}).done(function() {
 					$(".likeImg[seq="+ seq + "]").html("<img class=\"likeBtn\" seq=\""+seq+"\" value=\"likeAfter\" src=\"${pageContext.request.contextPath }/resources/images/likeAfter.png\">");
 						})
 			} else {
@@ -450,8 +541,7 @@ html, body {
 					data : {
 						feed_seq : seq
 							}
-						})
-				.done(function() {
+						}).done(function() {
 					$(".likeImg[seq="+ seq + "]").html("<img class=\"likeBtn\" seq=\""+seq+"\" value=\"likeBefore\" src=\"${pageContext.request.contextPath }/resources/images/likeBefore.png\">");
 					})
 					}
@@ -467,8 +557,7 @@ html, body {
 					data : {
 					feed_seq : seq
 							}
-						})
-				.done(function() {
+						}).done(function() {
 					$(".bookmarkImg[seq="+ seq + "]").html("<img class=\"bookmarkBtn\" seq=\""+seq+"\"  value=\"bookmarkAfter\" src=\"${pageContext.request.contextPath }/resources/images/bookmarkAfter.png\">");
 					})
 				} else {
@@ -477,13 +566,26 @@ html, body {
 						url : "/feed/deleteBookmark",
 						data : {
 						feed_seq : seq
-								}
-						})
-					.done(function() {
+						}
+					}).done(function() {
 						$(".bookmarkImg[seq="+ seq + "]").html("<img class=\"bookmarkBtn\" seq=\""+seq+"\"  value=\"bookmarkBefore\" src=\"${pageContext.request.contextPath }/resources/images/bookmarkBefore.png\">");
 						})
 						}
-					})
+				})
+		$(document).on("click",".sirenBtn",function() {
+			<p><a href="#ex1" rel="modal:open">모달창띄우기</a></p>
+			
+			var seq = $(this).attr("seq");
+			$.ajax({
+				type:"post",
+				url:"/admin/declareProc.do",
+				data : {
+					seq : seq
+				}
+			}).done(function(){
+				$(".profilefeedDeclartion[seq="+ seq + "]").html("<img class=\"sirenBtn\" seq=\""+seq+"\" src=\"${pageContext.request.contextPath }/resources/images/siren2.png\">");
+			})
+		})
 	</script>
 </body>
 </html>

@@ -45,13 +45,13 @@
 			<div class="col-md-10 col-sm-12">
 				<div class="row">
 					<div class="col">
-						<h3>피드 관리</h3>
+						<h3>신고게시물 관리</h3>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-sm-12" id="searchDiv">
 						<form
-							action="${pageContext.request.contextPath}/admin/searchForFeed.do"
+							action="${pageContext.request.contextPath}/admin/searchForDeclarationFeed.do"
 							method="post" id="searchF">
 							<select id="searchTag" name="searchTag">
 								<option value="nickname">닉네임</option>
@@ -68,19 +68,20 @@
 							<thead>
 								<tr>
 									<th>feed_seq</th>
-									<th>reported Person</th>
-									<th>reason</th>
-									<th>reporter</th>
+									<th>email</th>
+									<th>nickname</th>
+									<th>title</th>
+									<th>delete</th>
 								</tr>
 							</thead>
 							<tbody>
-								<c:forEach items="${feedList}" var="ddto">
+								<c:forEach items="${feedList}" var="fdto">
 									<tr class="${fdto.email}">
 										<td><a
 											href="${pageContext.request.contextPath}/feed/detailView?feed_seqS=${fdto.feed_seq}">${fdto.feed_seq}</a></td>
-										<td>${ddto.to_id}</td>
-										<td>${ddto.reason}</td>
-										<td>${ddto.from_id}</td>
+										<td>${fdto.email}</td>
+										<td>${fdto.nickname}</td>
+										<td>${fdto.title}</td>
 										<td><button type="button" class="dBtn btn-dark"
 												id="${fdto.feed_seq}">삭제</button></td>
 									</tr>
