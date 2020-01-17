@@ -32,17 +32,18 @@ public class FeedController {
 	private HttpSession session;
 
 	@RequestMapping("/myFeed")
-	public String myFeed(Model model) {
+	public String myFeed(String email, Model model) {
 		System.out.println("myFeed 도착");
 		int ipage = 1;
 		List<FeedDTO> list = null;
 		List<String> cover = new ArrayList<>();
-		String email = ((MemberDTO)session.getAttribute("loginInfo")).getEmail();
-		System.out.println("로그인 세션 값 확인 : " + email);
 		try {
+
 			MemberDTO dto = mservice.getMyPageService(email);
 			list = (List<FeedDTO>)service.getMyFeed(ipage, email).get("list");
 			cover = (List<String>)service.getMyFeed(ipage, email).get("cover");
+			System.out.println("dto 이메일값 확인 : "+dto.getEmail()+dto.getName() );
+			model.addAttribute("mvo", dto);
 			model.addAttribute("list", list);
 			model.addAttribute("cover", cover);
 		}catch(Exception e) {
@@ -50,6 +51,7 @@ public class FeedController {
 		}
 		return "feeds/myFeed";
 	}
+	
 
 	@RequestMapping(value = "/myFeedAjax", produces = "application/json; charset=UTF-8")
 	@ResponseBody
@@ -110,7 +112,7 @@ public class FeedController {
 		System.out.println("게시물 등록 도착!");		
 		dto.setEmail(((MemberDTO)session.getAttribute("loginInfo")).getEmail());
 		dto.setNickname(((MemberDTO)session.getAttribute("loginInfo")).getNickname());
-
+		String email = ((MemberDTO)session.getAttribute("loginInfo")).getEmail();
 		int result = 0;
 		//mediaTmpUpload에서 임시로 mediaTmp폴더에 넣어둔 미디어들을 옮기기 위한 폴더
 		String mediaPath = session.getServletContext().getRealPath("media");
@@ -128,7 +130,7 @@ public class FeedController {
 		//등록이 되면 mediaList를 비워둠
 		session.setAttribute("mediaList", null);
 
-		return "redirect:myFeed";
+		return "redirect:myFeed?email="+email;
 	}
 
 
@@ -268,8 +270,9 @@ public class FeedController {
 		}
 		return "/feeds/scrapFeed";
 	}
-
-	@RequestMapping("/detailView") 
+	
+	@RequestMapping(value = "/detailView", produces = "text/html; charset=UTF-8") 
+	@ResponseBody
 	public String detailView(int feed_seqS, Model model) {
 		System.out.println("detailView 도착");
 		int feed_seq = feed_seqS;
@@ -278,22 +281,34 @@ public class FeedController {
 		int bookmarkCheck = 0; //0은 안한것 1은 한것
 		FeedDTO dto = null;
 		List<String> list = new ArrayList<>();
+
+		JsonObject obj = new JsonObject();
+		Gson g = new Gson();
+
 		List<ReplyDTO> replyList = new ArrayList<>();
 		try {
 			dto = service.detailView(feed_seq);
 			likeCheck = service.likeCheck(feed_seq, ((MemberDTO)session.getAttribute("loginInfo")).getEmail());
 			bookmarkCheck = service.bookmarkCheck(feed_seq, ((MemberDTO)session.getAttribute("loginInfo")).getEmail());
+
+
 			list = service.getMediaList(feed_seq);
 			replyList = service.viewAllReply(feed_seq);
-			model.addAttribute("media", list);
-			model.addAttribute("dto", dto);	
-			model.addAttribute("likeCheck", likeCheck);
-			model.addAttribute("bookmarkCheck", bookmarkCheck);
-			model.addAttribute("replyList", replyList);
+//			System.out.println("Email : "+dto.getEmail());
+//			System.out.println("memberDTO : "+mservice.getMemberDTO(dto.getEmail()));
+			obj.addProperty("writerProfile", g.toJson((mservice.getMemberDTO(dto.getEmail())).getProfile_img()));
+			obj.addProperty("likeCheck", g.toJson(likeCheck));
+			obj.addProperty("likeCheck", g.toJson(likeCheck));
+			obj.addProperty("bookmarkCheck", g.toJson(bookmarkCheck));
+			obj.addProperty("replyList",  g.toJson(replyList));
+			obj.addProperty("media", g.toJson(list));
+			obj.addProperty("dto", g.toJson(dto));	
+
 		}catch(Exception e) {
 			e.printStackTrace();
-		}
-		return "/feeds/detailView";
+		}			
+		return obj.toString();
+
 	}
 
 	@RequestMapping("/getFriendFeed")
@@ -423,12 +438,12 @@ public class FeedController {
 	//좋아요
 	@RequestMapping(value = "/insertLike", produces="text/html; charset=UTF-8")
 	@ResponseBody
-	public String insertLike(int feed_seq) {
+	public String insertLike(String feed_seq) {
 		System.out.println("insertLike 도착");
 		System.out.println("feed_seq : "+feed_seq);
 		String email = ((MemberDTO)session.getAttribute("loginInfo")).getEmail();
 		try {
-			service.insertLike(feed_seq, email);
+			service.insertLike(Integer.parseInt(feed_seq), email);
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -436,12 +451,12 @@ public class FeedController {
 	}
 	@RequestMapping(value = "/deleteLike", produces="text/html; charset=UTF-8")
 	@ResponseBody
-	public String deleteLike(int feed_seq) {
+	public String deleteLike(String feed_seq) {
 		System.out.println("deleteLike 도착");
 		System.out.println("feed_seq : "+feed_seq);
 		String email = ((MemberDTO)session.getAttribute("loginInfo")).getEmail();
 		try {
-			service.deleteLike(feed_seq, email);
+			service.deleteLike(Integer.parseInt(feed_seq), email);
 		}catch(Exception e) {
 			e.printStackTrace();
 		}

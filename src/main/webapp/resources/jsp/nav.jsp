@@ -22,7 +22,7 @@
               <a class="nav-link" href="${pageContext.request.contextPath}/message/messageMain" style="padding-top: 15px;"><img id="msg" src="/resources/images/msg.png"></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="${pageContext.request.contextPath}/feed/myFeed" style="padding-top: 12px;"><img id="my_feed" src="/resources/images/user.png"></a>
+              <a class="nav-link" href="${pageContext.request.contextPath}/feed/myFeed?email=${loginInfo.email}" style="padding-top: 12px;"><img id="my_feed" src="/resources/images/user.png"></a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="${pageContext.request.contextPath}/member/logout.do" style="padding-top: 12px;"><img id="logout" src="/resources/images/logout.png"></a>
@@ -78,5 +78,7 @@
     });
      $("#logout").mouseleave(function(){
          $("#logout").attr("src", $("#logout").attr("src").replace("/resources/images/logout3.png", "/resources/images/logout2.png"));  
-    });  
+    }); 
+    
+     
     </script>

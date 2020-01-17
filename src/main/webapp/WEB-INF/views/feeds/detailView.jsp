@@ -92,6 +92,7 @@ img {
 				    html += "</div>"
 					$(".replyList").append(html);
 				    $("#writeReply").html("");
+
 			})
 		})
 		//답글 이벤트 ------------------------------------------------------		
@@ -280,10 +281,12 @@ img {
 								</c:forEach>
 
 								<a class="carousel-control-prev"
-									href="#carouselExampleIndicators" role="button"
-									data-slide="prev"> <span class="carousel-control-prev-icon"
-									aria-hidden="true"></span> <span class="sr-only">Previous</span>
-								</a> <a class="carousel-control-next"
+									href="#carouselExampleIndicators" role="button" data-slide="prev"> 
+									<span class="carousel-control-prev-icon"
+									aria-hidden="true"></span> 
+									<span class="sr-only">Previous</span>
+								</a> 
+								<a class="carousel-control-next"
 									href="#carouselExampleIndicators" role="button"
 									data-slide="next"> <span class="carousel-control-next-icon"
 									aria-hidden="true"></span> <span class="sr-only">Next</span>
@@ -292,54 +295,49 @@ img {
 						</div>
 					</div>
 				</c:when>
+				
+				
+				
+				
+				
 			</c:choose>
 			<div class="row">
 				<div class="col-4 reply">${dto.contents }</div>
 				<div class="col-4 reply">
-					<a
-						href="${pageContext.request.contextPath }/feed/deleteProc?feed_seq=${dto.feed_seq}">
-						<img
-						src="${pageContext.request.contextPath }/resources/images/delete.png">
+					<a href="${pageContext.request.contextPath }/feed/deleteProc?feed_seq=${dto.feed_seq}">
+						<img src="${pageContext.request.contextPath }/resources/images/delete.png">
 					</a>
 				</div>
 				<div class="col-4 reply">
-					<a
-						href="${pageContext.request.contextPath }/feed/modifyFeedView?feed_seq=${dto.feed_seq}">
-						<img
-						src="${pageContext.request.contextPath }/resources/images/improvement.png">
+					<a href="${pageContext.request.contextPath }/feed/modifyFeedView?feed_seq=${dto.feed_seq}">
+						<img src="${pageContext.request.contextPath }/resources/images/improvement.png">
 					</a>
 				</div>
 				<div class="col-3 feed btnss like">
 					<c:choose>
 						<c:when test="${likeCheck==0 }">
-							<a href="#" id="like" class="${dto.feed_seq }"> <span
-								id="likeImg"><img class="likeBefore" id="likeBtn"
-									src="${pageContext.request.contextPath }/resources/images/likeBefore.png"></span>
-							</a>
+							<a href="#" id="like" class="${dto.feed_seq }"> <span id="likeImg">
+								<img class="likeBefore" id="likeBtn" src="${pageContext.request.contextPath }/resources/images/likeBefore.png">
+							</span></a>
 						</c:when>
 						<c:otherwise>
-							<a href="#" id="like" class="${dto.feed_seq }"> <span
-								id="likeImg"><img class="likeAfter" id="likeBtn"
-									src="${pageContext.request.contextPath }/resources/images/likeAfter.png"></span>
-							</a>
+							<a href="#" id="like" class="${dto.feed_seq }"> <span id="likeImg">
+							<img class="likeAfter" id="likeBtn" src="${pageContext.request.contextPath }/resources/images/likeAfter.png">
+							</span></a>
 						</c:otherwise>
 					</c:choose>
 				</div>
 				<div class="col-3 feed btnss bookmark">
 					<c:choose>
 						<c:when test="${bookmarkCheck==0 }">
-							<a href="#" id="bookmark" class="${dto.feed_seq }"> <span
-								id="bookmarkImg"><img class="bookmarkBefore"
-									id="bookmarkBtn"
-									src="${pageContext.request.contextPath }/resources/images/bookmarkBefore.png"></span>
-							</a>
+							<a href="#" id="bookmark" class="${dto.feed_seq }"> <span id="bookmarkImg">
+								<img class="bookmarkBefore" id="bookmarkBtn" src="${pageContext.request.contextPath }/resources/images/bookmarkBefore.png">
+							</span> </a>
 						</c:when>
 						<c:otherwise>
-							<a href="#" id="bookmark" class="${dto.feed_seq }"> <span
-								id="bookmarkImg"><img class="bookmarkAfter"
-									id="bookmarkBtn"
-									src="${pageContext.request.contextPath }/resources/images/bookmarkAfter.png"></span>
-							</a>
+							<a href="#" id="bookmark" class="${dto.feed_seq }"> <span id="bookmarkImg">
+								<img class="bookmarkAfter" id="bookmarkBtn" src="${pageContext.request.contextPath }/resources/images/bookmarkAfter.png">
+							</span> </a>
 						</c:otherwise>
 					</c:choose>
 				</div>
@@ -445,6 +443,7 @@ img {
 					$("#bookmarkImg").html("<img class=\"bookmarkBefore\" id=\"bookmarkBtn\" src=\"${pageContext.request.contextPath }/resources/images/bookmarkBefore.png\">");
 				})
 			}
+				
 		})
 	</script>
 </body>
