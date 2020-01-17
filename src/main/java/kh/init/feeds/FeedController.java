@@ -32,19 +32,19 @@ public class FeedController {
 	private HttpSession session;
 
 	@RequestMapping("/myFeed")
-	public String myFeed(Model model) {
+	public String myFeed(String email, Model model) {
 		System.out.println("myFeed 도착");
 		int ipage = 1;
 		List<FeedDTO> list = null;
 		List<String> cover = new ArrayList<>();
-		//로그인 세션 테스트 코드 시작
-		String email = ((MemberDTO)session.getAttribute("loginInfo")).getEmail();
-		System.out.println("로그인 세션 값 확인 : " + email);
-		//로그인 세션 테스트 코드 끝
+
 		try {
+
 			MemberDTO dto = mservice.getMyPageService(email);
 			list = (List<FeedDTO>)service.getMyFeed(ipage, email).get("list");
 			cover = (List<String>)service.getMyFeed(ipage, email).get("cover");
+			System.out.println("dto 이메일값 확인 : "+dto.getEmail()+dto.getName() );
+			model.addAttribute("mvo", dto);
 			model.addAttribute("list", list);
 			model.addAttribute("cover", cover);
 		}catch(Exception e) {
@@ -52,6 +52,7 @@ public class FeedController {
 		}
 		return "feeds/myFeed";
 	}
+	
 
 	@RequestMapping(value = "/myFeedAjax", produces = "application/json; charset=UTF-8")
 	@ResponseBody
@@ -141,7 +142,7 @@ public class FeedController {
 		//등록이 되면 mediaList를 비워둠
 		session.setAttribute("mediaList", null);
 
-		return "redirect:myFeed";
+		return "redirect:myFeed?email="+email;
 	}
 
 
