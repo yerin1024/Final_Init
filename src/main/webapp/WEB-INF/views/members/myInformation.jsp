@@ -9,7 +9,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<form action="${pageContext.request.contextPath}/member/changeMyInfo" method="post" id="changeMyInfo">
+	<form action="${pageContext.request.contextPath}/member/changeMyInfo"
+		method="post" id="changeMyInfo">
 		<div class="container">
 			<div class="changeMyInfoContainer">
 				<div class="modal fade" id="signUpModal" tabindex="-1" role="dialog"
@@ -26,7 +27,7 @@
 							<div class="modal-body">
 								<label>이메일</label> ${dto.email}<br> <label>현재 비밀번호</label>
 								<input type="password" class="cPw" name="currentPw"
-									maxlength="12"> <label class="adviseIn"
+									id="currentPw" maxlength="12"> <label class="adviseIn"
 									id="adviseInCPw" hidden></label><br> <label>새로운
 									비밀번호 </label> <input type="password" class="inputPw" name="pw"
 									maxlength="12"> <label class="adviseIn" id="adviseInPw"
@@ -47,10 +48,11 @@
 									<option value="017" class="pOption1">017</option>
 									<option value="018" class="pOption1">018</option>
 									<option value="019" class="pOption1">019</option>
-								</select> -<input type="text" class="phone2" maxlength="4" value="${poption2}"> -<input
-									type="text" class="phone3" maxlength="4" value="${poption3}"> <input
-									type="text" class="phone" name="phone" maxlength="11" hidden>
-								<label class="adviseIn" id="adviseInPhone" hidden></label>
+								</select> -<input type="text" class="phone2" maxlength="4"
+									value="${poption2}"> -<input type="text" class="phone3"
+									maxlength="4" value="${poption3}"> <input type="text"
+									class="phone" name="phone" maxlength="11" hidden> <label
+									class="adviseIn" id="adviseInPhone" hidden></label>
 								<p class="adviseOut" id="advisePhone" readonly></p>
 
 								<input type="text" id="verif_code" name="verif_code"
@@ -73,7 +75,7 @@
 							<div class="modal-footer">
 								<button type=button id="withdrawMem">회원탈퇴</button>
 								<button type=button id="changeInfo" onclick="formValidation();">수정완료</button>
-								<button type=button>뒤로가기</button>
+								<button type=button id="backToFeed">뒤로가기</button>
 							</div>
 						</div>
 					</div>
@@ -86,6 +88,42 @@
 
 
 	<script>
+	$('#currentPw').on('keyup',function() {
+		var cpassword = $(this).val();
+		
+		$('.frInfo').remove();
+					$.ajax({
+							url : "${pageContext.request.contextPath}/member/identifyMemPw",
+							type : "POST",
+							dataType : "text",
+							data:{
+								pw:cpassword
+							},
+							success : function(res) {
+							
+							console.log(res);
+							if(res == "yes"){
+								advisePw.innerHTML = "비밀번호가 일치합니다."
+				                    advisePw.style.color = "green";
+				                adviseInCPw.innerHTML = "사용가능";
+				                console.log("validate");
+				            }else{
+				            	advisePw.innerHTML = "비밀번호가 일치하지 않습니다."
+				                    advisePw.style.color = "red";
+				                adviseInCPw.innerHTML = "사용불가";
+				                console.log("invalidate");
+				            }
+							
+									
+								},
+								error : function(request, status, error) {
+									console.log("ajax call went wrong:"
+											+ request.responseText);
+								}
+							});
+
+				});
+	
 //         window.onready =function(){
         	console.log('${poption}');
 //         }
@@ -97,35 +135,12 @@
         	}
         	
         }
-        var bLength1 = $(".bOption1").length;
         
-        for(var i=0;i<bLength1;i++){
-        	if($(".bOption1:nth-child("+i+")").val() ==  '${boption1}'+"월"){
-        		$(".bOption1:nth-child("+i+")").attr('selected','selected');
-        	}
-        	
-        }
-        var bLength2 = $(".bOption2").length;
-        
-        for(var i=0;i<bLength2;i++){
-        	if($(".bOption2:nth-child("+i+")").val() == '${boption2}'+"월"){
-        		$(".bOption2:nth-child("+i+")").attr('selected','selected');
-        	}
-        	
-        }
-        var bLength3 = $(".bOption3").length;
-        
-        for(var i=0;i<bLength3;i++){
-        	if($(".bOption3:nth-child("+i+")").val() == '${boption3}'+"일"){
-        		$(".bOption3:nth-child("+i+")").attr('selected','selected');
-        	}
-        	
-        }
         var doc = document;
         var rawStr = null;
         var changeMyInfo = doc.getElementById("changeMyInfo");
 
-        
+        var cPw = doc.getElementsByClassName("cPw")[0];
         var pw = doc.getElementsByClassName("inputPw")[0];
         var confirmPw = doc.getElementsByClassName("confirmPw")[0];
        
@@ -142,14 +157,14 @@
        
        
         var verif_code = doc.getElementById("verif_code");
-
+        
         var advisePw = doc.getElementById("advisePw");
         
         var advisePhone = doc.getElementById("advisePhone");
         var adviseBirth = doc.getElementById("adviseBirth");
         var adviseName = doc.getElementById("adviseName");
 
-        
+        var adviseInCPw = doc.getElementById("adviseInCPw");
         var adviseInPw = doc.getElementById("adviseInPw");
        
         var adviseInName = doc.getElementById("adviseInName");
@@ -253,6 +268,34 @@
             appendYear();
             appendMonth();
             appendDay();
+            
+            var bLength1 = $(".bOption1").length;
+            console.log(${dto.birth});
+            console.log(${boption1});
+            console.log(${boption2});
+            console.log(${boption3});
+            for(var i=0;i<bLength1;i++){
+            	if($(".bOption1:nth-child("+i+")").val() ==  '${boption1}'+"년"){
+            		$(".bOption1:nth-child("+i+")").attr('selected','selected');
+            	}
+            	
+            }
+            var bLength2 = $(".bOption2").length;
+            
+            for(var i=0;i<bLength2;i++){
+            	if($(".bOption2:nth-child("+i+")").val() == '${boption2}'+"월"){
+            		$(".bOption2:nth-child("+i+")").attr('selected','selected');
+            	}
+            	
+            }
+            var bLength3 = $(".bOption3").length;
+            
+            for(var i=0;i<bLength3;i++){
+            	if($(".bOption3:nth-child("+i+")").val() == '${boption3}'+"일"){
+            		$(".bOption3:nth-child("+i+")").attr('selected','selected');
+            	}
+            	
+            }
         }
 
         function checkPhone(){
@@ -286,7 +329,18 @@
             var selectVal = doc.getElementById("year");
             var optionIndex = 0;
             for(var i=year-100;i<=year;i++){
-                selectVal.add(new Option(i+"년",i), optionIndex++);
+            	if("${boption1}" == i){
+            		var opt = new Option(i+"년",i);
+                	selectVal.add(opt,optionIndex++);
+                    opt.setAttribute("class","bOption1");
+                    opt.setAttribute("selected","selected");
+            	}else{
+            		var opt = new Option(i+"년",i);
+                	selectVal.add(opt,optionIndex++);
+                    opt.setAttribute("class","bOption1");
+            	}
+            	
+            	
             }
         }
         
@@ -294,16 +348,35 @@
             var selectVal = doc.getElementById("month");
             var optionIndex = 0;
             for(var i=1;i<=12;i++){
-                selectVal.add(new Option(i+"월",i), optionIndex++);
-            }           
+            	if("${boption2}" == i){
+            		var opt = new Option(i+"월",i);
+                	selectVal.add(opt,optionIndex++);
+                    opt.setAttribute("class","bOption2");
+                    opt.setAttribute("selected","selected");
+            	}else{
+            		var opt = new Option(i+"월",i);
+                	selectVal.add(opt,optionIndex++);
+                    opt.setAttribute("class","bOption2");
+            	}
+            	}           
         }
 
         function appendDay(){
             var selectVal = doc.getElementById("day");
             var optionIndex = 0;
             for(var i=1;i<=31;i++){
-                selectVal.add(new Option(i+"일",i), optionIndex++);
-            }            
+            	if("${boption3}" == i){
+            		var opt = new Option(i+"일",i);
+                	selectVal.add(opt,optionIndex++);
+                    opt.setAttribute("class","bOption3");
+                    opt.setAttribute("selected","selected");
+            	}else{
+            		var opt = new Option(i+"일",i);
+                	selectVal.add(opt,optionIndex++);
+                    opt.setAttribute("class","bOption3");
+            	}
+            	
+            	}            
         }        
 
         
@@ -321,6 +394,10 @@
                 advisePw.innerHTML = "필수 입력사항입니다."
                 advisePw.style.color = "red";
                 return false;
+            }else if(cPw.value === ""){
+            	advisePw.innerHTML = "필수 입력사항입니다."
+            		advisePw.style.color = "red";
+                    return false;
             }else if(confirmPw.value === ""){
                 adviseConfirmPw.innerHTML = "필수 입력사항입니다."
                 adviseConfirmPw.style.color = "red";
@@ -384,9 +461,12 @@
 
     </script>
 	<script>
-$("#withdrawMem").on("click",function(){
-	location.href = "withdrawMem";
-})
+	$("#withdrawMem").on("click",function(){
+		location.href = "${pageContext.request.contextPath}/member/withdrawMem";
+	})
+	$("#backToFeed").on("click", function() {
+				location.href = "${pageContext.request.contextPath}/feed/myFeed?email=${dto.email}";
+			});
 </script>
 </body>
 </html>

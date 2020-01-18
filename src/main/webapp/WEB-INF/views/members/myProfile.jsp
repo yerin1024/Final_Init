@@ -158,6 +158,9 @@
         }     
         //submit 직전 유효성 검사
 
+        $("#cancelBtn").on("click", function() {
+				location.href = "${pageContext.request.contextPath}/feed/myFeed?email=${dto.email}";
+			});
     </script>
 
 </body>

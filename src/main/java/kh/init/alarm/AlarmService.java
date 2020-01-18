@@ -14,14 +14,14 @@ public class AlarmService {
 	@Autowired
 	private AlarmDAO dao;
 	
-	@Transactional("txManager")
-	public List<AlarmDTO> alarmList(String email){
-		return dao.alarmList(email);
-	}
+//	@Transactional("txManager")
+//	public List<AlarmDTO> alarmList(String email){
+//		return dao.alarmList(email);
+//	}
 	
 	@Transactional("txManager")
-	public List<AlarmVO> alarmList2(String email){
-		return dao.alarmList2(email);
+	public List<AlarmVO> alarmList(String email){
+		return dao.alarmList(email);
 	}
 	
 	@Transactional("txManager")
@@ -32,6 +32,16 @@ public class AlarmService {
 	@Transactional("txManager")
 	public int deleteAlarm(String email, int alarm_seq) {
 		return dao.deleteAlarm(email, alarm_seq);
+	}
+	
+	@Transactional("txManager")
+	public int alarmCheck(String email) {
+		return dao.alarmCheck(email);
+	}
+	
+	@Transactional("txManager")
+	public int isNewAlarm(String email) {
+		return dao.isNewAlarm(email);
 	}
 	
 

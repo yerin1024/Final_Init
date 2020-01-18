@@ -47,11 +47,11 @@ public class MessageDAO {
 		return jdbc.selectList("Message.selectAll", prm);
 	}
 	
-	// 수신 확인
-	public int readCheck(MessageDTO dto) {
+	// 읽음 변경				// to_id: 상대	from_id: 나
+	public int readCheck(String to_id, String from_id) {
 		Map<String, String> prm = new HashMap<>();
-		prm.put("from_id", dto.getFrom_id());
-		prm.put("to_id", dto.getTo_id());
+		prm.put("to_id", to_id);
+		prm.put("from_id", from_id);
 		return jdbc.update("Message.readCheck", prm);
 	}
 	
@@ -64,15 +64,26 @@ public class MessageDAO {
 	}
 	
 	// 읽지 않은 메시지 수
-	public int unreadCount(MessageDTO dto) {
-		int result = jdbc.selectOne("Message.previewMsg");
+	public int unreadCount(String to_id, String from_id) {
+		Map<String, Object> prm = new HashMap<>();
+		prm.put("to_id", to_id);
+		prm.put("from_id", from_id);
+		int result = jdbc.selectOne("Message.unreadCount", prm);
+		return result;
+	}
+	
+	// new 메시지 존재 여부
+	public int isNewMsg(String from_id) {
+		Map<String, Object> prm = new HashMap<>();
+		prm.put("from_id", from_id);
+		int result = jdbc.selectOne("Message.isNewMsg", prm);
 		return result;
 	}
 	
 	// 친구 목록
-	public List<FriendDTO> friendList(FriendDTO dto, String myId){ 
+	public List<MessageDTO> friendList(String my_id){ 
 		Map<String, String> prm = new HashMap<>();
-		prm.put("my_id", myId);
+		prm.put("my_id", my_id);
 		return jdbc.selectList("Message.friendList", prm);
 	}
 	
