@@ -9,7 +9,7 @@ public class MemberDTO {
 	private String name;
 	private String phone;
 	private String birth;
-	private String profile_img;
+	private String profile_img = "/resources/images/default_profile_img.png";
 	private String profile_msg;
 	private String admin;
 	private Timestamp join_date;
@@ -33,7 +33,15 @@ public class MemberDTO {
 		this.join_date = join_date;
 		this.id_type = id_type;
 		this.black = black;
+	}	
+	
+   @Override
+	public String toString() {
+		return "MemberDTO [email=" + email + ", pw=" + pw + ", nickname=" + nickname + ", name=" + name + ", phone="
+				+ phone + ", birth=" + birth + ", profile_img=" + profile_img + ", profile_msg=" + profile_msg
+				+ ", admin=" + admin + ", join_date=" + join_date + ", id_type=" + id_type + ", black=" + black + "]";
 	}
+
    public String getEmail() {return email;}
    public void setEmail(String email) {this.email = email;}
 

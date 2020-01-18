@@ -11,7 +11,7 @@
     <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 </head>
 <body>
-    <form action="${pageContext.request.contextPath}/guest/signUp.do" method="post" id="signUpForm">
+    <form action="${pageContext.request.contextPath}/guest/signUpProc.do" method="post" enctype="multipart/form-data" id="signUpForm">
         <div class="container">
             <div class="signUpContainer">
                 <div class="modal fade" id="signUpModal" tabindex="-1" role="dialog" aria-labelledby="loginModalTitle" aria-hidden="true">
@@ -25,7 +25,8 @@
                             </div>
                             <div class="modal-body">
                                 <label>이메일</label>
-                                <input type="text" class="email1">@
+                                <input type="text" class="email1">
+                                <label class="adviseIn" id="adviseInEmail" hidden></label>@
                                 <input type="text" class="email2">
                                 <!-- <input type="text" class="inputEmail2" name="inputEmail2" hidden> -->
                                 <input type="text" class="email" name="email" hidden>
@@ -40,16 +41,22 @@
                                     <option value="yahoo.com">yahoo.com</option>
                                 </select> 
                                 <br>
-                                <p id="email_dupCheck" disabled hidden></p>
+                                <p class="adviseOut" id="adviseEmail" readonly></p>
                                 <label>비밀번호</label>
-                                <input type="password" class="inputPw" name="pw" maxlength="12"><br>
+                                <input type="password" class="inputPw" name="pw" maxlength="12">
+                                <label class="adviseIn" id="adviseInPw" hidden></label><br>                                
                                 <label>비밀번호 확인</label>
-                                <input type="password" class="confirmPw" maxlength="12"><br>
+                                <input type="password" class="confirmPw" maxlength="12">
+                                <p class="adviseOut" id="advisePw" readonly>*6~15자 영문 대 소문자, 숫자를 조합하여 사용 가능합니다.</p>
+                                <!-- <p class="adviseOut" id="adviseConfirmPw" readonly></p> -->
                                 <label>이름</label>
-                                <input type="text" class="inputName" name="name" maxlength="70"><br>
+                                <input type="text" class="inputName" name="name" maxlength="70">
+                                <label class="adviseIn" id="adviseInName" hidden></label><br>
+                                <p class="adviseOut" id="adviseName" readonly></p>
                                 <label>닉네임</label>
-                                <input type="text" class="inputNick" name="nickname" maxlength="20"><br>
-                                <p id="nick_dupCheck" disabled hidden></p>
+                                <input type="text" class="inputNick" name="nickname" maxlength="20">
+                                <label class="adviseIn" id="adviseInNickname" hidden></label><br>
+                                <p class="adviseOut" id="adviseNickname" readonly>*4~20자 영문 대 소문자, 숫자, 특수문자(_)만 사용 가능합니다.</p>
                                 <label>전화번호</label>
                                 <select class="phone1">
                                     <option value="010">010</option>
@@ -57,13 +64,23 @@
                                     <option value="016">016</option>
                                     <option value="017">017</option>
                                     <option value="018">018</option>
-                                    <option value="019">019</option>++
-                                                                         -<input type="text" class="phone2" maxlength="4">
+                                    <option value="019">019</option>
+                                </select>
+                                -<input type="text" class="phone2" maxlength="4">
                                 -<input type="text" class="phone3" maxlength="4">
                                 <input type="text" class="phone" name="phone" maxlength="11" hidden>
-                                <p id="phone_dupCheck" disabled hidden></p>
-                                <input type="text" class="verif_code" name="verif_code" placeholder="인증번호">
-                                <button type="button" class="sendCode">send</button><br>
+                                <label class="adviseIn" id="adviseInPhone" hidden></label>
+                                <p class="adviseOut" id="advisePhone" readonly></p>
+
+                                <input type="text" id="verif_code" name="verif_code" placeholder="인증번호 입력" maxlength="6">
+                                <label class="adviseIn" id="adviseInVerifCode" hidden></label>
+                                <button type="button" id="sendCode" onclick="checkPhone();">인증번호 전송</button>
+                                <span id="showTimer" readonly></span>
+                                <button type="button" id="resendCode" onclick="checkPhone();" hidden>인증번호 재전송</button><br>
+                                <button type="button" id="checkVerifCode" onclick="confirmVerifCode();" hidden>인증번호 확인</button><br>
+                                <p class="adviseOut" id="adviseVerifCode" readonly></p>
+                                <p id="resultVerification" hidden></p>
+                                
                                 <label>생년월일</label>
                                 <select id="year" class="birthYear">
                                     <option>선택하세요.</option>
@@ -75,14 +92,16 @@
                                     <option>선택하세요.</option>
                                 </select>
                                 <input type="text" class="inputBirth" name="birth" hidden><br>
+                                <p class="adviseOut" id="adviseBirth" readonly></p>
                                 <label>프로필 사진</label>
                                 <img src="resources/default_profile_img.png" id="setProfile" style="width:50px;">
                                 <button type="button" id="deletePic">X</button>
-                                <input type="file" id="profile_img" name="profile_img"><br>   
+                                <input type="file" id="profileImg" name="profileImg"><br> 
+                                <p class="adviseOut" id="adviseProfile" readonly>*프로필 사진 미등록시 기본이미지로 등록됩니다.</p>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="signupBtn" onclick="signUp()">가입</button>
-                                <button type="button" class="cancelBtn">취소</button>
+                                <button type="button" id="signupBtn" onclick="formValidation();">가입</button>
+                                <button type="button" id="cancelBtn">취소</button>
                             </div>
                         </div>
                     </div>
@@ -93,6 +112,7 @@
     <script>
         var doc = document;
         var rawStr = null;
+        var signUpForm = doc.getElementById("signUpForm");
 
         var email = doc.getElementsByClassName("email")[0];
         var email1 = doc.getElementsByClassName("email1")[0];
@@ -110,20 +130,39 @@
         var birthDay = doc.getElementsByClassName("birthDay")[0];
         var birth = doc.getElementsByClassName("inputBirth")[0];
         var profile_msg = doc.getElementsByClassName("profile_msg")[0];
-        var email_dupCheck = doc.getElementById("email_dupCheck");
-        var nick_dupCheck = doc.getElementById("nick_dupCheck");
-        var phone_dupCheck = doc.getElementById("phone_dupCheck");
+        var adviseEmail = doc.getElementById("adviseEmail");
+        var sendCode = doc.getElementById("sendCode");
+        var verif_code = doc.getElementById("verif_code");
+        var resultVerification = doc.getElementById("resultVerification");
+        var resendCode = doc.getElementById("resendCode");
+        var checkVerifCode = doc.getElementById("checkVerifCode");
+        var showTimer = doc.getElementById("showTimer");
+
+        var advisePw = doc.getElementById("advisePw");
+        var adviseNickname = doc.getElementById("adviseNickname");
+        var advisePhone = doc.getElementById("advisePhone");
+        var adviseBirth = doc.getElementById("adviseBirth");
+        var adviseName = doc.getElementById("adviseName");
+
+        var adviseInEmail =  doc.getElementById("adviseInEmail");
+        var adviseInPw = doc.getElementById("adviseInPw");
+        var adviseInNickname = doc.getElementById("adviseInNickname");
+        var adviseInName = doc.getElementById("adviseInName");
+        var adviseInPhone = doc.getElementById("adviseInPhone");
+        var adviseInVerifCode = doc.getElementById("adviseInVerifCode");
+        var adviseIn = doc.getElementsByClassName("adviseIn");
+
         var deletePic = doc.getElementById("deletePic");
         var setProfile = doc.getElementById("setProfile");
-        var profile_img = doc.getElementById("profile_img");
+        var profile_img = doc.getElementById("profileImg");
 
+        var setTime = 300;
+        
         function readURL(input) {
             if (input.files && input.files[0]) {
                 var reader = new FileReader();
-                
                 reader.onload = function (e) {
-                    console.log(e.target.result);
-                    console.log(profile_img.value);                   
+                    console.log(profile_img.value);  // 파일명        
                     setProfile.src = e.target.result; 
                 }                
                 reader.readAsDataURL(input.files[0]);
@@ -136,46 +175,100 @@
 
         deletePic.addEventListener("click", function(){
             setProfile.src = "resources/default_profile_img.png";
-        });
+        });     
 
+        pw.addEventListener("focus", function(){
+        	email.value = email1.value + "@" + email2.value;
+            $.ajax({
+                url : "${pageContext.request.contextPath}/guest/checkEmail.do",
+                data : {email : email.value},
+                dataType : "json",
+                type : "post"
+            }).done(function(resp){
+                console.log(resp);
+                console.log(resp.result);
+                if(resp.result == "available"){
+                	adviseEmail.innerHTML = "사용가능";
+                	adviseEmail.style.color = "green";
+                    adviseInEmail.innerHTML = "사용가능";
+                }else{
+                	adviseEmail.innerHTML = "중복된 이메일입니다.";
+                	adviseEmail.style.color = "red";
+                	adviseInEmail.innerHTML = "사용불가";
+                	return false;
+                }                
+            }).fail(function(a,b,c){
+            	
+                console.log(a);
+                console.log(b);
+                console.log(c);
+                return false;
+            });
+        });
+        
         email1.addEventListener("keyup", function(){
             rawStr = email1.value;
             console.log(rawStr);
             var regExp = /^[0-9a-zA-Z][0-9a-zA-Z\_\-\.]*[0-9a-zA-Z]$/;
             if(regExp.test(rawStr)){
-                console.log("OK");
+                adviseEmail.innerHTML = "";
+                adviseInEmail.innerHTML = "사용가능";
+                console.log("validate");
             }else{
-                console.log("Nope");
+            	adviseEmail.innerHTML = "올바른 이메일 형식이 아닙니다."
+                adviseEmail.style.color = "red";
+                adviseInEmail.innerHTML = "사용불가";
+                console.log("invalidate");
             }
         });
-
+        
         email2.addEventListener("keyup", function(){
             rawStr = email2.value;
             console.log(rawStr);
             var regExp = /^[0-9a-zA-Z][0-9a-zA-Z\_\-]*[0-9a-zA-Z](\.[a-zA-Z]{2,6}){1,2}$/;
             if(regExp.test(rawStr)){
-                console.log("ok");
+                adviseEmail.innerHTML = "";
+                adviseInEmail.innerHTML = "사용가능";
+                console.log("validate");
             }else{
-                console.log("nope");
+                adviseEmail.innerHTML = "올바른 이메일 형식이 아닙니다."
+                adviseEmail.style.color = "red";
+                adviseInEmail.innerHTML = "사용불가";
+                console.log("invalidate");
             }
         });
 
         pw.addEventListener("keyup", function(){
             rawStr = pw.value;
             console.log(rawStr);
-            var regExp = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,12}$/;
+            var regExp = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,15}$/;
             if(regExp.test(rawStr)){
-                console.log("ok");
+                advisePw.innerHTML = "";
+                adviseInPw.innerHTML = "사용가능";
+                console.log("validate");
             }else{
-                console.log("nope");
+                advisePw.innerHTML = "올바른 비밀번호 형식이 아닙니다."
+                advisePw.style.color = "red";
+                adviseInPw.innerHTML = "사용불가";
+                console.log("invalidate");
             }
         });
 
-        confirmPw.addEventListener("keyup", function(){
+        pw.addEventListener("change", function(){
+            confirmPw.value = "";
+        });
+
+        confirmPw.addEventListener("blur", function(){
             if(confirmPw.value != pw.value){
-                console.log("nope");
+                advisePw.innerHTML = "비밀번호가 일치하지 않습니다."
+                advisePw.style.color = "red";
+                adviseInPw.innerHTML = "사용불가";
+                confirmPw.value = "";
+                console.log("invalidate");
             }else{
-                console.log("Ok");
+                advisePw.innerHTML = "";
+                adviseInPw.innerHTML = "사용가능";
+                console.log("validate");
             }
         });
 
@@ -184,20 +277,53 @@
             console.log(rawStr);
             var regExp = /^[가-힣]{2,35}$/;
             if(regExp.test(rawStr)){
-                console.log("OK");
+                console.log("validate");
+                adviseName.innerHTML = "";
+                adviseInName.innerHTML = "사용가능";
             }else{
-                console.log("nope");
+                adviseName.innerHTML = "올바른 이름이 아닙니다."
+                adviseName.style.color = "red";
+                adviseInName.innerHTML = "사용불가";
+                console.log("invalidate");
             }
         });
 
         nickname.addEventListener("keyup", function(){
             rawStr = nickname.value;
             console.log(rawStr);
-            var regExp = /^[A-Za-z]{1}[A-Za-z0-9\_]{3,18}[A-Za-z0-9]{1}$/;
+            var regExp = /^[A-Za-z]{1}[A-Za-z0-9\_]{2,18}[A-Za-z0-9]{1}$/;
             if(regExp.test(rawStr)){
-                console.log("ok");
+                console.log("validate");
+                adviseNickname.innerHTML = "";
+                $.ajax({
+                url : "${pageContext.request.contextPath}/guest/checkNickname.do",
+                data : {nickname : rawStr},
+                dataType : "json",
+                type : "post"
+                }).done(function(resp){
+                    console.log(resp);
+                    console.log(resp.result);
+                    if(resp.result == "available"){
+                    	adviseNickname.innerHTML = "사용가능";
+                    	adviseNickname.style.color = "green";
+                        adviseInNickname.innerHTML = "사용가능";
+                    }else{
+                    	adviseNickname.innerHTML = "중복된 닉네임입니다.";
+                    	adviseNickname.style.color = "red";
+                        adviseInNickname.innerHTML = "사용불가";
+                        return false;
+                    }
+                }).fail(function(a,b,c){                	
+                    console.log(a);
+                    console.log(b);
+                    console.log(c);
+                    return false;
+                });
             }else{
-                console.log("nope");
+                adviseNickname.innerHTML = "올바른 닉네임이 아닙니다."
+                adviseNickname.style.color = "red";
+                adviseInNickname.innerHTML = "사용불가";
+                console.log("invalidate");
             }
         });
         
@@ -206,9 +332,14 @@
             console.log(rawStr);
             var regExp = /^[0-9]{3,4}$/;
             if(regExp.test(rawStr)){
-                console.log("ok");
+                console.log("validate");
+                advisePhone.innerHTML = "";
+                adviseInPhone.innerHTML = "사용가능";
             }else{
-                console.log("nope");
+                advisePhone.innerHTML = "올바른 전화번호 형식이 아닙니다."
+                advisePhone.style.color = "red";
+                adviseInPhone.innerHTML = "사용불가";
+                console.log("invalidate");
             }
         });
 
@@ -217,9 +348,14 @@
             console.log(rawStr);
             var regExp = /^[0-9]{4}$/;
             if(regExp.test(rawStr)){
-                console.log("ok");
-            }else{
-                console.log("nope");
+                console.log("validate");
+                advisePhone.innerHTML = "";
+                adviseInPhone.innerHTML = "사용가능";
+            }else{0
+                advisePhone.innerHTML = "올바른 전화번호 형식이 아닙니다."
+                advisePhone.style.color = "red";
+                adviseInPhone.innerHTML = "사용불가";
+                console.log("invalidate");
             }
         });  
 
@@ -228,86 +364,93 @@
             appendMonth();
             appendDay();
         }
-
-        email2.addEventListener("blur", function(){
-            if(email1.value != "" && email2.value != ""){
-                email_dupCheck.innerHTML = "중복된 이메일입니다.";
-                email_dupCheck.style.color = "red";
-                email_dupCheck.hidden = false;
-            }            
-
-            // $.ajax({
-            //     url: "${pageContext.request.contextPath}/guest/dupCheckEmail.do",
-            //     data: {email : email1.value + "@" + email2.value},
-            //     type: "post",
-            //     dataType: "json"
-            // }).done(function(resp){
-            //     console.log(resp);
-            // }).fail(function(a,b,c){
-            //     console.log(a);
-            //     console.log(b);
-            //     console.log(c);
-            // });
-        });
-
-        email2.addEventListener("focus", function(){
-            email_dupCheck.innerHTML = "";
-            email_dupCheck.hidden = true;
-        });
-
-        nickname.addEventListener("blur", function(){
-            if(nickname.value != ""){
-                nick_dupCheck.innerHTML = "중복된 닉네임입니다.";
-                nick_dupCheck.style.color = "red";
-                nick_dupCheck.hidden = false;
-            }            
-            // $.ajax({
-            //     url: "${pageContext.request.contextPath}/guest/dupCheckNick.do",
-            //     data: {nickname : nickname},
-            //     type: "post",
-            //     dataType: "json"
-            // }).done(function(resp){
-            //     console.log(resp);
-            // }).fail(function(a,b,c){
-            //     console.log(a);
-            //     console.log(b);
-            //     console.log(c);
-            // });
-        });
-
-        nickname.addEventListener("focus", function(){
-            nick_dupCheck.innerHTML = "";
-            nick_dupCheck.hidden = true;
-        });
-
-        phone3.addEventListener("blur", function(){
-            if(phone1.value != "" && phone2.value != "" && phone3.value != ""){
-                phone_dupCheck.innerHTML = "중복된 핸드폰 번호입니다.";
-                phone_dupCheck.style.color = "red";
-                phone_dupCheck.hidden = false;
-            }
-           
-            // $.ajax({
-            //     url: "${pageContext.request.contextPath}/guest/dupCheckPhone.do",
-            //     data: {phone : phone1.value + phone2.value + phone3.value},
-            //     type: "post",
-            //     dataType: "json"
-            // }).done(function(resp){
-            //     console.log(resp);
-            // }).fail(function(a,b,c){
-            //     console.log(a);
-            //     console.log(b);
-            //     console.log(c);
-            // });
-        });
-
-        phone3.addEventListener("focus", function(){
-            phone_dupCheck.innerHTML = "";
-            phone_dupCheck.hidden = true;
-        });
-
+		
         
+        
+        function checkPhone(){
+        	checkVerifCode.hidden = false;
+        	sendCode.hidden = true;        
+        	resendCode.hidden = false;
+        	verif_code.disabled = false;
+            phone.value = phone1.value + phone2.value + phone3.value;
+            
+            setInterval('msg_time()',1000);
 
+            $.ajax({
+                url : "${pageContext.request.contextPath}/guest/checkPhone.do",
+                data : {phone : phone.value},
+                dataType : "json",
+                type : "post",
+//                 async : false
+                }).done(function(resp){
+                    console.log(resp);
+                    if(resp.result == "available"){
+                        adviseInPhone.innerHTML = "사용가능";
+                        
+                        $.ajax({
+                        	url: "${pageContext.request.contextPath}/guest/sendVerifCode.do",
+                        	data : {phone : phone.value},
+                        	dataType: "json",
+                        	type : "post"
+                        }).done(function(resp){
+                        	console.log(resp);
+                        	console.log(resp.result);
+                            resultVerification.innerHTML = resp.result;                        
+                            
+                        }).fail(function(a,b,c){
+                        	console.log(a);
+                        	console.log(b);
+                        	console.log(c);
+                        });
+                    }else{
+                    	advisePhone.innerHTML = "중복된 번호입니다.";
+                    	advisePhone.style.color = "red";
+                        adviseInPhone.innerHTML = "사용불가";
+                        return false;
+                    }                
+                }).fail(function(a,b,c){
+                    console.log(a);
+                    console.log(b);
+                    console.log(c);
+                    return false;
+                });  
+        }
+        
+        function msg_time() {       	
+			m = addzero(Math.floor(setTime / 60)) + ":" + addzero(setTime % 60);
+			console.log(m);
+			var msg = m;
+			showTimer.innerHTML = msg;
+			setTime--;
+			if (setTime < 0) {	
+				clearInterval(tid);
+				adviseVerifCode.innerHTML = "입력시간이 초과되었습니다.";
+        		adviseVerifCode.style.color = "red";
+        		adviseInVerifCode.innerHTML ="사용불가";
+        		resultVerification.innerHTML = "";
+        		checkVerifCode.hidden = true;
+        		verif_code.disabled = true;
+			}    			
+		}
+        
+        function addzero(num) {
+    		if(num < 10) { num = "0" + num; }
+     		return num;
+    	}
+        
+        function confirmVerifCode(){
+        	console.log("verif_code : " + verif_code.value);
+        	
+        	if(verif_code.value == resultVerification.innerHTML){
+        		adviseVerifCode.innerHTML = "인증 완료";
+        		adviseVerifCode.style.color = "green";
+        	}else{
+        		adviseVerifCode.innerHTML = "인증번호 불일치";
+        		adviseVerifCode.style.color = "red";
+        		adviseInVerifCode.innerHTML ="사용불가";
+        	}
+        }    
+        
         function appendYear(){
             var date = new Date();
             var year = date.getFullYear();
@@ -348,23 +491,79 @@
             }
         }
 
-        function signUp(){
-            email.value = email1.value + "@" + email2.value;
+        function formValidation(){
+
+            for(var i = 0; i < adviseIn.length; i++){
+                if(adviseIn[i].innerHTML === "사용불가"){
+                    console.log("유효성 통과 탈락");
+                    return false;
+                }
+            }
+
+        	if(email1.value === ""){
+        		adviseEmail.innerHTML = "필수 입력사항입니다."
+                adviseEmail.style.color = "red";
+        		return false;
+            }else if(email2.value === ""){
+                adviseEmail.innerHTML = "필수 입력사항입니다."
+                adviseEmail.style.color = "red";
+                return false;
+            }else if(pw.value === ""){
+                advisePw.innerHTML = "필수 입력사항입니다."
+                advisePw.style.color = "red";
+                return false;
+            }else if(confirmPw.value === ""){
+                adviseConfirmPw.innerHTML = "필수 입력사항입니다."
+                adviseConfirmPw.style.color = "red";
+                return false;
+            }else if(inputName.value === ""){
+            	adviseName.innerHTML = "필수 입력사항입니다."
+                adviseName.style.color = "red";
+                return false;
+            }else if(nickname.value === ""){
+            	adviseNickname.innerHTML = "필수 입력사항입니다."
+                adviseNickname.style.color = "red";
+                return false;
+            }else if(phone2.value === ""){
+            	advisePhone.innerHTML = "필수 입력사항입니다."
+            	advisePhone.style.color = "red";
+                return false;
+            }else if(phone3.value === ""){
+            	advisePhone.innerHTML = "필수 입력사항입니다."
+                advisePhone.style.color = "red";
+                return false;
+            }else if(birthYear.value === "선택하세요."){
+            	adviseBirth.innerHTML = "필수 입력사항입니다."
+            	adviseBirth.style.color = "red";
+                return false;
+            }else if(birthMonth.value === "선택하세요."){
+            	adviseBirth.innerHTML = "필수 입력사항입니다."
+                adviseBirth.style.color = "red";
+                return false;
+            }else if(birthDay.value === "선택하세요."){
+            	adviseBirth.innerHTML = "필수 입력사항입니다."
+                adviseBirth.style.color = "red";
+                return false;
+            }else if(verif_code.value === ""){
+            	adviseVerifCode.innerHTML = "휴대폰 인증은 필수입니다."
+            	adviseVerifCode.style.color = "red";
+                return false;
+            }      	
+        	  	
+        	email.value = email1.value + "@" + email2.value;
             phone.value = phone1.value + phone2.value + phone3.value;
             var month = birthMonth.value;
             var day = birthDay.value;
-
-            if(birthMonth.value < 10){
-                console.log(birthMonth.value);
-                month = "0"+birthMonth.value;
+            if(month < 10){
+                console.log(month);
+                month = "0" + month;
                 console.log(month);
             }
-            if(birthDay.value < 10){
-                console.log(birthDay.value);
-                day = "0"+birthDay.value;
+            if(day < 10){
+                console.log(day);
+                day = "0" + day;
                 console.log(day);
             }
-            
             birth.value = birthYear.value + month + day;
 
             console.log("완성 휴대폰 : " + phone.value);
@@ -372,32 +571,12 @@
             console.log("완성 이름 : " + inputName.value);
             console.log("완성 닉네임 : " + nickname.value);
             console.log("완성 이메일 : " + email.value);
-            console.log("완성 생년월일 : " + birth.value);
+            console.log("완성 생년월일 : " + birth.value);       
+            
+            signUpForm.submit();
+        }     
+        //submit 직전 유효성 검사
 
-            if(email1.value === ""){
-                alert("이메일을 입력해 주세요.");
-            }else if(email2.value === ""){
-                alert("이메일을 입력해 주세요.");
-            }else if(pw.value === ""){
-                alert("비밀번호를 입력해 주세요.");
-            }else if(confirmPw.value === ""){
-                alert("비밀번호를 입력해 주세요.");
-            }else if(inputName.value === ""){
-                alert("이름을 입력해 주세요.");
-            }else if(nickname.value === ""){
-                alert("닉네임을 입력해 주세요.");
-            }else if(phone2.value === ""){
-                alert("전화번호를 입력해 주세요.");
-            }else if(phone3.value === ""){
-                alert("전화번호를 입력해 주세요.");
-            }else if(birthYear.value === "선택하세요."){
-                alert("생년월일을 입력해 주세요.");
-            }else if(birthMonth.value === "선택하세요."){
-                alert("생년월일을 입력해 주세요.");
-            }else if(birthDay.value === "선택하세요."){
-                alert("생년월일을 입력해 주세요.");
-            }
-        }
     </script>
 </body>
 </html>
