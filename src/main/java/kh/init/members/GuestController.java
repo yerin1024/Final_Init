@@ -42,6 +42,32 @@ public class GuestController {
 		}
 		return "main";
 	}
+	
+	//카카오 계정 회원가입처리(신규회원 추가)
+		@RequestMapping("/kakaoSignup")
+		public String toSignUpKakao(MemberDTO dto, MultipartFile profileImg, Model model) {
+			System.out.println("가입 요청 정보 : " + dto.toString());
+			String path = session.getServletContext().getRealPath("files");
+			if(profileImg.getOriginalFilename() == "") { //프로필 미등록 시
+				service.insert(dto, null, path);
+			}else { //프로필 등록 시 
+				service.insert(dto, profileImg, path);
+			}
+			return "main";
+		}
+	
+	//카카오 계정 회원가입처리(신규회원 추가)
+	@RequestMapping("/kakaoSignupProc")
+	public String toSignUpKakaoProc(MemberDTO dto, MultipartFile profileImg, Model model) {
+		System.out.println("가입 요청 정보 : " + dto.toString());
+		String path = session.getServletContext().getRealPath("files");
+		if(profileImg.getOriginalFilename() == "") { //프로필 미등록 시
+			service.insert(dto, null, path);
+		}else { //프로필 등록 시 
+			service.insert(dto, profileImg, path);
+		}
+		return "main";
+	}
 
 	//이메일 중복확인
 	@RequestMapping(value="/checkEmail.do", produces="text/html;charset=UTF-8")

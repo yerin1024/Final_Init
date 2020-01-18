@@ -14,14 +14,14 @@ public class AlarmService {
 	@Autowired
 	private AlarmDAO dao;
 	
-	@Transactional("txManager")
-	public List<AlarmDTO> alarmList(String email){
-		return dao.alarmList(email);
-	}
+//	@Transactional("txManager")
+//	public List<AlarmDTO> alarmList(String email){
+//		return dao.alarmList(email);
+//	}
 	
 	@Transactional("txManager")
-	public List<AlarmVO> alarmList2(String email){
-		return dao.alarmList2(email);
+	public List<AlarmVO> alarmList(String email){
+		return dao.alarmList(email);
 	}
 	
 	@Transactional("txManager")

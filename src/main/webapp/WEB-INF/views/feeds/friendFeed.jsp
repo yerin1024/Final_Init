@@ -31,56 +31,7 @@
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
 <style>
-<<<<<<< HEAD
-	#wrapper{
-		border:1px solid red;
-		margin:auto;
-		width:70vw;
-	}
 
-	.feed{
-		border:1px solid blue;
-	}
-	.dz-default {
-		border: 2px solid black;
-	}
-	
-	.dz-preview {
-		display: none;
-	}
-	
-	.carousel-item {
-		margin: auto;
-		text-align: center;
-	}
-	
-/* 	.carousel-inner { */
-/* 		width: 100vw; */
-/* 	} */
-	
-	.carousel-item * {
-		width: 600px;
-		height: 600px;
-	}
-	
-	.btnss * {
-		width: 100px;
-		height: 100px;
-	}
-	.likeImg>img{
-		width:50px;
-		height:50px;
-	}
-	.bookmarkImg>img{
-		width:50px;
-		height:50px;
-	}
-	.row{
-		width:100%;
-		margin:0px;
-	}
-	
-=======
 #wrapper {
 	border: 1px solid red;
 	margin: auto;
