@@ -415,6 +415,7 @@ public class FeedController {
 			List<FeedDTO> list = service.getFriendFeed(ipage, email);
 			System.out.println("feed size : "+list.size());
 			List<String> profile_imgList = new ArrayList<>();
+			//List<Integer> tfeed_seqList = new ArrayList<>();
 			List<List<String>> mediaList = new ArrayList<>();
 			List<List<ReplyDTO>> replyList = new ArrayList<>();
 			List<Integer> likeCheckList = new ArrayList<>();
@@ -423,6 +424,7 @@ public class FeedController {
 				int feed_seq = tmp.getFeed_seq();
 				String tmpEmail = tmp.getEmail();
 				profile_imgList.add(service.getProfile_img(tmpEmail));
+			//	tfeed_seqList.add(service.getDeclare(feed_seq));
 				mediaList.add(service.getMediaList(feed_seq));
 //				replyList.add(service.viewAllReply(feed_seq));
 				likeCheckList.add(service.likeCheck(feed_seq, ((MemberDTO)session.getAttribute("loginInfo")).getEmail()));
@@ -431,6 +433,7 @@ public class FeedController {
 			
 			System.out.println(list);
 			System.out.println(profile_imgList);
+			//System.out.println(tfeed_seqList);
 			System.out.println(mediaList);
 			System.out.println(replyList);
 			System.out.println(likeCheckList);
