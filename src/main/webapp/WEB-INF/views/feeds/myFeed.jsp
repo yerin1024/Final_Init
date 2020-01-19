@@ -322,8 +322,76 @@
 	padding:0px;
 	color:black;
 }
+.modal-dialog {
+    max-width: 935px;
+    margin: 1.75rem auto;
+}
+.row{
+	margin:0px;
+}
+.modal-main{
+    display: flex;
+    height: 500px;
+}
+.carousel-item>img{
+	width:500px;
+	height:500px;
+}
+.reply {
+        height: 90%;
+        padding: 16px;
+        overflow-y: scroll;
+}
 
+.reply::-webkit-scrollbar {
+        width: 0 !important
+}
+.reply>ul {
+        padding: 0px;
+}
 
+.reply>ul>li {
+        list-style: none;
+}
+.writerProfile,.userProfile,.myProfile{	
+    margin-right: 16px;
+}
+.writerProfileImg,.userProfileImg{
+	width:50px;
+	height:50px;
+	border-radius: 160px;
+    border: 1px solid black;
+}
+.modal-btns{
+	height:50px;
+	line-height:50px;
+    padding: 0px 16px;
+}
+.writerInfo,.userInfo{
+    margin-left: -12px;
+    margin-right: 0;
+    padding: 12px 16px 0px 16px;
+    display: flex;
+}
+.userProfileID,.writerProfileID{
+	font-weight: 600;
+    padding-left: 5px;
+    margin: 0px 5px 0px -5px;
+}
+.userReply,.text>p{
+        word-break: break-all;	
+}
+.writeReplyBox{
+	display:flex;
+}
+.modal-title{
+	line-height: 50px;
+}
+.writeReply{	
+    border: 1px solid black;
+    width: 700px;
+    margin: 0px 20px;
+}
 /* All Device */
 /* 모든 해상도를 위한 공통 코드를 작성한다. 모든 해상도에서 이 코드가 실행됨. */
 
@@ -369,10 +437,6 @@
 	body {
 		background-color: pink;
 	}
-}
-#writerProfile{
-	width:50px;
-	height:50px;
 }
 </style>
 <script>
@@ -632,17 +696,43 @@
 	  <div class="modal-dialog" role="document">
 	    <div class="modal-content">
 	      <div class="modal-header">
-	        <h5 class="modal-title" id="exampleModalLabel">DETAIL VIEW</h5>
 	         <span class="writerProfile"></span>
+	        <h5 class="modal-title" id="exampleModalLabel">DETAIL VIEW</h5>
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 	          <span aria-hidden="true">&times;</span>
 	        </button>
 	      </div>
-	      <div class="modal-body1">
+	      <div class="modal-main">			
+	      		<div class="modal-body1">
 			
-	      </div>
-	      <div class="modal-footer1">
-				
+	      		</div>
+            <div class="title">
+                <div class="reply">
+               		<div class="writerInfo">
+                    		<span class="writerProfile"></span>
+                     		<span class="writerProfileID">asdsadas</span>
+                    </div>
+                    <div class="userInfo">
+                    		<span class="userProfile"><img class="userProfileImg" src="${pageContext.request.contextPath }/resources/images/dog.jpg" alt=""></span>
+                     		<span class="userProfileID">asdsadas</span>
+                    		<span class="userReply"></span>
+                    </div>   
+                     <div class="userInfo">
+                    		<span class="userProfile"><img class="userProfileImg" src="${pageContext.request.contextPath }/resources/images/dog.jpg" alt=""></span>
+                     		<span class="userProfileID">asdsadas</span>
+                    		<span class="userReply"></span>
+                    </div>          
+                </div>
+                <div class="modal-btns">KobeKim</div>
+            </div>
+        </div>
+	      <div class="modal-header">
+				<div class="writeReplyBox">					
+	         		<span class="myProfile"><img class="userProfileImg" src="${pageContext.request.contextPath }/resources/images/dog.jpg" alt=""></span>
+	       			 <h5 class="modal-title" id="exampleModalLabel">${loginInfo.nickname }</h5>
+	       			 <div class="writeReply" style="border:1px solid black;"></div>
+	       			 <button type="button" class="registerReplyBtn">등록</button>
+				</div>
 	      </div>
 	    </div>
 	  </div>
@@ -722,9 +812,9 @@
 			
 			
 			//디테일뷰 글
-			var textRow = $("<div class='row text'></div>");
+			var textRow = $("<span class='row text'></span>");
 			textRow.append(dto.contents);
-			$(".modal-body1").append(textRow);
+			$(".writerInfo").append(textRow);
 			
 			
 			//디테일뷰 좋아요, 스크랩, 수정, 삭제 버튼
@@ -754,11 +844,11 @@
 			bookmarkA.append(bookmarkS);
 			bookmarkS.append(bookmarkI); 
 			
-			$(".modal-footer1").html("");
-			$(".modal-footer1").append(likeA);
-			$(".modal-footer1").append(bookmarkA);
+			$(".modal-btns").html("");
+			$(".modal-btns").append(likeA);
+			$(".modal-btns").append(bookmarkA);
 
-			$(".writerProfile").html("<img src="+writerProfile+" id='writerProfile'>");
+			$(".writerProfile").html("<img src="+writerProfile+" class='writerProfileImg'>");
 			
 		})
 		
