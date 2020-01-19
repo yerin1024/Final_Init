@@ -405,7 +405,6 @@ public class FeedController {
 
 	@RequestMapping("/getFriendFeed")
 	public String getFriendFeed(Model model, String page) {
-		
 		int ipage = 1;
 		System.out.println("friendFeed 도착");
 		String email = ((MemberDTO)session.getAttribute("loginInfo")).getEmail();
