@@ -209,10 +209,10 @@ function getList(page){
 						<c:forEach items="${friendList}" var="friend">
 						<div class="row">
 							<div class="col-4">
-								${friend.profile_img }
+								<img src="${friend.profile_img}" style="width:100px;">
 							</div>
 							<div class="col-8">
-								${friend.nickname }
+								<a href="${pageContext.request.contextPath}/feed/myFeed?email=${friend.email}">${friend.nickname}</a>
 							</div>
 						</div>
 						</c:forEach>

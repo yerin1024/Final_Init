@@ -46,11 +46,10 @@ public class MemberController {
 	// 로그인	유효성 검사
 	@RequestMapping(value="/kakaoLoginProc", produces="text/html;charset=UTF-8")
 	@ResponseBody
-	public String toKaKaoLogin(String access_token) {
-		
-		session.setAttribute("accessToken", access_token);
-		HashMap<String, Object> userInfo = service.getKakaoInfo(access_token);
-		session.setAttribute("loginInfo", service.getMemberDTO((String) userInfo.get("user_id")));
+	public String toKaKaoLogin(String access_token) {		
+		session.setAttribute("accessToken", access_token); //access_token 세션 저장
+		HashMap<String, Object> userInfo = service.getKakaoInfo(access_token); //access_token 이용해 정보 얻기
+		session.setAttribute("loginInfo", service.getMemberDTO((String) userInfo.get("user_id"))); //카카오 사용자 loginInfo 세션 셋팅
 		
 		JsonObject obj = new JsonObject();
 		obj.addProperty("result", "loginSuccess");
@@ -67,7 +66,7 @@ public class MemberController {
 		System.out.println("로그아웃 > " + session.getAttribute("loginInfo").toString() + " 세션 삭제");
 		session.removeAttribute("loginInfo");
 		System.out.println("로그아웃 실시 > 로그인 세션 삭제 완료");
-		return "main";
+		return "redirect:/main";
 	}
 
 	// 비밀번호 찾기
@@ -80,7 +79,8 @@ public class MemberController {
 		if(service.findPw(email) == "invalid") {
 			obj.addProperty("result", "invalid");
 		}else {
-			obj.addProperty("result", email);
+			obj.addProperty("result", "success");
+			obj.addProperty("email", email);
 		}
 		return obj.toString();		    
 	}
