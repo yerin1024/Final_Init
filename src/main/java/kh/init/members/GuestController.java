@@ -1,14 +1,19 @@
 package kh.init.members;
 
 
+import java.util.HashMap;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
 import com.google.gson.JsonObject;
 
@@ -18,6 +23,9 @@ public class GuestController {
 
 	@Autowired
 	private GuestService service;
+	
+	@Autowired
+	private MemberService serviceMember;
 	
 	@Autowired
 	private HttpSession session;
@@ -33,6 +41,37 @@ public class GuestController {
 	//회원가입	처리(신규회원 추가)
 	@RequestMapping("/signUpProc.do")
 	public String toSignUpProc(MemberDTO dto, MultipartFile profileImg, Model model) {
+		System.out.println("가입 요청 정보 : " + dto.toString());
+		String path = session.getServletContext().getRealPath("files");
+		if(profileImg.getOriginalFilename() == "") { //프로필 미등록 시
+			service.insert(dto, null, path);
+		}else { //프로필 등록 시 
+			service.insert(dto, profileImg, path);
+		}
+		return "main";
+	}
+	
+	//카카오 계정 회원가입처리(신규회원 추가)
+		@RequestMapping("/kakaoSignup")
+		public String toSignUpKakao(@RequestParam("code") String code, HttpServletRequest request, Model model) {
+			String requestURI = request.getRequestURI();
+			System.out.println("requestURI : " + request.getRequestURI());
+			System.out.println("code : " + code);
+			String authorizedCode = serviceMember.getAccessToken(code, requestURI);
+			System.out.println("authorized_code : " + authorizedCode);
+			session.setAttribute("accessToken", authorizedCode);
+			HashMap<String, Object> userInfo = serviceMember.getKakaoInfo(authorizedCode);
+			
+			System.out.println("userInfo : " + userInfo);
+			
+			model.addAttribute("kakaoProfile", userInfo.get("kakaoProfile"));
+			model.addAttribute("user_id", userInfo.get("user_id"));
+			return "redirect:/main?kakaoSignUp";
+		}
+	
+	//카카오 계정 회원가입처리(신규회원 추가)
+	@RequestMapping("/kakaoSignupProc")
+	public String toSignUpKakaoProc(MemberDTO dto, MultipartFile profileImg, Model model) {
 		System.out.println("가입 요청 정보 : " + dto.toString());
 		String path = session.getServletContext().getRealPath("files");
 		if(profileImg.getOriginalFilename() == "") { //프로필 미등록 시
