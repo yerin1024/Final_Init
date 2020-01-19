@@ -2,8 +2,10 @@ package kh.init.members;
 
 import java.util.HashMap;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.http.HttpRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
 import com.google.gson.JsonObject;
 
@@ -39,9 +42,11 @@ public class MemberController {
 	
 	// 로그인	유효성 검사
 	@RequestMapping("/kakaoLoginProc")
-	public String toKaKaoLogin(@RequestParam("code") String code) {
+	public String toKaKaoLogin(@RequestParam("code") String code, HttpServletRequest request) {
+		String requestURI = request.getRequestURI();
+		System.out.println("requestURI : " + request.getRequestURI());
 		System.out.println("code : " + code);
-		String authorizedCode = service.getAccessToken(code);
+		String authorizedCode = service.getAccessToken(code, requestURI);
 		System.out.println("authorized_code : " + authorizedCode);
 		session.setAttribute("accessToken", authorizedCode);
 		HashMap<String, Object> userInfo = service.getKakaoInfo(authorizedCode);

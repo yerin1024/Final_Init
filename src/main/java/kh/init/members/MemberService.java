@@ -46,7 +46,7 @@ public class MemberService {
 		return dao.isLoginOk(email, pw);
 	}
 
-	public String getAccessToken(String code) {
+	public String getAccessToken(String code, String requestURI) {
 		String accessToken = "";
 		String refreshToken = "";
 		String reqURL = "https://kauth.kakao.com/oauth/token";
@@ -64,7 +64,7 @@ public class MemberService {
 			StringBuilder sb = new StringBuilder();
 			sb.append("grant_type=authorization_code");
 			sb.append("&client_id=4f039db4ba705950489f1f29405d6c6c");
-			sb.append("&redirect_uri=http://localhost/member/kakaoLoginProc");
+			sb.append("&redirect_uri=http://localhost" + requestURI);
 			sb.append("&code=" + code);
 			bw.write(sb.toString());
 			bw.flush();
@@ -132,23 +132,26 @@ public class MemberService {
 			JsonParser parser = new JsonParser();
 			JsonElement element = parser.parse(result);
 			
-			JsonObject properties = element.getAsJsonObject().get("properties").getAsJsonObject();
 			JsonObject kakaoAccount = element.getAsJsonObject().get("kakao_account").getAsJsonObject();
+			JsonObject profile = kakaoAccount.getAsJsonObject().get("profile").getAsJsonObject();
 			
-			String nickname =  properties.getAsJsonObject().get("nickname").getAsString();
-			if(properties.getAsJsonObject().get("profile_image") != null) {
-				profile_image = properties.getAsJsonObject().get("profile_image").getAsString();
+			String user_id = element.getAsJsonObject().get("id").getAsString();
+			
+//			String nickname =  properties.getAsJsonObject().get("nickname").getAsString();
+			if(profile.getAsJsonObject().get("profile_image_url") != null) {
+				profile_image = profile.getAsJsonObject().get("profile_image_url").getAsString();
 			}			
 			
-			String email = kakaoAccount.getAsJsonObject().get("email").getAsString();
-			String is_email_verified = kakaoAccount.getAsJsonObject().get("is_email_verified").getAsString();
-			String birthday = kakaoAccount.getAsJsonObject().get("birthday").getAsString();
+//			String email = kakaoAccount.getAsJsonObject().get("email").getAsString();
+//			String is_email_verified = kakaoAccount.getAsJsonObject().get("is_email_verified").getAsString();
+//			String birthday = kakaoAccount.getAsJsonObject().get("birthday").getAsString();
 			
-			userInfo.put("nickname", nickname);
+			userInfo.put("user_id", user_id);
+//			userInfo.put("nickname", nickname);
 			userInfo.put("profile_image", profile_image);
-			userInfo.put("email", email);
-			userInfo.put("is_email_verified", is_email_verified);
-			userInfo.put("birthday", birthday);	
+//			userInfo.put("email", email);
+//			userInfo.put("is_email_verified", is_email_verified);
+//			userInfo.put("birthday", birthday);	
 		}catch(Exception e) {
 			e.printStackTrace();
 		}	
