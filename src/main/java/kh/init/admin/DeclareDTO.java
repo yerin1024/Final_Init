@@ -8,19 +8,24 @@ public class DeclareDTO {
 	private String declare_reason;
 	private String from_id;
 	private Timestamp declare_date;
+	private String delete_feed;
 	public DeclareDTO() {}
+	
 	@Override
 	public String toString() {
 		return "DeclareDTO [feed_seq=" + feed_seq + ", to_id=" + to_id + ", declare_reason=" + declare_reason
-				+ ", from_id=" + from_id + ", declare_date=" + declare_date + "]";
+				+ ", from_id=" + from_id + ", declare_date=" + declare_date + ", delete_feed=" + delete_feed + "]";
 	}
-	public DeclareDTO(int feed_seq, String to_id, String declare_reason, String from_id, Timestamp declare_date) {
+
+	public DeclareDTO(int feed_seq, String to_id, String declare_reason, String from_id, Timestamp declare_date,
+			String delete_feed) {
 		super();
 		this.feed_seq = feed_seq;
 		this.to_id = to_id;
 		this.declare_reason = declare_reason;
 		this.from_id = from_id;
 		this.declare_date = declare_date;
+		this.delete_feed = delete_feed;
 	}
 	public int getFeed_seq() {
 		return feed_seq;
@@ -52,7 +57,11 @@ public class DeclareDTO {
 	public void setDeclare_date(Timestamp declare_date) {
 		this.declare_date = declare_date;
 	}
-	
-	
+	public String getDelete_feed() {
+		return delete_feed;
+	}
+	public void setDelete_feed(String delete_feed) {
+		this.delete_feed = delete_feed;
+	}
 	
 }

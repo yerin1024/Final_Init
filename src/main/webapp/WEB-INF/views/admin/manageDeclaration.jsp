@@ -50,8 +50,7 @@
 				</div>
 				<div class="row">
 					<div class="col-sm-12" id="searchDiv">
-						<form
-							action="${pageContext.request.contextPath}/admin/searchForDeclare.do"
+						<form action="${pageContext.request.contextPath}/admin/searchForDeclare.do"
 							method="post" id="searchF">
 							<select id="searchTag" name="searchTag">
 								<option value="to_id">신고당한사람</option>
@@ -81,8 +80,20 @@
 										<td>${ddto.to_id}</td>
 										<td>${ddto.declare_reason}</td>
 										<td>${ddto.from_id}</td>
+										<c:choose>
+										<c:when test="${ddto.delete_feed == 'N'}">
 										<td><button type="button" class="dBtn btn-dark"
 												id="${ddto.feed_seq}">삭제</button></td>
+										</c:when>
+										<c:when test="${ddto.delete_feed == 'Y'}">
+										<td><button type="button" class="dBtn btn-danger"
+												id="b_${ddto.feed_seq}">블랙경고</button></td>
+										</c:when>
+									<%-- 	<c:otherwise>
+										<td><button type="button" class="dBtn btn-dark"
+												id="${ddto.feed_seq}">삭제</button></td>
+										</c:otherwise> --%>
+										</c:choose>
 									</tr>
 								</c:forEach>
 								<tr align=center>
@@ -99,7 +110,7 @@
 		$(".dBtn").on("click",function() {
 			var feed = $(this).attr("id");
 			$.ajax({
-				url : "${pageContext.request.contextPath}/admin/deleteFeedProc.do",
+				url : "${pageContext.request.contextPath}/admin/deleteDeclareFeedProc.do",
 				type : "post",
 				data : {
 				feed : feed

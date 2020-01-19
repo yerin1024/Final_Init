@@ -118,6 +118,12 @@ public class FeedDAO {
 		String result = jdbc.selectOne("Feed.getProfile_img", email);
 		return result;
 	}
+	
+	//신고관리
+	public int getDeclareFeed(int feed_seq) throws Exception{
+		int result = jdbc.selectOne("Feed.getDeclareFeed", feed_seq);
+		return result;
+	}
 
 	public int getFriendFeedCount(String email) throws Exception{
 		int result = jdbc.selectOne("Feed.getFriendFeedCount", email);

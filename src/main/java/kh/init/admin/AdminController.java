@@ -192,6 +192,7 @@ public class AdminController {
 			return "deleteFeed fail";
 		}
 	}
+	
 	//신고
 	@RequestMapping(value = "/declareReasonProc.do", produces="text/html; charset=UTF-8")
 	@ResponseBody
@@ -205,7 +206,7 @@ public class AdminController {
 		System.out.println("declare_reason : " + declare_reason);
 		String to_id = aService.getReportedEmail(feed_seq);
 		System.out.println("to_id : " + to_id);
-		DeclareDTO ddto = new DeclareDTO(feed_seq, to_id, declare_reason, from_id, null);
+		DeclareDTO ddto = new DeclareDTO(feed_seq, to_id, declare_reason, from_id, null, null);
 		try {
 			aService.declare(ddto);
 		}catch(Exception e) {
@@ -216,6 +217,7 @@ public class AdminController {
 	//신고관리
 	@RequestMapping("/declarationList.do")
 	public String declarationList(Model mod, String page) throws Exception {
+		System.out.println("declaration으로 도착!");
 		System.out.println("현재 넘어온 페이지 값  : " + page);
 		int cpage = 1;
 		if(page != null) {
@@ -231,6 +233,7 @@ public class AdminController {
 		System.out.println(pageNavi);
 		mod.addAttribute("pageNavi", pageNavi);
 		List<DeclareDTO> declarationList = aService.selectDeclareByPage(start, end);
+		System.out.println("selectDeclareByPage다녀옴");
 		for(DeclareDTO tmp : declarationList) {
 			System.out.println(tmp.getFrom_id());
 		}
@@ -239,6 +242,8 @@ public class AdminController {
 	}
 	@RequestMapping("searchForDeclare.do")
 	public String searchForDeclare(String searchTag, String search, Model mod, String page) throws Exception {
+		System.out.println("searchTag : " +searchTag);
+		System.out.println("search : " +search);
 		int cpage = 1;
 		if(page != null) {
 			cpage = Integer.parseInt(page); 
@@ -253,9 +258,24 @@ public class AdminController {
 		mod.addAttribute("pageNavi", pageNavi);
 		List<DeclareDTO> DeclarationList = aService.searchForDeclarePaging(searchTag, search, start, end);
 		for(DeclareDTO tmp : DeclarationList) {
-			System.out.println(tmp.getDeclare_reason());
+			System.out.println(tmp.toString());
 		}
-		mod.addAttribute("DeclarationList", DeclarationList);
-		return "admin/manageDeclare";
+		mod.addAttribute("declarationList", DeclarationList);
+		return "admin/manageDeclaration";
+	}
+	//신고게시물 삭제 및 블랙 경고
+	@RequestMapping("deleteDeclareFeedProc.do")
+	@ResponseBody
+	public String deleteDeclareFeedProc(String feed) throws Exception {
+		System.out.println("신고게시물 삭제 및 블랙 경고 controller");
+		int feed_seq = Integer.parseInt(feed);
+		System.out.println("controller " + feed_seq);
+		int deleteR = aService.deleteDeclareFeed(feed_seq);
+		System.out.println("deleteR : " + deleteR);
+		if (deleteR > 0) {
+			return feed_seq+"";
+		} else {
+			return "deleteFeed fail";
+		}
 	}
 }

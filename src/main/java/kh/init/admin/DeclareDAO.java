@@ -15,7 +15,7 @@ import kh.init.members.MemberDTO;
 public class DeclareDAO {
 	@Autowired
 	private SqlSessionTemplate jdbc;
-	
+
 	public int insertDeclare(DeclareDTO ddto) throws Exception{
 		return jdbc.insert("Admin.declare",ddto);
 	}
@@ -43,11 +43,19 @@ public class DeclareDAO {
 		return jdbc.selectOne("Admin.dbsearchForDeclare",map);
 	}
 	public List<DeclareDTO> searchForDeclarePaging(String searchTag, String search, int start, int end) throws Exception{
+		System.out.println("DeclareDAO 검색어 페이징");
 		Map<String, Object> map = new HashMap<>();
 		map.put("searchTag", searchTag);
 		map.put("search", search);
 		map.put("start", start);
 		map.put("end", end);
 		return jdbc.selectList("Admin.searchForDeclarePaging",map);
+	}
+	//신고게시물 삭제
+	public int deleteDeclareFeed(int feed_seq) throws Exception{
+		return jdbc.delete("Admin.deleteDeclareFeed", feed_seq);
+	}
+	public int delete_feed(int feed_seq) throws Exception{
+		return jdbc.update("Admin.delete_feed", feed_seq);
 	}
 }

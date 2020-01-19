@@ -445,5 +445,11 @@ public class AdminService {
 	public List<DeclareDTO> searchForDeclarePaging(String searchTag, String search, int start, int end) throws Exception{
 		return ddao.searchForDeclarePaging(searchTag, search, start, end);
 	}
+	//신고게시물 삭제
+	@Transactional("txManager")
+	public int deleteDeclareFeed(int feed_seq) throws Exception{
+		ddao.delete_feed(feed_seq);
+		return ddao.deleteDeclareFeed(feed_seq);
+	}
 
 }

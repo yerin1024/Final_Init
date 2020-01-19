@@ -410,14 +410,24 @@ html, body {
 								${profile_imgList[status.index]}</div>
 							<div class="row profileNickname">${feed.nickname}</div>
 
-							<div class="row profilefeedDeclartion">
-								<button type="button" id="srB_${feed.feed_seq}" role="button"
-									class="sirenBtn" data-toggle="modal"
-									data-target="#declareModal" data-backdrop="static">
-									<img class="sirenImg" id="srI_${feed.feed_seq}"
-										src="${pageContext.request.contextPath }/resources/images/siren.png">
-								</button>
+							<div class="row profilefeedDeclartion" seq="${feed.feed_seq}">
+								<%-- <c:choose>
+									<c:when
+										test="${feed.feed_seq == tfeed_seq[status.index]}">
+										<img class="sirenImg" id="srI2_${feed.feed_seq}"
+											src="${pageContext.request.contextPath }/resources/images/siren2.png">
+									</c:when>
+									<c:otherwise> --%>
+										<button type="button" id="srB_${feed.feed_seq}" role="btton"
+											seq="${feed.feed_seq}" class="sirenBtn" data-toggle="modal"
+											data-target="#declareModal" data-backdrop="static">
+											<img class="sirenImg" id="srI_${feed.feed_seq}"
+									 			src="${pageContext.request.contextPath }/resources/images/siren.png">
+										</button>
+									<%-- </c:otherwise>
+								</c:choose>  --%>
 							</div>
+
 						</div>
 						<div class="row media">
 							<div id="carouselExampleIndicators" class="carousel slide"
@@ -604,6 +614,9 @@ html, body {
 		$("#declareModal").modal('hide');
 		$("#declareReasonModal").modal('show');
 	})
+	
+
+	
 	//사유데이터 처리
 	$(".declareReason").on("click", function(){
 		var seq = $("#dr").val();
@@ -620,7 +633,8 @@ html, body {
 				}
 			}).done(function(resp){
 				if(resp = 'declare'){
-					$(".profilefeedDeclartion").html("<img class=\"sirenImg\" seq=\""+seq+"\" src=\"${pageContext.request.contextPath }/resources/images/siren2.png\">");
+					console.log(seq);
+					$("#"+seq).html("<img class=\"sirenImg\" seq=\""+seq+"\" src=\"${pageContext.request.contextPath }/resources/images/siren2.png\">");
 					$("#declareReasonModal").modal('hide');
 				}
 			})	 
