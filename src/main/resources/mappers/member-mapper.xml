@@ -4,7 +4,7 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace ="Member">
 	<insert id="insert">
-		insert into tb_member values(#{email},#{pw},#{nickname},#{name},#{phone},#{birth},#{profile_img},null,'N',sysdate,'E','N')
+		insert into tb_member values(#{email},#{pw, jdbcType=VARCHAR},#{nickname},#{name, jdbcType=VARCHAR},#{phone, jdbcType=VARCHAR},#{birth, jdbcType=VARCHAR},#{profile_img},null,'N',sysdate,#{id_type},'N')
 	</insert>
 	<select id="checkOverlap" resultType="integer">
 		select count(*) from tb_member where ${col} = #{val}

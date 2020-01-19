@@ -44,33 +44,27 @@ public class GuestController {
 		System.out.println("가입 요청 정보 : " + dto.toString());
 		String path = session.getServletContext().getRealPath("files");
 		if(profileImg.getOriginalFilename() == "") { //프로필 미등록 시
+			dto.setId_type("E");
 			service.insert(dto, null, path);
 		}else { //프로필 등록 시 
+			dto.setId_type("E");
 			service.insert(dto, profileImg, path);
 		}
 		return "main";
 	}
 
 	//카카오 계정 회원가입처리(신규회원 추가)
-	@RequestMapping("/kakaoSignup")
+	@RequestMapping(value="/kakaoSignup", produces="text/html;charset=UTF-8")
 	@ResponseBody
-	public String toSignUpKakao(@RequestParam("code") String code, HttpServletRequest request, Model model, RedirectAttributes redirectAttributes) {
-		String requestURI = request.getRequestURI();
-		System.out.println("requestURI : " + request.getRequestURI());
-		System.out.println("code : " + code);
-		String authorizedCode = serviceMember.getAccessToken(code, requestURI);
-		System.out.println("authorized_code : " + authorizedCode);
-		session.setAttribute("accessToken", authorizedCode);
-		HashMap<String, Object> userInfo = serviceMember.getKakaoInfo(authorizedCode);
+	public String toSignUpKakao(String access_token, Model model) {
+		session.setAttribute("accessToken", access_token);
+		HashMap<String, Object> userInfo = serviceMember.getKakaoInfo(access_token);
 
-		//			JsonObject obj = new JsonObject();
-		//			obj.addProperty("kakaoProfile", (String) userInfo.get("kakaoProfile"));
-		//			obj.addProperty("kakaoProfile", (String) userInfo.get("user_id"));
-
+		JsonObject obj = new JsonObject();
+		obj.addProperty("kakaoProfile", (String) userInfo.get("profile_image"));
+		obj.addProperty("user_id", (String) userInfo.get("user_id"));
 		System.out.println("userInfo : " + userInfo);
-		model.addAttribute("kakaoProfile", userInfo.get("kakaoProfile"));
-		model.addAttribute("user_id", userInfo.get("user_id"));
-		return "redirect:/main/kakaoSignUp";
+		return obj.toString();
 	}
 
 	//카카오 계정 회원가입처리(신규회원 추가)
@@ -79,8 +73,10 @@ public class GuestController {
 		System.out.println("가입 요청 정보 : " + dto.toString());
 		String path = session.getServletContext().getRealPath("files");
 		if(profileImg.getOriginalFilename() == "") { //프로필 미등록 시
+			dto.setId_type("K");
 			service.insert(dto, null, path);
 		}else { //프로필 등록 시 
+			dto.setId_type("K");
 			service.insert(dto, profileImg, path);
 		}
 		return "main";

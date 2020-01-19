@@ -25,6 +25,7 @@ public class GuestService {
 	//회원가입 처리
 	@Transactional("txManager")
 	public int insert(MemberDTO dto, MultipartFile profile_img, String path) {
+		System.out.println("서비스 dto  : "  + dto.toString());
 		File filePath = new File(path); 
 		if(!filePath.exists()) {
 			filePath.mkdir();
@@ -39,7 +40,9 @@ public class GuestService {
 			}
 		}
 		try {
-			dto.setPw(config.encrypt(dto.getPw())); //비밀번호 encryption 적용
+			if(dto.getPw() != null) {
+				dto.setPw(config.encrypt(dto.getPw())); //비밀번호 encryption 적용
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
