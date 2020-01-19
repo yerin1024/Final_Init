@@ -52,8 +52,6 @@ public class FeedController {
 		}
 		return "feeds/myFeed";
 	}
-	
-
 	@RequestMapping(value = "/myFeedAjax", produces = "application/json; charset=UTF-8")
 	@ResponseBody
 	public String myFeedAjax(String page) {
@@ -93,6 +91,100 @@ public class FeedController {
 		return obj.toString();
 	}
 	
+
+	@RequestMapping(value = "/myPersonalFeed", produces = "application/json; charset=UTF-8")
+	@ResponseBody
+	public String myPersonalFeed(String email) {
+		System.out.println("myFeed 도착");
+		int ipage = 1;
+		List<FeedDTO> list = null;
+		List<String> cover = new ArrayList<>();
+		
+	
+		try {
+			list = (List<FeedDTO>)service.getMyFeed(ipage, email).get("list");
+			cover = (List<String>)service.getMyFeed(ipage, email).get("cover");
+			
+		}catch(Exception e) {
+			return "{\"result\" : \"false\"}";
+		}
+		Gson g = new Gson();
+		
+		JsonObject obj = new JsonObject();
+		obj.addProperty("list", g.toJson(list));
+		obj.addProperty("cover", g.toJson(cover));
+		
+		return obj.toString();
+	}
+	
+	@RequestMapping(value = "/myScrapFeed", produces = "application/json; charset=UTF-8")
+	@ResponseBody
+	public String myScrapFeed(String page) {
+		System.out.println("scrapFeedAjax 도착");
+		int ipage = Integer.parseInt(page);
+		System.out.println("ipage :  "+ipage);
+		String email = ((MemberDTO)session.getAttribute("loginInfo")).getEmail();
+		System.out.println("로그인 세션 값 확인 : " + email);
+		//로그인 세션 테스트 코드 끝
+
+		List<String> cover = new ArrayList<>();
+		List<FeedDTO> scrapList = new ArrayList<>();
+
+		try {
+			scrapList = (List<FeedDTO>)service.scrapFeed(email).get("scrapList");
+			cover = (List<String>)service.scrapFeed(email).get("cover");
+			System.out.println("list.size : "+scrapList.size());
+		
+			
+		}catch(Exception e) {
+			return "{\"result\" : \"false\"}";
+		}
+		Gson g = new Gson();
+		
+		JsonObject obj = new JsonObject();
+		obj.addProperty("list", g.toJson(scrapList));
+		obj.addProperty("cover", g.toJson(cover));
+		
+		return obj.toString();
+	}
+	@RequestMapping(value = "/myScrapFeedAjax", produces = "application/json; charset=UTF-8")
+	@ResponseBody
+	public String myScrapFeedAjax(String page) {
+		System.out.println("myScrapFeedAjax 도착");
+		int ipage = Integer.parseInt(page);
+		System.out.println("ipage :  "+ipage);
+		List<FeedDTO> list = new ArrayList<>();
+		List<Integer> rnum = new ArrayList<>();
+		List<String> cover = new ArrayList<>();
+		//로그인 세션 테스트 코드 시작
+		String email = ((MemberDTO)session.getAttribute("loginInfo")).getEmail();
+		System.out.println("로그인 세션 값 확인 : " + email);
+		//로그인 세션 테스트 코드 끝
+		try {
+//			if((List<FeedDTO>)service.getMyFeed(ipage, email)==null) {
+//				System.out.println("list는 null입니다.");
+//				return "{\"result\" : \"false\"}";
+//			}
+			list = (List<FeedDTO>)service.getMyFeed(ipage, email).get("list");
+			rnum = (List<Integer>)service.getMyFeed(ipage, email).get("rnum");
+			cover = (List<String>)service.getMyFeed(ipage, email).get("cover");
+			System.out.println("1 : "+service);
+			System.out.println("2 : "+service.getMyFeed(ipage, email));
+			System.out.println("3 : "+service.getMyFeed(ipage, email).get("list"));
+			System.out.println("3 : "+service.getMyFeed(ipage, email).get("rnum"));
+			
+		}catch(Exception e) {
+			return "{\"result\" : \"false\"}";
+		}
+		Gson g = new Gson();
+		
+		JsonObject obj = new JsonObject();
+		obj.addProperty("list", g.toJson(list));
+		obj.addProperty("rnum", g.toJson(rnum));
+		obj.addProperty("cover", g.toJson(cover));
+		
+		return obj.toString();
+	}
 	@RequestMapping("/deleteProc")
 	public String deleteProc(int feed_seq) {
 		System.out.println("삭제 도착!");
