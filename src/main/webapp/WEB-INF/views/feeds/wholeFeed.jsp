@@ -8,23 +8,18 @@
 <head>
 <meta charset="UTF-8">
 <title>Whole Feed</title>
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"> 
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-<script
-	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="/resources/css/nav.css"> 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 <style>
 #wrapper {
 	margin: auto;
+	padding: 60px 20px 0;
 }
 
 #search {
@@ -33,20 +28,22 @@
 }
 
 #contents {
-	border: 2px solid black;
-	width: 60vw;
+/* 	border: 2px solid black; */
+	width: 65vw;
 	min-width: 470px;
 	margin: auto;
 	text-align: center;
 }
 
+.row{
+	margin:0px;
+}
 .feed {
 	width: 20vw;
-	height: 20vw;
+	height: 22vw;
 	min-height: 150px;
 	min-width: 150px;
-	border: 1px solid red;
-	padding:0px;
+	padding:10px;
 }
 .btn-primary:hover, .btn-primary:hover{
 	background-color:white;
@@ -59,6 +56,15 @@
 	width: 100%;
 	height: 100%;
 }
+.parent([.title]){
+	border:1px solid red;
+}
+.title{
+	display:inline-block;
+	position:absolute;top:50%;left:50%;transform: translate(-50%, -50%);
+	 word-break: break-all;
+    white-space: normal;
+}
 .btn-primary{
 	width:100%;
 	height:100%;
@@ -70,6 +76,9 @@
 #likeBtn, #bookmarkBtn{
 	width:20px;
 	height:20px;
+}
+#exampleModal{
+	padding: 100px 20px 0;
 }
 #carouselExampleIndicators{
 	width:100%;
@@ -178,7 +187,7 @@ function getList(page){
 </script>
 </head>
 <body>
-
+ <jsp:include page="/resources/jsp/nav.jsp" />
 	<div id="wrapper">
 		<div id="search">
 			<br><br>
@@ -221,12 +230,15 @@ function getList(page){
 						<div id="feeds">
 							<c:forEach items="${list }" var="feed" varStatus="status">
 								<c:if test="${status.count mod 3==1}">
-									<div class="row" style="margin: 0px">
+									<div class="row" >
 								</c:if>
+								
 								<div class="col-4 feed">
 									<a class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" href="#" data-id="${feed.feed_seq }">${cover[status.count-1] }</a>
 								</div>
+								
 								<c:if test="${status.count mod 3==0}">
+
 									</div>
 								</c:if>
 							</c:forEach>
@@ -258,7 +270,6 @@ function getList(page){
 	    </div>
 	  </div>
 	<script>
-	
 	$('#exampleModal').on('shown.bs.modal', function (event) {
 		var seq= $(event.relatedTarget).data('id');
 		console.log("seq : "+seq);
