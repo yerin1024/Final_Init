@@ -174,7 +174,7 @@ img {
 				data : {reply_seq:reply_seq}				
 			}).done(function(resp) {
 				console.log('성공적으로 성공');
-// 			   	var childReply =  $("."+reply_seq+"").next()[0].remove();
+			   	var childReply =  $(this).closest(".childReply").remove();
 				$("."+resp).html("");
 			})
 		})
