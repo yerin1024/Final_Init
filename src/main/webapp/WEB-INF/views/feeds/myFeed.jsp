@@ -69,7 +69,9 @@
 	#feedList{
 		border:2px solid red;
 	}
-	
+	#feedList {
+	border: 2px solid red;
+}
 	html, body {
 	background-color: #1D4E89;
 
@@ -83,6 +85,22 @@
 }
 
 
+
+
+
+.cover {
+	border: 1px solid black;
+	width: 100%;
+	height: 100%;
+}
+
+.feed {
+	width: 20vw;
+      height: 20vw;
+      min-height: 150px;
+      min-width: 150px;
+	
+}
 #likeBtn, #bookmarkBtn{
    width:20px;
    height:20px;
@@ -372,6 +390,7 @@
 .writeReply{	
     border: 1px solid black;
     width: 700px;
+    line-height:50px;
     margin: 0px 20px;
 }
 /* All Device */
@@ -422,123 +441,9 @@
 }
 </style>
 <script>
-    var feedState = 0; // 0:PersonalFeed 1:ScrapFeed
-    var myMail = '${mvo.email }';
 	$(function() {
 		$("#registerFeed").on("click", function() {
 			location.href = "writeFeed";
-		})
-	})
-	$(function() {
-		$("#personalFeed").on("click", function() {
-			feedState = 0;
-			 page = 1;
-			$('.row').remove();
-			$.ajax({
-				url : "${pageContext.request.contextPath}/feed/myPersonalFeed",
-				type : "POST",
-				data : {
-					"email" : myMail
-				},
-				dataType : "json",
-				success : function(res) {
-					console.log(res);
-					var list = JSON.parse(res.list);
-			        var cover = JSON.parse(res.cover);
-			          console.log(list);
-					
-				
-			          var i = 0;
-			          var end = list.length;
-			          var index=0;
-			          var data = "";
-			          
-			          for(i; i<end; i++){
-			              data = data + "<div class='col-4 feed'><a class='btn btn-primary' data-toggle='modal' data-target='#exampleModal' href='#' data-id='"+list[index].feed_seq+"'>"+cover[index]+"</a></div>";
-			              console.log(i);
-			              if((i+1)%3==1){
-			                 console.log(i+"는 1");
-			                 data = "<div class='row' style='margin:0px'>" +data;
-			              }
-			              if((i+1)%3==0){
-			                 console.log(i+"는0");
-			                 data = data + "</div>";
-
-			                  $("#feeds").append(data); 
-			                  var data = "";
-			              }
-			              index++;
-			            }
-			            $("#feeds").append(data); 
-			           
-			            
-
-					
-
-				},//personalFeed done
-				error : function(
-						request,
-						status,
-						error) {
-					console.log("ajax call went wrong:"+ request.responseText);
-				}
-			})
-		})
-	})
-	$(function() {
-		$("#scrapFeed").on("click", function() {
-			feedState = 1;
-			page = 1;
-			$('.row').remove();
-			$.ajax({
-				url : "${pageContext.request.contextPath}/feed/myScrapFeed",
-				type : "POST",
-				data : {
-					"email" : myMail
-				},
-				dataType : "json",
-				success : function(res) {
-					console.log(res);
-					var list = JSON.parse(res.list);
-			        var cover = JSON.parse(res.cover);
-			          console.log(list);
-					
-				
-			          var i = 0;
-			          var end = list.length;
-			          var index=0;
-			          var data = "";
-			          
-			          for(i; i<end; i++){
-			              data = data + "<div class='col-4 feed'><a class='btn btn-primary' data-toggle='modal' data-target='#exampleModal' href='#' data-id='"+list[index].feed_seq+"'>"+cover[index]+"</a></div>";
-			              console.log(i);
-			              if((i+1)%3==1){
-			                 console.log(i+"는 1");
-			                 data = "<div class='row' style='margin:0px'>" +data;
-			              }
-			              if((i+1)%3==0){
-			                 console.log(i+"는0");
-			                 data = data + "</div>";
-
-			                  $("#feeds").append(data); 
-			                  var data = "";
-			              }
-			              index++;
-			            }
-			            $("#feeds").append(data); 
-			            
-			            
-
-					
-
-				},//personalFeed done
-				error : function(
-						request,
-						status,
-						error) {
-					console.log("ajax call went wrong:"+ request.responseText);
-				}
-			})
 		})
 	})
 
@@ -559,26 +464,14 @@
 				if ($(window).scrollTop() >= $(document).height()
 						- $(window).height() - 5) {
 					console.log("스크롤감지");
-					if(feedState == 1){
-						if (page == 1) {
-							console.log(page);
-							page++;
-						} else {
-							console.log(page);
-							getScrapList(page);
-							page++;
-						}
-					}else{
-						if (page == 1) {
-							console.log(page);
-							page++;
-						} else {
-							console.log(page);
-							getList(page);
-							page++;
-						}
+					if (page == 1) {
+						console.log(page);
+						page++;
+					} else {
+						console.log(page);
+						getList(page);
+						page++;
 					}
-					
 				}
 			});
 
@@ -590,7 +483,6 @@
 	           url : "/feed/myFeedAjax",
 	           dataType:"JSON"
 	       }).done(function(data){
-	    	   console.log("data.result : "+data);
 	          console.log("data.result : "+data.result);
 	          if(data.result=="false"){
 	             console.log("false");
@@ -618,75 +510,12 @@
 	                 console.log(i+"는0");
 	                 data = data + "</div>";
 
-	                  $("#feeds").append(data);
-	                 
+	                  $("#feeds").append(data); 
 	                  var data = "";
 	              }
 	              
 	            }
 	            $("#feeds").append(data); 
-	            index++;
-//	          for(i; i<end; i++){
-//	             console.log(i);
-//	              var data = $("<div class='col-4 feed'></div>");
-//	              var a = $("<a href='/feed/detailView?feed_seqS="+list[index].feed_seq+"'>");
-//	              a.append(cover[index]);
-//	              data.append(a);
-//	              if(i%3==1){
-//	                 data.before("<div class='row' style='margin:0px'>")
-//	                 console.log(data);
-//	              }else if(i%3==0){
-//	                 data.after("</div>");
-//	              }
-//	              $("#feeds").append(data);
-//	              index++;
-//	          }
-	      })
-	   }
-	 function getScrapList(page){
-	       $.ajax({
-	           type : 'POST',  
-	           dataType : 'json', 
-	           data : {"page" : page},
-	           url : "/feed/myScrapFeedAjax",
-	           dataType:"JSON"
-	       }).done(function(data){
-	    	   console.log("data.result : "+data);
-	          console.log("data.result : "+data.result);
-	          if(data.result=="false"){
-	             console.log("false");
-	             return 'false';
-	          }
-	         var rnum = JSON.parse(data.rnum);
-	         console.log("rnum : "+rnum);
-	          var list = JSON.parse(data.list);
-	          var cover = JSON.parse(data.cover);
-	          console.log(list);
-	          var i =Number(rnum[0]);
-	          console.log("rnum[0] : " +i);
-	          var end = (Number(i)+list.length);
-	          var index=0;
-	          var data = "";
-	          
-	          for(i; i<end; i++){
-	              data = data + "<div class='col-4 feed'><a class='btn btn-primary' data-toggle='modal' data-target='#exampleModal' href='#' data-id='"+list[index].feed_seq+"'>"+cover[index]+"</a></div>";
-	              console.log(i);
-	              if(i%3==1){
-	                 console.log(i+"는 1");
-	                 data = "<div class='row' style='margin:0px'>" +data;
-	              }
-	              if(i%3==0){
-	                 console.log(i+"는0");
-	                 data = data + "</div>";
-
-	                  $("#feeds").append(data);
-	                 
-	                  var data = "";
-	              }
-	              
-	            }
-	            $("#feeds").append(data); 
-	            index++;
 //	          for(i; i<end; i++){
 //	             console.log(i);
 //	              var data = $("<div class='col-4 feed'></div>");
@@ -751,7 +580,6 @@
 								<button type="button" id="changeProfile">프로필 편집</button>
 
 						</div>
-						</div>
 						<div class="profileLayoutRight">
 							<button class="profileButton" id="changeInfo">＋</button>
 							<div class="btnText">회원정보</div>
@@ -761,14 +589,13 @@
 						<div class="profileName">${mvo.nickname }</div>
 						<div class="profileMessage">${mvo.profile_msg}</div>
 					</div>
-					
 				</c:otherwise>
 
 			</c:choose>
 		</div>
 		<div class=menubar style="height:200px;">
-		<button type="button" id="personalFeed">Personal feed</button>
-		<button type="button" id="scrapFeed">scrap feed</button>
+		<button type="button">Personal feed</button>
+		<button type="button">scrap feed</button>
 		
 		<button type="button" id="registerFeed">게시물 등록</button>
 	
@@ -798,7 +625,6 @@
             </c:otherwise>
          </c:choose>
           </div>
-         
          </div>
       
 		
@@ -903,10 +729,10 @@
         </div>
 	      <div class="modal-header">
 				<div class="writeReplyBox">					
-	         		<span class="myProfile"><img class="userProfileImg" src="${pageContext.request.contextPath }/resources/images/dog.jpg" alt=""></span>
+	         		<span class="myProfile"><img class="userProfileImg" src="${loginInfo.profile_img }" alt=""></span>
 	       			 <h5 class="modal-title" id="exampleModalLabel">${loginInfo.nickname }</h5>
-	       			 <div class="writeReply" style="border:1px solid black;"></div>
-	       			 <button type="button" class="registerReplyBtn">등록</button>
+	       			 <div class="writeReply" contenteditable="true" style="border:1px solid black;"></div>
+	       			 <button type="button" >등록</button>
 				</div>
 	      </div>
 	    </div>
@@ -1117,7 +943,7 @@
 													$('.modal-body2')
 															.append(
 
-																	"<div class=frInfo><a href='${pageContext.request.contextPath}/feed/myFeed?email="
+																	"<div class=frInfo><a href='${pageContext.request.contextPath}/feed/yourFeed?email="
 																			+ waitlist[j].email
 																			+ "'>"
 																			+ waitlist[j].email
@@ -1131,7 +957,7 @@
 													$('.modal-body2')
 															.append(
 
-																	"<div class=frInfo><a href='${pageContext.request.contextPath}/feed/myFeed?email="
+																	"<div class=frInfo><a href='${pageContext.request.contextPath}/feed/yourFeed?email="
 																			+ list[j].email
 																			+ "'>"
 																			+ list[j].email
@@ -1271,7 +1097,7 @@
 																						$(
 																								'.modal-body2')
 																								.append(
-																										"<div class=frInfo id=wfrNum"+j+"><a href='${pageContext.request.contextPath}/feed/myFeed?email="
+																										"<div class=frInfo id=wfrNum"+j+"><a href='${pageContext.request.contextPath}/feed/yourFeed?email="
 																												+ waitlist[j].email
 																												+ "'>"
 																												+ waitlist[j].email
@@ -1287,7 +1113,7 @@
 																								'.modal-body2')
 																								.append(
 
-																										"<div class=frInfo id=frNum"+j+"><a href='${pageContext.request.contextPath}/feed/myFeed?email="
+																										"<div class=frInfo id=frNum"+j+"><a href='${pageContext.request.contextPath}/feed/yourFeed?email="
 																												+ list[j].email
 																												+ "'>"
 																												+ list[j].email

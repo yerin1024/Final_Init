@@ -26,6 +26,7 @@ public class GuestService {
 	@Transactional("txManager")
 	public int insert(MemberDTO dto, MultipartFile profile_img, String path) {
 		File filePath = new File(path); 
+		System.out.println(filePath);
 		if(!filePath.exists()) {
 			filePath.mkdir();
 		}
