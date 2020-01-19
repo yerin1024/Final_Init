@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 <link href="https://fonts.googleapis.com/css?family=Do+Hyeon|Nanum+Gothic+Coding|Noto+Sans+KR|Noto+Serif+KR&display=swap" rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 </head>
@@ -147,12 +148,24 @@
         background-color: #0f4c81;
         color: #fffefc;
     }
+    
+    .tab4_body button {
+        width: 100px;
+        height: 30px;
+        padding: 5px;
+        margin: 10px;
+        border: none;
+        border-radius: 8px;
+        font-size: 15px;
+        background-color: #0f4c81;
+        color: #fffefc;
+    }
 
-    .tab4_container {
+    .tab5-1_container {
         text-align: left;
     }
 
-    .tab4_body .userInput {
+    .tab5-1_body .userInput {
         width: 270px;
         height: 30px;
         padding: 5px;
@@ -188,7 +201,7 @@
                     <div>
                         <!--tab 컨텐츠 start-->
                         <div class="tab-content">
-                            <div role="tabpanel" class="tab-pane active" id="main">
+                            <div role="tabpanel" class="tab-pane" id="main">
                                 <div class="tab1_container">
                                     <form action="${pageContext.request.contextPath}/member/loginProc.do" method="post" id="tab1_loginForm">
                                         <div class="tab1_loginContainer">
@@ -197,8 +210,8 @@
                                                 <input type="password" class="userInput" id="tab1_pw" name="pw" placeholder="비밀번호 입력"><br>
                                                 <button type="button" id="tab1_loginBtn" onclick="toLogin();">로그인</button><br>
                                                 <a href="https://kauth.kakao.com/oauth/authorize?client_id=4f039db4ba705950489f1f29405d6c6c
-&redirect_uri=http://localhost/member/kakaoLoginProc&response_type=code">
-                                                	<img src="resources/images/kakao_login_btn.png" id="tab1_kakaoLoginBtn"><br>
+													&redirect_uri=http://localhost/member/kakaoLoginProc&response_type=code">
+                                                	<img src="resources/images/kakaoLogin_btn.png" id="tab1_kakaoLoginBtn"><br>
 	                                            </a>
 	                                            <div class="saveId">
 	                                            	<input type="checkbox" id="tab1_saveIdCheck" onChange="toCheckCbox();">
@@ -218,6 +231,7 @@
                                 <div class="tab2_container">
                                     <div class="tab2_body">
                                         <label>비밀번호 찾기</label><br>
+                                        <p>※카카오 계정으로 가입한 회원은 카카오 홈페이지를 이욯해 주십시오.</p>
                                         <p>비밀번호를 찾고자 하는 이메일주소를 입력해 주세요.</p>
                                         <input type="text" class="userInput" id="tab2_email" name="email" placeholder="Init 이메일"><br>
                                         <button type="button" id="tab2_previous">이전</button>
@@ -242,21 +256,38 @@
                                     </div>
                                 </div>
                             </div>
-
-                            <div role="tabpanel" class="tab-pane" id="signUp">
+                            
+                            <div role="tabpanel" class="tab-pane" id="signUpBtns">
                                 <div class="tab4_container">
+                                    <div class="tab4_body">
+                                    	<div class="tab4_signupBtnBox">
+                                    		<button type="button" id="tab5-1_generalSignup">일반 회원가입</button>
+<!--                                     		<a href="https://kauth.kakao.com/oauth/authorize?client_id=4f039db4ba705950489f1f29405d6c6c&redirect_uri=http://localhost/guest/kakaoSignup&response_type=code"> -->
+                                                <img src="resources/images/kakaoSignup_btn.png" id="tab5-2_kakaoLoginBtn"><br>
+<!-- 	                                        </a> -->
+                                    	</div>
+                                        <div class="tab4_btnBox">
+                                            <button type="button" id="tab3_goMain">이전</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+<!-- 일반 회원가입 start  -->
+                            <div role="tabpanel" class="tab-pane" id="generalSignUp">
+                                <div class="tab5-1_container">
                                     <form action="${pageContext.request.contextPath}/guest/signUpProc.do" method="post"
                                         enctype="multipart/form-data" id="signUpForm">
-                                        <div class="tab4_header">
-                                            <h5 id="tab4_signUpTitle">회원가입</h5>
+                                        <div class="tab5-1_header">
+                                            <h5 id="tab5-1_signUpTitle">회원가입</h5>
                                         </div>
-                                        <div class="tab4_body">
+                                        <div class="tab5-1_body">
                                             <!-- 이메일 -->
-                                            <label>이메일</label><span class="required">*</span><br> <input type="text" class="userInput" id="tab4_email1"> 
+                                            <label>이메일</label><span class="required">*</span><br> <input type="text" class="userInput" id="tab5-1_email1"> 
                                                 <span style="font-weight: bold;">@</span>
-                                            <input type="text" class="userInput" id="tab4_email2" list="tab4_emailSelect" placeholder="직접 입력">
-                                            <input type="text" id="tab4_email" name="email" class="userInput" hidden>
-                                            <datalist id="tab4_emailSelect">
+                                            <input type="text" class="userInput" id="tab5-1_email2" list="tab5-1_emailSelect" placeholder="직접 입력">
+                                            <input type="text" id="tab5-1_email" name="email" class="userInput" hidden>
+                                            <datalist id="tab5-1_emailSelect">
                                                 <option value="naver.com">naver.com</option>
                                                 <option value="daum.net">daum.net</option>
                                                 <option value="gmail.com">gmail.com</option>
@@ -270,36 +301,36 @@
                                             <p class="hiddenResp" id="hiddenRespEmail" hidden></p>
                                             <!-- 비밀번호 -->
                                             <label>비밀번호</label><span class="required">*</span><br> 
-                                            <input type="password" class="userInput" id="tab4_pw" name="pw" maxlength="12" placeholder="비밀번호(영문 대소문자, 숫자 6~15자리)">
+                                            <input type="password" class="userInput" id="tab5-1_pw" name="pw" maxlength="12" placeholder="비밀번호(영문 대소문자, 숫자 6~15자리)">
                                             <!-- 비밀번호 확인 -->
-                                            <input type="password" class="userInput" id="tab4_confirmPw" maxlength="12" placeholder="비밀번호 재입력"><br>
+                                            <input type="password" class="userInput" id="tab5-1_confirmPw" maxlength="12" placeholder="비밀번호 재입력"><br>
                                             <p class="advise" id="advisePw" readonly></p>
                                             <p class="hiddenResp" id="hiddenRespPw" hidden></p>
                                             <!-- 이름 -->
                                             <label>이름</label><span class="required">*</span class="required"><br>
-                                            <input type="text" class="userInput" id="tab4_name" name="name" maxlength="70">
+                                            <input type="text" class="userInput" id="tab5-1_name" name="name" maxlength="70">
                                             <p class="advise" id="adviseName" readonly></p>
                                             <p class="hiddenResp" id="hiddenRespName" hidden></p>
                                             <!-- 닉네임 -->
                                             <label>닉네임</label><span class="required">*</span class="required"><br>
-                                            <input type="text" class="userInput" id="tab4_nickname" name="nickname"
+                                            <input type="text" class="userInput" id="tab5-1_nickname" name="nickname"
                                                 maxlength="20" placeholder="닉네임(영문 대소문자, 숫자, 특수문자(_) 4~20자리)">
                                             <p class="advise" id="adviseNickname" readonly></p>
                                             <p class="hiddenResp" id="hiddenRespNickname" hidden></p>
                                             <!-- 생년월일 -->
                                             <label>생년월일</label><span class="required">*</span class="required"><br>
-                                            <select name="year" id="tab4_birthYear">
+                                            <select name="year" id="tab5-1_birthYear">
                                                 <option>선택하세요.</option>
-                                            </select> <select name="month" id="tab4_birthMonth">
+                                            </select> <select name="month" id="tab5-1_birthMonth">
                                                 <option>선택하세요.</option>
-                                            </select> <select name="day" id="tab4_birthDay">
+                                            </select> <select name="day" id="tab5-1_birthDay">
                                                 <option>선택하세요.</option>
-                                            </select> <input type="text" id="tab4_birth" name="birth" hidden><br>
+                                            </select> <input type="text" id="tab5-1_birth" name="birth" hidden><br>
                                             <p class="advise" id="adviseBirth" readonly></p>
                                             <p class="hiddenResp" id="hiddenRespBirth" hidden></p>
                                             <!-- 전화번호 -->
                                             <label>전화번호</label><span class="required">*</span class="required"><br>
-                                            <select id="tab4_phone1" style="text-align:center;width:80px;height:30px">
+                                            <select id="tab5-1_phone1" style="text-align:center;width:80px;height:30px">
                                                 <option value="010">010</option>
                                                 <option value="011">011</option>
                                                 <option value="016">016</option>
@@ -307,18 +338,18 @@
                                                 <option value="018">018</option>
                                                 <option value="019">019</option>
                                             </select> - 
-                                            <input type="text" id="tab4_phone2" maxlength="4" style="text-align:center;width:80px;"> - 
-                                            <input type="text" id="tab4_phone3" maxlength="4" style="text-align:center;width:80px;">
-                                            <input type="text" id="tab4_phone" name="phone" maxlength="11" hidden>
+                                            <input type="text" id="tab5-1_phone2" maxlength="4" style="text-align:center;width:80px;"> - 
+                                            <input type="text" id="tab5-1_phone3" maxlength="4" style="text-align:center;width:80px;">
+                                            <input type="text" id="tab5-1_phone" name="phone" maxlength="11" hidden>
                                             <p class="advise" id="advisePhone" readonly></p>
                                             <p class="hiddenResp" id="hiddenRespPhone" hidden></p>
                                             <!-- 인증번호 -->
-                                            <input type="text" id="tab4_verifyCode" name="verifyCode" placeholder="인증번호 입력" maxlength="6" style="text-align:center;">
-                                            <button type="button" id="tab4_sendCode" onclick="checkOverlap();">인증번호 전송</button>
-                                            <span id="tab4_timer" readonly></span>
-                                            <button type="button" id="tab4_resendCode" onclick="checkOverlap();" hidden>인증번호 재전송</button>
+                                            <input type="text" id="tab5-1_verifyCode" name="verifyCode" placeholder="인증번호 입력" maxlength="6" style="text-align:center;">
+                                            <button type="button" id="tab5-1_sendCode" onclick="checkOverlap();">인증번호 전송</button>
+                                            <span id="tab5-1_timer" readonly></span>
+                                            <button type="button" id="tab5-1_resendCode" onclick="checkOverlap();" hidden>인증번호 재전송</button>
                                             <br>
-                                            <button type="button" id="tab4_confirmVerifyCode" onclick="confirmVerifCode();"
+                                            <button type="button" id="tab5-1_confirmVerifyCode" onclick="confirmVerifCode();"
                                                 hidden>인증번호 확인</button>
                                             <br>
                                             <p class="advise" id="adviseVerifCode" readonly></p>
@@ -326,25 +357,65 @@
                                             <!-- 프로필 사진 -->
                                             <label>프로필 사진</label><br>
                                             <p class="advise" id="adviseProfile" readonly>*프로필 사진 미등록시 기본이미지로 등록됩니다.</p>
-                                            <img src="resources/images/default_profile_img.png" id="tab4_setProfile" style="width: 50px;">
-                                            <button type="button" id="tab4_deleteProfile">X</button>
-                                            <input type="file" id="tab4_profileImg" name="profileImg"><br>
+                                            <img src="resources/images/default_profile_img.png" id="tab5-1_setProfile" style="width: 50px;">
+                                            <button type="button" id="tab5-1_deleteProfile">X</button>
+                                            <input type="file" id="tab5-1_profileImg" name="profileImg"><br>
                                         </div>
-                                        <div class="tab4_footer">
-                                            <button type="button" id="tab4_cancelBtn" data-dismiss="modal">이전</button>
-                                            <button type="button" id="tab4_signupBtn" onclick="formValidation();">회원가입</button>
+                                        <div class="tab5-1_footer">
+                                            <button type="button" id="tab5-1_cancelBtn" data-dismiss="modal">이전</button>
+                                            <button type="button" id="tab5-1_signupBtn" onclick="formValidation();">회원가입</button>
                                         </div>
                                     </form>
                                 </div>
                             </div>
+<!-- 일반회원가입 end -->
 
-
+<!-- 카카오 회원가입 start -->
+<div role="tabpanel" class="tab-pane" id="kakaoSignUp">
+	<div class="tab5-2_container">
+		<div class="tab5-2_header">
+			<h5 id="tab5-2_signUpTitle">
+				카카오 회원	
+				<br>간편 회원가입
+			</h5>
+		</div>
+		<div class="tab5-2_body">
+			<form action="${pageContext.request.contextPath}/guest/kakaoSignupProc" method="post"
+										enctype="multipart/form-data" id="kakaoSignUpForm">
+				<!-- userId 고유 값 hidden-->
+				<input type="text" id="tab5-2_email" name="email" class="userInput" style="display:none">
+				<p class="advise" id="tab5-2_adviseEmail" readonly></p>
+				<p class="hiddenResp" id="tab5-2_hiddenRespEmail" hidden></p>
+				<!-- 닉네임 -->
+				<label>닉네임</label><span class="required">*</span class="required"><br>
+				<input type="text" class="userInput" id="tab5-2_nickname" name="nickname"
+					maxlength="20" placeholder="닉네임(영문 대소문자, 숫자, 특수문자(_) 4~20자리)">
+				<p class="advise" id="tab5-2_adviseNickname" readonly></p>
+				<p class="hiddenResp" id="tab5-2_hiddenRespNickname" hidden></p>
+				<!-- 프로필 사진 -->
+				<label>프로필 사진</label><br>
+				<p class="advise" id="tab5-2_adviseProfile" readonly>*프로필 사진 미등록시 기본이미지로 등록됩니다.</p>
+				<img src="resources/images/default_profile_img.png" name="profile_img" id="tab5-2_setProfile" style="width: 50px;">	
+				<button type="button" id="tab5-2_deleteProfile">X</button>
+				<input type="text" id="tab5-2_hiddenProfileImg" name="profile_img" style="display:none;"><br>
+				<input type="file" id="tab5-2_profileImg" name="profileImg"><br>
+			</form>
+		</div>
+		<div class="tab5-2_footer">
+			<div class="tab5-2_btnBox">
+				<button type="button" id="tab5-2_goSignUp">이전</button>
+				<button type="button" id="tab5-2_signupBtn">완료</button>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- 카카오 회원가입 end -->
                         </div>
                         <!--tab 컨텐츠 end-->
 
                         <!--tab 링크 start-->
                         <ul class="nav nav-tabs" role="tablist" hidden>
-                            <li role="presentation" class="active" id="main"><a href="#main" aria-controls="main"
+                            <li role="presentation" id="main"><a href="#main" aria-controls="main"
                                     role="tab" data-toggle="tab" id="mainTab"></a></li>
                             <li role="presentation" id="findPw"><a href="#findPw" aria-controls="findPw" role="tab"
                                     data-toggle="tab" id="findPwTab"></a>
@@ -352,8 +423,14 @@
                             <li role="presentation" id="sentEmail"><a href="#sentEmail" aria-controls="sentEmail"
                                     role="tab" data-toggle="tab" id="sentEmailTab"></a>
                             </li>
-                            <li role="presentation" id="signUp"><a href="#signUp" aria-controls="signUp"
+                            <li role="presentation" id="signUpBtns"><a href="#signUpBtns" aria-controls="signUpBtns"
+                                role="tab" data-toggle="tab" id="signUpBtnsTab"></a>
+                            </li>
+                            <li role="presentation" id="generalSignUp"><a href="#generalSignUp" aria-controls="generalSignUp"
                                 role="tab" data-toggle="tab" id="signUpTab"></a>
+                            </li>
+                            <li role="presentation" id="kakaoSignUp"><a href="#kakaoSignUp" aria-controls="kakaoSignUp"
+                                role="tab" data-toggle="tab" id="kakaoSignUpTab"></a>
                             </li>
                         </ul>
                         <!--tab 링크 end-->
@@ -368,13 +445,17 @@
     <script>
         var doc = document;
         var userInput = doc.querySelectorAll(".userInput");
-
+	
         window.onload = function () {
+        	Kakao.init("798b7f7028249ef2a4388b4944cf88ce");
             toCheckCookie();
             $("#indexModal").modal({backdrop: 'static', keyboard: false, show: true});//일단 예제로 띄우기
-            doc.getElementById("mainTab").click(); //예제 연습            
-        }
-
+            clearInput(userInput, userInput.length);           
+            
+            var url = document.location.toString();
+            	$('#main').tab('show'); //예제 연습       
+        }        
+        
         //tab1_로그인 start
         var login = doc.getElementById("tab1_loginBtn");
         var saveIdCheck = doc.getElementById("tab1_saveIdCheck");
@@ -457,44 +538,215 @@
         });
         //tab3_임시비밀번호 전송완료 안내 end 
 
-        //tab4_회원가입 start
+        //tab4_회원가입 선택 start
         doc.getElementById("goSignUp").addEventListener("click", function () {
+            clearInput(userInput, userInput.length);
+            doc.getElementById("signUpBtnsTab").click();
+            appendYear();
+            appendMonth();
+            appendDay();
+        });
+        //tab4_회원가입 선택 end
+        
+        //tab5-2_카카오 회원가입 start
+        doc.getElementById("tab5-2_kakaoLoginBtn").addEventListener("click", function(){
+        	var email = doc.getElementById("tab5-2_email");
+        	var adviseEmail = doc.getElementById("tab5-2_adviseEmail");
+        	var hiddenRespEmail = doc.getElementById("tab5-2_hiddenRespEmail");
+        	var nickname = doc.getElementById("tab5-2_nickname");
+        	var adviseNickname = doc.getElementById("tab5-2_adviseNickname");
+        	var hiddenRespNickname = doc.getElementById("tab5-2_hiddenRespNickname");
+        	var setProfile = doc.getElementById("tab5-2_setProfile");
+        	var hiddenProfileImg = doc.getElementById("tab5-2_hiddenProfileImg");
+        	var profileImg = doc.getElementById("tab5-2_profileImg");
+        	
+        		Kakao.Auth.login({
+        			success: function(authObj){
+        				var access_token = authObj.access_token;
+						$.ajax({
+							url: "${pageContext.request.contextPath}/guest/kakaoSignup",
+							data: {access_token : access_token},
+							type: "post",
+							dataType: "json"
+						}).done(function(data){
+							console.log(data);
+							console.log("user_id : " + data.user_id);
+							console.log("kakaoProfile : " + data.kakaoProfile);
+							doc.getElementById('kakaoSignUpTab').click();
+							email.value = data.user_id;
+							if(data.kakaoProfile == ""){
+								setProfile.src = "resources/images/default_profile_img.png";
+								hiddenProfileImg.value = "resources/images/default_profile_img.png";
+							}else{
+								console.log("카톡 프로필 exist");
+								setProfile.src = data.kakaoProfile;
+								doc.getElementById("tab5-2_hiddenProfileImg")
+								hiddenProfileImg.value = data.kakaoProfile;
+							}
+							
+						}).fail(function(a,b,c){
+							console.log(a);
+							console.log(b);
+							console.log(c);
+						});
+        			},
+        			fail: function(err){
+        				alert(JSON.stringify(err));
+        			}
+        		});
+        		
+                function readURL(input) {
+                    if (input.files && input.files[0]) {
+                        var reader = new FileReader();
+                        reader.onload = function (e) {
+                            console.log("프로필 사진명 : " + profileImg.value);  // 파일명                
+                            profileImg.src = e.target.result;
+                        }
+                        reader.readAsDataURL(input.files[0]);
+                    }
+                }
+
+                profileImg.addEventListener("change", function () {
+                    readURL(this);
+                });
+        		
+        		doc.getElementById("tab5-2_deleteProfile").addEventListener("click", function(){
+        			setProfile.src = "resources/images/default_profile_img.png";
+        			hiddenProfileImg.value = "resources/images/default_profile_img.png";
+        		});
+        		
+        		// 이메일 중복 검사 함수 start
+                function emailOverlapCheck() {
+                    console.log("email 중복 체크  : " + email.value);
+                    $.ajax({
+                        url: "${pageContext.request.contextPath}/guest/checkEmail.do",
+                        data: { email: email.value },
+                        dataType: "json",
+                        type: "post"
+                    }).done(function (resp) {
+                        console.log("이메일 중복 서버 검증 결과 : " + resp.result);
+                        if (resp.result == "available") {
+                        	adviseEmail.innerHTML = "사용가능";
+                        	adviseEmail.style.color = "green";
+                            hiddenRespEmail.innerHTML = "사용가능";
+                        } else {
+                            adviseEmail.style.color = "red";
+                            adviseEmail.innerHTML = "이미 가입된 카카오 계정입니다.";
+                            hiddenRespEmail.innerHTML = "사용불가";
+                        }
+                    }).fail(function (a, b, c) {
+                        console.log(a);
+                        console.log(b);
+                        console.log(c);
+                        return false;
+                    });
+                }
+                // 이메일 중복 검사 함수 end
+                        //닉네임 유효성 검사 start
+        nickname.addEventListener("blur", function () {
+            rawStr = nickname.value;
+            console.log("nickname: " + rawStr);
+            var regExp = /^[A-Za-z]{1}[A-Za-z0-9\_]{2,18}[A-Za-z0-9]{1}$/;
+            if (rawStr.length != 0) {
+                if (regExp.test(rawStr)) {
+                    console.log("nickname 유효성 검사결과: validate");
+                    adviseNickname.innerHTML = "";
+                    // 닉네임 중복 체크 ajax
+                    $.ajax({
+                        url: "${pageContext.request.contextPath}/guest/checkNickname.do",
+                        data: { nickname: rawStr },
+                        dataType: "json",
+                        type: "post"
+                    }).done(function (resp) {
+                        console.log("nickname 중복 서버 검증결과: " + resp.result);
+                        if (resp.result == "available") {
+                            adviseNickname.innerHTML = "사용가능";
+                            adviseNickname.style.color = "green";
+                            hiddenRespNickname.innerHTML = "사용가능";
+                        } else {
+                            adviseNickname.innerHTML = "중복된 닉네임입니다.";
+                            adviseNickname.style.color = "red";
+                            hiddenRespNickname.innerHTML = "사용불가";
+                            nickname.focus();
+                        }
+                    }).fail(function (a, b, c) {
+                        console.log(a);
+                        console.log(b);
+                        console.log(c);
+                        return false;
+                    });
+                } else {
+                    adviseNickname.innerHTML = "올바른 닉네임이 아닙니다."
+                    adviseNickname.style.color = "red";
+                    hiddenRespNickname.innerHTML = "사용불가";
+                    nickname.focus();
+                    console.log("nickname 유효성 검사결과: invalidate");
+                }
+            }
+        });
+        //닉네임 유효성 검사 end
+			doc.getElementById("tab5-2_signupBtn").addEventListener("click", function(){
+				
+				if (nickname.value === "") {
+					adviseNickname.innerHTML = "필수 입력사항입니다."
+					adviseNickname.style.color = "red";
+                    return false;
+                }else if(hiddenRespEmail.innerHTML === "사용불가"){
+                	adviseEmail.innerHTML = "가입 불가한 카카오 계정입니다."
+                    adviseEmail.style.color = "red";
+                	return false;
+                }else if(hiddenRespNickname.innerHTML === "사용불가"){
+                	adviseNickname.innerHTML = "사용 불가한 닉네임입니다."
+                    adviseNickname.style.color = "red";
+                	return false;
+                }
+				doc.getElementById("kakaoSignUpForm").submit();
+			});              
+        });
+        
+     
+        
+        
+       //tab5-2_카카오 회원가입 end
+         
+        //tab5-1_ 일반 회원가입 start
+        doc.getElementById("tab5-1_generalSignup").addEventListener("click", function () {
             clearInput(userInput, userInput.length);
             doc.getElementById("signUpTab").click();
             appendYear();
             appendMonth();
             appendDay();
-        });
+        });   
         
-        doc.getElementById("tab4_cancelBtn").addEventListener("click", function (){
+        doc.getElementById("tab5-1_cancelBtn").addEventListener("click", function (){
         	clearInput(userInput, userInput.length);
         	doc.getElementById("mainTab").click();
-        })
+        });
 
         // 입력 변수
-        var email = doc.getElementById("tab4_email");
-        var email1 = doc.getElementById("tab4_email1");
-        var email2 = doc.getElementById("tab4_email2");
-        var pw = doc.getElementById("tab4_pw");
-        var confirmPw = doc.getElementById("tab4_confirmPw");
-        var username = doc.getElementById("tab4_name");
-        var nickname = doc.getElementById("tab4_nickname");
-        var birthYear = doc.getElementById("tab4_birthYear");
-        var birthMonth = doc.getElementById("tab4_birthMonth");
-        var birthDay = doc.getElementById("tab4_birthDay");
-        var birth = doc.getElementById("tab4_birth");
-        var phone = doc.getElementById("tab4_phone");
-        var phone1 = doc.getElementById("tab4_phone1");
-        var phone2 = doc.getElementById("tab4_phone2");
-        var phone3 = doc.getElementById("tab4_phone3");
-        var verifyCode = doc.getElementById("tab4_verifyCode");
-        var sendCode = doc.getElementById("tab4_sendCode");
-        var resendCode = doc.getElementById("tab4_resendCode");
-        var confirmVerifyCode = doc.getElementById("tab4_confirmVerifyCode");
-        var timer = doc.getElementById("tab4_timer");
-        var setProfile = doc.getElementById("tab4_setProfile");
-        var deleteProfile = doc.getElementById("tab4_deleteProfile");
-        var profile_img = doc.getElementById("tab4_profileImg");
+        var email = doc.getElementById("tab5-1_email");
+        var email1 = doc.getElementById("tab5-1_email1");
+        var email2 = doc.getElementById("tab5-1_email2");
+        var pw = doc.getElementById("tab5-1_pw");
+        var confirmPw = doc.getElementById("tab5-1_confirmPw");
+        var username = doc.getElementById("tab5-1_name");
+        var nickname = doc.getElementById("tab5-1_nickname");
+        var birthYear = doc.getElementById("tab5-1_birthYear");
+        var birthMonth = doc.getElementById("tab5-1_birthMonth");
+        var birthDay = doc.getElementById("tab5-1_birthDay");
+        var birth = doc.getElementById("tab5-1_birth");
+        var phone = doc.getElementById("tab5-1_phone");
+        var phone1 = doc.getElementById("tab5-1_phone1");
+        var phone2 = doc.getElementById("tab5-1_phone2");
+        var phone3 = doc.getElementById("tab5-1_phone3");
+        var verifyCode = doc.getElementById("tab5-1_verifyCode");
+        var sendCode = doc.getElementById("tab5-1_sendCode");
+        var resendCode = doc.getElementById("tab5-1_resendCode");
+        var confirmVerifyCode = doc.getElementById("tab5-1_confirmVerifyCode");
+        var timer = doc.getElementById("tab5-1_timer");
+        var setProfile = doc.getElementById("tab5-1_setProfile");
+        var deleteProfile = doc.getElementById("tab5-1_deleteProfile");
+        var profile_img = doc.getElementById("tab5-1_profileImg");
 
         // 검증 실시간 확인 변수
         var adviseEmail = doc.getElementById("adviseEmail");
@@ -543,7 +795,7 @@
                     email1.focus();
                     console.log("email1 유효성 검사결과: invalidate");
                 }
-        }
+        	}
         });
         email2.addEventListener("blur", function () {
             rawStr = email2.value;
@@ -627,7 +879,7 @@
                     advisePw.style.color = "red";
                     hiddenRespPw.innerHTML = "사용불가";
                     confirmPw.value = "";
-                    confirmPw.focus();
+                    confirmPw.click();
                     console.log("confirmPw 일치여부: invalidate");
                 } else {
                     advisePw.innerHTML = "";
@@ -919,7 +1171,7 @@
             function appendYear() {
                 var date = new Date();
                 var year = date.getFullYear();
-                var selectVal = doc.getElementById("tab4_birthYear");
+                var selectVal = doc.getElementById("tab5-1_birthYear");
                 var optionIndex = 0;
                 for (var i = year - 100; i <= year; i++) {
                     selectVal.add(new Option(i + "년", i), optionIndex++);
@@ -927,7 +1179,7 @@
             }
 
             function appendMonth() {
-                var selectVal = doc.getElementById("tab4_birthMonth");
+                var selectVal = doc.getElementById("tab5-1_birthMonth");
                 var optionIndex = 0;
                 for (var i = 1; i <= 12; i++) {
                     selectVal.add(new Option(i + "월", i), optionIndex++);
@@ -935,7 +1187,7 @@
             }
 
             function appendDay() {
-                var selectVal = doc.getElementById("tab4_birthDay");
+                var selectVal = doc.getElementById("tab5-1_birthDay");
                 var optionIndex = 0;
                 for (var i = 1; i <= 31; i++) {
                     selectVal.add(new Option(i + "일", i), optionIndex++);

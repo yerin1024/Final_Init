@@ -70,17 +70,14 @@ img {
 		$("#replyBtn").on("click", function() {	        
 			var feed_seq = ${dto.feed_seq};
 			var contents = $("#writeReply").html();
-			var nickname = "${loginInfo.nickname}";
-			console.log(nickname);
-
 			$.ajax({
 				type : "POST",
 				url : "${pageContext.request.contextPath }/feed/registerReply",
-				data :{feed_seq:feed_seq,contents:contents,nickname:nickname},
+				data :{feed_seq:feed_seq,contents:contents,nickname:'${loginInfo.nickname}'},
 				dataType:"json"
 			}).done(function(resp) {
 					var html = "";	        	
-		        	html += "<div class=\"row replyFeed "+resp.reply_seq+"\">"
+		        	html += "<div class=\"row replyParent"+resp.reply_seq+"\">"
 		        	html += "<div class=\"col-2 reply replyWriter\" style=\"text-align:center\">"+resp.nickname+"님의 댓글</div>"
 		        	html += "<div class=\"col-9 reply contentsDiv\">"
 		        	html += "<div class=\"replyContents\">"+resp.contents+"</div>"
@@ -94,7 +91,8 @@ img {
 				    html += "</div>"
 				    html += "</div>"
 					$(".replyList").append(html);
-				   	$("#writeReply").html("");
+				    $("#writeReply").html("");
+
 			})
 		})
 		//답글 이벤트 ------------------------------------------------------		
@@ -105,7 +103,7 @@ img {
 			var replyWriter = 
 				$("."+reply_seq+"").children(".replyWriter").html().split('님')[0];
 			var html = "";		        	
-        	html += "<div class=\"row childReply\">"
+        	html += "<div class=\"row childModifiyBox\">"
         	html += "<div class=\"col-2 reply replyWriter\" style=\"text-align:center\">└──</div>"
         	html += "<div class=\"col-9 reply contentsDiv\">"
             html += "<div class=\"replyWriter\" style=\"color:gray;font-size:15px;\">@"+replyWriter+"</div>"
@@ -122,38 +120,37 @@ img {
 			$('.replyBtn').find('.replyModifyCancel').hide();
 			$('.replyBtn').find('.replyModifySuccess').hide();	
 		   	var childReply =  $("."+reply_seq+"").next()[0];
-		   	$(".childReply").not(childReply).remove();
+		   	$(".childModifiyBox").not(childReply).remove();
 			$(".contentsDiv").find('.replyContents').attr({
 				"contenteditable" : "false"
-			});	    
+			});	  
 		})
 		//답글을 취소했을 때
 		$(document).on("click",".childCancelBtn", function() {
-			$(this).closest(".childReply").remove();
+			$(this).closest(".childModifiyBox").remove();
 		})
 		//답글을 등록했을 때
 		$(document).on("click",".childRegisterReply",function(){
 			var reply_seq = $(this).val();      
 			var feed_seq = ${dto.feed_seq};
-			var nickname = '${loginInfo.nickname}';
 			var replyWriter = 
 				$("."+reply_seq+"").children(".replyWriter").html().split('님')[0];
-		   	var div = $(this).closest(".childReply");
+		   	var div = $(this).closest(".childModifiyBox");
 		   	var childReplyContents = div.find(".writeReply").html();
 			$.ajax({
 				type : "POST",
 				url : "${pageContext.request.contextPath }/feed/registerReply",
-				data : {feed_seq:feed_seq,nickname:nickname,contents:childReplyContents,depth:1,parent:reply_seq},
+				data : {feed_seq:feed_seq,nickname:'${loginInfo.nickname}',contents:childReplyContents,depth:1,parent:reply_seq},
 				dataType:"json"		
 			}).done(function(resp) {
 				console.log('성공적으로 성공');
 				div.remove();
 				var html = "";		        	
-	        	html += "<div class=\"row replyVowel\">"
+	        	html += "<div class=\"row childReply\">"
 		        html += "<div class=\"col-1 reply replyWriter\" style=\"text-align:center\">└──</div>"
-	        	html += "<div class=\"col-1 reply replyWriter\" style=\"text-align:center\">"+nickname+"</div>"
+	        	html += "<div class=\"col-1 reply replyWriter\" style=\"text-align:center\">"+resp.nickname+"</div>"
 	        	html += "<div class=\"col-9 reply contentsDiv\">"
-	            html += "<div class=\"replyWriter\" style=\"color:gray;font-size:15px;\">@"+replyWriter+"</div>"
+	            html += "<div class=\"replyWriter\" style=\"color:gray;font-size:15px;\">@"+resp.replyWriter+"</div>"
 	        	html += "<div class=\"writeReply\">"+resp.contents+"</div>"
 	        	html += "</div>"
 		        html += "<div class=\"col-1 reply\">"
@@ -177,7 +174,7 @@ img {
 				data : {reply_seq:reply_seq}				
 			}).done(function(resp) {
 				console.log('성공적으로 성공');
-// 			   	var childReply =  $("."+reply_seq+"").next()[0].remove();
+			   	var childReply =  $(this).closest(".childReply").remove();
 				$("."+resp).html("");
 			})
 		})
@@ -193,7 +190,7 @@ img {
 			$('.replyBtn').find('.replyModifyBtn').not(modifyBtn).show();
 			$('.replyBtn').find('.replyModifyCancel').not(modifyCancel).hide();
 			$('.replyBtn').find('.replyModifySuccess').not(modifySuccess).hide();
-			$(".childReply").remove();
+			$(".childModifiyBox").remove();
 			$('.contentsDiv').find('.replyContents').not(contentsDiv).attr({
 				"contenteditable" : "false"
 			});
@@ -214,7 +211,6 @@ img {
 	 		})
 	 		modifySuccess.on("click",function(){
 	 			var modifiedContents = $("."+seq+"").children(".contentsDiv").children(".replyContents").html();
-	 			
 	 			console.log("원래 댓글 : " + originContents);
 	 			console.log("수정 댓글 : " +modifiedContents);
 	 			
@@ -285,10 +281,12 @@ img {
 								</c:forEach>
 
 								<a class="carousel-control-prev"
-									href="#carouselExampleIndicators" role="button"
-									data-slide="prev"> <span class="carousel-control-prev-icon"
-									aria-hidden="true"></span> <span class="sr-only">Previous</span>
-								</a> <a class="carousel-control-next"
+									href="#carouselExampleIndicators" role="button" data-slide="prev"> 
+									<span class="carousel-control-prev-icon"
+									aria-hidden="true"></span> 
+									<span class="sr-only">Previous</span>
+								</a> 
+								<a class="carousel-control-next"
 									href="#carouselExampleIndicators" role="button"
 									data-slide="next"> <span class="carousel-control-next-icon"
 									aria-hidden="true"></span> <span class="sr-only">Next</span>
@@ -297,102 +295,94 @@ img {
 						</div>
 					</div>
 				</c:when>
+				
+				
+				
+				
+				
 			</c:choose>
 			<div class="row">
 				<div class="col-4 reply">${dto.contents }</div>
 				<div class="col-4 reply">
-					<a
-						href="${pageContext.request.contextPath }/feed/deleteProc?feed_seq=${dto.feed_seq}">
-						<img
-						src="${pageContext.request.contextPath }/resources/images/delete.png">
+					<a href="${pageContext.request.contextPath }/feed/deleteProc?feed_seq=${dto.feed_seq}">
+						<img src="${pageContext.request.contextPath }/resources/images/delete.png">
 					</a>
 				</div>
 				<div class="col-4 reply">
-					<a
-						href="${pageContext.request.contextPath }/feed/modifyFeedView?feed_seq=${dto.feed_seq}">
-						<img
-						src="${pageContext.request.contextPath }/resources/images/improvement.png">
+					<a href="${pageContext.request.contextPath }/feed/modifyFeedView?feed_seq=${dto.feed_seq}">
+						<img src="${pageContext.request.contextPath }/resources/images/improvement.png">
 					</a>
 				</div>
 				<div class="col-3 feed btnss like">
 					<c:choose>
 						<c:when test="${likeCheck==0 }">
-							<a href="#" id="like" class="${dto.feed_seq }"> <span
-								id="likeImg"><img class="likeBefore" id="likeBtn"
-									src="${pageContext.request.contextPath }/resources/images/likeBefore.png"></span>
-							</a>
+							<a href="#" id="like" class="${dto.feed_seq }"> <span id="likeImg">
+								<img class="likeBefore" id="likeBtn" src="${pageContext.request.contextPath }/resources/images/likeBefore.png">
+							</span></a>
 						</c:when>
 						<c:otherwise>
-							<a href="#" id="like" class="${dto.feed_seq }"> <span
-								id="likeImg"><img class="likeAfter" id="likeBtn"
-									src="${pageContext.request.contextPath }/resources/images/likeAfter.png"></span>
-							</a>
+							<a href="#" id="like" class="${dto.feed_seq }"> <span id="likeImg">
+							<img class="likeAfter" id="likeBtn" src="${pageContext.request.contextPath }/resources/images/likeAfter.png">
+							</span></a>
 						</c:otherwise>
 					</c:choose>
 				</div>
 				<div class="col-3 feed btnss bookmark">
 					<c:choose>
 						<c:when test="${bookmarkCheck==0 }">
-							<a href="#" id="bookmark" class="${dto.feed_seq }"> <span
-								id="bookmarkImg"><img class="bookmarkBefore"
-									id="bookmarkBtn"
-									src="${pageContext.request.contextPath }/resources/images/bookmarkBefore.png"></span>
-							</a>
+							<a href="#" id="bookmark" class="${dto.feed_seq }"> <span id="bookmarkImg">
+								<img class="bookmarkBefore" id="bookmarkBtn" src="${pageContext.request.contextPath }/resources/images/bookmarkBefore.png">
+							</span> </a>
 						</c:when>
 						<c:otherwise>
-							<a href="#" id="bookmark" class="${dto.feed_seq }"> <span
-								id="bookmarkImg"><img class="bookmarkAfter"
-									id="bookmarkBtn"
-									src="${pageContext.request.contextPath }/resources/images/bookmarkAfter.png"></span>
-							</a>
+							<a href="#" id="bookmark" class="${dto.feed_seq }"> <span id="bookmarkImg">
+								<img class="bookmarkAfter" id="bookmarkBtn" src="${pageContext.request.contextPath }/resources/images/bookmarkAfter.png">
+							</span> </a>
 						</c:otherwise>
 					</c:choose>
 				</div>
 			</div>
 		</div>
 		<div class="replyList">
-			<c:forEach items="${parentReply }" var="parentReply"   varStatus="status">
-				<div class="row replyFeed ${parentReply.reply_seq }">
-					<div class="col-2 reply replyWriter" style="text-align: center">${parentReply.nickname }님의
-						댓글</div>
-					<div class="col-9 reply contentsDiv">
-						<div class="replyContents" contenteditable="false">${parentReply.contents }</div>
-					</div>
-					<div class="col-1 reply replyBtn">
-						<button type="button" class="replyDeleteBtn"
-							value="${replylist.reply_seq }" style="width: 30%">삭제</button>
-						<button type="button" class="replyModifyBtn" value="${parentReply.reply_seq }" style="width: 30%">수정</button>
-						<button type="button" class="replyChildBtn" value="${parentReply.reply_seq }" style="width: 30%">답글</button>
-						<button type="button" class="replyModifySuccess"
-							value="${replylist.reply_seq }" style="width: 50%; display:none" >완료</button>
-						<button type="button" class="replyModifyCancel"  value="${parentReply.reply_seq }" style="width: 50%; display:none">취소</button>
-					</div>
-				</div>	
-						<c:forEach items="${childReply[status.count-1] }" var="childReply"> 
-							<c:choose>
-								<c:when test="${childReply.parent==parentReply}">
-								같습니다.
-								<div class="row replyVowel ${childReply.parent } ${parentReply.reply_seq}">
-									<div class="col-1 reply replyWriter" style="text-align: center">└──</div>
-									<div class="col-1 reply replyWriter" style="text-align: center">${childReply.nickname }님의 댓글</div>
-									<div class="col-9 reply contentsDiv">
-										<div class="replyWriter" style="color: gray; font-size: 15px;">@${parentReply.nickname }</div>
-										<div class="writeReply">${childReply.contents }</div>
-									</div>
-									<div class="col-1 reply">
-										<button type="button" class="replyDeleteBtn" value="125"
-											style="width: 50%">삭제</button>
-										<button type="button" class="replyModifyBtn" value="125"
-											style="width: 50%">수정</button>
-										<button type="button" class="replyModifySuccess" value="125"
-											style="width: 50%; display: none">완료</button>
-										<button type="button" class="replyModifyCancel" value="125"
-											style="width: 50%; display: none">취소</button>
-									</div>
-								</div>
-								</c:when>
-							</c:choose>			
-						</c:forEach>
+			<c:forEach items="${replyList }" var="replyList">
+				<c:choose>					
+					<c:when test="${replyList.parent == 0}">
+					<div class="row replyParent ${replyList.reply_seq }">
+						<div class="col-2 reply replyWriter" style="text-align: center">${replyList.nickname }님의
+							댓글</div>
+						<div class="col-9 reply contentsDiv">
+							<div class="replyContents" contenteditable="false">${replyList.contents }</div>
+						</div>
+						<div class="col-1 reply replyBtn">
+							<button type="button" class="replyDeleteBtn"
+								value="${parentReply.reply_seq }" style="width: 30%">삭제</button>
+							<button type="button" class="replyModifyBtn" value="${replyList.reply_seq }" style="width: 30%">수정</button>
+							<button type="button" class="replyChildBtn" value="${replyList.reply_seq }" style="width: 30%">답글</button>
+							<button type="button" class="replyModifySuccess"
+								value="${replylist.reply_seq }" style="width: 50%; display:none" >완료</button>
+							<button type="button" class="replyModifyCancel"  value="${replyList.reply_seq }" style="width: 50%; display:none">취소</button>
+						</div>
+					</div>	
+					</c:when>
+						<c:otherwise>
+						<div class="row childReply ${replyList.reply_seq }">
+							<div class="col-1 reply replyWriter" style="text-align: center">└──</div>
+								<div class="col-1 reply replyWriter" style="text-align: center">${replyList.nickname }님의
+								댓글</div>
+							<div class="col-9 reply contentsDiv">
+							<div class="replyContents" contenteditable="false">${replyList.contents }</div>
+							</div>
+							<div class="col-1 reply replyBtn">
+								<button type="button" class="replyDeleteBtn"
+									value="${replyList.reply_seq }" style="width: 30%">삭제</button>
+								<button type="button" class="replyModifyBtn" value="${replyList.reply_seq }" style="width: 30%">수정</button>
+								<button type="button" class="replyModifySuccess"
+									value="${replylist.reply_seq }" style="width: 50%; display:none" >완료</button>
+								<button type="button" class="replyModifyCancel"  value="${replyList.reply_seq }" style="width: 50%; display:none">취소</button>
+							</div>
+						</div>	
+						</c:otherwise>
+					</c:choose>
 				</c:forEach>			
 			</div>
 			<div class="replyWindow">
@@ -453,6 +443,7 @@ img {
 					$("#bookmarkImg").html("<img class=\"bookmarkBefore\" id=\"bookmarkBtn\" src=\"${pageContext.request.contextPath }/resources/images/bookmarkBefore.png\">");
 				})
 			}
+				
 		})
 	</script>
 </body>

@@ -1,6 +1,7 @@
 package kh.init.feeds;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.Gson;
 
+import edu.emory.mathcs.backport.java.util.Collections;
 import kh.init.members.MemberDTO;
 
 
@@ -122,13 +124,13 @@ public class FeedService {
 			int feed_seq = tmp.getFeed_seq();
 			List<String> media = dao.getMediaList(feed_seq);
 			if(media.size()==0) { //이미지나 비디오가 없기 때문에 제목으로 커버를 만들어야되는 경우
-				cover.add("<span class='cover'>"+tmp.getTitle()+"</span>");
+				cover.add("<span class='cover' style='width:100%;height:100%'>"+tmp.getTitle()+"</span>");
 			}else {
 				if(media.get(0).endsWith("mp4")) { //파일이 동영상일 경우
-					String video = "<video class='cover' src=\""+media.get(0)+"\">";
+					String video = "<video class='cover' style='width:100%;height:100%' src=\""+media.get(0)+"\">";
 					cover.add(video);
 				}else {//파일이 이미지
-					String img = "<img class='cover' src=\""+media.get(0)+"\">";
+					String img = "<img class='cover' style='width:100%;height:100%' src=\""+media.get(0)+"\">";
 					cover.add(img);
 				}
 			}
@@ -174,7 +176,7 @@ public class FeedService {
 			int feed_seq = tmp.getFeed_seq();
 			List<String> media = dao.getMediaList(feed_seq);
 			if(media.size()==0) { //이미지나 비디오가 없기 때문에 제목으로 커버를 만들어야되는 경우
-				cover.add("<span class='cover'>"+tmp.getTitle()+"</span>");
+				cover.add("<div class='title'>"+tmp.getTitle()+"</div>");
 			}else {
 				if(media.get(0).endsWith("mp4")) { //파일이 동영상일 경우
 					String video = "<video class='cover' src=\""+media.get(0)+"\">";
@@ -390,24 +392,9 @@ public class FeedService {
 		int result = replyDAO.deleteReply("reply_seq",reply_seq);
 		return result;
 	}
-	public Map<String, Object> viewAllReply(int feed_seq)throws Exception{
-		List<ReplyDTO> parents = replyDAO.viewAllReply(feed_seq, 0);
-		System.out.println(parents.toString());
-		List<ReplyDTO> childs = null;
-		Map<String, Object> map = new HashMap<>();
-		map.put("parents", parents);
-		for(ReplyDTO tmp : parents){
-			int tmpParent = tmp.getReply_seq();
-//			try {
-				childs = replyDAO.viewAllReply(feed_seq, tmpParent);
-				System.out.print("\n"+childs.toString()+"입니다!");
-//			}catch(Exception e) {
-//				e.printStackTrace();
-//				return map;
-//			}
-		}
-		map.put("childs", childs);
-		return map;
+	public List<ReplyDTO> viewAllReply(int feed_seq)throws Exception{
+		List<ReplyDTO> list = replyDAO.viewAllReply(feed_seq);
+		return list;
 	}
 	public int updateReply(ReplyDTO dto)throws Exception{
 		int result = replyDAO.updateReply(dto);

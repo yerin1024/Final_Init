@@ -461,12 +461,12 @@
 
     </script>
 	<script>
-$("#withdrawMem").on("click",function(){
-	location.href = "${pageContext.request.contextPath}/member/withdrawMem";
-})
-$("#backToFeed").on("click", function() {
-			location.href = "${pageContext.request.contextPath}/feed/myFeed";
-		});
+	$("#withdrawMem").on("click",function(){
+		location.href = "${pageContext.request.contextPath}/member/withdrawMem";
+	})
+	$("#backToFeed").on("click", function() {
+				location.href = "${pageContext.request.contextPath}/feed/myFeed?email=${dto.email}";
+			});
 </script>
 </body>
 </html>
