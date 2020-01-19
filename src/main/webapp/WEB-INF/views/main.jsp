@@ -201,7 +201,7 @@
                     <div>
                         <!--tab 컨텐츠 start-->
                         <div class="tab-content">
-                            <div role="tabpanel" class="tab-pane active" id="main">
+                            <div role="tabpanel" class="tab-pane" id="main">
                                 <div class="tab1_container">
                                     <form action="${pageContext.request.contextPath}/member/loginProc.do" method="post" id="tab1_loginForm">
                                         <div class="tab1_loginContainer">
@@ -262,8 +262,7 @@
                                     <div class="tab4_body">
                                     	<div class="tab4_signupBtnBox">
                                     		<button type="button" id="tab5-1_generalSignup">일반 회원가입</button>
-                                    		<a href="https://kauth.kakao.com/oauth/authorize?client_id=4f039db4ba705950489f1f29405d6c6c
-												&redirect_uri=http://localhost/guest/kakaoSignup&response_type=code">
+                                    		<a href="https://kauth.kakao.com/oauth/authorize?client_id=4f039db4ba705950489f1f29405d6c6c&redirect_uri=http://localhost/guest/kakaoSignup&response_type=code">
                                                 <img src="resources/images/kakaoSignup_btn.png" id="tab5-2_kakaoLoginBtn"><br>
 	                                        </a>
                                     	</div>
@@ -420,7 +419,7 @@
 
                         <!--tab 링크 start-->
                         <ul class="nav nav-tabs" role="tablist" hidden>
-                            <li role="presentation" class="active" id="main"><a href="#main" aria-controls="main"
+                            <li role="presentation" id="main"><a href="#main" aria-controls="main"
                                     role="tab" data-toggle="tab" id="mainTab"></a></li>
                             <li role="presentation" id="findPw"><a href="#findPw" aria-controls="findPw" role="tab"
                                     data-toggle="tab" id="findPwTab"></a>
@@ -454,15 +453,26 @@
         window.onload = function () {
             toCheckCookie();
             $("#indexModal").modal({backdrop: 'static', keyboard: false, show: true});//일단 예제로 띄우기
-            clearInput(userInput, userInput.length);
+            clearInput(userInput, userInput.length);           
+            
             var url = document.location.toString();
-            if (url.match('http://localhost/main?kakaoSignUp')) {
-            	$('.nav-tabs #kakaoSignUp').tab('show')//예제 연습    
-//             	doc.getElementById("tab5-2_email").value = ${user_id};
-            }else{
-                doc.getElementById("mainTab").click(); //예제 연습       
-            }     
+            	$('#main').tab('show'); //예제 연습       
         }
+        
+//         doc.getElementById("tab5-2_kakaoLoginBtn").addEventListener("click", function(){
+//         	$('#kakaoSignUp').tab('show');
+//         	$.ajax({
+//         		url: "https://kauth.kakao.com/oauth/authorize?client_id=4f039db4ba705950489f1f29405d6c6c&redirect_uri=http://localhost/guest/kakaoSignup&response_type=code", 
+//         		dataType: "text/html"        			
+//         	}).done(function(data){
+//         		console.log(data);
+//         	}).fail(function(a,b,c){
+//         		console.log(a);
+//         		console.log(b);
+//         		console.log(c);
+//         	})
+//         })
+        
         //tab1_로그인 start
         var login = doc.getElementById("tab1_loginBtn");
         var saveIdCheck = doc.getElementById("tab1_saveIdCheck");
@@ -556,9 +566,9 @@
         //tab4_회원가입 선택 end
         
         //tab5-2_카카오 회원가입 start
-         doc.getElementById("tab5-2_kakaoLoginBtn").addEventListener("click", function () {
-            clearInput(userInput, userInput.length);
-        });
+//          doc.getElementById("tab5-2_kakaoLoginBtn").addEventListener("click", function () {
+//             clearInput(userInput, userInput.length);
+//         });
        //tab5-2_카카오 회원가입 end
          
         //tab5-1_ 일반 회원가입 start
@@ -573,7 +583,7 @@
         doc.getElementById("tab5-1_cancelBtn").addEventListener("click", function (){
         	clearInput(userInput, userInput.length);
         	doc.getElementById("mainTab").click();
-        })
+        });
 
         // 입력 변수
         var email = doc.getElementById("tab5-1_email");
