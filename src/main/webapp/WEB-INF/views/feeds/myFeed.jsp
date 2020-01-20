@@ -689,7 +689,7 @@
 	</div>
 
 	<!-- 친구 목록 모달 영역 -->
-	<div id="modalBox2" class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+	<div id="modalBox2" class="modal fade"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
 		style="margin-top: 100px;">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
