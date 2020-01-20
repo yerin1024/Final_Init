@@ -24,8 +24,6 @@ public class HomeController {
 	@RequestMapping("/home")
 	public String home() {
 		session.setAttribute("mediaList", new ArrayList<String>());
-
-		
 		return "home";
 	}
 	

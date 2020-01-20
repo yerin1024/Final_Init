@@ -383,7 +383,6 @@ public class FeedController {
 			likeCheck = service.likeCheck(feed_seq, ((MemberDTO)session.getAttribute("loginInfo")).getEmail());
 			bookmarkCheck = service.bookmarkCheck(feed_seq, ((MemberDTO)session.getAttribute("loginInfo")).getEmail());
 
-
 			list = service.getMediaList(feed_seq);
 			replyList = service.viewAllReply(feed_seq);
 //			System.out.println("Email : "+dto.getEmail());
