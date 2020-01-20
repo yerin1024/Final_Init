@@ -2,7 +2,6 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,10 +11,8 @@
 <script src="https://code.jquery.com/jquery-3.4.1.js"
 	type="text/javascript"></script>
 <link rel="stylesheet" href="/resources/css/nav.css">
-
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-
 <script
 	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
 <script
@@ -346,19 +343,19 @@
 .reply::-webkit-scrollbar {
         width: 0 !important
 }
-.reply>ul {
-        padding: 0px;
-}
 
-.reply>ul>li {
-        list-style: none;
-}
 .writerProfile,.userProfile,.myProfile{	
     margin-right: 16px;
 }
 .writerProfileImg,.userProfileImg{
-	width:50px;
-	height:50px;
+	width:40px;
+	height:40px;
+	border-radius: 160px;
+    border: 1px solid black;
+}
+.childProfileImg{
+	width:24px;
+	height:24px;
 	border-radius: 160px;
     border: 1px solid black;
 }
@@ -372,6 +369,13 @@
     margin-right: 0;
     padding: 12px 16px 0px 16px;
     display: flex;
+    flex-wrap: wrap;
+}
+.childReply{
+    margin-right: 0;
+    padding: 12px 16px 0px 60px;
+    display: flex;
+    flex-wrap: wrap;
 }
 .userProfileID,.writerProfileID{
 	font-weight: 600;
@@ -381,17 +385,39 @@
 .userReply,.text>p{
         word-break: break-all;	
 }
+.childContentsBox{
+	width:322px;
+    border: 1px solid rgb(239, 239, 239);
+    border-radius: 16px;
+    transition: all 1000ms ease 0s;
+}
 .writeReplyBox{
 	display:flex;
+    width: 100%;
 }
 .modal-title{
 	line-height: 50px;
 }
-.writeReply{	
-    border: 1px solid black;
-    width: 700px;
+#writeReply{	
+    border-radius: 16px;
+    border: 1px solid rgb(239, 239, 239);
+    width: 100%;
     line-height:50px;
     margin: 0px 20px;
+}
+.replyContents{	
+    background: transparent;
+    border: 0px;
+    display: inline-block;
+    min-height: 50px;
+    font-size: 16px;
+    outline: 0px;
+    overflow-x: hidden;
+    resize: none;
+    white-space: pre-wrap;
+    width: 100%;
+    word-break: break-all;
+    padding: 12px;
 }
 /* All Device */
 /* 모든 해상도를 위한 공통 코드를 작성한다. 모든 해상도에서 이 코드가 실행됨. */
@@ -474,7 +500,7 @@
 					}
 				}
 			});
-
+	
 	 function getList(page){
 	       $.ajax({
 	           type : 'POST',  
@@ -533,8 +559,6 @@
 //	          }
 	      })
 	   }
-
-
 </script>
 </head>
 
@@ -562,7 +586,6 @@
 						<button class="friendRequest">＋</button>
 						<div class="btnText">메세지</div>
 					</div>
-
 				</c:when>
 				<c:otherwise>
 
@@ -605,7 +628,7 @@
 			<div id="myFeed">
          <c:choose>
             <c:when test="${fn:length(list) ==0}">
-            게시물이 없습니다.
+            	게시물이 없습니다.
             </c:when>
             <c:otherwise>
             <div id="feeds">
@@ -631,7 +654,6 @@
 		
 
 </div>
-
 	<!-- 친구요청 모달 영역 -->
 	<div id="modalBox" class="modal fade" id="myModal" tabindex="-1"
 		role="dialog" aria-labelledby="myModalLabel"
@@ -691,8 +713,6 @@
 			</div>
 		</div>
 	</div>
-
-	
 	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="margin-top: 100px;">
 	  <div class="modal-dialog" role="document">
 	    <div class="modal-content">
@@ -731,15 +751,13 @@
 				<div class="writeReplyBox">					
 	         		<span class="myProfile"><img class="userProfileImg" src="${loginInfo.profile_img }" alt=""></span>
 	       			 <h5 class="modal-title" id="exampleModalLabel">${loginInfo.nickname }</h5>
-	       			 <div class="writeReply" contenteditable="true" style="border:1px solid black;"></div>
-	       			 <button type="button" >등록</button>
+	       			 <div id="writeReply" contenteditable="true"></div>
+	       			 <button type="button" id="replyBtn" onclick="replyBtnOnclick('${loginInfo.email }')">등록</button>
 				</div>
 	      </div>
 	    </div>
 	  </div>
 	  </div>
-	
-		
 	<script type="text/javascript">
 	
 	    $("#registerFeed").on(
@@ -749,6 +767,9 @@
 	$('#exampleModal').on('shown.bs.modal', function (event) {
 		var seq= $(event.relatedTarget).data('id');
 		console.log("seq : "+seq);
+		//피드시퀀스값
+		var feedSeqDiv = $("<div class=\"feedSeqDiv\" style=\"visibility:hidden\">"+seq+"</div>");
+		$(".writeReplyBox").append(feedSeqDiv);
 		$.ajax({
 			type:"post",
 			url:"/feed/detailView",
@@ -764,7 +785,6 @@
 			var mediaList = JSON.parse(data.media);
 			var dto = JSON.parse(data.dto);
 			console.log(mediaList.length);
-			
 			//디테일뷰 미디어
 			if(mediaList.length>0){ //미디어가 존재하므로 캐러셀 만들어줌
 				console.log("캐러셀 시작");
@@ -807,17 +827,12 @@
 				
 				cei.append(cInner);
 				mediaRow.append(cei);
-				
 				$(".modal-body1").html(mediaRow);
 			}
-			
-			
 			//디테일뷰 글
-			var textRow = $("<span class='row text'></span>");
+			var textRow = $("<span class='row text '></span>");
 			textRow.append(dto.contents);
 			$(".writerInfo").append(textRow);
-			
-			
 			//디테일뷰 좋아요, 스크랩, 수정, 삭제 버튼
 			//좋아요버튼
 			if(likeCheck==0){
@@ -852,8 +867,6 @@
 			$(".writerProfile").html("<img src="+writerProfile+" class='writerProfileImg'>");
 			
 		})
-		
-		
 		$('#myInput').trigger('focus');
 		
 	})
@@ -1177,8 +1190,7 @@
 		});
 
 		//친구추가 ,취소 ,끊기
-	</script>
-
-
+	</script>	
+	  <jsp:include page="/resources/script/myFeedScript.jsp"></jsp:include>
 </body>
 </html>

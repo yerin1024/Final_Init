@@ -24,7 +24,7 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.css"
 	rel="stylesheet">
 <script
-	src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.js"></script>
+	src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.js"></script>	
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -185,7 +185,7 @@ img {
 			var deleteBtn = $("."+seq+"").find(".replyDeleteBtn");
 			var modifyBtn = $("."+seq+"").find(".replyModifyBtn"); 
 			var modifyCancel = $("."+seq+"").find(".replyModifyCancel"); 
-			var modifySuccess = $("."+seq+"").find(".replyModifySuccess");	
+			var modifySuccess = $("."+seq+"").find(".replyModifySuccess");
 			$('.replyBtn').find('.replyDeleteBtn').not(deleteBtn).show();
 			$('.replyBtn').find('.replyModifyBtn').not(modifyBtn).show();
 			$('.replyBtn').find('.replyModifyCancel').not(modifyCancel).hide();
@@ -225,7 +225,7 @@ img {
 	 			}else{
 	 				$.ajax({
 	 					type : "POST",
-	 					url : "${pageContext.request.contextPath }/feed/updateReply",
+	 					url : "${pageContext.request.contextPath }/feed/modifyReply",
 	 					data : {reply_seq:seq,contents:modifiedContents}	
 	 				}).done(function(resp){
 	 					if(resp == 1){
