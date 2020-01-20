@@ -27,7 +27,7 @@ public class AlarmDAO {
 	// 댓글 알림 추가			dual 리턴값 받아서 넣기 // email에 alarmWho 리턴값 넣기
 	public int alarmReply(int sharedSeq, String email) {
 		Map<String, Object> prm = new HashMap<>();
-		prm.put("shardSeq",sharedSeq);
+		prm.put("sharedSeq",sharedSeq);
 		prm.put("email",email);
 		return jdbc.insert("Alarm.alarmReply",prm);
 	}
@@ -35,7 +35,7 @@ public class AlarmDAO {
 	// 좋아요 알림 추가
 	public int alarmLike(int sharedSeq, String email) {
 		Map<String, Object> prm = new HashMap<>();
-		prm.put("shardSeq",sharedSeq);
+		prm.put("sharedSeq",sharedSeq);
 		prm.put("email",email);
 		return jdbc.insert("Alarm.alarmLike",prm);
 	}
@@ -43,7 +43,7 @@ public class AlarmDAO {
 	// 친구 요청 알림 추가
 	public int alarmFriend(int sharedSeq, FriendRequestDTO dto) {
 		Map<String, Object> prm = new HashMap<>();
-		prm.put("shardSeq",sharedSeq);
+		prm.put("sharedSeq",sharedSeq);
 //		prm.put("email", email);	// tb_friend_request의 to_id
 		prm.put("email", dto.getTo_id());
 		return jdbc.insert("Alarm.alarmFriend",prm);
