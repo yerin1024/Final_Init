@@ -46,62 +46,7 @@ public class MemberService {
 		return dao.isLoginOk(email, pw);
 	}
 
-	public String getAccessToken(String code, String requestURI) {
-		String accessToken = "";
-		String refreshToken = "";
-		String reqURL = "https://kauth.kakao.com/oauth/token";
-
-		try {
-			URL url = new URL(reqURL);
-			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-
-			//    POST 요청을 위해 기본값이 false인 setDoOutput을 true로
-			conn.setRequestMethod("POST");
-			conn.setDoOutput(true);
-
-			//    POST 요청에 필요로 요구하는 파라미터 스트림을 통해 전송
-			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
-			StringBuilder sb = new StringBuilder();
-			sb.append("grant_type=authorization_code");
-			sb.append("&client_id=4f039db4ba705950489f1f29405d6c6c");
-			sb.append("&redirect_uri=http://localhost" + requestURI);
-			sb.append("&code=" + code);
-			bw.write(sb.toString());
-			bw.flush();
-
-			//    결과 코드가 200이라면 성공
-			int responseCode = conn.getResponseCode();
-			System.out.println("responseCode : " + responseCode);
-
-			//    요청을 통해 얻은 JSON타입의 Response 메세지 읽어오기
-			BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-			String line = "";
-			String result = "";
-
-			while ((line = br.readLine()) != null) {
-				result += line;
-			}
-			System.out.println("response body : " + result);
-
-			//    Gson 라이브러리에 포함된 클래스로 JSON파싱 객체 생성
-			JsonParser parser = new JsonParser();
-			JsonElement element = parser.parse(result);
-
-			accessToken = element.getAsJsonObject().get("access_token").getAsString();
-			refreshToken = element.getAsJsonObject().get("refresh_token").getAsString();
-
-			System.out.println("access_token : " + accessToken);
-			System.out.println("refresh_token : " + refreshToken);
-
-			br.close();
-			bw.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		} 
-
-		return accessToken;
-	}
-
+	//카카오 로그인 access_token 이용해 userId, profile 사진 뽑기 
 	public HashMap<String, Object> getKakaoInfo(String access_Token){
 
 		HashMap<String, Object> userInfo = new HashMap<>();
@@ -136,22 +81,14 @@ public class MemberService {
 			JsonObject profile = kakaoAccount.getAsJsonObject().get("profile").getAsJsonObject();
 			
 			String user_id = element.getAsJsonObject().get("id").getAsString();
-			
-//			String nickname =  properties.getAsJsonObject().get("nickname").getAsString();
+		
 			if(profile.getAsJsonObject().get("profile_image_url") != null) {
 				profile_image = profile.getAsJsonObject().get("profile_image_url").getAsString();
 			}			
 			
-//			String email = kakaoAccount.getAsJsonObject().get("email").getAsString();
-//			String is_email_verified = kakaoAccount.getAsJsonObject().get("is_email_verified").getAsString();
-//			String birthday = kakaoAccount.getAsJsonObject().get("birthday").getAsString();
-			
 			userInfo.put("user_id", user_id);
-//			userInfo.put("nickname", nickname);
 			userInfo.put("profile_image", profile_image);
-//			userInfo.put("email", email);
-//			userInfo.put("is_email_verified", is_email_verified);
-//			userInfo.put("birthday", birthday);	
+			
 		}catch(Exception e) {
 			e.printStackTrace();
 		}	
