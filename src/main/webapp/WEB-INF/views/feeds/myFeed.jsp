@@ -604,12 +604,10 @@
 
 						</div>
 						</div>
-						<c:if test="${mvo.id_type} == 'E'">
 						<div class="profileLayoutRight">
 							<button class="profileButton" id="changeInfo">＋</button>
 							<div class="btnText">회원정보</div>
 						</div>
-						</c:if>
 					</div>
 					<div class="profileMessageLayout">
 						<div class="profileName">${mvo.nickname }</div>
