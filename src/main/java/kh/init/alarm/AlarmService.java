@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import kh.init.feeds.ReplyDTO;
+import kh.init.friends.FriendRequestDTO;
 
 @Service
 public class AlarmService {
@@ -43,6 +44,12 @@ public class AlarmService {
 	public int isNewAlarm(String email) {
 		return dao.isNewAlarm(email);
 	}
+	
+	@Transactional("txManager")
+	public int alarmFriend(int sharedSeq, FriendRequestDTO dto) {
+		return dao.alarmFriend(sharedSeq, dto);
+	}
+	
 	
 
 }
