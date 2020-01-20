@@ -194,7 +194,7 @@
 	<insert id="registerReply"
 		parameterType="kh.init.feeds.ReplyDTO">
 		insert into tb_reply
-		values(#{feed_seq},#{reply_seq},#{nickname},#{depth},#{parent},#{contents},sysdate)
+		values(#{feed_seq},#{reply_seq},#{email},#{depth},#{parent},#{contents},sysdate)
 	</insert>
 
 	<delete id="deleteReply" parameterType="java.util.Map">

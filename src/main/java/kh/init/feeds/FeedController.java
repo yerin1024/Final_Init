@@ -41,7 +41,7 @@ public class FeedController {
 			MemberDTO dto = mservice.getMyPageService(email);
 			list = (List<FeedDTO>)service.getMyFeed(ipage, email).get("list");
 			cover = (List<String>)service.getMyFeed(ipage, email).get("cover");
-			System.out.println("dto 이메일값 확인 : "+dto.getEmail()+dto.getName() );
+			System.out.println("dto 이메일값 확인 : "+dto.getEmail()+dto.getName());
 			model.addAttribute("mvo", dto);
 			model.addAttribute("list", list);
 			model.addAttribute("cover", cover);
@@ -382,7 +382,6 @@ public class FeedController {
 			likeCheck = service.likeCheck(feed_seq, ((MemberDTO)session.getAttribute("loginInfo")).getEmail());
 			bookmarkCheck = service.bookmarkCheck(feed_seq, ((MemberDTO)session.getAttribute("loginInfo")).getEmail());
 
-
 			list = service.getMediaList(feed_seq);
 			replyList = service.viewAllReply(feed_seq);
 //			System.out.println("Email : "+dto.getEmail());
@@ -635,10 +634,6 @@ public class FeedController {
 		}
 		return result;
 	}
-	@RequestMapping("/modifyReply")
-	public String modifyReply(FeedDTO dto) {
-		return "feeds/myFeed";
-	}
 
 	@RequestMapping("/deleteReply")
 	@ResponseBody
@@ -654,7 +649,7 @@ public class FeedController {
 		System.out.println(result + "지워짐");
 		return  reply_seq+"";
 	}
-	@RequestMapping("/updateReply")
+	@RequestMapping("/modifyReply")
 	@ResponseBody
 	public String updateReply(ReplyDTO dto) {
 		System.out.println("댓글 수정 도착!!");

@@ -1,43 +1,47 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
-<div class="ac1" id="ac1_1">
-	<img src="/images/letter.png" style="width: 50px;">
-</div>
-<div id=collection>
-	<button id=toCollection>메시지 목록</button>
-</div>
-
-<div id="view1">
-	<div class="ac2">
-		<div id=cross>
-			<img src="/images/cross.png" style="width: 30px;">
-		</div>
+<div class="ac1" id="ac1_1"><img src="/images/letter.png" style="width:50px;"></div>
+	<div id=collection>
+		<button id=toCollection>메시지 목록</button>
 	</div>
-	<div class="pre_top">
-		<div class="pre_top_pf">
-			<img src="/images/default_profile_img.png" class="pre_top_pf_img">
+			
+	<div id="view1">
+		<div class="ac2">
+		    <div id=cross>
+		    <img src="/images/cross.png" style="width:30px;">
+            </div>
 		</div>
-		<div class="pre_title">Messenger</div>
-	</div>
+		<div class="pre_top">
+            <div class="pre_top_pf"><img src="/images/default_profile_img.png" class="pre_top_pf_img"></div>
+            <div class="pre_title">Messenger</div>
+          </div>
+          
+<!--       <div class="search"> -->
+<!--             <input type="text"> <img src="/images/search1.png" style="width: 20px;"> -->
+<!--         </div> -->
+          
+		<div class="sector">
+<!--           ------------------------------------------------->
+			<div class="sector_in">
 
-	<!--       <div class="search"> -->
-	<!--             <input type="text"> <img src="/images/search1.png" style="width: 20px;"> -->
-	<!--         </div> -->
-
-	<div class="sector">
-		<!--           ------------------------------------------------->
-		<div class="sector_in">
-		
+<!--             <div class="pre_line"> -->
+<!--                 <div class="pre_pf"><img src="images/b1.png" class="pre_pf_img"></div> -->
+<!--                 <div class="pre_text"><b>yuri</b></div> -->
+<!--                 <div class="pre_time"><img src="images/startMsg.png" class="pre_start"></div> -->
+<!--             </div> -->
+<!--             <div class="pre_line"> -->
+<!--                 <div class="pre_pf"><img src="images/default.png" class="pre_pf_img"></div> -->
+<!--                 <div class="pre_text"><b>whoru</b></div> -->
+<!--                 <div class="pre_time"><img src="images/startMsg.png" class="pre_start"></div> -->
+<!--             </div> -->
+			
+			</div>
+<!--           ------------------------------------------------->
+        <div id="footer">
+        </div>
 		</div>
-		<!--           ------------------------------------------------->
-		<div id="footer"></div>
-	</div>
-</div>
-
-
-<script>
+    </div>
+	
+	
+	<script>
 	 
 	$(document).ready(function(){
 

@@ -27,6 +27,7 @@ public class GuestService {
 	public int insert(MemberDTO dto, MultipartFile profile_img, String path) {
 		System.out.println("서비스 dto  : "  + dto.toString());
 		File filePath = new File(path); 
+		System.out.println(filePath);
 		if(!filePath.exists()) {
 			filePath.mkdir();
 		}
