@@ -15,7 +15,6 @@
 		function replyBtnOnclick(email) {
 			var writeReply = $("#writeReply");
 			var contents = writeReply.html();
-			
 			var feed_seq = $(".feedSeqDiv").html();
 			$.ajax({
 				type : "POST",

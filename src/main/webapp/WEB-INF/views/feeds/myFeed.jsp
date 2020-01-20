@@ -320,7 +320,7 @@
 	color:black;
 }
 .modal-dialog {
-    max-width: 935px;
+    max-width: 1300px;
     margin: 1.75rem auto;
 }
 .row{
@@ -328,7 +328,7 @@
 }
 .modal-main{
     display: flex;
-    height: 500px;
+    height: 650px;
 }
 .carousel-item>img{
 	width:500px;
@@ -368,8 +368,7 @@
     margin-left: -12px;
     margin-right: 0;
     padding: 12px 16px 0px 16px;
-    display: flex;
-    flex-wrap: wrap;
+    display:flex;
 }
 .childReply{
     margin-right: 0;
@@ -383,7 +382,15 @@
     margin: 0px 5px 0px -5px;
 }
 .userReply,.text>p{
-        word-break: break-all;	
+    border-radius: 16px;
+    border: 1px solid rgb(239, 239, 239);
+    width: 100%;
+    line-height: 50px;
+    width: 400px;
+    margin: 0px 20px;
+    word-break: break-all;	
+    display: inherit;
+}
 }
 .childContentsBox{
 	width:322px;
@@ -419,9 +426,15 @@
     word-break: break-all;
     padding: 12px;
 }
-.modal-body1{	
-    width: 500px;
-    height: 500px;
+.modal-body1{
+	width:55%;
+    height: 100%;
+}
+.title{
+	width:45%;
+}
+.media{
+	width:100%;
 }
 /* All Device */
 /* 모든 해상도를 위한 공통 코드를 작성한다. 모든 해상도에서 이 코드가 실행됨. */
@@ -1012,7 +1025,7 @@
 				$(".modal-body1").html(mediaRow);
 			}
 			//디테일뷰 글
-			var textRow = $("<span class='row text '></span>");
+			var textRow = $("<span class='text'></span>");
 			textRow.append(dto.contents);
 			$(".writerInfo").append(textRow);
 			//디테일뷰 좋아요, 스크랩, 수정, 삭제 버튼
