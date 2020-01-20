@@ -119,6 +119,7 @@
 		and p.relation >= r.relation
 		or p.email = #{email}
 	</select>
+
 	<select id="getFriendFeed" parameterType="java.util.Map"
 		resultType="kh.init.feeds.FeedDTO">
 		select feed_seq, email, nickname, title, contents,
@@ -134,15 +135,17 @@
 		where rnum between #{startNum} and #{endNum}
 	</select>
 
+		
+	<!-- 신고게시물의 주인 -->
+	<select id="getReportedEmail" resultType="String">
+		select email from tb_feed where feed_seq = #{feed_seq}
+	</select>
 
 	<update id="modifyFeed" parameterType="kh.init.feeds.FeedDTO">
-		update tb_feed set title =
-		#{title}, contents=#{contents} , relation=#{relation} where feed_seq =
-		#{feed_seq}
+		update tb_feed set title = #{title}, contents=#{contents} , relation=#{relation} where feed_seq = #{feed_seq}
 	</update>
 
 	<!--좋아요 기능 -->
-
 	<select id="getLikeSeq" resultType="integer">
 		select like_seq.nextval from
 		dual

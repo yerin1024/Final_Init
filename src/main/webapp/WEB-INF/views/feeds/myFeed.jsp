@@ -671,7 +671,7 @@
 
 				<div class="modal-body">
 					<form
-						action="${pageContext.request.contextPath}/friend/friendRequest?to_id=${dto.email}"
+						action="${pageContext.request.contextPath}/friend/friendRequest?to_id=${mvo.email}"
 						method="post" id="goReqFri">
 						<input type=radio name="relation" value="1"> 아는 사람<br>
 						<input type=radio name="relation" value="2"> 친구<br> <input

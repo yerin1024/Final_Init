@@ -3,17 +3,14 @@ package kh.init.members;
 
 import java.util.HashMap;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.google.gson.JsonObject;
 
@@ -50,7 +47,7 @@ public class GuestController {
 			dto.setId_type("E");
 			service.insert(dto, profileImg, path);
 		}
-		return "main";
+		return "redirect:/main";
 	}
 
 	//카카오 계정 회원가입처리(신규회원 추가)
@@ -61,7 +58,10 @@ public class GuestController {
 		HashMap<String, Object> userInfo = serviceMember.getKakaoInfo(access_token);
 
 		JsonObject obj = new JsonObject();
-		obj.addProperty("kakaoProfile", (String) userInfo.get("profile_image"));
+		if(!(boolean)userInfo.get("profile_image").equals("none")) {
+			obj.addProperty("kakaoProfile", (String) userInfo.get("profile_image"));
+		}
+		obj.addProperty("kakaoProfile", "none");
 		obj.addProperty("user_id", (String) userInfo.get("user_id"));
 		System.out.println("userInfo : " + userInfo);
 		return obj.toString();
@@ -79,7 +79,7 @@ public class GuestController {
 			dto.setId_type("K");
 			service.insert(dto, profileImg, path);
 		}
-		return "main";
+		return "redirect:/main";
 	}
 
 	//이메일 중복확인
@@ -139,9 +139,9 @@ public class GuestController {
 	@RequestMapping(value="/sendVerifCode.do", produces="text/html;charset=UTF-8")
 	@ResponseBody
 	public String toSendVerifCode(String phone) {
-		//		String ranNum = service.sendVerifCode(phone); //인증번호 생성
-		//		session.setAttribute("verifyCode", ranNum);
-		//		System.out.println("인증번호 생성 : " + ranNum);
+				String ranNum = service.sendVerifCode(phone); //인증번호 생성
+				session.setAttribute("verifyCode", ranNum);
+				System.out.println("인증번호 생성 : " + ranNum);
 		JsonObject obj = new JsonObject();
 		obj.addProperty("result", "Verify Code sent");
 		return obj.toString();

@@ -207,12 +207,9 @@
                                         <div class="tab1_loginContainer">
                                             <div class="tab1_body">
                                                 <input type="text" class="userInput" id="tab1_email" name="email" placeholder="아이디 입력"><br>
-                                                <input type="password" class="userInput" id="tab1_pw" name="pw" placeholder="비밀번호 입력"><br>
+                                                <input type="password" class="userInput" autocomplete="off" id="tab1_pw" name="pw" placeholder="비밀번호 입력"><br>
                                                 <button type="button" id="tab1_loginBtn" onclick="toLogin();">로그인</button><br>
-                                                <a href="https://kauth.kakao.com/oauth/authorize?client_id=4f039db4ba705950489f1f29405d6c6c
-													&redirect_uri=http://localhost/member/kakaoLoginProc&response_type=code">
-                                                	<img src="resources/images/kakaoLogin_btn.png" id="tab1_kakaoLoginBtn"><br>
-	                                            </a>
+                                                <img src="resources/images/kakaoLogin_btn.png" id="tab1_kakaoLoginBtn"><br>
 	                                            <div class="saveId">
 	                                            	<input type="checkbox" id="tab1_saveIdCheck" onChange="toCheckCbox();">
 	                                                <span>아이디 저장</span>
@@ -231,7 +228,7 @@
                                 <div class="tab2_container">
                                     <div class="tab2_body">
                                         <label>비밀번호 찾기</label><br>
-                                        <p>※카카오 계정으로 가입한 회원은 카카오 홈페이지를 이욯해 주십시오.</p>
+                                        <p>※카카오 계정으로 가입한 회원은 카카오 홈페이지를 이용해 주십시오.</p>
                                         <p>비밀번호를 찾고자 하는 이메일주소를 입력해 주세요.</p>
                                         <input type="text" class="userInput" id="tab2_email" name="email" placeholder="Init 이메일"><br>
                                         <button type="button" id="tab2_previous">이전</button>
@@ -261,19 +258,17 @@
                                 <div class="tab4_container">
                                     <div class="tab4_body">
                                     	<div class="tab4_signupBtnBox">
-                                    		<button type="button" id="tab5-1_generalSignup">일반 회원가입</button>
-<!--                                     		<a href="https://kauth.kakao.com/oauth/authorize?client_id=4f039db4ba705950489f1f29405d6c6c&redirect_uri=http://localhost/guest/kakaoSignup&response_type=code"> -->
-                                                <img src="resources/images/kakaoSignup_btn.png" id="tab5-2_kakaoLoginBtn"><br>
-<!-- 	                                        </a> -->
+											<button type="button" id="tab5-1_generalSignup">일반 회원가입</button>
+											<img src="resources/images/kakaoSignup_btn.png" id="tab5-2_kakaoLoginBtn"><br>
                                     	</div>
                                         <div class="tab4_btnBox">
-                                            <button type="button" id="tab3_goMain">이전</button>
+                                            <button type="button" id="tab4_goMain">이전</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
-<!-- 일반 회원가입 start  -->
+							<!-- 일반 회원가입 start  -->
                             <div role="tabpanel" class="tab-pane" id="generalSignUp">
                                 <div class="tab5-1_container">
                                     <form action="${pageContext.request.contextPath}/guest/signUpProc.do" method="post"
@@ -301,9 +296,9 @@
                                             <p class="hiddenResp" id="hiddenRespEmail" hidden></p>
                                             <!-- 비밀번호 -->
                                             <label>비밀번호</label><span class="required">*</span><br> 
-                                            <input type="password" class="userInput" id="tab5-1_pw" name="pw" maxlength="12" placeholder="비밀번호(영문 대소문자, 숫자 6~15자리)">
+                                            <input type="password" class="userInput" autocomplete="off" id="tab5-1_pw" name="pw" maxlength="12" placeholder="비밀번호(영문 대소문자, 숫자 6~15자리)">
                                             <!-- 비밀번호 확인 -->
-                                            <input type="password" class="userInput" id="tab5-1_confirmPw" maxlength="12" placeholder="비밀번호 재입력"><br>
+                                            <input type="password" class="userInput" autocomplete="off" id="tab5-1_confirmPw" maxlength="12" placeholder="비밀번호 재입력"><br>
                                             <p class="advise" id="advisePw" readonly></p>
                                             <p class="hiddenResp" id="hiddenRespPw" hidden></p>
                                             <!-- 이름 -->
@@ -368,48 +363,48 @@
                                     </form>
                                 </div>
                             </div>
-<!-- 일반회원가입 end -->
+							<!-- 일반회원가입 end -->
 
-<!-- 카카오 회원가입 start -->
-<div role="tabpanel" class="tab-pane" id="kakaoSignUp">
-	<div class="tab5-2_container">
-		<div class="tab5-2_header">
-			<h5 id="tab5-2_signUpTitle">
-				카카오 회원	
-				<br>간편 회원가입
-			</h5>
-		</div>
-		<div class="tab5-2_body">
-			<form action="${pageContext.request.contextPath}/guest/kakaoSignupProc" method="post"
-										enctype="multipart/form-data" id="kakaoSignUpForm">
-				<!-- userId 고유 값 hidden-->
-				<input type="text" id="tab5-2_email" name="email" class="userInput" style="display:none">
-				<p class="advise" id="tab5-2_adviseEmail" readonly></p>
-				<p class="hiddenResp" id="tab5-2_hiddenRespEmail" hidden></p>
-				<!-- 닉네임 -->
-				<label>닉네임</label><span class="required">*</span class="required"><br>
-				<input type="text" class="userInput" id="tab5-2_nickname" name="nickname"
-					maxlength="20" placeholder="닉네임(영문 대소문자, 숫자, 특수문자(_) 4~20자리)">
-				<p class="advise" id="tab5-2_adviseNickname" readonly></p>
-				<p class="hiddenResp" id="tab5-2_hiddenRespNickname" hidden></p>
-				<!-- 프로필 사진 -->
-				<label>프로필 사진</label><br>
-				<p class="advise" id="tab5-2_adviseProfile" readonly>*프로필 사진 미등록시 기본이미지로 등록됩니다.</p>
-				<img src="resources/images/default_profile_img.png" name="profile_img" id="tab5-2_setProfile" style="width: 50px;">	
-				<button type="button" id="tab5-2_deleteProfile">X</button>
-				<input type="text" id="tab5-2_hiddenProfileImg" name="profile_img" style="display:none;"><br>
-				<input type="file" id="tab5-2_profileImg" name="profileImg"><br>
-			</form>
-		</div>
-		<div class="tab5-2_footer">
-			<div class="tab5-2_btnBox">
-				<button type="button" id="tab5-2_goSignUp">이전</button>
-				<button type="button" id="tab5-2_signupBtn">완료</button>
-			</div>
-		</div>
-	</div>
-</div>
-<!-- 카카오 회원가입 end -->
+							<!-- 카카오 회원가입 start -->
+							<div role="tabpanel" class="tab-pane" id="kakaoSignUp">
+								<div class="tab5-2_container">
+									<div class="tab5-2_header">
+										<h5 id="tab5-2_signUpTitle">
+											카카오 회원	
+											<br>간편 회원가입
+										</h5>
+									</div>
+									<div class="tab5-2_body">
+										<form action="${pageContext.request.contextPath}/guest/kakaoSignupProc" method="post"
+																	enctype="multipart/form-data" id="kakaoSignUpForm">
+											<!-- userId 고유 값 hidden-->
+											<input type="text" id="tab5-2_email" name="email" class="userInput" style="display:none">
+											<p class="advise" id="tab5-2_adviseEmail" readonly></p>
+											<p class="hiddenResp" id="tab5-2_hiddenRespEmail" hidden></p>
+											<!-- 닉네임 -->
+											<label>닉네임</label><span class="required">*</span class="required"><br>
+											<input type="text" class="userInput" id="tab5-2_nickname" name="nickname"
+												maxlength="20" placeholder="닉네임(영문 대소문자, 숫자, 특수문자(_) 4~20자리)">
+											<p class="advise" id="tab5-2_adviseNickname" readonly></p>
+											<p class="hiddenResp" id="tab5-2_hiddenRespNickname" hidden></p>
+											<!-- 프로필 사진 -->
+											<label>프로필 사진</label><br>
+											<p class="advise" id="tab5-2_adviseProfile" readonly>*프로필 사진 미등록시 기본이미지로 등록됩니다.</p>
+											<img src="resources/images/default_profile_img.png" name="profile_img" id="tab5-2_setProfile" style="width: 50px;">	
+											<button type="button" id="tab5-2_deleteProfile">X</button>
+											<input type="text" id="tab5-2_hiddenProfileImg" name="profile_img" style="display:none;"><br>
+											<input type="file" id="tab5-2_profileImg" name="profileImg"><br>
+										</form>
+									</div>
+									<div class="tab5-2_footer">
+										<div class="tab5-2_btnBox">
+											<button type="button" id="tab5-2_goSignUp">이전</button>
+											<button type="button" id="tab5-2_signupBtn">완료</button>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- 카카오 회원가입 end -->
                         </div>
                         <!--tab 컨텐츠 end-->
 
@@ -436,8 +431,6 @@
                         <!--tab 링크 end-->
                     </div>
                     <!--tab end-->
-
-
                 </div>
             </div>
         </div>
@@ -445,44 +438,85 @@
     <script>
         var doc = document;
         var userInput = doc.querySelectorAll(".userInput");
-	
+        var saveIdCheck = doc.getElementById("tab1_saveIdCheck");
+        
         window.onload = function () {
         	Kakao.init("798b7f7028249ef2a4388b4944cf88ce");
-            toCheckCookie();
+        	
             $("#indexModal").modal({backdrop: 'static', keyboard: false, show: true});//일단 예제로 띄우기
             clearInput(userInput, userInput.length);           
             
             var url = document.location.toString();
-            	$('#main').tab('show'); //예제 연습       
-        }        
-        
+            	$('#main').tab('show'); //예제 연습                   	
+            	toCheckCookie();                	
+        		          
+        }    
         //tab1_로그인 start
         var login = doc.getElementById("tab1_loginBtn");
-        var saveIdCheck = doc.getElementById("tab1_saveIdCheck");
-        var email = doc.getElementById("tab1_email");
-
+//         var email = doc.getElementById("tab1_email");
+//         var pw = doc.getElementById("tab1_pw");
+        
         function toLogin() { //로그인 시도
+//         	var email = doc.getElementById("tab1_email");
+//             var pw = doc.getElementById("tab1_pw");
+        	if(doc.getElementById("tab1_email").value == ""){
+        		alert("이메일을 입력해 주세요.");
+        		return;
+        	}else if(doc.getElementById("tab1_pw").value == ""){
+        		alert("비밀번호를 입력해 주세요.");
+        		return;
+        	}
             doc.getElementById("tab1_loginForm").submit();
         }
-
+        
+        doc.getElementById("tab1_kakaoLoginBtn").addEventListener("click", function(){
+        	Kakao.Auth.loginForm({
+    			success: function(authObj){
+    				var access_token = authObj.access_token;
+    				$.ajax({
+    					url: "${pageContext.request.contextPath}/member/kakaoLoginProc",
+    					data: {access_token : access_token},
+    					type: "post",
+    					dataType: "json"
+    				}).done(function(data){
+    					console.log(data);
+    					console.log(data.result);
+    					if(data.result == "loginSuccess"){
+    						clearInput(userInput, userInput.length);
+    						location.href = "${pageContext.request.contextPath}/feed/getFriendFeed";
+    					}    					
+    				}).fail(function(a,b,c){
+    					console.log(a);
+    					console.log(b);
+    					console.log(c);
+    				});
+    			},
+    			fail: function(err){
+    				alert(JSON.stringify(err)); 
+    			}
+    		});
+        })
+        
         //아이디 저장 쿠키 연관 함수 start
         var exdate = new Date();
-
-        function toCheckCookie() {
-            if (doc.cookie != "") {
-                var cookies = cookieToJson(doc.cookie);
-                email.value = cookies.userID;
-                saveIdCheck.checked = true;
-            }
-        }
+     
 
         function toCheckCbox() {
             if (saveIdCheck.checked == true) {
                 exdate.setDate(exdate.getDate() + 30);
-                doc.cookie = "userID=" + email.value + ";expires=" + exdate.toString();
+                doc.cookie = "userID=" + doc.getElementById("tab1_email").value + ";expires=" + exdate.toString();
             } else {
                 exdate.setDate(exdate.getDate() - 1);
-                doc.cookie = "userID=" + email.value + ";expires=" + exdate.toString();
+                doc.cookie = "userID=" + doc.getElementById("tab1_email").value + ";expires=" + exdate.toString();
+            }
+        }
+        
+        function toCheckCookie() {
+            if (doc.cookie != "") {
+                var cookies = cookieToJson(doc.cookie);
+                console.log(cookies.userID);
+                doc.getElementById("tab1_email").value = cookies.userID;
+                saveIdCheck.checked = true;
             }
         }
 
@@ -497,8 +531,8 @@
             }
             return cookieJson;
         }
-        //아이디 저장 쿠키 연관 함수 end
-
+            //아이디 저장 쿠키 연관 함수 end	  
+        
         doc.getElementById("goFindPW").addEventListener("click", function () {
             clearInput(userInput, userInput.length);
             doc.getElementById("findPwTab").click();
@@ -514,6 +548,10 @@
         doc.getElementById("tab2_next").addEventListener("click", function () {
             var email = doc.getElementById("tab2_email");
             console.log(email.value);
+            if(email.value == ""){
+            	alert("이메일을 입력해 주세요.");
+            	return false;
+            }
             $.ajax({
                 url: "${pageContext.request.contextPath}/member/findPwProc.do",
                 data: { email: email.value },
@@ -522,6 +560,9 @@
             }).done(function (resp) {
                 if (resp.result == "success") {
                     doc.getElementById("sentEmailTab").click();
+                    doc.getElementById("tab3_userEmail").innerHTML = resp.email;
+                }else if(resp.result == "invalid"){
+                	alert("등록된 계정이 아닙니다.");
                 }
             }).fail(function (a, b, c) {
                 console.log(a);
@@ -542,9 +583,10 @@
         doc.getElementById("goSignUp").addEventListener("click", function () {
             clearInput(userInput, userInput.length);
             doc.getElementById("signUpBtnsTab").click();
-            appendYear();
-            appendMonth();
-            appendDay();
+        });
+        doc.getElementById("tab4_goMain").addEventListener("click", function () {
+            clearInput(userInput, userInput.length);
+            doc.getElementById("mainTab").click();
         });
         //tab4_회원가입 선택 end
         
@@ -560,7 +602,7 @@
         	var hiddenProfileImg = doc.getElementById("tab5-2_hiddenProfileImg");
         	var profileImg = doc.getElementById("tab5-2_profileImg");
         	
-        		Kakao.Auth.login({
+        		Kakao.Auth.loginForm({
         			success: function(authObj){
         				var access_token = authObj.access_token;
 						$.ajax({
@@ -574,7 +616,8 @@
 							console.log("kakaoProfile : " + data.kakaoProfile);
 							doc.getElementById('kakaoSignUpTab').click();
 							email.value = data.user_id;
-							if(data.kakaoProfile == ""){
+							emailOverlapCheck();
+							if(data.kakaoProfile == "none"){
 								setProfile.src = "resources/images/default_profile_img.png";
 								hiddenProfileImg.value = "resources/images/default_profile_img.png";
 							}else{
@@ -591,16 +634,17 @@
 						});
         			},
         			fail: function(err){
-        				alert(JSON.stringify(err));
+        				alert(JSON.stringify(err)); 
         			}
         		});
         		
+        		//프로필 사진 uploda 이벤트 start
                 function readURL(input) {
                     if (input.files && input.files[0]) {
                         var reader = new FileReader();
                         reader.onload = function (e) {
                             console.log("프로필 사진명 : " + profileImg.value);  // 파일명                
-                            profileImg.src = e.target.result;
+                            setProfile.src = e.target.result;
                         }
                         reader.readAsDataURL(input.files[0]);
                     }
@@ -614,6 +658,7 @@
         			setProfile.src = "resources/images/default_profile_img.png";
         			hiddenProfileImg.value = "resources/images/default_profile_img.png";
         		});
+        		//프로필 사진 uploda 이벤트 end
         		
         		// 이메일 중복 검사 함수 start
                 function emailOverlapCheck() {
@@ -626,8 +671,6 @@
                     }).done(function (resp) {
                         console.log("이메일 중복 서버 검증 결과 : " + resp.result);
                         if (resp.result == "available") {
-                        	adviseEmail.innerHTML = "사용가능";
-                        	adviseEmail.style.color = "green";
                             hiddenRespEmail.innerHTML = "사용가능";
                         } else {
                             adviseEmail.style.color = "red";
@@ -642,7 +685,7 @@
                     });
                 }
                 // 이메일 중복 검사 함수 end
-                        //닉네임 유효성 검사 start
+        //닉네임 유효성 검사 start
         nickname.addEventListener("blur", function () {
             rawStr = nickname.value;
             console.log("nickname: " + rawStr);
@@ -703,10 +746,6 @@
 				doc.getElementById("kakaoSignUpForm").submit();
 			});              
         });
-        
-     
-        
-        
        //tab5-2_카카오 회원가입 end
          
         //tab5-1_ 일반 회원가입 start
@@ -772,9 +811,6 @@
         var tid = null;
         var rawStr = null;
 
-        // window.onload = function () { //윈도우 로드 시 생년월일 select 셋팅
-            
-        // }
         // 이메일 유효성 검사 start
         email1.addEventListener("blur", function () {
             rawStr = email1.value;
@@ -1062,14 +1098,13 @@
                         console.log(c);
                         return false;
                     });
-                }
-    
+                	}    
                 }else{
                     alert("전화번호를 입력해 주세요.");
                 }    		
             }
-        //인증번호 전송 end
-                        //사용자 입력 인증번호 일치여부 검사 start
+        	//인증번호 전송 end
+            //사용자 입력 인증번호 일치여부 검사 start
                 function confirmVerifCode() {
                     $.ajax({
                         url: "${pageContext.request.contextPath}/guest/verifyUser.do",
@@ -1078,8 +1113,8 @@
                         type: "post",
                     }).done(function (resp) {
                         console.log("인증번호 서버 검증 결과 : " + resp.result);
-    //     	          if (resp.result == "verified") {
-    //     	            console.log("인증 완료 ");
+        	          if (resp.result == "verified") {
+        	            console.log("인증 완료 ");
                         adviseVerifCode.innerHTML = "인증완료";
                         adviseVerifCode.style.color = "green";
                         hiddenRespPhone.innerHTML = "사용가능";
@@ -1087,16 +1122,16 @@
                         sendCode.hidden = true;
                         resendCode.hidden = true;
                         verifyCode.disabled = true;
-    //     	          } else if (resp.result == "unverified") {
-    //     	            console.log("인증 실패 ");
-    //     	            adviseVerifCode.innerHTML = "인증실패";
-    //     	            adviseVerifCode.style.color = "red";
-    //     	            hiddenRespPhone.innerHTML = "사용불가";
-    //     	            hiddenRespVerifCode.innerHTML = "인증실패";
-    //     	            sendCode.hidden = true;
-    //     	            resendCode.hidden = false;
-    //     	            verifyCode.disabled = false;
-    //     	          };
+        	          } else if (resp.result == "unverified") {
+        	            console.log("인증 실패 ");
+        	            adviseVerifCode.innerHTML = "인증실패";
+        	            adviseVerifCode.style.color = "red";
+        	            hiddenRespPhone.innerHTML = "사용불가";
+        	            hiddenRespVerifCode.innerHTML = "인증실패";
+        	            sendCode.hidden = true;
+        	            resendCode.hidden = false;
+        	            verifyCode.disabled = false;
+        	          };
                     }).fail(function (a, b, c) {
                         console.log(a);
                         console.log(b);
@@ -1293,7 +1328,7 @@
                 doc.getElementById("signUpForm").submit();
             };
             //회원가입 form submit 이벤트 end
-                //tab4_회원가입 end
+            //tab4_회원가입 end
 
             //기타 함수 start
             function clearInput(userInput, length) { //tab 전환 시 모든 input창 clear

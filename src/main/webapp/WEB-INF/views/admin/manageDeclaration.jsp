@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>manageMember</title>
+<title>Manage Feed</title>
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 <script
@@ -15,7 +15,7 @@
 	src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
 <style>
-.tbBtn {
+.dBtn {
 	box-shadow: 0.5px 0.5px 0.5px 0.5px gray;
 	border-radius: 5px 5px 5px 5px;
 }
@@ -23,20 +23,7 @@
 #searchDiv {
 	text-align: right;
 }
-.profileImgBox{
-	border:1px solid black;
-    border-radius: 75px;
-    width: 50px;
-    height: 50px;
-}
-.profileImg{
-    width: 100%;
-    height: 100%;
-    border-radius: 75px;
-}
-
 </style>
-
 </head>
 <body>
 	<div class="container mt-5">
@@ -58,17 +45,17 @@
 			<div class="col-md-10 col-sm-12">
 				<div class="row">
 					<div class="col">
-						<h3>멤버 관리</h3>
+						<h3>신고게시물 관리</h3>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-sm-12" id="searchDiv">
-						<form action="${pageContext.request.contextPath}/admin/search.do"
+						<form action="${pageContext.request.contextPath}/admin/searchForDeclare.do"
 							method="post" id="searchF">
 							<select id="searchTag" name="searchTag">
-								<option value="nickname">닉네임</option>
-								<option value="name">이름</option>
-								<option value="email">이메일</option>
+								<option value="to_id">신고당한사람</option>
+								<option value="from_id">신고자</option>
+								<option value="declare_reason">이유</option>
 							</select> <input type="text" id="search" name="search">
 							<button type="submit" id="searchBtn" class="btn-secondary">검색</button>
 						</form>
@@ -79,30 +66,38 @@
 						<table class="table table-hover">
 							<thead>
 								<tr>
-									<th>프로필</th>
-									<th>닉네임</th>
-									<th>이름</th>
-									<th>이메일</th>
-									<th>블랙</th>
+									<th>feed_seq</th>
+									<th>reported person</th>
+									<th>declare_reason</th>
+									<th>reporter</th>
+									<th>delete</th>
 								</tr>
 							</thead>
 							<tbody>
-								<c:forEach items="${memberList}" var="mdto">
-									<tr class="contents">
-										<td>
-										<div class="profileImgBox">
-											<img class="profileImg" src="${mdto.profile_img}" alt="">
-										</div>
-										</td>
-										<td>${mdto.nickname}</td>
-										<td>${mdto.name}</td>
-										<td>${mdto.email}</td>
-										<td><button type="button" class="tbBtn btn-dark"
-												id="${mdto.email}">black</button></td>
+								<c:forEach items="${declarationList}" var="ddto">
+									<tr>
+										<td><a href="${pageContext.request.contextPath}/feed/detailView?feed_seqS=${ddto.feed_seq}">${ddto.feed_seq}</a></td>
+										<td>${ddto.to_id}</td>
+										<td>${ddto.declare_reason}</td>
+										<td>${ddto.from_id}</td>
+										<c:choose>
+										<c:when test="${ddto.delete_feed == 'N'}">
+										<td><button type="button" class="dBtn btn-dark"
+												id="${ddto.feed_seq}">삭제</button></td>
+										</c:when>
+										<c:when test="${ddto.delete_feed == 'Y'}">
+										<td><button type="button" class="dBtn btn-danger"
+												id="b_${ddto.feed_seq}">블랙경고</button></td>
+										</c:when>
+									<%-- 	<c:otherwise>
+										<td><button type="button" class="dBtn btn-dark"
+												id="${ddto.feed_seq}">삭제</button></td>
+										</c:otherwise> --%>
+										</c:choose>
 									</tr>
 								</c:forEach>
-								<tr align=center id="naviTr">
-									<td colspan=5 class="pageNavi">${pageNavi}</td>
+								<tr align=center>
+									<td colspan=5>${pageNavi}</td>
 								</tr>
 							</tbody>
 						</table>
@@ -111,29 +106,29 @@
 			</div>
 		</div>
 	</div>
-</body>
-<script>
-	$(".tbBtn").on("click", function() {
-		var blackMember = $(this).attr("id");
-		$.ajax({
-			url : "${pageContext.request.contextPath}/admin/blackProc.do",
-			type : "post",
-			data : {
-				blackMember : blackMember
-			}
-		}).done(function(resp) {
-			if (resp == blackMember) {
-				alert("블랙리스트로 추가되었습니다.");
-				location.reload();
-			} else {
-				alert("블랙리스트로 추가에 실패하셨습니다.");
-				location.reload();
-			}
-		}).fail(function(a, b, c) {
-			console.log(a);
-			console.log(b);
-			console.log(c);
+	<script>
+		$(".dBtn").on("click",function() {
+			var feed = $(this).attr("id");
+			$.ajax({
+				url : "${pageContext.request.contextPath}/admin/deleteDeclareFeedProc.do",
+				type : "post",
+				data : {
+				feed : feed
+				}
+			}).done(function(resp) {
+					if (resp == feed) {
+					alert("게시물이 삭제되었습니다.");
+					location.reload();
+					} else {
+					alert("게시물 삭제에 실패하셨습니다.");
+					location.reload();
+					}
+			}).fail(function(a, b, c) {
+					console.log(a);
+					console.log(b);
+					console.log(c);
+			});
 		});
-	});
-</script>
+	</script>
+</body>
 </html>

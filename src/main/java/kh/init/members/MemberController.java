@@ -30,38 +30,30 @@ public class MemberController {
 	@RequestMapping("/loginProc.do")
 	public String toLogin(String email, String pw) {
 		if(email != null && pw != null) {
-			System.out.println("로그인 시도 : " + email);
-		}
-		if(service.isLoginOk(email, pw) > 0) { // 로그인 허가
-			session.setAttribute("loginInfo", service.getMemberDTO(email)); // 세션 로그인정보 담기
-			return "redirect:/feed/getFriendFeed";
+			System.out.println("로그인 시도 : " + email);		
+			if(service.isLoginOk(email, pw) > 0) { // 로그인 허가
+				session.setAttribute("loginInfo", service.getMemberDTO(email)); // 세션 로그인정보 담기
+				return "redirect:/feed/getFriendFeed";
+			}else {
+				return "main";
+			}
 		}else {
+			System.out.println("'email input' or 'pw input' is detected as null.");
 			return "main";
 		}
 	}
 	
 	// 로그인	유효성 검사
-	@RequestMapping("/kakaoLoginProc")
-	public String toKaKaoLogin(@RequestParam("code") String code, HttpServletRequest request) {
-		String requestURI = request.getRequestURI();
-		System.out.println("requestURI : " + request.getRequestURI());
-		System.out.println("code : " + code);
-		String authorizedCode = service.getAccessToken(code, requestURI);
-		System.out.println("authorized_code : " + authorizedCode);
-		session.setAttribute("accessToken", authorizedCode);
-		HashMap<String, Object> userInfo = service.getKakaoInfo(authorizedCode);
+	@RequestMapping(value="/kakaoLoginProc", produces="text/html;charset=UTF-8")
+	@ResponseBody
+	public String toKaKaoLogin(String access_token) {		
+		session.setAttribute("accessToken", access_token); //access_token 세션 저장
+		HashMap<String, Object> userInfo = service.getKakaoInfo(access_token); //access_token 이용해 정보 얻기
+		session.setAttribute("loginInfo", service.getMemberDTO((String) userInfo.get("user_id"))); //카카오 사용자 loginInfo 세션 셋팅
 		
-		System.out.println("userInfo : " + userInfo);
-//		if(email != null && pw != null) {
-//			System.out.println("로그인 시도 : " + email);
-//		}
-//		if(service.isLoginOk(email, pw) > 0) { // 로그인 허가
-//			session.setAttribute("loginInfo", service.getMemberDTO(email)); // 세션 로그인정보 담기
-//			return "redirect:/feed/getFriendFeed";
-//		}else {
-//			return "main";
-//		}
-		return "main";
+		JsonObject obj = new JsonObject();
+		obj.addProperty("result", "loginSuccess");
+		return obj.toString();
 	}
 
 	// 로그아웃 세션 삭제
@@ -74,7 +66,7 @@ public class MemberController {
 		System.out.println("로그아웃 > " + session.getAttribute("loginInfo").toString() + " 세션 삭제");
 		session.removeAttribute("loginInfo");
 		System.out.println("로그아웃 실시 > 로그인 세션 삭제 완료");
-		return "main";
+		return "redirect:/main";
 	}
 
 	// 비밀번호 찾기
@@ -87,7 +79,8 @@ public class MemberController {
 		if(service.findPw(email) == "invalid") {
 			obj.addProperty("result", "invalid");
 		}else {
-			obj.addProperty("result", email);
+			obj.addProperty("result", "success");
+			obj.addProperty("email", email);
 		}
 		return obj.toString();		    
 	}

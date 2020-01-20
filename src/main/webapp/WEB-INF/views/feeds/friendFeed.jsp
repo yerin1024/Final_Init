@@ -11,7 +11,7 @@
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <script
 	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
 <script
@@ -24,7 +24,7 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.css">
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.js"></script>
-<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+
 
 <link rel="stylesheet" href="/resources/css/nav.css">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -37,6 +37,7 @@
 	margin: auto;
 	/* width: 50vw; */
 }
+
 html, body {
 	padding: 0px;
 	margin: 0px;
@@ -45,6 +46,7 @@ html, body {
 * {
 	box-sizing: border-box;
 }
+
 .feed {
 	border: 1px solid blue;
 }
@@ -66,8 +68,20 @@ html, body {
 /* 		width: 100vw; */
 /* 	} */
 .carousel-item * {
-	width: 677px;
-	height: 677px;
+	width: 100%;
+	height: 100%;
+}
+
+/* .carousel-inner{
+	width: 100%;
+	height: 100%;
+} */
+/* .carousel-inner>img{
+	width: 100%;
+	height: 100%;
+} */
+.slide {
+	width: 99.5%;
 }
 
 .btnss * {
@@ -90,23 +104,67 @@ html, body {
 .row {
 	margin: 0px;
 }
-.profile{
-	display:flex;
+
+.profileNickname {
+	position: absolute;
+	left: 80px;
 }
-.profileImg{
-	width:50px;
-	height:50px;
+
+.profile {
+	justify-content: center;
+	flex-direction: column;
+	height: 50px;
+	display: flex;
 }
-.profileImg>img{
+
+.profileImg {
+	border: 1px solid black;
+	border-radius: 75px;
+	width: 50px;
+	height: 50px;
+}
+
+.profileImg>img {
 	width: 100%;
-	height:100%;
+	height: 100%;
+	border-radius: 75px;
 	margin: 0px;
 }
-.contents,.profile{
-	margin-top:10px; 
-	margin-left:10px;
-	margin-bottom:10px;
+
+.contents, .profile {
+	margin: 10px;
 }
+
+.profilefeedDeclartion {
+	position: absolute;
+	right: 20px;
+}
+
+.sirenImg {
+	width: 30px;
+	height: 30px;
+}
+
+.sirenBtn {
+	border: none;
+	background: none;
+}
+/* .modal {
+          text-align: center;
+        } */
+/* @@media screen and (min-width: 768px) {
+            display: inline-block;
+            vertical-align: middle;
+            content: " ";
+            height: 100%;
+          }
+        } */
+/* .modal-dialog {
+     display: inline-block;
+     text-align: left;
+     vertical-align: middle;
+} */
+
 /* All Device */
 /* 모든 해상도를 위한 공통 코드를 작성한다. 모든 해상도에서 이 코드가 실행됨. */
 
@@ -115,33 +173,45 @@ html, body {
 
 /* Tablet &amp; Desktop Device */
 @media all and (min-width:768px) {
-   /*     사용자 해상도가 768px 이상일 때 이 코드가 실행됨. 테블릿과 데스크톱의 공통 코드를 작성한다. */
-   #wrapper{
-    	width: 100%;
-    }
+	/*     사용자 해상도가 768px 이상일 때 이 코드가 실행됨. 테블릿과 데스크톱의 공통 코드를 작성한다. */
+	#wrapper {
+		width: 720px;
+	}
+	.media {
+		width: 720px;
+	}
 }
 
 @media all and (max-width:500px) {
-   /*     사용자 해상도가 768px 이하일 때 이 코드가 실행됨. 테블릿과 데스크톱의 공통 코드를 작성한다. */
- 	#wrapper{
-    	max-width: 750px;
-    }
+	/*     사용자 해상도가 768px 이하일 때 이 코드가 실행됨. 테블릿과 데스크톱의 공통 코드를 작성한다. */
+	#wrapper {
+		max-width: 720px;
+	}
+	.media {
+		max-width: 720px;
+	}
 }
 
 /* Tablet Device */
 @media all and (min-width:500px) and (max-width:768px) {
-   /*     사용자 해상도가 768px 이상이고 1024px 이하일 때 이 코드가 실행됨. 아이패드 또는 비교적 작은 해상도의 랩탑이나 데스크톱에 대응하는 코드를 작성한다. */
-    #wrapper{
-    	max-width: 700px;
-    }
+	/*     사용자 해상도가 768px 이상이고 1024px 이하일 때 이 코드가 실행됨. 아이패드 또는 비교적 작은 해상도의 랩탑이나 데스크톱에 대응하는 코드를 작성한다. */
+	#wrapper {
+		max-width: 720px;
+	}
+	.media {
+		max-width: 720px;
+	}
 }
 
 /* Desktop Device */
 @media all and (min-width:1025px) {
-   /*     사용자 해상도가 1025px 이상일 때 이 코드가 실행됨. 1025px 이상의 랩탑 또는 데스크톱에 대응하는 코드를 작성한다. */
-    #wrapper{
-    	max-width: 680px;
-    }
+	/*     사용자 해상도가 1025px 이상일 때 이 코드가 실행됨. 1025px 이상의 랩탑 또는 데스크톱에 대응하는 코드를 작성한다. */
+	#wrapper {
+		max-width: 720px;
+	}
+	.media {
+		max-width: 720px;
+	}
 }
 </style>
 <script>
@@ -246,14 +316,10 @@ html, body {
 									}
 									ci.append(divCI);
 								}
-								ci
-										.append("<a class='carousel-control-prev' href='#carouselExampleIndicators' role='button' data-slide='prev'>");
-								ci
-										.append("<span class='carousel-control-prev-icon' aria-hidden='true'></span> <span class='sr-only'>Previous</span></a>");
-								ci
-										.append("<a class='carousel-control-next' href='#carouselExampleIndicators' role='button' data-slide='next'>");
-								ci
-										.append("<span class='carousel-control-next-icon' aria-hidden='true'></span> <span class='sr-only'>Next</span></a>");
+								ci.append("<a class='carousel-control-prev' href='#carouselExampleIndicators' role='button' data-slide='prev'>");
+								ci.append("<span class='carousel-control-prev-icon' aria-hidden='true'></span> <span class='sr-only'>Previous</span></a>");
+								ci.append("<a class='carousel-control-next' href='#carouselExampleIndicators' role='button' data-slide='next'>");
+								ci.append("<span class='carousel-control-next-icon' aria-hidden='true'></span> <span class='sr-only'>Next</span></a>");
 
 								media.append(ci);
 								feed.append(nick);
@@ -341,12 +407,28 @@ html, body {
 				<c:forEach items="${list}" var="feed" varStatus="status">
 					<div class="feed">
 						<div class="row profile">
-						<div class="row profileImg">
-							${profile_imgList[status.index]} 
-						</div>
-						<div class="row profileNickname" style="margin-left: 11px; margin-top: 11px;">							
-							${feed.nickname }						
-						</div>
+							<div class="row profileImg">
+								${profile_imgList[status.index]}</div>
+							<div class="row profileNickname">${feed.nickname}</div>
+
+							<div class="row profilefeedDeclartion" seq="${feed.feed_seq}">
+								<%-- <c:choose>
+									<c:when
+										test="${feed.feed_seq == tfeed_seq[status.index]}">
+										<img class="sirenImg" id="srI2_${feed.feed_seq}"
+											src="${pageContext.request.contextPath }/resources/images/siren2.png">
+									</c:when>
+									<c:otherwise> --%>
+										<button type="button" id="srB_${feed.feed_seq}" role="btton"
+											seq="${feed.feed_seq}" class="sirenBtn" data-toggle="modal"
+											data-target="#declareModal" data-backdrop="static">
+											<img class="sirenImg" id="srI_${feed.feed_seq}"
+									 			src="${pageContext.request.contextPath }/resources/images/siren.png">
+										</button>
+									<%-- </c:otherwise>
+								</c:choose>  --%>
+							</div>
+
 						</div>
 						<div class="row media">
 							<div id="carouselExampleIndicators" class="carousel slide"
@@ -435,12 +517,130 @@ html, body {
 							</c:choose>
 						</div>
 					</div>
+
+
+					<!--  신고확인 기능 모달-->
+					<div class="modal fade" id="declareModal" role="dialog"
+						aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+						<div class="modal-dialog modal-dialog-centered" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h3 class="modal-title" id="exampleModalCenterTitle">신고알림창</h3>
+									<button type="button" class="close" data-dismiss="modal"
+										aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<div class="modal-body">
+									<div class="form-group">
+										<div class="declareQ">정말로 신고하시겠습니까?</div>
+									</div>
+								</div>
+								<div class="modal-footer">
+									<button type="button" id="declareCheck" role="button"
+										class="btn btn-primary" data-toggle="modal"
+										data-target="#declareReasonModal" data-backdrop="static"
+										seq="${feed.feed_seq}">네</button>
+									<button type="button" class="btn btn-secondary"
+										data-dismiss="modal">아니오</button>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!--  신고사유 기능 모달-->
+					<div class="modal fade" id="declareReasonModal" role="dialog"
+						aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+						<div class="modal-dialog modal-dialog-centered" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h3 class="modal-title" id="exampleModalCenterTitle">신고사유</h3>
+									<button type="button" class="close" data-dismiss="modal"
+										aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<div class="modal-body">
+									<div class="form-group">
+										<div class="declareR">
+											<input type="radio" name=declare_reason
+												value="권리침해 및 왕따/약자에 대한 사이버 괴롭힘">권리침해 및 왕따/약자에 대한
+											사이버 괴롭힘 <br> <input type="radio" name=declare_reason
+												value="명의 도용">명의 도용<br> <input type="radio"
+												name=declare_reason value="폭력적 위협">폭력적 위협<br> <input
+												type="radio" name=declare_reason value="아동 학대">아동 학대<br>
+											<input type="radio" name=declare_reason
+												value="보호집단에 대한 증오심 표현">보호집단에 대한 증오심 표현<br> <input
+												type="radio" name=declare_reason value="스팸 및 사기">스팸
+											및 사기<br> <input type="radio" name=declare_reason
+												value="사생활 침해">사생활 침해<br> <input type="radio"
+												name=declare_reason value="해당사항 없음">해당사항 없음<br>
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="declareN">반복적으로 신고가 들어올 경우 계정 해지 조치가 취해질 수
+											있습니다.</div>
+									</div>
+								</div>
+								<%--             	 id="dr_${feed.feed_seq}" --%>
+								<div class="modal-footer">
+									<button type="button" role="button"
+										class="btn btn-danger declareReason" id="dr">신고</button>
+									<button type="button" class="btn btn-secondary" id="cancelBtn"
+										data-dismiss="modal">취소</button>
+								</div>
+							</div>
+						</div>
+					</div>
+
 				</c:forEach>
 			</c:otherwise>
 		</c:choose>
+
+
+
 	</div>
 
-	<script>
+	<script>	
+	//신고확인 기능 모달
+	 $(".sirenBtn").on("click", function(){
+		 var seq = $(this).attr("id");
+		 $("#dr").val(seq);
+		 console.log(seq);
+		$("#declareModal").modal('show');
+		$(".profileDisplay").html(seq);
+	}) 
+	//신고사유 기능 모달
+	$("#declareCheck").on("click", function(){
+		$("#declareModal").modal('hide');
+		$("#declareReasonModal").modal('show');
+	})
+	
+
+	
+	//사유데이터 처리
+	$(".declareReason").on("click", function(){
+		var seq = $("#dr").val();
+		var reason = $("input:radio[name=declare_reason]:checked").val();
+		 console.log(seq);
+		 console.log(reason);
+
+			$.ajax({
+				type:"post",
+				url:"${pageContext.request.contextPath}/admin/declareReasonProc.do",
+				data : {
+					dr_seq : seq,
+					declare_reason : reason
+				}
+			}).done(function(resp){
+				if(resp = 'declare'){
+					console.log(seq);
+					$("#"+seq).html("<img class=\"sirenImg\" seq=\""+seq+"\" src=\"${pageContext.request.contextPath }/resources/images/siren2.png\">");
+					$("#declareReasonModal").modal('hide');
+				}
+			})	 
+		})
+	
 		$(document).on("click",".like",function() {
 			var seq = $(this).attr("id");
 			var likeCheck = $(".likeBtn[seq=" + seq + "]").attr("value");
@@ -453,8 +653,7 @@ html, body {
 					data : {
 						feed_seq : seq
 							}
-						})
-				.done(function() {
+						}).done(function() {
 					$(".likeImg[seq="+ seq + "]").html("<img class=\"likeBtn\" seq=\""+seq+"\" value=\"likeAfter\" src=\"${pageContext.request.contextPath }/resources/images/likeAfter.png\">");
 						})
 			} else {
@@ -464,8 +663,7 @@ html, body {
 					data : {
 						feed_seq : seq
 							}
-						})
-				.done(function() {
+						}).done(function() {
 					$(".likeImg[seq="+ seq + "]").html("<img class=\"likeBtn\" seq=\""+seq+"\" value=\"likeBefore\" src=\"${pageContext.request.contextPath }/resources/images/likeBefore.png\">");
 					})
 					}
@@ -481,8 +679,7 @@ html, body {
 					data : {
 					feed_seq : seq
 							}
-						})
-				.done(function() {
+						}).done(function() {
 					$(".bookmarkImg[seq="+ seq + "]").html("<img class=\"bookmarkBtn\" seq=\""+seq+"\"  value=\"bookmarkAfter\" src=\"${pageContext.request.contextPath }/resources/images/bookmarkAfter.png\">");
 					})
 				} else {
@@ -491,13 +688,12 @@ html, body {
 						url : "/feed/deleteBookmark",
 						data : {
 						feed_seq : seq
-								}
-						})
-					.done(function() {
+						}
+					}).done(function() {
 						$(".bookmarkImg[seq="+ seq + "]").html("<img class=\"bookmarkBtn\" seq=\""+seq+"\"  value=\"bookmarkBefore\" src=\"${pageContext.request.contextPath }/resources/images/bookmarkBefore.png\">");
 						})
 						}
-					})
+				})
 	</script>
 </body>
 </html>

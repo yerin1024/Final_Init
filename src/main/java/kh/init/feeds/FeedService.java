@@ -328,7 +328,11 @@ public class FeedService {
 		return profile_img = "<img src=\"" +profile_img + "\">";
 	}
 
-
+	//신고 
+	public int getDeclare(int tfeed_seq) throws Exception{
+		int result = dao.getDeclareFeed(tfeed_seq);
+		return result;
+	}
 
 
 	//-----------좋아요 & 스크랩----------------------------	
