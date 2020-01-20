@@ -41,11 +41,11 @@ public class AlarmDAO {
 	}
 	
 	// 친구 요청 알림 추가
-	public int alarmFriend(int sharedSeq, FriendRequestDTO fdto) {
+	public int alarmFriend(int sharedSeq, FriendRequestDTO dto) {
 		Map<String, Object> prm = new HashMap<>();
 		prm.put("shardSeq",sharedSeq);
 //		prm.put("email", email);	// tb_friend_request의 to_id
-		prm.put("email", fdto.getTo_id());
+		prm.put("email", dto.getTo_id());
 		return jdbc.insert("Alarm.alarmFriend",prm);
 	}
 	
