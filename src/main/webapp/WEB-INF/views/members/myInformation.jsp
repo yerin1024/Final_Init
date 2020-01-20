@@ -48,19 +48,39 @@
 									<option value="017" class="pOption1">017</option>
 									<option value="018" class="pOption1">018</option>
 									<option value="019" class="pOption1">019</option>
-								</select> -<input type="text" class="phone2" maxlength="4"
-									value="${poption2}"> -<input type="text" class="phone3"
-									maxlength="4" value="${poption3}"> <input type="text"
-									class="phone" name="phone" maxlength="11" hidden> <label
-									class="adviseIn" id="adviseInPhone" hidden></label>
-								<p class="adviseOut" id="advisePhone" readonly></p>
-
-								<input type="text" id="verif_code" name="verif_code"
-									placeholder="인증번호"> <label class="adviseIn"
-									id="adviseInVerifCode" hidden></label>
-								<button type="button" id="sendCode" onclick="checkPhone();">send</button>
+								</select> - <input type="text" id="phone2" maxlength="4"
+									style="text-align: center; width: 80px;" value="${poption2}">
+								- <input type="text" id="phone3" maxlength="4"
+									style="text-align: center; width: 80px;" value="${poption3}">
+								<input type="text" id="phone" name="phone" maxlength="11" hidden>
+								<p class="advise" id="advisePhone" readonly></p>
+								<p class="hiddenResp" id="hiddenRespPhone" hidden></p>
+								<!-- 인증번호 -->
+								<input type="text" id="verifyCode" name="verifyCode"
+									placeholder="인증번호 입력" maxlength="6" style="text-align: center;">
+								<button type="button" id="sendCode" onclick="checkOverlap();">인증번호
+									전송</button>
+								<span id="tab5-1_timer" readonly></span>
+								<button type="button" id="resendCode" onclick="checkOverlap();"
+									hidden>인증번호 재전송</button>
 								<br>
-								<p class="adviseOut" id="adviseVerifCode" readonly></p>
+								<button type="button" id="confirmVerifyCode"
+									onclick="confirmVerifCode();" hidden>인증번호 확인</button>
+								<br>
+								<p class="advise" id="adviseVerifCode" readonly></p>
+								<p class="hiddenResp" id="hiddenRespVerifCode" hidden></p>
+								<!-- 								<input type="text" class="phone2" maxlength="4" -->
+								<%-- 									value="${poption2}"> -<input type="text" class="phone3" --%>
+								<%-- 									maxlength="4" value="${poption3}"> <input type="text" --%>
+								<!-- 									class="phone" name="phone" maxlength="11" hidden> <label -->
+								<!-- 									class="adviseIn" id="adviseInPhone" hidden></label> -->
+								<!-- 								<p class="adviseOut" id="advisePhone" readonly></p> -->
+								<!-- 								<input type="text" id="verif_code" name="verif_code" -->
+								<!-- 									placeholder="인증번호"> <label class="adviseIn" -->
+								<!-- 									id="adviseInVerifCode" hidden></label> -->
+								<!-- 								<button type="button" id="sendCode" onclick="checkPhone();">send</button> -->
+								<!-- 								<br> -->
+								<!-- 								<p class="adviseOut" id="adviseVerifCode" readonly></p>								 -->
 
 								<label>생년월일</label> <select id="year" class="birthYear">
 									<option class="bOption1">선택하세요.</option>
@@ -84,10 +104,8 @@
 		</div>
 
 	</form>
-
-
-
 	<script>
+	
 	$('#currentPw').on('keyup',function() {
 		var cpassword = $(this).val();
 		
@@ -112,9 +130,7 @@
 				                    advisePw.style.color = "red";
 				                adviseInCPw.innerHTML = "사용불가";
 				                console.log("invalidate");
-				            }
-							
-									
+				            }							
 								},
 								error : function(request, status, error) {
 									console.log("ajax call went wrong:"
@@ -153,32 +169,23 @@
         var birthMonth = doc.getElementsByClassName("birthMonth")[0];
         var birthDay = doc.getElementsByClassName("birthDay")[0];
         var birth = doc.getElementsByClassName("inputBirth")[0];
-        
-       
-       
-        var verif_code = doc.getElementById("verif_code");
+        var verifyCode = doc.getElementById("verifyCode");
+        var sendCode = doc.getElementById("sendCode");
+        var resendCode = doc.getElementById("resendCode");
+        var confirmVerifyCode = doc.getElementById("confirmVerifyCode");
+        var advisePhone = doc.getElementById("advisePhone");
+        var adviseVerifCode = doc.getElementById("adviseVerifCode");
+        var hiddenRespPhone = doc.getElementById("hiddenRespPhone");
+        var hiddenVerifCode = doc.getElementById("hiddenVerifCode");
         
         var advisePw = doc.getElementById("advisePw");
-        
-        var advisePhone = doc.getElementById("advisePhone");
         var adviseBirth = doc.getElementById("adviseBirth");
         var adviseName = doc.getElementById("adviseName");
 
         var adviseInCPw = doc.getElementById("adviseInCPw");
         var adviseInPw = doc.getElementById("adviseInPw");
-       
         var adviseInName = doc.getElementById("adviseInName");
-        var adviseInPhone = doc.getElementById("adviseInPhone");
-        var adviseInVerifCode = doc.getElementById("adviseInVerifCode");
         var adviseIn = doc.getElementsByClassName("adviseIn");
-
-       
-
-        
-
-       
-        
-        
 
         pw.addEventListener("keyup", function(){
             rawStr = pw.value;
@@ -228,9 +235,7 @@
                 adviseInName.innerHTML = "사용불가";
                 console.log("invalidate");
             }
-        });
-
-        
+        });       
         
         phone2.addEventListener("keyup", function(){
             rawStr = phone2.value;
@@ -270,10 +275,10 @@
             appendDay();
             
             var bLength1 = $(".bOption1").length;
-            console.log(${dto.birth});
-            console.log(${boption1});
-            console.log(${boption2});
-            console.log(${boption3});
+            console.log("${dto.birth}");
+            console.log("${boption1}");
+            console.log("${boption2}");
+            console.log("${boption3}");
             for(var i=0;i<bLength1;i++){
             	if($(".bOption1:nth-child("+i+")").val() ==  '${boption1}'+"년"){
             		$(".bOption1:nth-child("+i+")").attr('selected','selected');
@@ -300,28 +305,134 @@
 
         function checkPhone(){
             phone.value = phone1.value + phone2.value + phone3.value;
-            $.ajax({
-                url : "${pageContext.request.contextPath}/guest/checkPhone.do",
-                data : {phone : phone.value},
-                dataType : "json",
-                type : "post"
-                }).done(function(resp){
-                    console.log(resp);
-                    if(resp.result == "available"){
-                        adviseInPhone.innerHTML = "사용가능";
-                    }else{
-                    	advisePhone.innerHTML = "중복된 번호입니다.";
-                    	advisePhone.style.color = "red";
-                        adviseInPhone.innerHTML = "사용불가";
+            if("${dto.phone}" != phone.value){
+            	$.ajax({
+                    url : "${pageContext.request.contextPath}/guest/checkPhone.do",
+                    data : {phone : phone.value},
+                    dataType : "json",
+                    type : "post"
+                    }).done(function(resp){
+                        console.log(resp);
+                        if(resp.result == "available"){
+                            adviseInPhone.innerHTML = "사용가능";
+                            $.ajax({
+                                url: "${pageContext.request.contextPath}/guest/sendVerifCode.do",
+                                data: { phone: phone.value },
+                                dataType: "json",
+                                type: "post"
+                            }).done(function (resp) {
+                            console.log("인증번호 서버 전송 결과: " + resp.result);            
+                            if (resp.result != "Verify Code sent") {
+                                adviseVerifCode.innerHTML("인증번호 전송에 실패했습니다.");
+                                adviseVerifCode.style.color = "red";
+                                hiddenRespPhone.innerHTML = "사용불가";
+                                hiddenRespVerifCode.innerHTML = "인증실패";
+                                confirmVerifyCode.hidden = true;
+                                sendCode.hidden = false;
+                                resendCode.hidden = true;
+                                verifyCode.disabled = true;
+                            }else{
+                                console.log("인증 코드 발송 완료");
+                                confirmVerifyCode.hidden = false;                  
+                            }              
+                            }).fail(function (a, b, c) {
+                                console.log(a);
+                                console.log(b);
+                                console.log(c);
+                            });
+                        }else{
+                        	advisePhone.innerHTML = "중복된 번호입니다.";
+                        	advisePhone.style.color = "red";
+                            adviseInPhone.innerHTML = "사용불가";
+                            return false;
+                        }                    
+                    }).fail(function(a,b,c){
+                        console.log(a);
+                        console.log(b);
+                        console.log(c);
                         return false;
-                    }                    
-                }).fail(function(a,b,c){
-                    console.log(a);
-                    console.log(b);
-                    console.log(c);
-                    return false;
-                });
+                    });
+            }
+            
         }
+        
+      //사용자 입력 인증번호 일치여부 검사 start
+        function confirmVerifCode() {
+            $.ajax({
+                url: "${pageContext.request.contextPath}/guest/verifyUser.do",
+                data: { verifyCode: verifyCode.value },
+                dataType: "json",
+                type: "post",
+            }).done(function (resp) {
+                console.log("인증번호 서버 검증 결과 : " + resp.result);
+	          if (resp.result == "verified") {
+	            console.log("인증 완료 ");
+                adviseVerifCode.innerHTML = "인증완료";
+                adviseVerifCode.style.color = "green";
+                hiddenRespPhone.innerHTML = "사용가능";
+                hiddenRespVerifCode.innerHTML = "사용가능";
+                sendCode.hidden = true;
+                resendCode.hidden = true;
+                verifyCode.disabled = true;
+	          } else if (resp.result == "unverified") {
+	            console.log("인증 실패 ");
+	            adviseVerifCode.innerHTML = "인증실패";
+	            adviseVerifCode.style.color = "red";
+	            hiddenRespPhone.innerHTML = "사용불가";
+	            hiddenRespVerifCode.innerHTML = "인증실패";
+	            sendCode.hidden = true;
+	            resendCode.hidden = false;
+	            verifyCode.disabled = false;
+	          };
+            }).fail(function (a, b, c) {
+                console.log(a);
+                console.log(b);
+                console.log(c);
+                return false;
+            });
+        }
+        //사용자 입력 인증번호 일치여부 검사 end  
+    //인증번호 제한시간 이벤트 start
+    function msg_time() {
+        m = addzero(Math.floor(setTime / 60)) + ":" + addzero(setTime % 60);
+        console.log(m);
+        var msg = m;
+        timer.innerHTML = msg;
+        setTime--;
+        if (setTime < 0) {
+            clearInterval(tid);
+            adviseVerifCode.innerHTML = "입력시간이 초과되었습니다.";
+            adviseVerifCode.style.color = "red";
+            hiddenRespPhone.innerHTML = "사용불가";
+            hiddenRespVerifCode.innerHTML = "인증실패";
+            confirmVerifCode.hidden = true;
+            verifyCode.disabled = true;
+            $.ajax({
+                url: "${pageContext.request.contextPath}/guest/removeVerifSession.do",
+                dataType: "json",
+                type: "post",
+            }).done(function(resp){
+                if(resp.result == "Verif Code removed"){
+                    timer.innerHTML = "";
+                    sendCode.hidden = false;
+                    resendCode.hidden = true;
+                    verifyCode.value = "";
+                    verifyCode.disabled = false;
+                }
+                console.log("인증번호 세션 삭제 실패");
+            }).fail(function(a,b,c){
+                console.log(a);
+                console.log(b);
+                console.log(c);
+            });
+        }
+    }
+        
+    function addzero(num) {
+        if (num < 10) { num = "0" + num; }
+        return num;
+    }
+    //인증번호 제한시간 이벤트 end   
 
         function appendYear(){
             var date = new Date();
@@ -377,12 +488,9 @@
             	}
             	
             	}            
-        }        
-
-        
+        }               
 
         function formValidation(){
-
             for(var i = 0; i < adviseIn.length; i++){
                 if(adviseIn[i].innerHTML === "사용불가"){
                     console.log("유효성 통과 탈락");
@@ -430,8 +538,7 @@
             	adviseVerifCode.innerHTML = "휴대폰 인증은 필수입니다."
             	adviseVerifCode.style.color = "red";
                 return false;
-            }      	
-        	  	
+            }    	
         	
             phone.value = phone1.value + phone2.value + phone3.value;
             var month = birthMonth.value;
@@ -458,15 +565,13 @@
             changeMyInfo.submit();
         }     
         //submit 직전 유효성 검사
-
-    </script>
-	<script>
+        
 	$("#withdrawMem").on("click",function(){
 		location.href = "${pageContext.request.contextPath}/member/withdrawMem";
 	})
 	$("#backToFeed").on("click", function() {
 				location.href = "${pageContext.request.contextPath}/feed/myFeed?email=${dto.email}";
 			});
-</script>
+    </script>
 </body>
 </html>

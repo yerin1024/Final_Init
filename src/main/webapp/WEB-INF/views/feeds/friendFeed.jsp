@@ -412,21 +412,20 @@ html, body {
 							<div class="row profileNickname">${feed.nickname}</div>
 
 							<div class="row profilefeedDeclartion" seq="${feed.feed_seq}">
-								<%-- <c:choose>
-									<c:when
-										test="${feed.feed_seq == tfeed_seq[status.index]}">
+								<c:choose>
+									<c:when test="${declareCheckList[status.index] == 1}">
 										<img class="sirenImg" id="srI2_${feed.feed_seq}"
 											src="${pageContext.request.contextPath }/resources/images/siren2.png">
 									</c:when>
-									<c:otherwise> --%>
+									<c:otherwise>
 										<button type="button" id="srB_${feed.feed_seq}" role="btton"
 											seq="${feed.feed_seq}" class="sirenBtn" data-toggle="modal"
 											data-target="#declareModal" data-backdrop="static">
 											<img class="sirenImg" id="srI_${feed.feed_seq}"
-									 			src="${pageContext.request.contextPath }/resources/images/siren.png">
+												src="${pageContext.request.contextPath }/resources/images/siren.png">
 										</button>
-									<%-- </c:otherwise>
-								</c:choose>  --%>
+									</c:otherwise>
+								</c:choose>
 							</div>
 
 						</div>

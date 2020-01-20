@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import kh.init.admin.DeclareDTO;
 import kh.init.members.MemberDTO;
 
 @Repository
@@ -124,10 +125,9 @@ public class FeedDAO {
 		return result;
 	}
 	
-	//신고관리
-	public int getDeclareFeed(int feed_seq) throws Exception{
-		int result = jdbc.selectOne("Feed.getDeclareFeed", feed_seq);
-		return result;
+	//신고게시물 seq리스트
+	public List<Integer> getDeclareFeed(String from_id) throws Exception{
+		return jdbc.selectList("Feed.getDeclareFeed", from_id);
 	}
 
 	public int getFriendFeedCount(String email) throws Exception{
