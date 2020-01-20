@@ -25,8 +25,7 @@
 		'N' where email = #{email}
 	</update>
 	<!-- 검색기능 -->
-	<select id="search" resultType="kh.init.members.MemberDTO"
-		parameterType="java.util.Map">
+	<select id="search" resultType="kh.init.members.MemberDTO" parameterType="java.util.Map">
 		select * from tb_member where black = 'N' and admin = 'N'
 		<choose>
 			<when test="search != ''">
@@ -35,8 +34,7 @@
 
 		</choose>
 	</select>
-	<select id="searchForBlack"
-		resultType="kh.init.members.MemberDTO" parameterType="java.util.Map">
+	<select id="searchForBlack" resultType="kh.init.members.MemberDTO" parameterType="java.util.Map">
 		select * from tb_member where black = 'Y' and admin = 'N'
 		<choose>
 			<when test="search != ''">
@@ -47,14 +45,12 @@
 
 	<!-- member페이징 -->
 	<select id="dbMember" resultType="integer">
-		select count(*) as seq from
-		tb_member where black = 'N' and admin = 'N'
+		select count(*) as seq from tb_member where black = 'N' and admin = 'N'
 	</select>
-	<select id="selectByPage" resultType="kh.init.members.MemberDTO"
-		parameterType="java.util.Map">
-		select * from (select tb_member.*, row_number()over(order by email desc) as
-		rown from tb_member where admin = 'N' and black = 'N') where rown
-		between ${start} and ${end}
+	<select id="selectByPage" resultType="kh.init.members.MemberDTO" parameterType="java.util.Map">
+		select * from (select tb_member.*,row_number()over(order by email desc) as
+		rown from tb_member where
+		admin = 'N' and black = 'N') where rown between ${start} and ${end}
 	</select>
 	<!-- 검색했을 때 member페이징 -->
 	<select id="dbsearchForMember" resultType="Integer"
@@ -80,8 +76,7 @@
 	</select>
 	<!-- black페이징 -->
 	<select id="dbBlack" resultType="integer">
-		select count(*) as seq from
-		tb_member where black = 'Y' and admin = 'N'
+		select count(*) as seq from tb_member where black = 'Y' and admin = 'N'
 	</select>
 	<select id="selectBlackByPage"
 		resultType="kh.init.members.MemberDTO" parameterType="java.util.Map">
@@ -92,18 +87,15 @@
 	<!-- 검색했을 때 black페이징 -->
 	<select id="dbsearchForBlack" resultType="Integer"
 		parameterType="java.util.Map">
-		select count(*) as seq from tb_member where admin = 'N' and black =
-		'Y'
+		select count(*) as seq from tb_member where admin = 'N' and black = 'Y'
 		<choose>
 			<when test="search != ''">
 				and ${searchTag} like '%' ||#{search}||'%'
 			</when>
 		</choose>
 	</select>
-	<select id="searchForBlackPaging"
-		resultType="kh.init.members.MemberDTO" parameterType="java.util.Map">
-		select * from (select tb_member.*, row_number()over(order by email
-		desc) as rown from tb_member where admin = 'N' and black = 'Y'
+	<select id="searchForBlackPaging" resultType="kh.init.members.MemberDTO" parameterType="java.util.Map">
+		select * from (select tb_member.*, row_number()over(order by email desc) as rown from tb_member where admin = 'N' and black = 'Y'
 		<choose>
 			<when test="search != ''">
 				and ${searchTag} like '%' ||#{search}||'%'
@@ -116,42 +108,78 @@
 		select * from tb_feed
 	</select>
 	<select id="myFeedList" resultType="kh.init.feeds.FeedDTO">
-		select * from tb_feed where
-		email = #{email}
+		select * from tb_feed where email = #{email}
 	</select>
 	<delete id="deleteFeed" parameterType="Integer">
-		delete from tb_feed where
-		feed_seq = #{feed_seq}
+		delete from tb_feed where feed_seq = #{feed_seq}
 	</delete>
 	<!-- feed페이징 -->
 	<select id="dbFeed" resultType="integer">
-		select count(*) as seq from
-		tb_feed
+		select count(*) as seq from tb_feed
 	</select>
-	<select id="selectFeedByPage" resultType="kh.init.feeds.FeedDTO"
-		parameterType="java.util.Map">
-		select * from (select tb_feed.*, row_number()over(order by feed_seq desc) as
-		rown from tb_feed) where rown between ${start} and ${end}
+	<select id="selectFeedByPage" resultType="kh.init.feeds.FeedDTO" parameterType="java.util.Map">
+		select * from (select tb_feed.*, row_number()over(order by feed_seq desc) as rown from tb_feed) where rown between ${start} and ${end}
 	</select>
 	<!-- 검색했을 때 feed페이징 -->
-	<select id="dbsearchForFeed" resultType="Integer"
-		parameterType="java.util.Map">
-		select count(*) as seq from tb_feed where
+	<select id="dbsearchForFeed" resultType="Integer" parameterType="java.util.Map">
+		select count(*) as seq from tb_feed 
 		<choose>
 			<when test="search != ''">
-				${searchTag} like '%' ||#{search}||'%'
+				where ${searchTag} like '%' ||#{search}||'%'
 			</when>
 		</choose>
 	</select>
-	<select id="searchForFeedPaging"
-		resultType="kh.init.feeds.FeedDTO" parameterType="java.util.Map">
-		select * from (select tb_feed.*, row_number()over(order by feed_seq
-		desc) as rown from tb_feed where
+	<select id="searchForFeedPaging" resultType="kh.init.feeds.FeedDTO" parameterType="java.util.Map">
+		select * from (select tb_feed.*, row_number()over(order by feed_seq desc) as rown from tb_feed 
 		<choose>
 			<when test="search != ''">
-				${searchTag} like '%' ||#{search}||'%'
+				where ${searchTag} like '%' ||#{search}||'%'
 			</when>
 		</choose>
 		) where rown between ${start} and ${end}
 	</select>
+
+
+	<!-- declare페이징 -->
+	<select id="dbDeclare" resultType="integer">
+		select count(*) as seq from tb_declare
+	</select>
+	<select id="selectDeclareByPage"
+		resultType="kh.init.admin.DeclareDTO" parameterType="java.util.Map">
+		select * from (select tb_declare.*, row_number()over(order by to_id desc) as rown
+		from tb_declare) where rown between ${start} and ${end}
+	</select>
+	<!-- 검색했을 때 declare페이징 -->
+	<select id="dbsearchForDeclare" resultType="Integer" parameterType="java.util.Map">
+		select count(*) as seq from tb_declare
+		<choose>
+			<when test="search != ''">
+				where ${searchTag} like '%' ||#{search}||'%'
+			</when>
+		</choose>
+	</select>
+	<select id="searchForDeclarePaging" resultType="kh.init.admin.DeclareDTO" parameterType="java.util.Map">
+		select * from (select tb_declare.*, row_number()over(order by to_id desc) as rown from tb_declare
+		<choose>
+			<when test="search != ''">
+				where ${searchTag} like '%' ||#{search}||'%'
+			</when>
+		</choose>
+		) where rown between ${start} and ${end}
+	</select>
+	<!-- 신고게시물 관리 -->
+	<insert id="declare" parameterType="kh.init.admin.DeclareDTO">
+		insert into tb_declare
+		values(#{feed_seq},#{to_id},#{declare_reason},#{from_id},sysdate, 'N')
+	</insert>
+	<select id="declarationList" resultType="kh.init.admin.DeclareDTO">
+		select * from tb_declare
+	</select>
+	<update id="delete_feed" parameterType="Integer">
+		update tb_declare set delete_feed = 'Y' where feed_seq = #{feed_seq}
+	</update>
+	<!-- 신고게시물 삭제 -->
+	<delete id="deleteDeclareFeed" parameterType="Integer">
+		delete from tb_feed where feed_seq = #{feed_seq}
+	</delete>
 </mapper>

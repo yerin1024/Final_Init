@@ -24,72 +24,84 @@
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 <style>
 #wrapper {
-	margin: auto;
+   margin: auto;
+   padding: 60px 20px 0;
 }
 
 #search {
-	margin: auto;
-	text-align: center;
+   margin: auto;
+   text-align: center;
 }
 
 #contents {
-	border: 2px solid black;
-	width: 60vw;
-	min-width: 470px;
-	margin: auto;
-	text-align: center;
+/*    border: 2px solid black; */
+   width: 65vw;
+   min-width: 470px;
+   margin: auto;
+   text-align: center;
+
 }
 
+.row{
+   margin:0px;
+}
 .feed {
-	width: 20vw;
-	height: 20vw;
-	min-height: 150px;
-	min-width: 150px;
-	border: 1px solid red;
-	padding:0px;
+   width: 20vw;
+   height: 22vw;
+   min-height: 150px;
+   min-width: 150px;
+
+   padding:10px;
 }
 .btn-primary:hover, .btn-primary:hover{
-	background-color:white;
+   background-color:white;
 }
 .btn-primary:not(:disabled):not(.disabled).active, .btn-primary:not(:disabled):not(.disabled):active, .show>.btn-primary.dropdown-toggle{
-	border:none;
-	background-color:white;
+   border:none;
+   background-color:white;
 }
 .cover {
-	width: 100%;
-	height: 100%;
+   width: 100%;
+   height: 100%;
+}
+.title{
+   display:inline-block;
+   position:absolute;
+   top:50%;
+   left:50%;
+   transform: translate(-50%, -50%);
 }
 .btn-primary{
-	width:100%;
-	height:100%;
-	border-color:white;
-	background-color:white;
-	padding:0px;
-	color:black;
+   width:100%;
+   height:100%;
+   border-color:white;
+   background-color:white;
+   padding:0px;
+   color:black;
 }
 #likeBtn, #bookmarkBtn{
-	width:20px;
-	height:20px;
+   width:20px;
+   height:20px;
 }
 #carouselExampleIndicators{
-	width:100%;
+   width:100%;
 }
 .carousel-item {
-	margin: auto;
-	text-align: center;
+   margin: auto;
+   text-align: center;
 }
 
 .carousel-inner {
-	width: 100%;
+   width: 100%;
 }
 
 .carousel-item * {
-	width: 200px;
-	height: 200px;
+   width: 200px;
+   height: 200px;
 }
 #writerProfile{
-	width:50px;
-	height:50px;
+   width:50px;
+   height:50px;
 }
 
 </style>
@@ -197,10 +209,10 @@ function getList(page){
 						<c:forEach items="${friendList}" var="friend">
 						<div class="row">
 							<div class="col-4">
-								${friend.profile_img }
+								<img src="${friend.profile_img}" style="width:100px;">
 							</div>
 							<div class="col-8">
-								${friend.nickname }
+								<a href="${pageContext.request.contextPath}/feed/myFeed?email=${friend.email}">${friend.nickname}</a>
 							</div>
 						</div>
 						</c:forEach>

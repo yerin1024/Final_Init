@@ -124,13 +124,13 @@ public class FeedService {
 			int feed_seq = tmp.getFeed_seq();
 			List<String> media = dao.getMediaList(feed_seq);
 			if(media.size()==0) { //이미지나 비디오가 없기 때문에 제목으로 커버를 만들어야되는 경우
-				cover.add("<span class='cover'>"+tmp.getTitle()+"</span>");
+				cover.add("<span class='cover' style='width:100%;height:100%'>"+tmp.getTitle()+"</span>");
 			}else {
 				if(media.get(0).endsWith("mp4")) { //파일이 동영상일 경우
-					String video = "<video class='cover' src=\""+media.get(0)+"\">";
+					String video = "<video class='cover' style='width:100%;height:100%' src=\""+media.get(0)+"\">";
 					cover.add(video);
 				}else {//파일이 이미지
-					String img = "<img class='cover' src=\""+media.get(0)+"\">";
+					String img = "<img class='cover' style='width:100%;height:100%' src=\""+media.get(0)+"\">";
 					cover.add(img);
 				}
 			}
@@ -176,7 +176,7 @@ public class FeedService {
 			int feed_seq = tmp.getFeed_seq();
 			List<String> media = dao.getMediaList(feed_seq);
 			if(media.size()==0) { //이미지나 비디오가 없기 때문에 제목으로 커버를 만들어야되는 경우
-				cover.add("<span class='cover'>"+tmp.getTitle()+"</span>");
+				cover.add("<div class='title'>"+tmp.getTitle()+"</div>");
 			}else {
 				if(media.get(0).endsWith("mp4")) { //파일이 동영상일 경우
 					String video = "<video class='cover' src=\""+media.get(0)+"\">";
@@ -328,7 +328,11 @@ public class FeedService {
 		return profile_img = "<img src=\"" +profile_img + "\">";
 	}
 
-
+	//신고 
+	public int getDeclare(int tfeed_seq) throws Exception{
+		int result = dao.getDeclareFeed(tfeed_seq);
+		return result;
+	}
 
 
 	//-----------좋아요 & 스크랩----------------------------	
