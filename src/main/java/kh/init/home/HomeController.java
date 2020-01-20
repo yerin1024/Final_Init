@@ -24,7 +24,6 @@ public class HomeController {
 	@RequestMapping("/home")
 	public String home() {
 		session.setAttribute("mediaList", new ArrayList<String>());
-		session.setAttribute("loginInfo", new MemberDTO("aa@naver.com", "PW", "YERIN", "YERIN", "R", "R", null,null, "N", null, "E", "N"));
 		return "home";
 	}
 	
