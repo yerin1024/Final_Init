@@ -759,7 +759,7 @@
 
 				<div class="modal-body">
 					<form
-						action="${pageContext.request.contextPath}/friend/friendRequest?to_id=${dto.email}"
+						action="${pageContext.request.contextPath}/friend/friendRequest?to_id=${mvo.email}"
 						method="post" id="goReqFri">
 						<input type=radio name="relation" value="1"> 아는 사람<br>
 						<input type=radio name="relation" value="2"> 친구<br> <input
@@ -776,7 +776,7 @@
 	</div>
 
 	<!-- 친구 목록 모달 영역 -->
-	<div id="modalBox2" class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+	<div id="modalBox2" class="modal fade"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
 		style="margin-top: 100px;">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
