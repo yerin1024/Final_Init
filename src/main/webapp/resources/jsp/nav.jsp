@@ -6,7 +6,7 @@
         <div class="header">
            <div class="inner">
             <div class="nav-left">
-                <div class="logo">i n ; t</div>
+                <div class="logo"><a class="nav-link active" id="logoA" href="${pageContext.request.contextPath}/feed/getFriendFeed">i n ; t</a></div>
             </div>
             <div class="nav-center"></div>
         <div class="nav-right">
@@ -80,5 +80,13 @@
          $("#logout").attr("src", $("#logout").attr("src").replace("/resources/images/logout3.png", "/resources/images/logout2.png"));  
     }); 
     
-     
+     $(".header").mouseenter(function(){
+     	 $("#logoA").css("background-position","right center"); 
+    	 $("#logoA").css("color","#0f4c81");
+     });
+     $(".header").mouseleave(function(){
+     	 $("#logoA").css("background-position","right center"); 
+    	 $("#logoA").css("color","white");
+     });
+
     </script>
