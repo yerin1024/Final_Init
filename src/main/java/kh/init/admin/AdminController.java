@@ -198,7 +198,7 @@ public class AdminController {
 	@ResponseBody
 	public String declareReasonProc(String dr_seq, String declare_reason, Timestamp decalre_date) throws Exception {
 		System.out.println("declareResonProc 도착!");
-		
+		System.out.println("dr_seq : "  + dr_seq);
 		int feed_seq = Integer.parseInt(dr_seq.substring(dr_seq.lastIndexOf("_") + 1));
 		System.out.println("feed_seq : " +feed_seq);
 		String from_id = ((MemberDTO)session.getAttribute("loginInfo")).getEmail();
