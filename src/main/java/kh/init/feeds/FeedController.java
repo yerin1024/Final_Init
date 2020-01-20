@@ -42,7 +42,7 @@ public class FeedController {
 			MemberDTO dto = mservice.getMyPageService(email);
 			list = (List<FeedDTO>)service.getMyFeed(ipage, email).get("list");
 			cover = (List<String>)service.getMyFeed(ipage, email).get("cover");
-			System.out.println("dto 이메일값 확인 : "+dto.getEmail()+dto.getName() );
+			System.out.println("dto 이메일값 확인 : "+dto.getEmail()+dto.getName());
 			model.addAttribute("mvo", dto);
 			model.addAttribute("list", list);
 			model.addAttribute("cover", cover);
