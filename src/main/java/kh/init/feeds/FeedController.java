@@ -1,9 +1,7 @@
 package kh.init.feeds;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -17,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
+import kh.init.admin.DeclareDTO;
 import kh.init.members.MemberDTO;
 import kh.init.members.MemberService;
 
@@ -413,16 +412,36 @@ public class FeedController {
 			List<FeedDTO> list = service.getFriendFeed(ipage, email);
 			System.out.println("feed size : "+list.size());
 			List<String> profile_imgList = new ArrayList<>();
-			//List<Integer> tfeed_seqList = new ArrayList<>();
+			List<Integer> tfeed_seqList = new ArrayList<>();
+			List<Integer> declareCheckList = new ArrayList<>();
 			List<List<String>> mediaList = new ArrayList<>();
 			List<List<ReplyDTO>> replyList = new ArrayList<>();
 			List<Integer> likeCheckList = new ArrayList<>();
 			List<Integer> bookmarkCheckList = new ArrayList<>();
+			tfeed_seqList=service.getDeclare(email);
+			System.out.println("신고목록:"+tfeed_seqList.toString());
+			System.out.println("게시글목록 : "+list.toString());
+			int index=0;
 			for(FeedDTO tmp : list) {
 				int feed_seq = tmp.getFeed_seq();
+				
 				String tmpEmail = tmp.getEmail();
 				profile_imgList.add(service.getProfile_img(tmpEmail));
-			//	tfeed_seqList.add(service.getDeclare(feed_seq));
+				
+				
+				for(int i=0; i<tfeed_seqList.size(); i++) {
+					System.out.println(tfeed_seqList.get(i));
+					if(tmp.getFeed_seq() == tfeed_seqList.get(i)) {
+						System.out.println("신고됨");
+						declareCheckList.add(index, 1);
+						break;
+					}else {
+						System.out.println("신고안됨");
+						declareCheckList.add(index, 0);
+					}
+				}
+				
+				index++;
 				mediaList.add(service.getMediaList(feed_seq));
 //				replyList.add(service.viewAllReply(feed_seq));
 				likeCheckList.add(service.likeCheck(feed_seq, ((MemberDTO)session.getAttribute("loginInfo")).getEmail()));
@@ -431,7 +450,8 @@ public class FeedController {
 			
 			System.out.println(list);
 			System.out.println(profile_imgList);
-			//System.out.println(tfeed_seqList);
+			System.out.println("declareCheckList : "+declareCheckList.toString());
+			System.out.println(tfeed_seqList);
 			System.out.println(mediaList);
 			System.out.println(replyList);
 			System.out.println(likeCheckList);
@@ -439,6 +459,7 @@ public class FeedController {
 			
 			model.addAttribute("list", list);
 			model.addAttribute("profile_imgList",profile_imgList);
+			model.addAttribute("declareCheckList", declareCheckList);
 			model.addAttribute("mediaList", mediaList);
 			model.addAttribute("replyList", replyList);
 			model.addAttribute("likeCheckList", likeCheckList);

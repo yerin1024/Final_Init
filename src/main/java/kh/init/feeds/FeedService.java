@@ -1,16 +1,12 @@
 package kh.init.feeds;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.servlet.http.HttpSession;
-
-import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,7 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.Gson;
 
-import edu.emory.mathcs.backport.java.util.Collections;
+import kh.init.admin.DeclareDTO;
 import kh.init.members.MemberDTO;
 
 
@@ -329,9 +325,8 @@ public class FeedService {
 	}
 
 	//신고 
-	public int getDeclare(int tfeed_seq) throws Exception{
-		int result = dao.getDeclareFeed(tfeed_seq);
-		return result;
+	public List<Integer> getDeclare(String from_id) throws Exception{
+		return dao.getDeclareFeed(from_id);
 	}
 
 

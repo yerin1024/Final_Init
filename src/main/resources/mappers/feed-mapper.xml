@@ -135,7 +135,11 @@
 		where rnum between #{startNum} and #{endNum}
 	</select>
 
-		
+   <!-- 신고 버튼을 위한 쿼리 -->
+    <select id="getDeclareFeed" parameterType="String" resultType="Integer">
+      select feed_seq from tb_declare where from_id = #{from_id}
+   </select>
+ 
 	<!-- 신고게시물의 주인 -->
 	<select id="getReportedEmail" resultType="String">
 		select email from tb_feed where feed_seq = #{feed_seq}
