@@ -832,16 +832,10 @@
                      </c:if>
                   </c:forEach>
                   </div>
-              
             </c:otherwise>
          </c:choose>
           </div>
          </div>
-      
-		
-		
-
-</div>
 	<!-- 친구요청 모달 영역 -->
 	<div id="modalBox" class="modal fade" id="myModal" tabindex="-1"
 		role="dialog" aria-labelledby="myModalLabel"
