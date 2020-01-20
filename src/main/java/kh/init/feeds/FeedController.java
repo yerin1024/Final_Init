@@ -50,6 +50,7 @@ public class FeedController {
 		}
 		return "feeds/myFeed";
 	}
+	
 	@RequestMapping(value = "/myFeedAjax", produces = "application/json; charset=UTF-8")
 	@ResponseBody
 	public String myFeedAjax(String page) {
@@ -381,11 +382,11 @@ public class FeedController {
 			dto = service.detailView(feed_seq);
 			likeCheck = service.likeCheck(feed_seq, ((MemberDTO)session.getAttribute("loginInfo")).getEmail());
 			bookmarkCheck = service.bookmarkCheck(feed_seq, ((MemberDTO)session.getAttribute("loginInfo")).getEmail());
-
 			list = service.getMediaList(feed_seq);
+			System.out.println(list.toString() + " 리스트의 투스트링입니다!");
 			replyList = service.viewAllReply(feed_seq);
-//			System.out.println("Email : "+dto.getEmail());
-//			System.out.println("memberDTO : "+mservice.getMemberDTO(dto.getEmail()));
+			System.out.println("Email : "+dto.getEmail());
+			System.out.println("memberDTO : "+mservice.getMemberDTO(dto.getEmail()));
 			obj.addProperty("writerProfile", g.toJson((mservice.getMemberDTO(dto.getEmail())).getProfile_img()));
 			obj.addProperty("likeCheck", g.toJson(likeCheck));
 			obj.addProperty("likeCheck", g.toJson(likeCheck));

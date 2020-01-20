@@ -6,11 +6,13 @@
         <div class="header">
            <div class="inner">
             <div class="nav-left">
+
 				<div class="logo">
 					<a class="nav-link active" id="logoA"
 						href="${pageContext.request.contextPath}/feed/getFriendFeed">i n ; t</a>
 				</div>
 			</div>
+
             <div class="nav-center"></div>
         <div class="nav-right">
         <ul class="nav justify-content-end">
@@ -44,7 +46,6 @@
         $("#logout").attr("src", $("#logout").attr("src").replace("/resources/images/logout.png", "/resources/images/logout2.png"));  
         $("#logoA").css("background-position","right center"); 
    	 	$("#logoA").css("color","#0f4c81");
-
      });
      $(".header").mouseleave(function(){
         $("#total_feed").attr("src", $("#total_feed").attr("src").replace("/resources/images/friends2.png", "/resources/images/friends.png"));  

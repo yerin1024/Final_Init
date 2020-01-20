@@ -26,7 +26,7 @@
                                 
                                 
                                 <label>프로필 사진</label>
-                                <img src="resources/default_profile_img.png" id="setProfile" style="width:50px;">
+                                <img src="/resources/images/default_profile_img.png" id="setProfile" style="width:50px;">
                                 <button type="button" id="deletePic">X</button>
                                 <input type="file" id="profileImg" name="profileImg" ><br> 
                                 <p class="adviseOut" id="adviseProfile" readonly>*프로필 사진 미등록시 기본이미지로 등록됩니다.</p>
