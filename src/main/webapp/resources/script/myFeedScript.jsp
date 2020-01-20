@@ -114,8 +114,7 @@
 			});
 		});
 		
-		
-		function deleteReply(ctxPath){
+		function deleteReply(self, ctxPath){
 			var reply_seq = $(this).val();
 			var deleteDiv = $(this).closest(".userInfo");
 			$.ajax({
