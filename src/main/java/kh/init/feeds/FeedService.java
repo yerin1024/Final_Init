@@ -382,7 +382,7 @@ public class FeedService {
 		dto.setReply_seq(reply_seq);
 		replyDAO.registerReply(dto);
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("nickname", dto.getNickname());
+		map.put("email", dto.getEmail());
 		map.put("contents", dto.getContents());
 		map.put("reply_seq", dto.getReply_seq());
 		String jsonString = gson.toJson(map);

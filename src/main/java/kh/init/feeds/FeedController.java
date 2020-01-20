@@ -613,10 +613,6 @@ public class FeedController {
 		}
 		return result;
 	}
-	@RequestMapping("/modifyReply")
-	public String modifyReply(FeedDTO dto) {
-		return "feeds/myFeed";
-	}
 
 	@RequestMapping("/deleteReply")
 	@ResponseBody
@@ -632,7 +628,7 @@ public class FeedController {
 		System.out.println(result + "지워짐");
 		return  reply_seq+"";
 	}
-	@RequestMapping("/updateReply")
+	@RequestMapping("/modifyReply")
 	@ResponseBody
 	public String updateReply(ReplyDTO dto) {
 		System.out.println("댓글 수정 도착!!");
