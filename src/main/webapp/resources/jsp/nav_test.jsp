@@ -127,6 +127,28 @@ $(function() {
     	    		 
     	    	 }
     	    	 
+    	    	 $(".header").mouseenter(function(){
+   	    	        $("#notification").attr("src", $("#notification").attr("src").replace("/resources/images/notification.png", "/resources/images/notification2.png"));  
+   	    	        $("#msg").attr("src", $("#msg").attr("src").replace("/resources/images/msg.png", "/resources/images/msg2.png"));  
+   	    	     });
+   	    	     $(".header").mouseleave(function(){
+   	    	        $("#notification").attr("src", $("#notification").attr("src").replace("/resources/images/notification2.png", "/resources/images/notification.png"));  
+   	    	        $("#msg").attr("src", $("#msg").attr("src").replace("/resources/images/msg2.png", "/resources/images/msg.png"));  
+   	    	        
+   	    	     });
+   	    	     $("#notification").mouseenter(function(){
+   	    	         $("#notification").attr("src", $("#notification").attr("src").replace("/resources/images/notification2.png", "/resources/images/notification3.png"));  
+   	    	        });
+   	    	     $("#notification").mouseleave(function(){
+   	    	         $("#notification").attr("src", $("#notification").attr("src").replace("/resources/images/notification3.png", "/resources/images/notification2.png"));  
+   	    	    });
+   	    	     $("#msg").mouseenter(function(){
+   	    	         $("#msg").attr("src", $("#msg").attr("src").replace("/resources/images/msg2.png", "/resources/images/msg3.png"));  
+   	    	        });
+   	    	     $("#msg").mouseleave(function(){
+   	    	         $("#msg").attr("src", $("#msg").attr("src").replace("/resources/images/msg3.png", "/resources/images/msg2.png"));  
+   	    	    });
+   	    	     
     	     }).fail(function(a,b,c){
     	    	 console.log(a); console.log(b); console.log(c);
     	     })
