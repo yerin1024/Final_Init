@@ -90,14 +90,14 @@ html, body {
 }
 
 .likeImg>img {
-	width: 30px;
-	height: 30px;
+	width: 28px;
+	height: 28px;
 	margin-left: 10px;
 }
 
 .bookmarkImg>img {
-	width: 30px;
-	height: 30px;
+	width: 28px;
+	height: 28px;
 	margin-left: 10px;
 }
 
@@ -135,14 +135,14 @@ html, body {
 	margin: 10px;
 }
 
-.profilefeedDeclartion {
+.profilefeedDeclaration {
 	position: absolute;
 	right: 20px;
 }
 
 .sirenImg {
-	width: 30px;
-	height: 30px;
+	width: 27px;
+	height: 28px;
 }
 
 .sirenBtn {
@@ -255,19 +255,16 @@ html, body {
 			});
 
 	function getList(page) {
-		$
-				.ajax({
-					type : 'POST',
-					dataType : 'json',
-					data : {
-						"page" : page
+		$.ajax({
+			type : 'POST',
+			dataType : 'json',
+			data : {
+				"page" : page
 					},
-					url : "/feed/getFriendFeedAjax",
-					dataType : "JSON"
-				})
-				.done(
-						function(data) {
-							if (data.result == 'false') {
+			url : "/feed/getFriendFeedAjax",
+			dataType : "JSON"
+				}).done(function(data) {
+					if (data.result == 'false') {
 								console.log("false");
 								return 'false';
 							}
@@ -279,13 +276,37 @@ html, body {
 							var likeCheckList = JSON.parse(data.likeCheckList);
 							var bookmarkCheckList = JSON
 									.parse(data.bookmarkCheckList);
-
+							var profile_imgList = JSON.parse(data.profile_imgList);
+							var declareCheckList = JSON.parse(data.declareCheckList);
 							for (var i = 0; i < list.length; i++) {
-
-								var feed = $("<div class='feed'></div>");
-								var nick = $("<div class='row nickname'></div>");
-								nick.append(list[i].nickname);
-
+								 var feed = $("<div class='feed'></div>");
+								 var profile = $("<div class='row profile'></div>");
+								 var Img = $("<div class='row profileImg'></div>") 
+								 Img.append(profile_imgList[i]); 
+								 profile.append(Img);
+								 feed.append(profile);
+								 var nick = $("<div class='row profileNickname'></div>");
+								 nick.append(list[i].nickname);
+								 profile.append(nick);
+								 var feedDeclaration = $("<div class='row profilefeedDeclaration'></div>");
+								 feedDeclaration.attr("seq",list[i].feed_seq);
+								 var afterDec = $("<img class='sirenImg' src='${pageContext.request.contextPath}/resources/images/siren2.png'>")
+								 afterDec.attr("id","srI2_"+list[i].feed_seq);
+								 var beforeDec = $("<button type='button' role='btton' seq='${feed.feed_seq}' class='sirenBtn' data-toggle='modal' data-target='#declareModal' data-backdrop='static'> </button>");	
+								 beforeDec.attr("id","srB_"+list[i].feed_seq);
+								 console.log("srB_"+list[i].feed_seq);
+								 var beforeDecImg = $("<img class='sirenImg' src='${pageContext.request.contextPath }/resources/images/siren.png'>");
+								 beforeDecImg.attr("id","srI_"+list[i].feed_seq);
+								 console.log("srI_"+list[i].feed_seq);
+								 beforeDec.append(beforeDecImg);
+								 if(declareCheckList[i] == 1){
+									 feedDeclaration.append(afterDec);	 
+									 profile.append(feedDeclaration); 
+								 }else{
+									 feedDeclaration.append(beforeDec);	 
+									 profile.append(feedDeclaration); 
+								 }
+								
 								var media = $("<div class='row media'></div>");
 
 								var CEI = $("<div id='carouselExampleIndicators' class='carousel slide' data-interval='false'></div>");
@@ -322,21 +343,21 @@ html, body {
 								ci.append("<span class='carousel-control-next-icon' aria-hidden='true'></span> <span class='sr-only'>Next</span></a>");
 
 								media.append(ci);
-								feed.append(nick);
+								feed.append(profile);
 								feed.append(media);
 
 								var contents = $("<div class='row contents' style='height:100px'></div>");
 								contents.append(list[i].contents);
 
-								var replys = $("<div class='row replys'></div>");
-								for (var r = 0; r < replyList[i].length; i++) {
-									var reply = $("<div class='row reply'></div>");
-									reply.append(replyList[i][r]);
-									replys.append(reply);
-								}
+// 								var replys = $("<div class='row replys'></div>");
+// 								for (var r = 0; r < replyList[i].length; i++) {
+// 									var reply = $("<div class='row reply'></div>");
+// 									reply.append(replyList[i][r]);
+// 									replys.append(reply);
+// 								}
 
 								feed.append(contents);
-								feed.append(replys);
+// 								feed.append(replys);
 
 								var btns = $("<div class='row btns'></div>");
 
@@ -389,8 +410,7 @@ html, body {
 								}
 								feed.append(btns);
 								$("#wrapper").append(feed);
-							}
-							;
+							};
 						})
 	}
 </script>
@@ -411,7 +431,7 @@ html, body {
 								${profile_imgList[status.index]}</div>
 							<div class="row profileNickname">${feed.nickname}</div>
 
-							<div class="row profilefeedDeclartion" seq="${feed.feed_seq}">
+							<div class="row profilefeedDeclaration" seq="${feed.feed_seq}">
 								<c:choose>
 									<c:when test="${declareCheckList[status.index] == 1}">
 										<img class="sirenImg" id="srI2_${feed.feed_seq}"
@@ -577,7 +597,7 @@ html, body {
 										</div>
 									</div>
 									<div class="form-group">
-										<div class="declareN">반복적으로 신고가 들어올 경우 계정 해지 조치가 취해질 수
+										<div class="declareN">※ 반복적으로 신고가 들어올 경우 계정 해지 조치가 취해질 수
 											있습니다.</div>
 									</div>
 								</div>
@@ -615,15 +635,12 @@ html, body {
 		$("#declareReasonModal").modal('show');
 	})
 	
-
-	
 	//사유데이터 처리
 	$(".declareReason").on("click", function(){
 		var seq = $("#dr").val();
 		var reason = $("input:radio[name=declare_reason]:checked").val();
 		 console.log(seq);
 		 console.log(reason);
-
 			$.ajax({
 				type:"post",
 				url:"${pageContext.request.contextPath}/admin/declareReasonProc.do",
