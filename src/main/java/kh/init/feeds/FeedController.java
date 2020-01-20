@@ -220,7 +220,7 @@ public class FeedController {
 		}
 		
 		//등록이 되면 mediaList를 비워둠
-		session.setAttribute("mediaList", null);
+		session.setAttribute("mediaList", new ArrayList<String>());
 
 		return "redirect:myFeed?email="+email;
 	}
@@ -252,6 +252,8 @@ public class FeedController {
 				
 				//writeFeedProc에서 media들의 경로가 필요해서 session에 넣어둠 , mediaList는 임시로 homeController에서 생성함
 				((ArrayList<String>)session.getAttribute("mediaList")).add(filePath);
+				System.out.println("session : "+session);
+				System.out.println("session.getAttribute(\"mediaList\")) : "+session.getAttribute("mediaList"));
 				returnVal = "{\"result\" : \""+filePath+"\", \"type\" : \""+fileType+"\"}";
 			}else {
 				//파일형식이 image나 video가 아닌 경우 업로드가 되지 않도록하고 fail을 리턴해서 alert창으로 불가능한 파일이라고 띄우도록 했음

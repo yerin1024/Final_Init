@@ -28,26 +28,21 @@
 }
 
 #contents {
-/*    border: 2px solid black; */
-   width: 65vw;
-   min-width: 470px;
-   margin: auto;
-   text-align: center;
+/* 	width:60vw; */
+	margin:0px;
+/*     margin: auto; */
+    text-align: center;
 
 }
 
 .row{
    margin:0px;
+   min-width:460px;
 }
 .feed {
-   width: 20vw;
-   height: 22vw;
    min-height: 150px;
    min-width: 150px;
    padding:10px;
-/* 	border: 2px solid black; */
-	width: 65vw;
-	min-width: 470px;
 	margin: auto;
 	text-align: center;
 }
@@ -100,15 +95,16 @@
 }
 .carousel-item {
    margin: auto;
+   width:10px;
    text-align: center;
 }
 
 .carousel-inner {
-   width: 100%;
+   width: 400px;
 }
 
 .carousel-item * {
-   width: 200px;
+   width: 100%;
    height: 200px;
 }
 #writerProfile{
@@ -116,6 +112,23 @@
    height:50px;
 }
 
+#keyword{
+	width:300px;
+}
+#searchBtn{
+	
+}
+
+.nickname{
+	vertical-align:middle;
+	line-height:60px;
+	font-size:30px;
+	font-weight:600;
+	text-align:left;
+}
+.nicknameA{
+	color:#48689a;
+}
 </style>
 <script>
 var page = 1;  //페이징과 같은 방식이라고 생각하면 된다. 
@@ -207,8 +220,8 @@ function getList(page){
 		<div id="search">
 			<br><br>
 			<form action="wholeFeed" method="post">
-				<input type="text" name="keyword" id="keyword">
-				<button>검색</button>
+				<input type="text" name="keyword" id="keyword">&nbsp;&nbsp;
+				<button id="searchBtn">검색</button>
 			</form>
 			<br><br>
 		</div>
@@ -220,11 +233,11 @@ function getList(page){
 					<div id="feeds">
 						<c:forEach items="${friendList}" var="friend">
 						<div class="row">
-							<div class="col-4">
-								<img src="${friend.profile_img}" style="width:100px;">
+							<div class="col-4 img">
+								<img src="${friend.profile_img}" style="width:60px;height:60px;">
 							</div>
-							<div class="col-8">
-								<a href="${pageContext.request.contextPath}/feed/myFeed?email=${friend.email}">${friend.nickname}</a>
+							<div class="col-8 nickname">
+								<a class="nicknameA" href="${pageContext.request.contextPath}/feed/myFeed?email=${friend.email}">${friend.nickname}</a>
 							</div>
 						</div>
 						</c:forEach>

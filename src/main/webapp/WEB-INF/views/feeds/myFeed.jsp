@@ -18,29 +18,28 @@
 <script
 	src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 <style>
-
-	body{
-		background-color:white;
-	}
-	.feed {
-		width: 20vw;
-		height: 20vw;
-		min-height: 150px;
-		min-width: 150px;
-		border: 1px solid red;
-	}
+body{
+	background-color:white;
+}
+.feed {
+	width: 20vw;
+	height: 20vw;
+	min-height: 150px;
+	min-width: 150px;
+	border: 1px solid red;
+}
 	
-	.cover {
-		width: 100%;
-		height: 100%;
-	}
-	#contents {
+.cover {
+	width: 100%;
+	height: 100%;
+}
+#contents {
 	border: 2px solid black;
 	width: 60vw;
 	min-width: 470px;
 	margin: auto;
 	text-align: center;
-	}
+}
 
 #likeBtn, #bookmarkBtn{
 	width:20px;
@@ -114,11 +113,13 @@
 }
 .carousel-item {
    margin: auto;
+   width: 200px;
    text-align: center;
 }
 
 .carousel-inner {
-   width: 100%;
+   width: 500px;
+  margin:auto;
 }
 
 .carousel-item * {
@@ -832,8 +833,8 @@
 			}
 			//디테일뷰 글
 			var textRow = $("<span class='row text '></span>");
-			textRow.append(dto.contents);
-			$(".writerInfo").append(textRow);
+			textRow.html(dto.contents);
+			$(".writerInfo").html(textRow);
 			//디테일뷰 좋아요, 스크랩, 수정, 삭제 버튼
 			//좋아요버튼
 			if(likeCheck==0){
