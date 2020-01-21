@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Alarm">
+
+	<!-- 알림 추가 -->
+	<insert id="insertAlarm_m"> 
+		insert into tb_alarm values(alarm_seq.nextval, 'M', #{sharedSeq}, sysdate, 'N', #{email})
+	</insert>
+
+	<!-- 알림 추가 / 댓글 -->
+	<insert id="alarmReply"> 
+		insert into tb_alarm values(alarm_seq.nextval, 'R', #{sharedSeq}, sysdate, 'N', #{email})
+	</insert>
+	
+	<!-- 알림 추가 / 좋아요 -->
+	<insert id="alarmLike"> 
+		insert into tb_alarm values(alarm_seq.nextval, 'L', #{sharedSeq}, sysdate, 'N', #{email})
+	</insert>
+	
+	<!-- 댓글 게시물 시퀀스로 피드 작성자 찾기 -->
+	<select id="alarmWho" resultType="java.lang.String">
+		select
+		    al.email email
+		from tb_alarm al 
+		full outer join tb_reply re on al.applied_seq = re.reply_seq 
+		full outer join tb_feed fe on fe.feed_seq = re.feed_seq 
+		full outer join tb_like lk on fe.feed_seq = lk.feed_seq 
+		where fe.feed_seq=#{feed_seq}
+	</select>
+	
+	<!-- 알림 추가 / 친구 요청 -->
+	<insert id="alarmFriend"> 
+		insert into tb_alarm values(alarm_seq.nextval, 'F', #{sharedSeq}, sysdate, 'N', #{email})
+	</insert>
+	
+	<!-- 알림 목록 -->
+	<select id="alarmList" resultType="kh.init.alarm.AlarmVO"> 
+		select
+		    alarm_seq, type, applied_seq, reg_date, alarm_check, al.email email, 
+		    re.feed_seq feed_seq_r, reply_seq, re.email email_r, contents, 
+		    friend_seq, from_id, to_id, 
+		    like_seq, lk.feed_seq feed_seq_l, lk.email email_l, 
+		    mem.nickname nickname_m
+		from tb_alarm al
+		full outer join tb_reply re on al.applied_seq = re.reply_seq
+		full outer join tb_friend_request fr on al.applied_seq = fr.friend_seq
+		full outer join tb_like lk on al.applied_seq = lk.like_seq
+		full outer join tb_member mem on lk.email = mem.email
+		where al.email= #{email}
+		order by alarm_seq desc
+	</select>
+	
+	<!-- 읽음 완료로 변경 -->
+	<update id="alarmCheck"> 
+		update tb_alarm set alarm_check='Y' where email= #{email} and alarm_check='N'
+	</update>
+	
+	<!-- 새 알림이 있는지 -->
+	<select id="isNewAlarm" resultType="java.lang.Integer"> 
+		select count(*) from tb_alarm where email=#{email} and alarm_check='N'
+	</select>
+	
+	<!-- 알림 삭제 -->
+	<delete id="deleteAlarm"> 
+		delete from tb_alarm where email= #{email} and alarm_seq=#{alarm_seq}
+	</delete>
+    
+</mapper>

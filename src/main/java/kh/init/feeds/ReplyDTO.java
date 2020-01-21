@@ -5,18 +5,22 @@ import java.sql.Timestamp;
 public class ReplyDTO {
 	private int feed_seq;
 	private int reply_seq;
-	private String nickname;
+	private String email;
+	private int	depth;
+	private int parent;
 	private String contents;
 	private Timestamp write_date;
-	
 	public ReplyDTO() {
 		super();
 	}
-	public ReplyDTO(int feed_seq, int reply_seq, String nickname, String contents, Timestamp write_date) {
+	public ReplyDTO(int feed_seq, int reply_seq, String email, int depth, int parent, String contents,
+			Timestamp write_date) {
 		super();
 		this.feed_seq = feed_seq;
 		this.reply_seq = reply_seq;
-		this.nickname = nickname;
+		this.email = email;
+		this.depth = depth;
+		this.parent = parent;
 		this.contents = contents;
 		this.write_date = write_date;
 	}
@@ -32,11 +36,23 @@ public class ReplyDTO {
 	public void setReply_seq(int reply_seq) {
 		this.reply_seq = reply_seq;
 	}
-	public String getNickname() {
-		return nickname;
+	public String getEmail() {
+		return email;
 	}
-	public void setNickname(String nickname) {
-		this.nickname = nickname;
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public int getDepth() {
+		return depth;
+	}
+	public void setDepth(int depth) {
+		this.depth = depth;
+	}
+	public int getParent() {
+		return parent;
+	}
+	public void setParent(int parent) {
+		this.parent = parent;
 	}
 	public String getContents() {
 		return contents;
@@ -50,6 +66,13 @@ public class ReplyDTO {
 	public void setWrite_date(Timestamp write_date) {
 		this.write_date = write_date;
 	}
+	@Override
+	public String toString() {
+		return "ReplyDTO [feed_seq=" + feed_seq + ", reply_seq=" + reply_seq + ", email=" + email + ", depth=" + depth
+				+ ", parent=" + parent + ", contents=" + contents + ", write_date=" + write_date + "]";
+	}
+	
+	
 	
 	
 }

@@ -10,20 +10,12 @@
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
 <link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-	integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
-	crossorigin="anonymous">
-<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-	integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
-	crossorigin="anonymous"></script>
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
 <script
-	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-	integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-	crossorigin="anonymous"></script>
+	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
 <script
-	src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-	integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-	crossorigin="anonymous"></script>
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
 <script
@@ -32,11 +24,20 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.css"
 	rel="stylesheet">
 <script
-	src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.js"></script>
+	src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.js"></script>	
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 <style>
+.reply {
+	border: 1px solid black;
+}
+.writeReply{
+	border:1px solid black;
+}
+img {
+	width: 300px;
+	height: 300px;
 .dz-default {
 	border: 2px solid black;
 }
@@ -66,35 +67,106 @@
 </style>
 <script>
 	$(function() {
-		$("#replyBtn").on("click", function() {
+		$("#replyBtn").on("click", function() {	        
 			var feed_seq = ${dto.feed_seq};
-			var contents = $("#replyContents").val();
+			var contents = $("#writeReply").html();
 			$.ajax({
 				type : "POST",
 				url : "${pageContext.request.contextPath }/feed/registerReply",
-				data :{feed_seq:feed_seq,contents:contents},
+				data :{feed_seq:feed_seq,contents:contents,nickname:'${loginInfo.nickname}'},
 				dataType:"json"
-			}).done(function(resp) {	
-				var html = "";
-		        console.log(resp.contents);
-		        console.log(resp.nickname);
-		        console.log(resp.reply_seq);
-		        	html += "<div class=\"row replyFeed "+resp.reply_seq+"\">"
-		        	html += "<div class=\"col-2 feed\" style=\"text-align:center\">"+resp.nickname+"님의 댓글</div>"
-		        	html += "<div class=\"col-9 feed\">"
-		        	html += "<div>"+resp.contents+"</div>"
+			}).done(function(resp) {
+					var html = "";	        	
+		        	html += "<div class=\"row replyParent"+resp.reply_seq+"\">"
+		        	html += "<div class=\"col-2 reply replyWriter\" style=\"text-align:center\">"+resp.nickname+"님의 댓글</div>"
+		        	html += "<div class=\"col-9 reply contentsDiv\">"
+		        	html += "<div class=\"replyContents\">"+resp.contents+"</div>"
 		        	html += "</div>"
-			        html += "<div class=\"col-1 feed\">"
+			        html += "<div class=\"col-1 reply replyBtn\">"
 		        	html += "<button type=\"button\" class=\"replyDeleteBtn\" value=\""+resp.reply_seq+"\" style=\"width:30%\">삭제</button>"
-		        	html += "<button type=\"button\" class=\"replyModifyBtn\" style=\"width:30%\">수정</button>"
+		        	html += "<button type=\"button\" class=\"replyModifyBtn\"  value=\""+resp.reply_seq+"\" style=\"width:30%\">수정</button>"
+		        	html += "<button type=\"button\" class=\"replyChildBtn\"  value=\""+resp.reply_seq+"\" style=\"width:30%\">답글</button>"
+		        	html += "<button type=\"button\" class=\"replyModifySuccess\"  value=\""+resp.reply_seq+"\" style=\"width:30%;display:none\">완료</button>"
+		        	html += "<button type=\"button\" class=\"replyModifyCancel\"  value=\""+resp.reply_seq+"\" style=\"width:30%;display:none\">취소</button>"
 				    html += "</div>"
 				    html += "</div>"
 					$(".replyList").append(html);
-				    $("#replyContents").val("");
+				    $("#writeReply").html("");
+
+			})
 		})
-		})
-		$(document).on("click",".replyDeleteBtn" ,function() {
+		//답글 이벤트 ------------------------------------------------------		
+		//답글버튼을 눌렀을 때
+		$(document).on("click",".replyChildBtn", function() {	
+			console.log("?? 답글 클릭 이벤트!!");
 			var reply_seq = $(this).val();
+			var replyWriter = 
+				$("."+reply_seq+"").children(".replyWriter").html().split('님')[0];
+			var html = "";		        	
+        	html += "<div class=\"row childModifiyBox\">"
+        	html += "<div class=\"col-2 reply replyWriter\" style=\"text-align:center\">└──</div>"
+        	html += "<div class=\"col-9 reply contentsDiv\">"
+            html += "<div class=\"replyWriter\" style=\"color:gray;font-size:15px;\">@"+replyWriter+"</div>"
+        	html += "<div class=\"writeReply\" contenteditable=\"true\"></div>"
+        	html += "</div>"
+	        html += "<div class=\"col-1 reply\">"
+        	html += "<button type=\"button\" class=\"childRegisterReply\" value=\""+reply_seq+"\" style=\"width:50%\">등록</button>"
+        	html += "<button type=\"button\" class=\"childCancelBtn\" value=\""+reply_seq+"\" style=\"width:50%\">취소</button>"
+		    html += "</div>"
+		   	html += "</div>"
+			$("."+reply_seq+"").after(html);
+			$('.replyBtn').find('.replyDeleteBtn').show();
+			$('.replyBtn').find('.replyModifyBtn').show();
+			$('.replyBtn').find('.replyModifyCancel').hide();
+			$('.replyBtn').find('.replyModifySuccess').hide();	
+		   	var childReply =  $("."+reply_seq+"").next()[0];
+		   	$(".childModifiyBox").not(childReply).remove();
+			$(".contentsDiv").find('.replyContents').attr({
+				"contenteditable" : "false"
+			});	  
+		})
+		//답글을 취소했을 때
+		$(document).on("click",".childCancelBtn", function() {
+			$(this).closest(".childModifiyBox").remove();
+		})
+		//답글을 등록했을 때
+		$(document).on("click",".childRegisterReply",function(){
+			var reply_seq = $(this).val();      
+			var feed_seq = ${dto.feed_seq};
+			var replyWriter = 
+				$("."+reply_seq+"").children(".replyWriter").html().split('님')[0];
+		   	var div = $(this).closest(".childModifiyBox");
+		   	var childReplyContents = div.find(".writeReply").html();
+			$.ajax({
+				type : "POST",
+				url : "${pageContext.request.contextPath }/feed/registerReply",
+				data : {feed_seq:feed_seq,nickname:'${loginInfo.nickname}',contents:childReplyContents,depth:1,parent:reply_seq},
+				dataType:"json"		
+			}).done(function(resp) {
+				console.log('성공적으로 성공');
+				div.remove();
+				var html = "";		        	
+	        	html += "<div class=\"row childReply\">"
+		        html += "<div class=\"col-1 reply replyWriter\" style=\"text-align:center\">└──</div>"
+	        	html += "<div class=\"col-1 reply replyWriter\" style=\"text-align:center\">"+resp.nickname+"</div>"
+	        	html += "<div class=\"col-9 reply contentsDiv\">"
+	            html += "<div class=\"replyWriter\" style=\"color:gray;font-size:15px;\">@"+resp.replyWriter+"</div>"
+	        	html += "<div class=\"writeReply\">"+resp.contents+"</div>"
+	        	html += "</div>"
+		        html += "<div class=\"col-1 reply\">"
+		       	html += "<button type=\"button\" class=\"replyDeleteBtn\" value=\""+resp.reply_seq+"\" style=\"width:50%\">삭제</button>"
+		       	html += "<button type=\"button\" class=\"replyModifyBtn\"  value=\""+resp.reply_seq+"\" style=\"width:50%\">수정</button>"
+		       	html += "<button type=\"button\" class=\"replyModifySuccess\"  value=\""+resp.reply_seq+"\" style=\"width:50%;display:none\">완료</button>"
+		       	html += "<button type=\"button\" class=\"replyModifyCancel\"  value=\""+resp.reply_seq+"\" style=\"width:50%;display:none\">취소</button>"
+			    html += "</div>"
+			   	html += "</div>"
+				$("."+reply_seq+"").after(html);
+			})
+		})
+		
+		
+		$(document).on("click",".replyDeleteBtn" ,function() {
+			var reply_seq = $(this).val();    
 			console.log(reply_seq + "입니다.");
 			$.ajax({
 				type : "POST",
@@ -102,11 +174,72 @@
 				data : {reply_seq:reply_seq}				
 			}).done(function(resp) {
 				console.log('성공적으로 성공');
+			   	var childReply =  $(this).closest(".childReply").remove();
 				$("."+resp).html("");
 			})
 		})
-		$("#replyModifyBtn").on("click", function() {
-			location.href = "${pageContext.request.contextPath }/feed/";
+		$(document).on("click",".replyModifyBtn", function(){
+			var seq = $(this).val();
+			var originContents = $("."+seq+"").find(".replyContents").html();
+			var contentsDiv = $("."+seq+"").find(".replyContents");
+			var deleteBtn = $("."+seq+"").find(".replyDeleteBtn");
+			var modifyBtn = $("."+seq+"").find(".replyModifyBtn"); 
+			var modifyCancel = $("."+seq+"").find(".replyModifyCancel"); 
+			var modifySuccess = $("."+seq+"").find(".replyModifySuccess");
+			$('.replyBtn').find('.replyDeleteBtn').not(deleteBtn).show();
+			$('.replyBtn').find('.replyModifyBtn').not(modifyBtn).show();
+			$('.replyBtn').find('.replyModifyCancel').not(modifyCancel).hide();
+			$('.replyBtn').find('.replyModifySuccess').not(modifySuccess).hide();
+			$(".childModifiyBox").remove();
+			$('.contentsDiv').find('.replyContents').not(contentsDiv).attr({
+				"contenteditable" : "false"
+			});
+			contentsDiv.html(originContents);
+	 		deleteBtn.hide();
+	 		modifyBtn.hide();
+	 		modifyCancel.show(); 
+	 		modifySuccess.show(); 
+	 		contentsDiv.attr("contenteditable","true");
+	 		contentsDiv.focus();
+	 		modifyCancel.on("click",function(){
+	 			contentsDiv.html(originContents);
+ 				deleteBtn.show();
+ 		 		modifyBtn.show();
+ 		 		modifyCancel.hide(); 
+ 		 		modifySuccess.hide(); 
+ 		 		contentsDiv.attr("contenteditable","false");
+	 		})
+	 		modifySuccess.on("click",function(){
+	 			var modifiedContents = $("."+seq+"").children(".contentsDiv").children(".replyContents").html();
+	 			console.log("원래 댓글 : " + originContents);
+	 			console.log("수정 댓글 : " +modifiedContents);
+	 			
+	 			if(originContents == modifiedContents){
+	 				console.log("원래 댓글 : " + originContents);
+		 			console.log("수정 댓글 : " +modifiedContents);
+	 				deleteBtn.show();
+	 		 		modifyBtn.show();
+	 		 		modifyCancel.hide(); 
+	 		 		modifySuccess.hide(); 
+	 		 		contentsDiv.attr("contenteditable","false");
+	 			}else{
+	 				$.ajax({
+	 					type : "POST",
+	 					url : "${pageContext.request.contextPath }/feed/modifyReply",
+	 					data : {reply_seq:seq,contents:modifiedContents}	
+	 				}).done(function(resp){
+	 					if(resp == 1){
+	 		 				deleteBtn.show();
+	 		 		 		modifyBtn.show();
+	 		 		 		modifyCancel.hide(); 
+	 		 		 		modifySuccess.hide();  
+	 		 		 		contentsDiv.attr("contenteditable","false");
+	 					}else{
+	 						console.log("오류");
+	 					}
+	 				})
+	 			}
+	 		})
 		})
 	})
 </script>
@@ -148,10 +281,12 @@
 								</c:forEach>
 
 								<a class="carousel-control-prev"
-									href="#carouselExampleIndicators" role="button"
-									data-slide="prev"> <span class="carousel-control-prev-icon"
-									aria-hidden="true"></span> <span class="sr-only">Previous</span>
-								</a> <a class="carousel-control-next"
+									href="#carouselExampleIndicators" role="button" data-slide="prev"> 
+									<span class="carousel-control-prev-icon"
+									aria-hidden="true"></span> 
+									<span class="sr-only">Previous</span>
+								</a> 
+								<a class="carousel-control-next"
 									href="#carouselExampleIndicators" role="button"
 									data-slide="next"> <span class="carousel-control-next-icon"
 									aria-hidden="true"></span> <span class="sr-only">Next</span>
@@ -160,96 +295,112 @@
 						</div>
 					</div>
 				</c:when>
+				
+				
+				
+				
+				
 			</c:choose>
 			<div class="row">
-				<div class="col-12 feed"
-					style="height: 200px; border: 2px solid red;">${dto.contents }</div>
-				<div class="col-3 feed btnss">
-					<a
-						href="${pageContext.request.contextPath }/feed/deleteProc?seq=${dto.feed_seq}">
-						<img
-						src="${pageContext.request.contextPath }/resources/images/delete.png">
+				<div class="col-4 reply">${dto.contents }</div>
+				<div class="col-4 reply">
+					<a href="${pageContext.request.contextPath }/feed/deleteProc?feed_seq=${dto.feed_seq}">
+						<img src="${pageContext.request.contextPath }/resources/images/delete.png">
 					</a>
 				</div>
-				<div class="col-3 feed btnss">
-					<a
-						href="${pageContext.request.contextPath }/feed/modifyFeedView?feed_seq=${dto.feed_seq}">
-						<img
-						src="${pageContext.request.contextPath }/resources/images/improvement.png">
+				<div class="col-4 reply">
+					<a href="${pageContext.request.contextPath }/feed/modifyFeedView?feed_seq=${dto.feed_seq}">
+						<img src="${pageContext.request.contextPath }/resources/images/improvement.png">
 					</a>
 				</div>
 				<div class="col-3 feed btnss like">
 					<c:choose>
 						<c:when test="${likeCheck==0 }">
-							<a href="#" id="like" class="${dto.feed_seq }"> <span
-								id="likeImg"><img class="likeBefore" id="likeBtn"
-									src="${pageContext.request.contextPath }/resources/images/likeBefore.png"></span>
-							</a>
+							<a href="#" id="like" class="${dto.feed_seq }"> <span id="likeImg">
+								<img class="likeBefore" id="likeBtn" src="${pageContext.request.contextPath }/resources/images/likeBefore.png">
+							</span></a>
 						</c:when>
 						<c:otherwise>
-							<a href="#" id="like" class="${dto.feed_seq }"> <span
-								id="likeImg"><img class="likeAfter" id="likeBtn"
-									src="${pageContext.request.contextPath }/resources/images/likeAfter.png"></span>
-							</a>
+							<a href="#" id="like" class="${dto.feed_seq }"> <span id="likeImg">
+							<img class="likeAfter" id="likeBtn" src="${pageContext.request.contextPath }/resources/images/likeAfter.png">
+							</span></a>
 						</c:otherwise>
 					</c:choose>
 				</div>
 				<div class="col-3 feed btnss bookmark">
 					<c:choose>
 						<c:when test="${bookmarkCheck==0 }">
-							<a href="#" id="bookmark" class="${dto.feed_seq }"> <span
-								id="bookmarkImg"><img class="bookmarkBefore"
-									id="bookmarkBtn"
-									src="${pageContext.request.contextPath }/resources/images/bookmarkBefore.png"></span>
-							</a>
+							<a href="#" id="bookmark" class="${dto.feed_seq }"> <span id="bookmarkImg">
+								<img class="bookmarkBefore" id="bookmarkBtn" src="${pageContext.request.contextPath }/resources/images/bookmarkBefore.png">
+							</span> </a>
 						</c:when>
 						<c:otherwise>
-							<a href="#" id="bookmark" class="${dto.feed_seq }"> <span
-								id="bookmarkImg"><img class="bookmarkAfter"
-									id="bookmarkBtn"
-									src="${pageContext.request.contextPath }/resources/images/bookmarkAfter.png"></span>
-							</a>
+							<a href="#" id="bookmark" class="${dto.feed_seq }"> <span id="bookmarkImg">
+								<img class="bookmarkAfter" id="bookmarkBtn" src="${pageContext.request.contextPath }/resources/images/bookmarkAfter.png">
+							</span> </a>
 						</c:otherwise>
 					</c:choose>
 				</div>
 			</div>
 		</div>
 		<div class="replyList">
-			<c:forEach items="${replylist }" var="replylist">
-				<div class="row replyFeed ${replylist.reply_seq }">
-					<div class="col-2 feed" style="text-align: center">${replylist.nickname }님의
-						댓글</div>
-					<div class="col-9 feed">
-						<div>${replylist.contents }</div>
-					</div>
-					<div class="col-1 feed">
-						<button type="button" class="replyDeleteBtn"
-							value="${replylist.reply_seq }" style="width: 30%">삭제</button>
-						<button type="button" class="replyModifyBtn" style="width: 30%">수정</button>
-					</div>
-				</div>
-			</c:forEach>
-		</div>
-		<div class="replyWindow">
-			<form method="post" id="registerReply">
+			<c:forEach items="${replyList }" var="replyList">
+				<c:choose>					
+					<c:when test="${replyList.parent == 0}">
+					<div class="row replyParent ${replyList.reply_seq }">
+						<div class="col-2 reply replyWriter" style="text-align: center">${replyList.nickname }님의
+							댓글</div>
+						<div class="col-9 reply contentsDiv">
+							<div class="replyContents" contenteditable="false">${replyList.contents }</div>
+						</div>
+						<div class="col-1 reply replyBtn">
+							<button type="button" class="replyDeleteBtn"
+								value="${parentReply.reply_seq }" style="width: 30%">삭제</button>
+							<button type="button" class="replyModifyBtn" value="${replyList.reply_seq }" style="width: 30%">수정</button>
+							<button type="button" class="replyChildBtn" value="${replyList.reply_seq }" style="width: 30%">답글</button>
+							<button type="button" class="replyModifySuccess"
+								value="${replylist.reply_seq }" style="width: 50%; display:none" >완료</button>
+							<button type="button" class="replyModifyCancel"  value="${replyList.reply_seq }" style="width: 50%; display:none">취소</button>
+						</div>
+					</div>	
+					</c:when>
+						<c:otherwise>
+						<div class="row childReply ${replyList.reply_seq }">
+							<div class="col-1 reply replyWriter" style="text-align: center">└──</div>
+								<div class="col-1 reply replyWriter" style="text-align: center">${replyList.nickname }님의
+								댓글</div>
+							<div class="col-9 reply contentsDiv">
+							<div class="replyContents" contenteditable="false">${replyList.contents }</div>
+							</div>
+							<div class="col-1 reply replyBtn">
+								<button type="button" class="replyDeleteBtn"
+									value="${replyList.reply_seq }" style="width: 30%">삭제</button>
+								<button type="button" class="replyModifyBtn" value="${replyList.reply_seq }" style="width: 30%">수정</button>
+								<button type="button" class="replyModifySuccess"
+									value="${replylist.reply_seq }" style="width: 50%; display:none" >완료</button>
+								<button type="button" class="replyModifyCancel"  value="${replyList.reply_seq }" style="width: 50%; display:none">취소</button>
+							</div>
+						</div>	
+						</c:otherwise>
+					</c:choose>
+				</c:forEach>			
+			</div>
+			<div class="replyWindow">
 				<div class="row">
-					<div class="col-2 feed" style="text-align: center">${dto.nickname }님의
+					<div class="col-2 reply" style="text-align: center; padding:15px;">${loginInfo.nickname}님의  <!-- 나중에 세션값으로 대체! -->
 						댓글</div>
-					<div class="col-9 feed">
-						<input type="text" id="replyContents" name="contents"
-							style="width: 100%">
+					<div class="col-9 reply">
+						<div class="writeReply" id="writeReply" contenteditable="true"></div>
 					</div>
-					<div class="col-1 feed">
+					<div class="col-1 reply">
 						<button type="button" id="replyBtn" style="width: 30%">등록</button>
 					</div>
 				</div>
-			</form>
-		</div>
+			</div>
 	</div>
 
 
-	<script>
-	
+	<script>	
 		$("#like").on("click", function(){
 			var seq = $(this).attr("class");
 			var likeCheck = $("#likeBtn").attr("class");
@@ -292,6 +443,7 @@
 					$("#bookmarkImg").html("<img class=\"bookmarkBefore\" id=\"bookmarkBtn\" src=\"${pageContext.request.contextPath }/resources/images/bookmarkBefore.png\">");
 				})
 			}
+				
 		})
 	</script>
 </body>

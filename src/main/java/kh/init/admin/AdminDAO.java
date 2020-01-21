@@ -127,4 +127,5 @@ public class AdminDAO {
 		map.put("end", end);
 		return jdbc.selectList("Admin.searchForFeedPaging",map);
 	}
+
 }

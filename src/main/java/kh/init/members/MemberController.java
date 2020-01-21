@@ -1,23 +1,21 @@
 package kh.init.members;
 
-import java.util.Date;
-import java.util.Properties;
+import java.util.HashMap;
 
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.http.HttpRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
+
+import com.google.gson.JsonObject;
 
 @RequestMapping("/member")
 @Controller
@@ -28,147 +26,118 @@ public class MemberController {
 	@Autowired
 	private HttpSession session;
 
-	//로그인	
+	// 로그인	유효성 검사
 	@RequestMapping("/loginProc.do")
 	public String toLogin(String email, String pw) {
-		System.out.println("id : " + email);
-		System.out.println("pw : " + pw);
-
-		if(service.isLoginOk(email, pw) > 0) {
-			session.setAttribute("loginInfo", email);
-			return "main";
+		if(email != null && pw != null) {
+			System.out.println("로그인 시도 : " + email);		
+			if(service.isLoginOk(email, pw) > 0) { // 로그인 허가
+				session.setAttribute("loginInfo", service.getMemberDTO(email)); // 세션 로그인정보 담기
+				return "redirect:/feed/getFriendFeed";
+			}else {
+				return "main";
+			}
 		}else {
-			return "error";
+			System.out.println("'email input' or 'pw input' is detected as null.");
+			return "main";
 		}
 	}
 	
-	@RequestMapping("/findPw.do")
-	public String toFindPw() {
-		return "members/findPw";
-	}
-	
-	@RequestMapping("/findPwProc.do")
-	public String toFindPwProc(String email) {
+	// 로그인	유효성 검사
+	@RequestMapping(value="/kakaoLoginProc", produces="text/html;charset=UTF-8")
+	@ResponseBody
+	public String toKaKaoLogin(String access_token) {		
+		session.setAttribute("accessToken", access_token); //access_token 세션 저장
+		HashMap<String, Object> userInfo = service.getKakaoInfo(access_token); //access_token 이용해 정보 얻기
+		session.setAttribute("loginInfo", service.getMemberDTO((String) userInfo.get("user_id"))); //카카오 사용자 loginInfo 세션 셋팅
 		
-		String host     = "smtp.naver.com";
-	    String user   = "init_manager";
-	    String password  = "initmanager6";
-	    String to     = email;
-	    
-		Properties props = new Properties();
-		props.put("mail.smtp.host", host);
-		props.put("mail.smtp.auth", "true");
-		Session session = Session.getInstance(props, new javax.mail.Authenticator() {
-			protected PasswordAuthentication getPasswordAuthentication() {
-				return new PasswordAuthentication(user, password);
-			}
-		});
-		    try {
-		        MimeMessage msg = new MimeMessage(session);
-		        msg.setFrom(new InternetAddress(user));
-		        msg.setRecipients(Message.RecipientType.TO,
-		                          to);
-		        msg.setSubject("비밀번호 찾기 테스트");
-		        msg.setText("비밀번호 찾자찾자\n");
-		        Transport.send(msg);
-		        System.out.println("message sent successfully...");
-		    } catch (MessagingException mex) {
-		        System.out.println("send failed, exception: " + mex);
-		    }
-		    
-		   return "main"; 
-//		    Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
-//		     protected PasswordAuthentication getPasswordAuthentication() {
-//		      return new PasswordAuthentication(user, password);
-//		     }
-//		    });
-//
-//		    // Compose the message
-//		    try {
-//		     MimeMessage message = new MimeMessage(session);
-//		     message.setFrom(new InternetAddress(user));
-//		     message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
-//
-//		     // Subject
-//		     message.setSubject("[Subject] Java Mail Test");
-//		     
-//		     // Text
-//		     message.setText("Simple mail test..");
-//
-//		     // send the message
-//		     Transport.send(message);
-//		     System.out.println("message sent successfully...");
-//
-//		    } catch (MessagingException e) {
-//		     e.printStackTrace();
-//		    }
+		JsonObject obj = new JsonObject();
+		obj.addProperty("result", "loginSuccess");
+		return obj.toString();
 	}
-	
-	@RequestMapping("/goMyInfo")
+
+	// 로그아웃 세션 삭제
+	@RequestMapping("/logout.do")
+	public String toLogout() {
+		if(session.getAttribute("accessToken") != null) {
+			session.removeAttribute("accessToken");
+			System.out.println("카카오 세션 삭제 완료");
+		}
+		System.out.println("로그아웃 > " + session.getAttribute("loginInfo").toString() + " 세션 삭제");
+		session.removeAttribute("loginInfo");
+		System.out.println("로그아웃 실시 > 로그인 세션 삭제 완료");
+		return "redirect:/main";
+	}
+
+	// 비밀번호 찾기
+	@RequestMapping("/findPwProc.do")
+	@ResponseBody
+	public String toFindPwProc(String email) {
+		System.out.println("사용자 이메일  : " + email);
+		JsonObject obj = new JsonObject();
+		
+		if(service.findPw(email) == "invalid") {
+			obj.addProperty("result", "invalid");
+		}else {
+			obj.addProperty("result", "success");
+			obj.addProperty("email", email);
+		}
+		return obj.toString();		    
+	}
+
+	@RequestMapping("/goMyInfo")  //내 정보 (편집) 가기
 	public String goMyInfo(String email, Model model) {
 		System.out.println("개인 정보 CON 도착.");
-		try {
-		MemberDTO dto = service.getMyPageService("kks@naver.com");
-		System.out.println(dto.getEmail());
-		System.out.println(dto.getName());
-		String poption1 = dto.getPhone().substring(0, 2);
-		String poption2 = dto.getPhone().substring(3, 7);
-		String poption3 = dto.getPhone().substring(7, 11);
-		String boption1 = dto.getBirth().substring(0, 2);
-		String boption2 = dto.getBirth().substring(3, 4);
-		String boption3 = dto.getBirth().substring(5, 6);
-		model.addAttribute("dto", dto);
-		model.addAttribute("poption1", poption1);
-		model.addAttribute("poption2", poption2);
-		model.addAttribute("poption3", poption3);
-		model.addAttribute("boption1", boption1);
-		model.addAttribute("boption2", boption2);
-		model.addAttribute("boption3", boption3);
-		return "members/myInformation";
+		MemberDTO mDto = (MemberDTO)session.getAttribute("loginInfo");
+		try {			
+			MemberDTO dto = service.getMyPageService(mDto.getEmail());
+			System.out.println(dto.getEmail());
+			System.out.println(dto.getName());
+			String poption1 = dto.getPhone().substring(0, 4);
+			String poption2 = dto.getPhone().substring(3, 7);
+			String poption3 = dto.getPhone().substring(7, 11);
+			String boption1 = dto.getBirth().substring(0, 4);
+			String boption2 = dto.getBirth().substring(5, 6);
+			String boption3 = dto.getBirth().substring(6, 8);
+			model.addAttribute("dto", dto);
+			model.addAttribute("poption1", poption1);
+			model.addAttribute("poption2", poption2);
+			model.addAttribute("poption3", poption3);
+			model.addAttribute("boption1", boption1);
+			model.addAttribute("boption2", boption2);
+			model.addAttribute("boption3", boption3);
+			return "members/myInformation";
 		}catch(Exception e) {
 			e.printStackTrace();
 			return "error";
 		}
 	}
-     
-	@RequestMapping("/goMyProfile")
+
+	@RequestMapping("/goMyProfile") //내 프로필(편집) 가기
 	public String goMyProfile(String email, Model model) {
 		System.out.println("개인 프로필 수정 CON 도착.");
 		try {
-		MemberDTO dto = service.getMyPageService("kks@naver.com");
-		System.out.println(dto.getProfile_img());
-		System.out.println(dto.getNickname());
-		System.out.println(dto.getProfile_msg());
-		
-		model.addAttribute("dto", dto);
-		
-		return "members/myProfile";
+			MemberDTO mDto = (MemberDTO)session.getAttribute("loginInfo");
+			MemberDTO dto = service.getMyPageService(mDto.getEmail());
+			System.out.println(dto.getProfile_img());
+			System.out.println(dto.getNickname());
+			System.out.println(dto.getProfile_msg());
+
+			model.addAttribute("dto", dto);
+
+			return "members/myProfile";
 		}catch(Exception e) {
 			e.printStackTrace();
 			return "error";
 		}
 	}
-	
-	@RequestMapping(value = "/getMyPage", produces ="text/html; charset=utf-8")
-	public String getMyPage() {
-		System.out.println("마이페이지 CON 도착.");
-		ModelAndView mav = new ModelAndView();
-		try {
-			MemberDTO dto = service.getMyPageService((String)session.getAttribute("loginInfo"));
 
-			mav.addObject("dto",dto);
-
-			return "good";
-		}catch(Exception e) {
-			e.printStackTrace();
-			return "job";
-		}
-	}
-	@RequestMapping("/withdrawMem")
+	@RequestMapping("/withdrawMem") //회원 탈퇴 하기
 	public String getout() {
 		System.out.println("회원 탈퇴 CON 도착.");
 		try {
-			int result = service.withdrawMemService("kks@naver.com");
+			MemberDTO mDto = (MemberDTO)session.getAttribute("loginInfo");
+			int result = service.withdrawMemService(mDto.getEmail());
 			System.out.println(result);
 			if(result> 0) {
 				session.invalidate();
@@ -185,18 +154,21 @@ public class MemberController {
 			System.out.println("입력실패.");
 			return "home";
 		}
-
-
 	}
 
-	@RequestMapping("/changeMyInfo")
+	@RequestMapping("/changeMyInfo") //회원 정보 수정하기
 	public String changeInfo(MemberDTO dto) {
 		System.out.println("회원 정보 수정 CON 도착.");
 		try {
-			
-			
-			int result = service.changeMyInfoService("kks@naver.com", dto);
-			if(result> 0) {
+			int result = 0;
+			MemberDTO mDto = (MemberDTO)session.getAttribute("loginInfo");
+			if(mDto.getEmail() != null) {
+				result = service.changeMyInfoService(mDto.getEmail(), dto);
+			}else {
+				result = 0;
+			}
+
+			if(result > 0) {
 
 				System.out.println("정보변경에 성공하셨슴당.");
 				return "home";
@@ -204,28 +176,27 @@ public class MemberController {
 				System.out.println("정보변경에 실패하셨슴당.");
 				return "error";
 			}
-
-
 		}catch(Exception e) {
 			e.printStackTrace();
 			System.out.println("입력실패.");
 			return "redirect:home";
 		}
 	} 
-	
-	@RequestMapping("/changeProfile")
+
+	@RequestMapping("/changeProfile") //프로필 바꿔버리기
 	public String changeMyProfile(MemberDTO dto, MultipartFile profileImg) {
 		System.out.println("회원 정보 수정 CON 도착.");
 		String path = session.getServletContext().getRealPath("files");
+		MemberDTO mDto = (MemberDTO)session.getAttribute("loginInfo");
 		int result = 0;
 		try {
 			if(profileImg.getOriginalFilename() == "") {
-				result = service.changeMyProfileService("kks@naver.com", dto,null,path);
+				result = service.changeMyProfileService(mDto.getEmail(), dto,null,path);
 			}else {
-				result = service.changeMyProfileService("kks@naver.com", dto,profileImg,path);
+				result = service.changeMyProfileService(mDto.getEmail(), dto,profileImg,path);
 			}
-			
-			
+
+
 			if(result> 0) {
 
 				System.out.println("정보변경에 성공하셨슴당.");
@@ -241,5 +212,27 @@ public class MemberController {
 			System.out.println("입력실패.");
 			return "redirect:home";
 		}
-	} 
+	}
+
+	@RequestMapping("/identifyMemPw")
+	@ResponseBody
+	public String identifyMemPw(String pw) {
+		System.out.println("현재 비밀번호 확인 CON 도착"); 
+		System.out.println("현재 적은 비번은 "+pw);
+		try {
+			MemberDTO mDto = (MemberDTO)session.getAttribute("loginInfo");
+			MemberDTO dto = service.identifyMemPwService(mDto.getEmail());
+			System.out.println("비번은 "+dto.getPw());
+			if(pw.equalsIgnoreCase(dto.getPw())) {
+				return "yes";
+			}else {
+				return "no";
+			}
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return "error";
+		}
+	}
 }

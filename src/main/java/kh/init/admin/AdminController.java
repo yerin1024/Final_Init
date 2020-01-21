@@ -1,6 +1,9 @@
 package kh.init.admin;
 
+import java.sql.Timestamp;
 import java.util.List;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,6 +20,9 @@ import kh.init.members.MemberDTO;
 public class AdminController {
 	@Autowired
 	private AdminService aService;
+	@Autowired
+	private HttpSession session;
+
 
 	@RequestMapping("adminHome.do")
 	public String adminHome() throws Exception {
@@ -191,6 +197,91 @@ public class AdminController {
 		} else {
 			return "deleteFeed fail";
 		}
-	} 
+	}
+	
+	//신고
+	@RequestMapping(value = "/declareReasonProc.do", produces="text/html; charset=UTF-8")
+	@ResponseBody
+	public String declareReasonProc(String dr_seq, String declare_reason, Timestamp decalre_date) throws Exception {
+		System.out.println("declareResonProc 도착!");
+		System.out.println("dr_seq : "  + dr_seq);
+		int feed_seq = Integer.parseInt(dr_seq.substring(dr_seq.lastIndexOf("_") + 1));
+		System.out.println("feed_seq : " +feed_seq);
+		String from_id = ((MemberDTO)session.getAttribute("loginInfo")).getEmail();
+		System.out.println("from_id : " + from_id);
+		System.out.println("declare_reason : " + declare_reason);
+		String to_id = aService.getReportedEmail(feed_seq);
+		System.out.println("to_id : " + to_id);
+		DeclareDTO ddto = new DeclareDTO(feed_seq, to_id, declare_reason, from_id, null, null);
+		try {
+			aService.declare(ddto);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return "declare";
+	}
+	//신고관리
+	@RequestMapping("/declarationList.do")
+	public String declarationList(Model mod, String page) throws Exception {
+		System.out.println("declaration으로 도착!");
+		System.out.println("현재 넘어온 페이지 값  : " + page);
+		int cpage = 1;
+		if(page != null) {
+			cpage = Integer.parseInt(page); 
+		}
 
+		int start = cpage * Utils.recordCountPerPage - (Utils.recordCountPerPage-1);
+		int end =  cpage * Utils.recordCountPerPage;
+		String pageNavi = aService.getPageNaviDeclare(cpage);
+		if(pageNavi.contains("redirect:declarationList.do?page=")) {
+			return pageNavi;
+		}
+		System.out.println(pageNavi);
+		mod.addAttribute("pageNavi", pageNavi);
+		List<DeclareDTO> declarationList = aService.selectDeclareByPage(start, end);
+		System.out.println("selectDeclareByPage다녀옴");
+		for(DeclareDTO tmp : declarationList) {
+			System.out.println(tmp.getFrom_id());
+		}
+		mod.addAttribute("declarationList", declarationList );
+		return "admin/manageDeclaration";
+	}
+	@RequestMapping("searchForDeclare.do")
+	public String searchForDeclare(String searchTag, String search, Model mod, String page) throws Exception {
+		System.out.println("searchTag : " +searchTag);
+		System.out.println("search : " +search);
+		int cpage = 1;
+		if(page != null) {
+			cpage = Integer.parseInt(page); 
+		}
+		int start = cpage * Utils.recordCountPerPage - (Utils.recordCountPerPage-1);
+		int end =  cpage * Utils.recordCountPerPage;
+		String pageNavi = aService.getPageNaviSearchDeclare(cpage, searchTag, search);    
+		if(pageNavi.contains("redirect:searchForDeclare.do?page=")) {
+			return pageNavi;
+		}
+		System.out.println(pageNavi);
+		mod.addAttribute("pageNavi", pageNavi);
+		List<DeclareDTO> DeclarationList = aService.searchForDeclarePaging(searchTag, search, start, end);
+		for(DeclareDTO tmp : DeclarationList) {
+			System.out.println(tmp.toString());
+		}
+		mod.addAttribute("declarationList", DeclarationList);
+		return "admin/manageDeclaration";
+	}
+	//신고게시물 삭제 및 블랙 경고
+	@RequestMapping("deleteDeclareFeedProc.do")
+	@ResponseBody
+	public String deleteDeclareFeedProc(String feed) throws Exception {
+		System.out.println("신고게시물 삭제 및 블랙 경고 controller");
+		int feed_seq = Integer.parseInt(feed);
+		System.out.println("controller " + feed_seq);
+		int deleteR = aService.deleteDeclareFeed(feed_seq);
+		System.out.println("deleteR : " + deleteR);
+		if (deleteR > 0) {
+			return feed_seq+"";
+		} else {
+			return "deleteFeed fail";
+		}
+	}
 }

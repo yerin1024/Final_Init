@@ -1,0 +1,157 @@
+html, body {
+	padding: 0px;
+	margin: 0px;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+.navBar {
+	padding: 0px;
+	position: fixed;
+	z-index: 999999999999;
+	width: 100%;
+}
+
+.header {
+	margin: 0px
+}
+
+.nav-left, .nav-center {
+	float: left
+}
+
+#logoA{
+	color: white;  
+	width: 150px;
+	line-height: 60px;
+	font-size: 35px;
+	font-weight: bold;
+	text-transform: uppercase;
+	text-align: center;
+	transition: 1.5s;
+	padding-top: 0px;
+}
+#total_feed, #my_feed, #logout {
+	width: 36px;
+	height: 36px;
+	line-height: 20px;
+}
+
+#notification, #msg {
+	width: 26px;
+	height: 26px;
+	line-height: 20px;
+}
+
+.header {
+	flex: 1 1 auto;
+	padding: 3px;
+	background-size: 200% auto;
+}
+
+.header:hover {
+	background-position: right center;
+	/* change the direction of the change here */
+}
+
+.header {
+	background-image: linear-gradient(to right, #1D4E89 0%, #ffecd2 51%, #1D4E89 100%);
+}
+
+.inner {
+	max-width: 1400px;
+	margin: auto;
+}
+/* All Device */
+/* 모든 해상도를 위한 공통 코드를 작성한다. 모든 해상도에서 이 코드가 실행됨. */
+
+/* Mobile Device */
+/* 768px 미만 해상도의 모바일 기기를 위한 코드를 작성한다. 모든 해상도에서 이 코드가 실행됨. 미디어 쿼리를 지원하지 않는 모바일 기기를 위해 미디어 쿼리 구문을 사용하지 않는다. */
+
+/* Tablet &amp; Desktop Device */
+@media all and (min-width:768px) {
+	/*     사용자 해상도가 768px 이상일 때 이 코드가 실행됨. 테블릿과 데스크톱의 공통 코드를 작성한다. */
+	#wrapper {
+		width: 720px;
+	}
+	.media {
+		width: 720px;
+	}
+}
+
+@media all and (max-width:500px) {
+	/*     사용자 해상도가 768px 이하일 때 이 코드가 실행됨. 테블릿과 데스크톱의 공통 코드를 작성한다. */
+	#wrapper {
+		max-width: 720px;
+	}
+	.media {
+		max-width: 720px;
+	}
+	/* #total_feed, #my_feed, #logout {
+		width: 25px;
+		height: 25px
+	}
+	#notification, #msg {
+		width: 20px;
+		height: 20px;
+	} */
+	#logoA{
+		width: 140px;
+		line-height: 55px;
+		font-size: 30px;
+		font-weight: bold;
+		text-transform: uppercase;
+		text-align: center;
+		transition: 1.5s;
+		padding-top: 0px;
+	}
+	/* .pick{
+		padding-top:13px;
+	} */
+}
+
+/* Tablet Device */
+@media all and (min-width:500px) and (max-width:768px) {
+	/*     사용자 해상도가 768px 이상이고 1024px 이하일 때 이 코드가 실행됨. 아이패드 또는 비교적 작은 해상도의 랩탑이나 데스크톱에 대응하는 코드를 작성한다. */
+	#wrapper {
+		max-width: 720px;
+	}
+	.media {
+		max-width: 720px;
+	}
+}
+
+/* Desktop Device */
+@media all and (min-width:1025px) {
+	/*     사용자 해상도가 1025px 이상일 때 이 코드가 실행됨. 1025px 이상의 랩탑 또는 데스크톱에 대응하는 코드를 작성한다. */
+	#wrapper {
+		max-width: 720px;
+	}
+	.media {
+		max-width: 720px;
+	}
+}
+
+/* ------------------------------------------- */
+.nav-link {
+	position: relative;
+}
+
+#redCircle1 {
+	position: absolute;
+	top: 13px;
+	right: 9px;
+}
+
+#redCircle2 {
+	position: absolute;
+	top: 14px;
+	right: 2px;
+}
+
+#notification{
+	z-index:99;
+}
+
