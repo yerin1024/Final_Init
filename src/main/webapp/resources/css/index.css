@@ -1,0 +1,19 @@
+@charset "UTF-8";
+
+@media ( min-width : 800px) and (max-width: 850px) {
+	.navbar:not (.top-nav-collapse ) {
+		background: #1C2331 !important;
+	}
+}
+
+.dot {
+	height: 100px;
+	width: 100px;
+	background-color: #bbb;
+	border-radius: 50%;
+}
+
+.profile {
+	border-radius: 50%;
+	width: 100%;
+}

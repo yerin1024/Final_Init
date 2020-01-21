@@ -164,15 +164,69 @@ public class MemberService {
 				return new PasswordAuthentication(manager, password);
 			}
 		});
+		String contents= "<!DOCTYPE html>\r\n" + 
+				"<html lang='en'>\r\n" + 
+				"<head>\r\n" + 
+				"    <meta charset='UTF-8'>\r\n" + 
+				"    <meta name='viewport' content='width=device-width, initial-scale=1.0'>\r\n" + 
+				"    <meta http-equiv='X-UA-Compatible' content='ie=edge'>\r\n" + 
+				"    <title>Document</title>\r\n" + 
+				"    <link href='https://fonts.googleapis.com/css?family=Noto+Sans+KR&display=swap' rel='stylesheet'>\r\n" + 
+				"</head>\r\n" + 
+				"<style>\r\n" + 
+				"*{\r\n" + 
+				"    font-family: 'Noto Sans KR'\r\n" + 
+				"}\r\n" + 
+				".pwDiv{\r\n" + 
+				"    border:1px solid grey;\r\n" + 
+				"    border-radius: 10px;\r\n" + 
+				"    margin:15px;\r\n" + 
+				"    padding: 10px;\r\n" + 
+				"}\r\n" + 
+				"a{\r\n" + 
+				"    text-decoration-line: none;\r\n" + 
+				"}\r\n" + 
+				"</style>\r\n" + 
+				"<body>\r\n" + 
+				"    <div style='width:100%'>\r\n" + 
+				"        <div style='max-width:600px;margin:0 auto;font-family:Roboto,Arial,Helvetica,sans-serif;font-size:16px;line-height:1.5;border:1px solid #e2e2e2'>\r\n" + 
+				"          <div align='center' style='padding:30px;background-color:#34558b;' class='logo-area'>\r\n" + 
+				"            <p style='font-size:80px;color:white;font-weight:bold;margin:0px;letter-spacing:10px;'>In;t</p>\r\n" + 
+				"          </div>\r\n" + 
+				"          <div style='max-width:90%;margin-left:auto;margin-right:auto;margin-top:40px' class='nomal-paragraph'>\r\n" + 
+				"            <div style='margin-top:20px'>\r\n" + 
+				"                <p style='text-align: center;font-size:20px;'><strong>[Init] 임시 비밀번호 발급 안내</strong></p>\r\n" + 
+				"                <hr style='border:0;border-top:solid 1px #e2e2e2;width:90%;margin:30px auto' class='horizontal-line'>\r\n" + 
+				"                <br>" + user + "님 Init 임시 비밀번호가 발급되었습니다.\r\n" + 
+				"                <div class='pwDiv'>\r\n" + 
+				"                    <p style='height:30px;line-height:30px;font-weight:bold;'> 임시 비밀번호 : " + ranChar + "</p>\r\n" + 
+				"                </div>\r\n" + 
+				"                <br>임시 비밀번호로 로그인 후 반드시 비밀번호를 재설정하여 사용하시기 바랍니다.\r\n" + 
+				"                <br>비밀번호 재설정은 <strong>'MyFeed > 회원정보 > 비밀번호 변경'</strong> 에서 가능합니다.\r\n" + 
+				"            </div>\r\n" + 
+				"          </div>\r\n" + 
+				"          <hr style='border:0;border-top:solid 1px #e2e2e2;width:90%;margin:30px auto' class='horizontal-line'>\r\n" + 
+				"          <div style='display:flex;max-width:90%;margin-left:auto;margin-right:auto;margin-top:40px' class='nomal-paragraph'>\r\n" + 
+				"            <div style='margin-top:20px;width:20%;border-right:1px solid grey;'>\r\n" + 
+				"                 <img src='/resources/images/logo.png' style='width:80%;'>\r\n" + 
+				"                </div>\r\n" + 
+				"            <div style='margin-left:22px;margin-top:20px;width:80%;'>\r\n" + 
+				"            본 메일은 사용자 요청에 의한 발신전용 메일이오니 문의사항이 있으시면 <a href='/localhost/main' style='font-weight:600;color:#34558b;'>고객센터</a>로 문의하여 주시기 바랍니다.\r\n" + 
+				"            </div>\r\n" + 
+				"          </div>\r\n" + 
+				"          <div align='center' style='padding-top:40px;padding-right:10px;padding-bottom:10px;padding-left:10px;margin-bottom:30px;'>\r\n" + 
+				"            <a href='/localhost/main' style='display: inline-block; color: rgb(255, 255, 255); background-color: rgb(0, 0, 0); border-radius: 60px; width: auto; border-width: 1px; border-style: solid; border-color: rgb(0, 0, 0); padding: 10px 25px;' target='_blank'>Init 바로가기</a>\r\n" + 
+				"          </div>      \r\n" + 
+				"        </div>\r\n" + 
+				"      </div>\r\n" + 
+				"</body>\r\n" + 
+				"</html>";
 		try {
 			MimeMessage msg = new MimeMessage(session);
 			msg.setFrom(new InternetAddress(manager));
 			msg.setRecipients(Message.RecipientType.TO, to);
 			msg.setSubject("[Init] 임시 비밀번호 발급 안내"); // 메일 타이틀
-			msg.setContent(user + "님 Init 임시 비밀번호가 발급되었습니다." // 메일 내용
-					+ "아래의 임시 비밀번호로 로그인 하신 후 반드시 비밀번호를 재설정하시기 바랍니다."
-					+ "비밀번호 재설정은 MyFeed > 보안 설정 > 비민번호 변경 에서 가능합니다."
-					+ "임시 비밀번호 : " + ranChar, "text/html");
+			msg.setContent(contents, "text/html;charset=UTF-8");
 			Transport.send(msg); // 메일 전송
 		} catch (MessagingException mex) {
 			System.out.println("send failed, exception: " + mex);

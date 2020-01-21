@@ -5,9 +5,13 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+
 <title>Init</title>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 <link href="https://fonts.googleapis.com/css?family=Do+Hyeon|Nanum+Gothic+Coding|Noto+Sans+KR|Noto+Serif+KR&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/resources/css/index.css">
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
@@ -30,7 +34,7 @@
     .modal-body {
         padding: 100px;
     }
-
+    
     #indexModalTitle {
         font-size: 50px;
         font-family: 'Noto Sans KR', sans-serif;
@@ -46,21 +50,21 @@
         font-family: 'Noto Sans KR', sans-serif;
     }
 
-    .tab1_body .userInput {
-        width: 400px;
-        height: 50px;
-        padding: 5px;
-        margin: 5px;
-        border-radius: 8px;
-        font-size: 15px;
-    }
+/*     .tab1_body .userInput { */
+/*         width: 300px; */
+/*         height: 50px; */
+/* /*         padding: 5px; */ */
+/* /*         margin: 5px; */ */
+/* /*         border-radius: 8px; */ */
+/* /*         font-size: 15px; */ */
+/*     } */
 
     .userInput:focus {
         outline: none;
     }
 
     #tab1_loginBtn {
-        width: 400px;
+        width: 350px;
         height: 50px;
         padding: 5px;
         margin: 10px;
@@ -72,7 +76,7 @@
     }
     
     #tab1_kakaoLoginBtn {
-    	width: 400px;
+    	width: 350px;
         height: 50px;
         margin: 10px;
         border: none;
@@ -174,17 +178,88 @@
         /* border: 1px thin gray; */
         font-size: 11px;
         overflow:hidden;
-    }
-
+    }    
+   	
+   	.input_centered {
+	  width: 350px;
+	  height: 80px;
+	  margin: auto;
+	  position: absolute;
+	  top: 0;
+	  bottom: 0;
+	  left: 0;
+	  right: 0;
+	}
+	
+	.input_group {
+	  width: 100%;
+	  height: 80px;
+	  overflow: hidden;
+	  position: relative; 
+	}
+	
+	.input_group label {
+	  position: absolute;
+	  top: 36.6666666667px;
+	  font: 400 36.6666666667px Roboto;
+	  cursor: text;
+	  transition: .25s ease;
+	}
+	
+	.input_group input {
+	  display: block;
+	  width: 100%;
+	  padding-top: 36.6666666667px;
+	  border: none;
+	  border-radius: 0;
+	  color: black;
+/* 	  font-size: 36.6666666667px; */
+	  transition: .3s ease;
+	}
+	.input_group input:valid ~ label {
+	  top: 0;
+	  font: 700 22px Roboto;
+	}
+	.input_group input:focus {
+	  outline: none;
+	}
+	.input_group input:focus ~ label {
+	  top: 0;
+	  font: 700 22px Roboto;
+	  color: #2196f3;
+	}
+	.input_group input:focus ~ .bar:before {
+	  transform: translateX(0);
+	}
+	.input_group input:-webkit-autofill {
+	  -webkit-text-fill-color: white !important;
+	}
+	
+	.bar {
+	  content: '';
+	  width: 550px;
+	  height: 3.6666666667px;
+	  transition: .3s ease;
+	  position: relative;
+	}
+	.bar:before {
+	  content: '';
+	  position: absolute;
+	  width: 100%;
+	  height: 150%;
+	  background: #2196f3;
+	  transform: translateX(-100%);
+	}
+	
+	::selection {
+/* 	  background: rgba(33, 150, 243, 0.3); */
+	}
+   	
+	
 </style>
 
 <body>
-    <!-- modal popup 임시버튼 -->
-    <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#indexModal"
-        style="margin:100px;width:200px;height:200px;">
-        Modal
-    </button> -->
-
+ <jsp:include page="/resources/script/index.jsp" flush="true"/>
     <!-- Modal start -->
     <div class="modal fade bd-example-modal-lg" id="indexModal" tabindex="-1" role="dialog"
         aria-labelledby="eindexModalTitle" aria-hidden="true">
@@ -205,9 +280,20 @@
                                 <div class="tab1_container">
                                     <form action="${pageContext.request.contextPath}/member/loginProc.do" method="post" id="tab1_loginForm">
                                         <div class="tab1_loginContainer">
-                                            <div class="tab1_body">
-                                                <input type="text" class="userInput" id="tab1_email" name="email" placeholder="아이디 입력"><br>
-                                                <input type="password" class="userInput" autocomplete="off" id="tab1_pw" name="pw" placeholder="비밀번호 입력"><br>
+                                            <div class="tab1_body">  
+                                                <div class="input_centered">
+                                                	<div class="input_group">
+    												  	<input type="text" class="form__field userInput" id="tab1_email" name="email" required/>
+												  		<label for="tab1_email" class="form__label">EMAIL</label>  
+												  		<p class="bar"></p> 
+                                                	</div>
+                                                	<div class="input_group">
+														<input type="password" class="form__field userInput" id="tab1_pw" name="pw" required/>
+													  	<label for="tab1_pw" class="form__label">PW</label>  
+													  	<p class="bar"></p> 
+                                                	</div>
+                                                </div>	
+														
                                                 <button type="button" id="tab1_loginBtn" onclick="toLogin();">로그인</button><br>
                                                 <img src="resources/images/kakaoLogin_btn.png" id="tab1_kakaoLoginBtn"><br>
 	                                            <div class="saveId">
@@ -442,23 +528,18 @@
         
         window.onload = function () {
         	Kakao.init("798b7f7028249ef2a4388b4944cf88ce");
-        	
-            $("#indexModal").modal({backdrop: 'static', keyboard: false, show: true});//일단 예제로 띄우기
-            clearInput(userInput, userInput.length);           
-            
-            var url = document.location.toString();
-            	$('#main').tab('show'); //예제 연습                   	
-            	toCheckCookie();                	
-        		          
+        	              
+			doc.getElementById("popupIndexModal").addEventListener("click", function(){
+				$("#indexModal").modal({backdrop: 'static', keyboard: false});
+				clearInput(userInput, userInput.length);
+				doc.getElementById("mainTab").click();
+				toCheckCookie();             	
+            })      
         }    
         //tab1_로그인 start
         var login = doc.getElementById("tab1_loginBtn");
-//         var email = doc.getElementById("tab1_email");
-//         var pw = doc.getElementById("tab1_pw");
         
         function toLogin() { //로그인 시도
-//         	var email = doc.getElementById("tab1_email");
-//             var pw = doc.getElementById("tab1_pw");
         	if(doc.getElementById("tab1_email").value == ""){
         		alert("이메일을 입력해 주세요.");
         		return;
@@ -500,7 +581,6 @@
         //아이디 저장 쿠키 연관 함수 start
         var exdate = new Date();
      
-
         function toCheckCbox() {
             if (saveIdCheck.checked == true) {
                 exdate.setDate(exdate.getDate() + 30);
