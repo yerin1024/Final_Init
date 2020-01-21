@@ -36,6 +36,18 @@ public class FeedDAO {
 		result.put("rnum", rnum);
 		return result;
 	}
+	public Map<String, Object> getMyScrapFeed(String email, int startNum, int endNum) throws Exception{
+		Map<String, String> param = new HashMap<>();
+		param.put("email", email);
+		param.put("startNum", startNum+"");
+		param.put("endNum", endNum+"");
+		List<FeedDTO> list = jdbc.selectList("Feed.getMyScrapFeed", param);
+		List<Integer> rnum = jdbc.selectList("Feed.getMyScrapFeedRnum", param);
+		Map<String, Object> result = new HashMap<>();
+		result.put("list", list);
+		result.put("rnum", rnum);
+		return result;
+	}
 	
 	public int getMyFeedCount(String email) throws Exception{
 		int count = jdbc.selectOne("Feed.getMyFeedCount", email);
