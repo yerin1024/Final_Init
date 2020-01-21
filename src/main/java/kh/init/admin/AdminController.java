@@ -43,6 +43,7 @@ public class AdminController {
 		mod.addAttribute("memberList", memberList);
 		return "admin/manageMember";
 	}
+	//멤버 검색 기능
 	@RequestMapping("search.do")
 	public String searchProc(String searchTag, String search, Model mod, String page) throws Exception {
 		int cpage = 1;
@@ -60,6 +61,7 @@ public class AdminController {
 		mod.addAttribute("memberList", searchList);
 		return "admin/manageMember";
 	}
+	//멤버를 블랙멤버로 
 	@RequestMapping("blackProc.do")
 	@ResponseBody
 	public String blackProc(String blackMember) throws Exception {
@@ -91,6 +93,7 @@ public class AdminController {
 		mod.addAttribute("blackList", blackList);
 		return "admin/manageBlack";
 	}
+	//블랙 검색 기능
 	@RequestMapping("searchForBlack.do")
 	public String searchForBlack(String searchTag, String search, Model mod, String page) throws Exception {
 		int cpage = 1;
@@ -108,7 +111,7 @@ public class AdminController {
 		mod.addAttribute("blackList",searchList);
 		return "admin/manageBlack";
 	}
-
+	//블랙멤버 탈퇴
 	@RequestMapping("withdrawalProc.do")
 	@ResponseBody
 	public String withdrawalProc(String withdrawal) throws Exception {
@@ -121,6 +124,7 @@ public class AdminController {
 			return "withdrawal fail";
 		}
 	}
+	//블랙멤버를 멤버로
 	@RequestMapping("toMemberProc.do")
 	@ResponseBody
 	public String toMember(String cbMember) throws Exception {
@@ -153,6 +157,7 @@ public class AdminController {
 		mod.addAttribute("feedList", feedList);
 		return "admin/manageFeed";
 	}
+	//피드 검색 기능
 	@RequestMapping("searchForFeed.do")
 	public String searchForFeed(String searchTag, String search, Model mod, String page) throws Exception {
 		int cpage = 1;
@@ -174,6 +179,7 @@ public class AdminController {
 		mod.addAttribute("feedList", feedList);
 		return "admin/manageFeed";
 	}
+	//피드 삭제 기능
 	@RequestMapping("deleteFeedProc.do")
 	@ResponseBody
 	public String deleteFeedProc(String feed) throws Exception {
