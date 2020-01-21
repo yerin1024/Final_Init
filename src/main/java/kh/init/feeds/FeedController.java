@@ -15,7 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
-import kh.init.admin.DeclareDTO;
+import kh.init.friends.FriendService;
 import kh.init.members.MemberDTO;
 import kh.init.members.MemberService;
 
@@ -25,6 +25,8 @@ public class FeedController {
 
 	@Autowired
 	private FeedService service;
+	@Autowired
+	private FriendService fservice;
 	@Autowired
 	private MemberService mservice;
 	@Autowired
@@ -36,13 +38,18 @@ public class FeedController {
 		int ipage = 1;
 		List<FeedDTO> list = null;
 		List<String> cover = new ArrayList<>();
+		String myEmail = ((MemberDTO)session.getAttribute("loginInfo")).getEmail();
 		try {
-
+			if(!(email.equalsIgnoreCase(myEmail))) {
+            int frResult = fservice.friendIsOkService(email, myEmail);
+            model.addAttribute("frResult", frResult);
+            }
 			MemberDTO dto = mservice.getMyPageService(email);
 			list = (List<FeedDTO>)service.getMyFeed(ipage, email).get("list");
 			cover = (List<String>)service.getMyFeed(ipage, email).get("cover");
 			System.out.println("dto 이메일값 확인 : "+dto.getEmail()+dto.getName());
 			model.addAttribute("mvo", dto);
+			
 			model.addAttribute("list", list);
 			model.addAttribute("cover", cover);
 		}catch(Exception e) {
@@ -116,7 +123,7 @@ public class FeedController {
 	@RequestMapping(value = "/myScrapFeed", produces = "application/json; charset=UTF-8")
 	@ResponseBody
 	public String myScrapFeed(String page) {
-		System.out.println("scrapFeedAjax 도착");
+		System.out.println("myScrapFeed 도착");
 		int ipage = Integer.parseInt(page);
 		System.out.println("ipage :  "+ipage);
 		String email = ((MemberDTO)session.getAttribute("loginInfo")).getEmail();
@@ -127,8 +134,8 @@ public class FeedController {
 		List<FeedDTO> scrapList = new ArrayList<>();
 
 		try {
-			scrapList = (List<FeedDTO>)service.scrapFeed(email).get("scrapList");
-			cover = (List<String>)service.scrapFeed(email).get("cover");
+			scrapList = (List<FeedDTO>)service.getMyScrapFeed(ipage, email).get("list");
+			cover = (List<String>)service.getMyScrapFeed(ipage, email).get("cover");
 			System.out.println("list.size : "+scrapList.size());
 		
 			
@@ -161,13 +168,13 @@ public class FeedController {
 //				System.out.println("list는 null입니다.");
 //				return "{\"result\" : \"false\"}";
 //			}
-			list = (List<FeedDTO>)service.getMyFeed(ipage, email).get("list");
-			rnum = (List<Integer>)service.getMyFeed(ipage, email).get("rnum");
-			cover = (List<String>)service.getMyFeed(ipage, email).get("cover");
+			list = (List<FeedDTO>)service.getMyScrapFeed(ipage, email).get("list");
+			rnum = (List<Integer>)service.getMyScrapFeed(ipage, email).get("rnum");
+			cover = (List<String>)service.getMyScrapFeed(ipage, email).get("cover");
 			System.out.println("1 : "+service);
-			System.out.println("2 : "+service.getMyFeed(ipage, email));
-			System.out.println("3 : "+service.getMyFeed(ipage, email).get("list"));
-			System.out.println("3 : "+service.getMyFeed(ipage, email).get("rnum"));
+			System.out.println("2 : "+service.getMyScrapFeed(ipage, email));
+			System.out.println("3 : "+service.getMyScrapFeed(ipage, email).get("list"));
+			System.out.println("3 : "+service.getMyScrapFeed(ipage, email).get("rnum"));
 			
 		}catch(Exception e) {
 			return "{\"result\" : \"false\"}";
@@ -220,7 +227,7 @@ public class FeedController {
 		}
 		
 		//등록이 되면 mediaList를 비워둠
-		session.setAttribute("mediaList", null);
+		session.setAttribute("mediaList", new ArrayList<String>());
 
 		return "redirect:myFeed?email="+email;
 	}
