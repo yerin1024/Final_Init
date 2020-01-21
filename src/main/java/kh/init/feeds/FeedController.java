@@ -220,7 +220,7 @@ public class FeedController {
 		}
 		
 		//등록이 되면 mediaList를 비워둠
-		session.setAttribute("mediaList", null);
+		session.setAttribute("mediaList", new ArrayList<String>());
 
 		return "redirect:myFeed?email="+email;
 	}
