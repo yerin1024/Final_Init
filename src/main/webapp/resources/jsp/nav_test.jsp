@@ -19,7 +19,7 @@
               <img id="notification" src="/resources/images/notification.png"></a>
             </li>
 			
-            <li class="nav-item ac1_nav" id="ac1_1">
+            <li class="nav-item ac1" id="ac1_1">
               <a class="nav-link" id="msg_exist" style="padding-top: 15px;">
               <img id="msg" src="/resources/images/msg.png"></a>
             </li>

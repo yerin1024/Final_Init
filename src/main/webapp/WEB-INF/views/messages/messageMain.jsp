@@ -7,12 +7,21 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Insert title here</title>
-<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-<link rel="stylesheet" href="/resources/css/msg.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"> 
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script> 
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" ></script> 
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="/resources/css/nav.css">
+	<link rel="stylesheet" href="/resources/css/msg.css">
+	<link rel="stylesheet" href="/resources/css/alr.css">
+	<link rel="stylesheet" href="/resources/css/test.css">
 </head>
 <body>
+	<jsp:include page="/resources/jsp/nav_test.jsp"/>
+<%-- 	<jsp:include page="/resources/jsp/alr.jsp"/> --%>
+<%-- 	<jsp:include page="/resources/jsp/msg.jsp"/> --%>
 	
-	<div class="ac1" id="ac1_1"><img src="/images/letter.png" style="width:50px;"></div>
+<!-- 	<div class="ac1" id="ac1_1"><img src="/images/letter.png" style="width:50px;"></div> -->
 	<div id=collection>
 		<button id=toCollection class=toColl>메시지 목록</button>
 	</div>
@@ -20,17 +29,13 @@
 	<div id="view1">
 		<div class="ac2">
 		    <div id=cross>
-		    <img src="/images/close2.png" style="width:35px;">
+		    <img src="/images/close2.png" style="width:100%;">
             </div>
 		</div>
 		<div class="pre_top">
             <div class="pre_top_pf"><img src="/images/default_profile_img.png" class="pre_top_pf_img"></div>
             <div class="pre_title">친구</div>
           </div>
-          
-<!--       <div class="search"> -->
-<!--             <input type="text"> <img src="/images/search1.png" style="width: 20px;"> -->
-<!--         </div> -->
           
 		<div class="sector">
 <!--           ------------------------------------------------->
@@ -39,11 +44,6 @@
 <!--             <div class="pre_line"> -->
 <!--                 <div class="pre_pf"><img src="images/b1.png" class="pre_pf_img"></div> -->
 <!--                 <div class="pre_text"><b>yuri</b></div> -->
-<!--                 <div class="pre_time"><img src="images/startMsg.png" class="pre_start"></div> -->
-<!--             </div> -->
-<!--             <div class="pre_line"> -->
-<!--                 <div class="pre_pf"><img src="images/default.png" class="pre_pf_img"></div> -->
-<!--                 <div class="pre_text"><b>whoru</b></div> -->
 <!--                 <div class="pre_time"><img src="images/startMsg.png" class="pre_start"></div> -->
 <!--             </div> -->
 			
@@ -60,7 +60,7 @@
 	$(document).ready(function(){
 
 		// 열기
-		$("div[class='ac1']").click(function(){
+		$(".ac1").click(function(){
 			$("div[id='view1']").fadeIn(0); 
 			
 			$.ajax({
@@ -76,9 +76,9 @@
  				$(".sector_in").children().remove();
  				// 친구 목록
  				for(var i=0; i < resp.length; i++){
- 					$(".sector_in").append("<div class='pre_line'>"		// img src 안에다가 dto 꺼내듯이 쓰면 됨
+ 					$(".sector_in").append("<div class='ppre_line'>"		// img src 안에다가 dto 꺼내듯이 쓰면 됨
  							+"<div class='pre_pf'><img src='"+resp[i].profile_img+"' class='pre_pf_img'></div>"
- 			        		+"<div class='pre_text'><b>"+resp[i].nickname+"</b></div>"
+ 			        		+"<div class='pre_text'>"+resp[i].nickname+"</div>"
  			                +"<div class='pre_time'>"
  			                +"<img src='/images/startMsg2.png' class='pre_start' id='"+resp[i].fr_id+"' value='"+resp[i].nickname+"' name='"+resp[i].profile_img+"'>"
  			                +"</div></div>");
@@ -101,6 +101,8 @@
  						},
  						dataType: "json"
  					 }).done(function(resp){
+ 						 console.log("친구 목록에서");
+ 						console.log("${loginInfo.email}");
  						 $(".pre_top").children().remove();
  						 $(".pre_top").append("<div class='pre_back'><img src='/images/left4.png' class='pre_back_img'></div>"
  						            + "<div class='pre_top_pf'><img src='"+friendImg+"' class='pre_top_pf_img'></div>"
@@ -110,7 +112,7 @@
  						 $(".search").children().remove();
  						 for(var i=0; i < resp.length; i++){
  							 
- 							 if(resp[i].from_id=='123@123.123'){
+ 							 if(resp[i].from_id=="123@123.123"){
  								 $(".sector_in").append("<ul class='ul_right'>"
  							                +"<li class='from_id'>"+resp[i].contents+"</li><span class=time_right>"
  							                +resp[i].write_date+"</span><br></ul>");

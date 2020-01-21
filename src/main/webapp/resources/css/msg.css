@@ -43,6 +43,8 @@
 	/*            border-radius: 10px;*/
 	overflow: scroll;
 	overflow-x: hidden;
+	padding-top: 10px;
+    padding-bottom: 10px;
 }
 
 #view1::-webkit-scrollbar-track {
@@ -75,8 +77,13 @@
 }
 
 /* -- pre 시작 ----------------------------------------- */
+.ppre_line {
+	padding-left: 5px;
+	height: 60px;
+}
 .pre_line {
-	
+	padding-left: 5px;
+	height: 60px;
 }
 
 .pre_line_none {
@@ -95,7 +102,7 @@
 	float: left;
 	margin-left: 3px;
 	padding: 2px;
-	padding-top: 10px;
+	padding-top: 7px;
 }
 
 .pre_pf_img {
@@ -136,6 +143,7 @@
 	padding-left: 10px;
 	padding-right: 10px;
 	padding-top: 5px;
+	cursor: pointer;
 }
 
 .pre_title {
@@ -195,7 +203,8 @@ ul {
 	background-color: #f0f0f0;
 	color: #000000;
 	display: inline-block;
-	padding: 8px;
+	min-height: 30px;
+	padding: 5px;
 	padding-left: 10px;
 	padding-right: 10px;
 	margin-left: -30px;
@@ -209,8 +218,10 @@ ul {
 	/*            border: 1px solid red;*/
 	background-color: #3f62a0;
 	color: white;
+	min-height: 17px;
+	min-height: 30px;
 	display: inline-block;
-	padding: 8px;
+	padding: 5px;
 	padding-left: 10px;
 	padding-right: 10px;
 	margin-right: 10px;
@@ -379,9 +390,8 @@ ul {
 }
 
 .pre_start {
-	width: 55px;
-	height: 50px;
-	margin-top: 8px;
+	width: 48px;
+	height: 45px;
 }
 
 .pre_start:hover {
@@ -392,14 +402,18 @@ ul {
 	min-width: 350px;
 	/*    border: 1px solid black;*/
 	float: right;
-	margin-bottom: -13px;
+/* 	margin-bottom: -13px; */
+margin-top: 1px;
+margin-bottom: 1px;
 }
 
 .ul_left {
 	min-width: 350px;
 	/*    border: 1px solid red;*/
 	float: left;
-	margin-bottom: -13px;
+/* 	margin-bottom: -13px; */
+margin-top: 1px;
+margin-bottom: 1px;
 }
 
 .toWhere {
@@ -439,7 +453,7 @@ ul {
 @media ( max-width : 700px ) {
 	.ac2 {
 		position: fixed;
-		bottom: 700px;
+		bottom: 580px;
 		right: 20px;
 		/*            border: 1px solid black;*/
 		width: 45px;
@@ -447,8 +461,9 @@ ul {
 		z-index: 9;
 	}
 	.pre_top {
+		right: 0px;
 		position: fixed;
-		bottom: 680px;
+		bottom: 560px;
 		width: 100%;
 		height: 80px;
 		/*            border: 1px solid red;*/
@@ -466,7 +481,7 @@ ul {
 		bottom: 80px;
 		right: 0px;
 		width: 100%;
-		height: 600px;
+		height: 480px;
 		/*            border:1px solid black;*/
 		/*            border-radius: 10px;*/
 		overflow: scroll;
@@ -508,6 +523,7 @@ ul {
 	.to_id {
 		background-color: #f0f0f0;
 		color: #000000;
+		min-height: 30px;
 		display: inline-block;
 		padding: 5px;
 		padding-left: 10px;
@@ -522,6 +538,7 @@ ul {
 		/*            border: 1px solid red;*/
 		background-color: #3f62a0;
 		color: white;
+		min-height: 30px;
 		display: inline-block;
 		padding: 5px;
 		padding-left: 10px;
@@ -603,7 +620,7 @@ ul {
 		margin-left: 5px;
 		margin-right: 5px;
 		cursor: pointer;
-		height: 100%;
+		height: 90%;
 		background-color: white;
 		border: none;
 		/*            border: 1px solid red;*/
@@ -631,7 +648,7 @@ ul {
 		/*            border: 1px solid green;*/
 		height: 30px;
 		float: left;
-		width: 90px;
+		width: 75px;
 		text-align: center;
 		line-height: 30px;
 		font-size: 11px;
@@ -642,13 +659,22 @@ ul {
 	}
 	.pre_time_p {
 		/*    border: 1px solid pink;*/
-		float: right;
-		width: 100px;
-		text-align: center;
-		line-height: 60px;
-		font-size: 14px;
-		color: #535353;
+		height: 30px;
+	    float: left;
+	    width: 75px;
+	    text-align: right;
+	    line-height: 25px;
+	    font-size: 12px;
+	    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 	}
+	.pre_new_inside{
+/*    border: 1px solid black;*/
+    background-color: red;
+    padding: 2px; padding-left: 6px; padding-right: 6px;
+    margin-right: 10px;
+    color: white;
+    border-radius: 10px;
+}
 	.pre_back {
 		/*                border: 1px solid red;*/
 		float: left;
@@ -765,13 +791,15 @@ ul {
 		min-width: 450px;
 		/*    border: 1px solid black;*/
 		float: right;
-		margin-bottom: -13px;
+		margin-top: 1px;
+		margin-bottom: 1px;
 	}
 	.ul_left {
 		min-width: 450px;
 		/*    border: 1px solid red;*/
 		float: left;
-		margin-bottom: -13px;
+		margin-top: 1px;
+		margin-bottom: 1px;
 	}
 	.toWhere {
 		float: left;
