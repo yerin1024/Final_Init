@@ -29,7 +29,7 @@
             <!-- Content -->
             <div class="text-center white-text mx-5 wow fadeIn">             
               <p class="mb-4 d-none d-md-block">
-                <strong style="font-size: 30px;letter-spacing:5px">가장 나같은 공간</strong>
+                <strong style="font-size: 30px;letter-spacing:5px">가장 나다운 공간</strong>
               </p>
               <h1 class="mb-4">
                 <strong style="font-size: 150px;letter-spacing:15px">In;t</strong>
@@ -263,7 +263,7 @@
         <p>
           <i class="fas fa-envelope mr-3"></i> init_manager@naver.com</p>
         <p>
-          <i class="fas fa-phone mr-3"></i> + 82 2 245 8721</p>
+          <i class="fas fa-phone mr-3"></i> +82 2 245 8721</p>
       </div>
       <!-- Grid column -->
     </div>

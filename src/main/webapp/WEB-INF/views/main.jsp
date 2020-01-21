@@ -50,14 +50,14 @@
         font-family: 'Noto Sans KR', sans-serif;
     }
 
-/*     .tab1_body .userInput { */
-/*         width: 300px; */
-/*         height: 50px; */
-/* /*         padding: 5px; */ */
-/* /*         margin: 5px; */ */
-/* /*         border-radius: 8px; */ */
-/* /*         font-size: 15px; */ */
-/*     } */
+     .tab1_body .userInput {
+         width: 300px;
+         height: 50px;
+         padding: 5px;
+         margin: 5px;
+         border-radius: 8px;
+         font-size: 15px;
+     } 
 
     .userInput:focus {
         outline: none;
@@ -180,82 +180,73 @@
         overflow:hidden;
     }    
    	
-   	.input_centered {
-	  width: 350px;
-	  height: 80px;
-	  margin: auto;
+   	
+   	
+   	
+   	
+   	.inp {
+	  position: relative;
+	  margin-bottom: 15px;
+	  width: 100%;
+	  max-width: 280px;
+	}
+	.inp .label {
 	  position: absolute;
-	  top: 0;
+	  top: 16px;
+	  left: 0;
+	  font-size: 16px;
+	  color: #9098a9;
+	  font-weight: 500;
+	  transform-origin: 0 0;
+	  transition: all 0.2s ease;
+	}
+	.inp .border {
+	  position: absolute;
 	  bottom: 0;
 	  left: 0;
-	  right: 0;
-	}
-	
-	.input_group {
+	  height: 2px;
 	  width: 100%;
-	  height: 80px;
-	  overflow: hidden;
-	  position: relative; 
+	  transform: scaleX(0);
+	  transform-origin: 0 0;
+	  transition: all 0.15s ease;
+	  background: #0f4c81;
 	}
-	
-	.input_group label {
-	  position: absolute;
-	  top: 36.6666666667px;
-	  font: 400 36.6666666667px Roboto;
-	  cursor: text;
-	  transition: .25s ease;
-	}
-	
-	.input_group input {
-	  display: block;
+	.inp input {
+	  -webkit-appearance: none;
 	  width: 100%;
-	  padding-top: 36.6666666667px;
-	  border: none;
+	  border: 0;
+	  font-family: inherit;
+	  padding: 12px 0;
+	  height: 48px;
+	  font-size: 16px;
+	  font-weight: 500;
+	  border-bottom: 2px solid #c8ccd4;
+	  background: none;
 	  border-radius: 0;
-	  color: black;
-/* 	  font-size: 36.6666666667px; */
-	  transition: .3s ease;
+	  color: #223254;
+	  transition: all 0.15s ease;
 	}
-	.input_group input:valid ~ label {
-	  top: 0;
-	  font: 700 22px Roboto;
+	.inp input:hover {
+	  background: rgba(34,50,84,0.03);
 	}
-	.input_group input:focus {
+	.inp input:not(:placeholder-shown) + span {
+	  color: #5a667f;
+	  transform: translateY(-26px) scale(0.75);
+	}
+	.inp input:focus {
+	  background: none;
 	  outline: none;
 	}
-	.input_group input:focus ~ label {
-	  top: 0;
-	  font: 700 22px Roboto;
-	  color: #2196f3;
+	.inp input:focus + span {
+	  color: #07f;
+	  transform: translateY(-26px) scale(0.75);
 	}
-	.input_group input:focus ~ .bar:before {
-	  transform: translateX(0);
-	}
-	.input_group input:-webkit-autofill {
-	  -webkit-text-fill-color: white !important;
-	}
-	
-	.bar {
-	  content: '';
-	  width: 550px;
-	  height: 3.6666666667px;
-	  transition: .3s ease;
-	  position: relative;
-	}
-	.bar:before {
-	  content: '';
-	  position: absolute;
-	  width: 100%;
-	  height: 150%;
-	  background: #2196f3;
-	  transform: translateX(-100%);
-	}
-	
-	::selection {
-/* 	  background: rgba(33, 150, 243, 0.3); */
+	.inp input:focus + span + .border {
+	  transform: scaleX(1);
 	}
    	
-	
+   	
+ 
 </style>
 
 <body>
@@ -266,7 +257,7 @@
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h2 class="modal-title" id="indexModalTitle">Init</h2>
+                    <h2 class="modal-title" id="indexModalTitle" style="letter-spacing:5px;">In;t</h2>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true" id="closeBtn">&times;</span>
                     </button>
@@ -280,20 +271,20 @@
                                 <div class="tab1_container">
                                     <form action="${pageContext.request.contextPath}/member/loginProc.do" method="post" id="tab1_loginForm">
                                         <div class="tab1_loginContainer">
-                                            <div class="tab1_body">  
-                                                <div class="input_centered">
-                                                	<div class="input_group">
-    												  	<input type="text" class="form__field userInput" id="tab1_email" name="email" required/>
-												  		<label for="tab1_email" class="form__label">EMAIL</label>  
-												  		<p class="bar"></p> 
-                                                	</div>
-                                                	<div class="input_group">
-														<input type="password" class="form__field userInput" id="tab1_pw" name="pw" required/>
-													  	<label for="tab1_pw" class="form__label">PW</label>  
-													  	<p class="bar"></p> 
-                                                	</div>
-                                                </div>	
-														
+                                            <div class="tab1_body">
+                                            
+                                            	<label for="tab1_email" class="inp">
+												  <input type="text" id="tab1_email" name="email" placeholder="&nbsp;">
+												  <span class="label">Email</span>
+												  <span class="border"></span>
+												</label>
+												
+												<label for="tab1_pw" class="inp">
+												  <input type="text" id="tab1_pw" name="pw" placeholder="&nbsp;">
+												  <span class="label">Password</span>
+												  <span class="border"></span>
+												</label>
+												
                                                 <button type="button" id="tab1_loginBtn" onclick="toLogin();">로그인</button><br>
                                                 <img src="resources/images/kakaoLogin_btn.png" id="tab1_kakaoLoginBtn"><br>
 	                                            <div class="saveId">
