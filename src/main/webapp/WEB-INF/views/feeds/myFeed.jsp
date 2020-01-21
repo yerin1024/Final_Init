@@ -11,12 +11,15 @@
 <link rel="stylesheet" href="/resources/css/nav.css">
 <script src="https://code.jquery.com/jquery-3.4.1.js"
 	type="text/javascript"></script>
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 <script
 	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-<script
-	src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="/resources/css/nav.css">
+
+
 <style>
 
 	body{
@@ -556,7 +559,8 @@
 				url : "${pageContext.request.contextPath}/feed/myScrapFeed",
 				type : "POST",
 				data : {
-					"email" : myMail
+					
+					"page": page
 				},
 				dataType : "json",
 				success : function(res) {
@@ -570,7 +574,7 @@
 			          var end = list.length;
 			          var index=0;
 			          var data = "";
-			          
+			          if(list != null){
 			          for(i; i<end; i++){
 			              data = data + "<div class='col-4 feed'><a class='btn btn-primary' data-toggle='modal' data-target='#exampleModal' href='#' data-id='"+list[index].feed_seq+"'>"+cover[index]+"</a></div>";
 			              console.log(i);
@@ -587,7 +591,10 @@
 			              index++;
 			            }
 			            $("#feeds").append(data); 
-			            
+			          }else{
+			        	  data += "<div class='col-4 feed'>게시물이 없습니다.</div>";
+			        	  $("#feeds").append(data); 
+			          }
 			            
 					
 				},//personalFeed done
@@ -679,10 +686,10 @@
 	                 
 	                  var data = "";
 	              }
-	              
+	              index++;
 	            }
 	            $("#feeds").append(data); 
-	            index++;
+	            
 //	          for(i; i<end; i++){
 //	             console.log(i);
 //	              var data = $("<div class='col-4 feed'></div>");
@@ -737,13 +744,13 @@
 	                 data = data + "</div>";
 
 	                  $("#feeds").append(data);
-	                 
+	                  
 	                  var data = "";
 	              }
-	              
+	              index++;
 	            }
 	            $("#feeds").append(data); 
-	            index++;
+	            
 //	          for(i; i<end; i++){
 //	             console.log(i);
 //	              var data = $("<div class='col-4 feed'></div>");
@@ -771,30 +778,47 @@
 		<div class="profile">
 			<c:choose>
 				<c:when test="${loginInfo.email ne mvo.email}">
-					<div class="profileLayoutLeft">
-						<button class="btn btn-primary btn-lg" id="openModalBtn">＋</button>
-						<div class="btnText">친구요청</div>
+					<div class="report">
+						<button type="button" id="reportBtn">ㆍㆍㆍ</button>
 					</div>
-					<div class="profileLayoutCenter">
-						<div class="profileImageBox">
-							<img class="profileImg" src="${mvo.profile_img}" alt="">
+					<div class="profileLayout">
+						<div class="profileLayoutLeft">
+						<c:if test="${frResult == null || frResult == 0  }">
+							<button class="btn btn-primary btn-lg" id="openModalBtn">＋</button>
+							<div class="btnText">친구요청</div>
+						</c:if>			
+							<c:if test="${frResult == 1 }">
+						
+							<div class="btnText">친구요청중</div>
+						</c:if>	
+						<c:if test="${frResult == 2  }">
+							
+							<div class="btnText">친구</div>
+						</c:if>	
+						
+						</div>
+						<div class="profileLayoutCenter">
+							<div class="profileImageBox">
+								<img class="profileImg" src="${mvo.profile_img}" alt="">
+								
 
 						</div>
+						</div>
+						
+							<div class="profileLayoutRight">
+								<button class="sendMsg" id="sendMsg">＋</button>
+								<div class="btnText">메세지</div>
+							</div>
+												
 					</div>
 					<div class="profileMessageLayout">
 						<div class="profileName">${mvo.nickname }</div>
 						<div class="profileMessage">${mvo.profile_msg}</div>
 					</div>
-					<div class="profileLayoutRight">
-						<button class="friendRequest">＋</button>
-						<div class="btnText">메세지</div>
-					</div>
 				</c:when>
 				<c:otherwise>
 
-					<div class="report">
-						<button type="button" id="reportBtn">ㆍㆍㆍ</button>
-					</div>
+					
 					<div class="profileLayout">
 						<div class="profileLayoutLeft">
 							<button class="profileButton" id="friendsList">＋</button>
@@ -818,17 +842,17 @@
 						<div class="profileName">${mvo.nickname }</div>
 						<div class="profileMessage">${mvo.profile_msg}</div>
 					</div>
+					<div class=menubar style="height: 200px;">
+						<button type="button" id="personalFeed">Personal feed</button>
+						<button type="button" id="scrapFeed">scrap feed</button>
+						<button type="button" id="registerFeed">게시물 등록</button>
+
+					</div>
 				</c:otherwise>
 
 			</c:choose>
 		</div>
-		<div class=menubar style="height:200px;">
-		<button type="button" id="personalFeed">Personal feed</button>
-		<button type="button" id="scrapFeed">scrap feed</button>
 		
-		<button type="button" id="registerFeed">게시물 등록</button>
-	
-		</div>
 		<div class="wrapper">
 			
 			<div id="myFeed">
@@ -1134,7 +1158,7 @@
                         var waitlist = JSON
                             .parse(res.waitlist);
                         for (var j = 0; j < waitlist.length; j++) {
-                            $('.modal-body2').append("<div class=frInfo><a href='${pageContext.request.contextPath}/feed/yourFeed?email="
+                            $('.modal-body2').append("<div class=frInfo><a href='${pageContext.request.contextPath}/feed/myFeed?email="
                                 + waitlist[j].email
                                 + "'>"
                                 + waitlist[j].email
@@ -1145,7 +1169,7 @@
                         var list = JSON.parse(res.list);
                         for (var j = 0; j < list.length; j++) {
                             $('.modal-body2').append(
-                                "<div class=frInfo><a href='${pageContext.request.contextPath}/feed/yourFeed?email="
+                                "<div class=frInfo><a href='${pageContext.request.contextPath}/feed/myFeed?email="
                                 + list[j].email
                                 + "'>"
                                 + list[j].email
@@ -1244,7 +1268,7 @@
                                 if (res.waitlist != null) {
                                     var waitlist = JSON.parse(res.waitlist);
                                     for (var j = 0; j < waitlist.length; j++) {
-                                        $('.modal-body2').append("<div class=frInfo id=wfrNum" + j + "><a href='${pageContext.request.contextPath}/feed/yourFeed?email="
+                                        $('.modal-body2').append("<div class=frInfo id=wfrNum" + j + "><a href='${pageContext.request.contextPath}/feed/myFeed?email="
                                             + waitlist[j].email
                                             + "'>"
                                             + waitlist[j].email
@@ -1255,7 +1279,7 @@
                                     var list = JSON.parse(res.list);
                                     for (var j = 0; j < list.length; j++) {
                                         $('.modal-body2').append(
-                                            "<div class=frInfo id=frNum" + j + "><a href='${pageContext.request.contextPath}/feed/yourFeed?email="
+                                            "<div class=frInfo id=frNum" + j + "><a href='${pageContext.request.contextPath}/feed/myFeed?email="
                                             + list[j].email
                                             + "'>"
                                             + list[j].email
@@ -1307,10 +1331,7 @@
 						function() {
 							location.href = "${pageContext.request.contextPath}/member/goMyInfo";
 						})
-		
-						
-						
-						
+
 		$('#closeModalBtn2').on('click', function() {
 
 			$('#modalBox3').modal('hide');
