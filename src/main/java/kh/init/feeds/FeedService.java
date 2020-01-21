@@ -362,10 +362,10 @@ public class FeedService {
 			for(int i=0; i<list.size(); i++) {
 				if(list.get(i).endsWith("mp4")) { //파일이 동영상일 경우
 					String video = "<video class='cover' src=\""+list.get(i)+"\">";
-					list.add(i, video);
+					list.set(i, video);
 				}else {//파일이 이미지
 					String img = "<img class='cover' src=\""+list.get(i)+"\">";
-					list.add(i, img);
+					list.set(i, img);
 				}
 			}
 		}

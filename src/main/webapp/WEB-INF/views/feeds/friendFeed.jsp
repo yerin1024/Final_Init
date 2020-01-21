@@ -284,7 +284,6 @@ html, body {
 								 var Img = $("<div class='row profileImg'></div>") 
 								 Img.append(profile_imgList[i]); 
 								 profile.append(Img);
-								 feed.append(profile);
 								 var nick = $("<div class='row profileNickname'></div>");
 								 nick.append(list[i].nickname);
 								 profile.append(nick);
@@ -292,10 +291,11 @@ html, body {
 								 feedDeclaration.attr("seq",list[i].feed_seq);
 								 var afterDec = $("<img class='sirenImg' src='${pageContext.request.contextPath}/resources/images/siren2.png'>")
 								 afterDec.attr("id","srI2_"+list[i].feed_seq);
-								 var beforeDec = $("<button type='button' role='btton' seq='${feed.feed_seq}' class='sirenBtn' data-toggle='modal' data-target='#declareModal' data-backdrop='static'> </button>");	
+								 var beforeDec = $("<button type='button' class='sirenBtn' role='btton' data-toggle='modal' data-target='#declareModal' data-backdrop='static'></button>");	
+								 beforeDec.attr("seq",list[i].feed_seq);
 								 beforeDec.attr("id","srB_"+list[i].feed_seq);
 								 console.log("srB_"+list[i].feed_seq);
-								 var beforeDecImg = $("<img class='sirenImg' src='${pageContext.request.contextPath }/resources/images/siren.png'>");
+								 var beforeDecImg = $("<img class='sirenImg' src='${pageContext.request.contextPath}/resources/images/siren.png'>");
 								 beforeDecImg.attr("id","srI_"+list[i].feed_seq);
 								 console.log("srI_"+list[i].feed_seq);
 								 beforeDec.append(beforeDecImg);
@@ -306,7 +306,7 @@ html, body {
 									 feedDeclaration.append(beforeDec);	 
 									 profile.append(feedDeclaration); 
 								 }
-								
+								feed.append(profile);
 								var media = $("<div class='row media'></div>");
 
 								var CEI = $("<div id='carouselExampleIndicators' class='carousel slide' data-interval='false'></div>");
@@ -343,7 +343,6 @@ html, body {
 								ci.append("<span class='carousel-control-next-icon' aria-hidden='true'></span> <span class='sr-only'>Next</span></a>");
 
 								media.append(ci);
-								feed.append(profile);
 								feed.append(media);
 
 								var contents = $("<div class='row contents' style='height:100px'></div>");
@@ -622,9 +621,11 @@ html, body {
 
 	<script>	
 	//신고확인 기능 모달
-	 $(".sirenBtn").on("click", function(){
-		 var seq = $(this).attr("id");
-		 $("#dr").val(seq);
+	$(document).on("click",".sirenBtn",function(){
+ 		 var seq = $(this).attr("id");
+ 		 console.log("웨굳개ㅑ덕ㄴ이란");
+ 		 console.log("dssss"+seq);
+		 seq = $("#dr").val(seq);
 		 console.log(seq);
 		$("#declareModal").modal('show');
 		$(".profileDisplay").html(seq);
@@ -637,7 +638,7 @@ html, body {
 	
 	//사유데이터 처리
 	$(".declareReason").on("click", function(){
-		var seq = $("#dr").val();
+ 		var seq = $("#dr").val();
 		var reason = $("input:radio[name=declare_reason]:checked").val();
 		 console.log(seq);
 		 console.log(reason);
