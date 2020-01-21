@@ -117,7 +117,7 @@
 
 	<select id="getFriendFeedCount" resultType="Integer">
 		select count(*) from
-		tb_feed p join tb_friend r on p.email = r.my_id
+		tb_feed p left join tb_friend r on p.email = r.my_id
 		where r.fr_id =
 		#{email}
 		and p.relation >= r.relation
@@ -131,12 +131,13 @@
 		hashtag
 		from (select p.*, ROW_NUMBER() OVER(ORDER
 		BY p.feed_seq) rnum
-		from tb_feed p join tb_friend r on p.email =
+		from tb_feed p left join tb_friend r on p.email =
 		r.my_id
 		where r.fr_id = #{email} and p.relation >= r.relation
 		or p.email
 		= #{email})
 		where rnum between #{startNum} and #{endNum}
+
 	</select>
 
    <!-- 신고 버튼을 위한 쿼리 -->

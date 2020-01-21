@@ -603,10 +603,7 @@ html, body {
 
 				</c:forEach>
 			</c:otherwise>
-		</c:choose>
-
-
-
+		</c:choose>S
 	</div>
 
 	<script>	
