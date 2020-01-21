@@ -21,6 +21,13 @@ public class FriendDAO {
 		return jdbc.selectList("Friend.selectById", id);
 
 	}
+	public List<FriendDTO> getFriendsIsOk(String my_id,String fr_id) throws Exception{
+		Map<String,String> map = new HashMap<>();
+		map.put("id", my_id);
+		map.put("fr_id", fr_id);
+		return jdbc.selectList("Friend.selectByIdOk", map);
+
+	}
 	//친구 목록 조회(아이디 검색)
 	public List<FriendDTO> getFriendsList(String id,String search) throws Exception{
 
@@ -30,9 +37,7 @@ public class FriendDAO {
 		System.out.println("dao 넘어온 이메일은 "+id);
 		Map<String,String> map = new HashMap<>();
 		map.put("my_id", id);
-		
-
-			map.put("fr_id", search2);
+		map.put("fr_id", search2);
 
 		return jdbc.selectList("Friend.selectBySearch", map);
 
@@ -66,6 +71,13 @@ public class FriendDAO {
 	// 친구 요청 리스트 가져오기
 	public List<FriendRequestDTO> getFndRequestList(String id) throws Exception{
 		return jdbc.selectList("Friend.selectListReqById",id);
+
+	}
+	public List<FriendRequestDTO> getFndRequestIsOk(String fr_id,String my_id) throws Exception{
+		Map<String,String> map = new HashMap<>();
+		map.put("id", fr_id);
+		map.put("from_id", my_id);
+		return jdbc.selectList("Friend.selectListReqById2",map);
 
 	}
 	// 검색된 친구 요청 리스트 가져오기

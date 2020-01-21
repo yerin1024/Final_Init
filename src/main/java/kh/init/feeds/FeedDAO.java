@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import kh.init.admin.DeclareDTO;
 import kh.init.members.MemberDTO;
 
 @Repository
@@ -30,6 +31,18 @@ public class FeedDAO {
 		param.put("endNum", endNum+"");
 		List<FeedDTO> list = jdbc.selectList("Feed.getMyFeed", param);
 		List<Integer> rnum = jdbc.selectList("Feed.getMyFeedRnum", param);
+		Map<String, Object> result = new HashMap<>();
+		result.put("list", list);
+		result.put("rnum", rnum);
+		return result;
+	}
+	public Map<String, Object> getMyScrapFeed(String email, int startNum, int endNum) throws Exception{
+		Map<String, String> param = new HashMap<>();
+		param.put("email", email);
+		param.put("startNum", startNum+"");
+		param.put("endNum", endNum+"");
+		List<FeedDTO> list = jdbc.selectList("Feed.getMyScrapFeed", param);
+		List<Integer> rnum = jdbc.selectList("Feed.getMyScrapFeedRnum", param);
 		Map<String, Object> result = new HashMap<>();
 		result.put("list", list);
 		result.put("rnum", rnum);
@@ -119,10 +132,9 @@ public class FeedDAO {
 		return result;
 	}
 	
-	//신고관리
-	public int getDeclareFeed(int feed_seq) throws Exception{
-		int result = jdbc.selectOne("Feed.getDeclareFeed", feed_seq);
-		return result;
+	//신고게시물 seq리스트
+	public List<Integer> getDeclareFeed(String from_id) throws Exception{
+		return jdbc.selectList("Feed.getDeclareFeed", from_id);
 	}
 
 	public int getFriendFeedCount(String email) throws Exception{
