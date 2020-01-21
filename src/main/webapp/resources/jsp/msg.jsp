@@ -46,7 +46,7 @@
 	$(document).ready(function(){
 
 		// 열기
-		$("div[class='ac1']").click(function(){
+		$("div[class='ac1_nav']").click(function(){
 			$("div[id='view1']").fadeIn(0); 
 			
 			$.ajax({
@@ -88,8 +88,8 @@
  					 }).done(function(resp){
  						 $(".pre_top").children().remove();
  						 $(".pre_top").append("<div class='pre_back'><img src='/images/left2.png' class='pre_back_img'></div>"
- 						            + "<div class='pre_top_fr_pf'><img src='"+friendImg+"' class='pre_top_fr_pf_img'></div>"
- 						            + "<div class='pre_text'><b>"+friendNick+"</b></div>");
+//  						            + "<div class='pre_top_pf'><img src='"+friendImg+"' class='pre_top_pf_img'></div>"
+ 						            + "<div class='pre_text'><span class='pre_text_name'>"+friendNick+"</span></div>");
  						 
  						 $(".sector_in").children().remove();
  						 $(".search").children().remove();
@@ -218,7 +218,7 @@
 		 					 }).done(function(resp){
 		 						 $(".pre_top").children().remove();
 		 						 $(".pre_top").append("<div class='pre_back'><img src='/images/left2.png' class='pre_back_img'></div>"
-		 						            + "<div class='pre_top_fr_pf'><img src='"+friendImg+"' class='pre_top_fr_pf_img'></div>"
+// 		 						            + "<div class='pre_top_fr_pf'><img src='"+friendImg+"' class='pre_top_fr_pf_img'></div>"
 		 						            + "<div class='pre_text'><b>"+friendNick+"</b></div>");
 		 						 
 		 						 $(".sector_in").children().remove();

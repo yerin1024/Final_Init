@@ -8,545 +8,24 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-<style>
-
-* {
-	box-sizing: border-box;
-}
-.ac1, #cross { cursor: pointer; }
-.ac1 {
-	width: 50px;
-	height: 50px;
-	position: relative;
-	left: 100px;
-}
-.ac2 {
-	position: fixed;
-	bottom: 620px; right: 10px;
-	/*            border: 1px solid black;*/
-	width: 50px; height: 50px;
-}
-.pre_top {
-	position: fixed;
-	bottom: 560px; right: 10px;
-	width: 400px; height: 65px;
-	background-color: #5d9ef5;
-	color: white;
-}
-#view1 {	
-	display: none;
-	position: fixed;
-	bottom: 60px; right: 10px;
-	width: 400px; height: 500px;
-	border: 1px solid #5d9ef5;
-	/*            border-radius: 10px;*/
-	overflow: scroll;
-	overflow-x: hidden;
-}
-#cross {
-	/*            border: 1px solid red;*/
-	float: right;
-	width: 30px; height: 30px;
-	margin: 10px;
-}
-
-.sector {
-	/*            border: 1px solid #e6abb5;*/
-	min-height: 60px;
-}
-
-/* -- pre 시작 ----------------------------------------- */
-	[class^=pre] { height: 60px; }
-	.pre_line {
-	
-	}
-	.pre_line_none{
-	    display: none;
-	}
-	.pre_line:hover {
-		background-color: #e8e8e8;
-		transition-duration: 0.2s;
-	}
-	.pre_pf {
-/*        border: 1px solid pink;*/
-		width: 50px;
-		float: left;
-		margin-left: 3px;
-		padding: 2px; padding-top: 10px;
-	}
-	.pre_pf_img {
-		width: 100%; height: 45px;
-		border-radius: 30px;
-	}
-	.pre_text {
-		float: left;
-		width: 250px;
-		font-size: 14px;
-		white-space: nowrap;
-		overflow: hidden;
-		text-overflow: ellipsis;
-		padding-right: 15px;
-		line-height: 60px;
-		padding-left: 10px;
-	}
-	.pre_text_p{
-/*        border: 1px solid red;*/
-           float: left;
-           width: 250px;
-           line-height: 25px;
-           font-size: 14px;
-           white-space: nowrap;
-           overflow: hidden;
-           text-overflow: ellipsis;
-           padding-left: 5px; padding-right: 5px;
-           padding-top: 5px;
-       }
-	.pre_title {
-		font-size: 30px;
-		margin-left: 10px;
-		float: left;
-		line-height: 60px;
-	}
-	.pre_top_pf {
-		width: 50px;
-		float: left;
-		margin-left: 3px;
-		padding: 2px; padding-top: 10px;
-	}
-	.pre_top_pf_img {
-		width: 100%; height: 45px;
-		border-radius: 30px;
-	}
-/* -- pre (messageView) ----------------------------------------- */
-	.pre_top_fr_pf {
-		width: 50px;
-		float: left;
-		margin-left: 3px;
-		padding: 2px;
-		padding-top: 10px;
-	}
-	.pre_top_fr_pf_img {
-		width: 100%;
-		height: 45px;
-		border-radius: 30px;
-	}
-	.pre_back_img { width: 80%; height: 40px; }
-	.pre_back {
-		float: left;
-		width: 30px;
-		margin-left: 3px;
-		padding: 2px; padding-top: 15px;
-	}
-	.pre_back:hover { cursor: pointer; }
-	
-/* -- pre 끝 ----------------------------------------- */
-
-li { list-style: none; } 
-ul { padding-bottom: 5px; }
-
-.to_id {
-	background-color: gray;
-	color: white;
-	display: inline-block;
-	padding: 5px;
-	margin-left: -30px;
-	margin-right: 20px;
-	border-radius: 10px;
-	word-break: break-all;
-	font-size: 14px;
-	box-shadow: 2px 2px 2px #777777;
-}
-.from_id {
-	background-color: cornflowerblue;
-	color: white;
-	display: inline-block;
-	padding: 5px;
-	margin-right: 10px;
-	border-radius: 10px;
-	float: right;
-	word-break: break-all;
-	font-size: 14px;
-	box-shadow: 2px 2px 2px #777777;
-}
-.time {
-	font-size: 8px;
-	margin-left: -10px; margin-right: 5px;
-}
-.time_right {
-	font-size: 8px;
-	margin-left: 5px;
-	margin-right: 5px;
-	float: right;
-	line-height: 25px;
-}
-.readCheck {
-	float: right;
-	font-size: 8px;
-	margin-bottom: 10px;
-	line-height: 25px;
-}
-#footer {
-	position: fixed;
-	bottom: 20px;
-/* 	right: 10px; */
-	width: 400px; height: 40px;
-	float: left;
-	background-color: #5d9ef5;
-}
-
-#inputtxt {
-	width: 300px;
-	margin-left: 10px;
-	margin-right: 10px;
-	border-radius: 30px;
-	height: 75%;
-	margin-top: 5px;
-	padding-left: 15px;
-	padding-right: 15px;
-	border: none;
-}
-
-#sendfly{
-    float: right;
-    color: white;
-    line-height: 40px;
-    margin-right: 20px;
-    cursor: pointer;
-    height: 100%;
-    background-color: #5d9ef5;
-    border: none;
-    font-size: 15px;
-}
-
-.pre_time {
-	float: left;
-	width: 70px;
-	text-align: center;
-	line-height: 60px;
-}
-.pre_time_p{
-    height: 30px;
-/*    border: 1px solid green;*/
-    float: left;
-    width: 75px;
-    text-align: center;
-    line-height: 30px;
-    font-size: 12px;
-    color: #535353;
-    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-}
-    /* -----!---------!---------!------!-------!--------!----!-------!-------- */
-.pre_new_p{
-/*    border: 1px solid green;*/
-    height: 30px;
-    float: left;
-    width: 75px;
-    text-align: right;
-    line-height: 30px;
-    font-size: 12px;
-    color: #535353;
-    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-}
-.pre_new_inside{
-/*    border: 1px solid black;*/
-    background-color: red;
-    padding: 2px; padding-left: 6px; padding-right: 6px;
-    margin-right: 10px;
-    color: white;
-    border-radius: 10px;
-}
-     /* -----!---------!---------!------!-------!--------!----!-------!-------- */
-.pre_start {
-	width: 55px;
-	height: 50px;
-	margin-top: 5px;
-}
-
-.pre_start:hover {
-	cursor: pointer;
-}
-
-.ul_right{
-    min-width: 380px;
-/*    border: 1px solid black;*/
-    float: right;
-    margin-bottom: -3px;
-}
-.ul_left{
-    min-width: 380px;
-/*    border: 1px solid red;*/
-    float: left;
-    margin-bottom: -3px;
-}
-
-/* ---------------------------------------------------------------------------------------- */
-
-
-@media ( max-width : 700px ) {
-	.ac2 {
-		position: fixed;
-		bottom: 780px;
-		right: 10px;
-		/*            border: 1px solid black;*/
-		width: 50px;
-		height: 50px;
-	}
-	.pre_top {
-		/*    border: 1px solid red;*/
-		position: fixed;
-		bottom: 680px;
-		width: 100%;
-		height: 75px;
-		background-color: #5d9ef5;
-		color: white;
-	}
-	#view1 {
-		display: none;
-		position: fixed;
-		bottom: 80px;
-		right: 0px;
-		width: 100%;
-		height: 600px;
-		border: 1px solid #5d9ef5;
-		/*            border-radius: 10px;*/
-		overflow: scroll;
-		overflow-x: hidden;
-	}
-	#cross {
-		/*    border: 1px solid red;*/
-		float: right;
-		width: 50px;
-		height: 50px;
-		margin: 10px;
-	}
-	.sector {
-		/*    border: 1px solid #e6abb5;*/
-		min-height: 80px;
-	}
-
-	/* -- pre 시작 ----------------------------------------- */
-	.pre_line {
-		/*        border: 1px solid green;*/
-		padding-top: 5px;
-		height: 80px;
-	}
-	.pre_line_none{
-	    display: none;
-	}
-	.pre_line:hover {
-		background-color: #e8e8e8;
-		transition-duration: 0.2s;
-	}
-	.pre_pf {
-		/*        border: 1px solid red;*/
-		width: 80px;
-		height: 80px;
-		float: left;
-		margin-left: 15px;
-		padding: 2px;
-		padding-top: 0px;
-	}
-	.pre_pf_img {
-		/*        border: 1px solid red;*/
-		width: 70px;
-		height: 70px;
-		border-radius: 50px;
-	}
-	.pre_text {
-		/*        border: 1px solid blue;*/
-		float: left;
-		width: 50vw;
-		line-height: 60px;
-		font-size: 20px;
-		white-space: nowrap;
-		overflow: hidden;
-		text-overflow: ellipsis;
-		padding-left: 30px;
-		padding-right: 15px;
-	}
-	.pre_text_p {
-		/*            border: 1px solid red;*/
-		float: left;
-		width: 55vw;
-		line-height: 25px;
-		font-size: 15px;
-		white-space: nowrap;
-		overflow: hidden;
-		text-overflow: ellipsis;
-		padding-left: 5px;
-		padding-right: 5px;
-		padding-top: 5px;
-	}
-	.pre_title {
-		text-align: center;
-		font-size: 35px;
-		line-height: 70px;
-	}
-	.pre_top_pf {
-		display: none;
-	}
-	.pre_top_pf_img {
-		display: none;
-	}
-	/* -- pre (messageView) ----------------------------------------- */
-	.pre_top_fr_pf {
-		width: 60px;
-		height: 60px;
-		float: left;
-		margin-left: 3px;
-		padding: 2px;
-		padding-top: 10px;
-	}
-	.pre_top_fr_pf_img {
-		width: 55px;
-		height: 55px;
-		border-radius: 30px;
-	}
-	.pre_back_img {
-		width: 100%;
-		height: 45px;
-	}
-	.pre_back {
-		float: left;
-		width: 30px;
-		margin-left: 10px;
-		margin-right: 10px;
-		padding: 2px;
-		padding-top: 15px;
-	}
-	/* -- pre 끝 ----------------------------------------- */
-	.to_id {
-		background-color: gray;
-		color: white;
-		display: inline-block;
-		padding: 5px;
-		margin-left: -30px;
-		margin-right: 20px;
-		border-radius: 10px;
-		word-break: break-all;
-		font-size: 20px;
-		box-shadow: 2px 2px 2px #777777;
-	}
-	.from_id {
-		background-color: cornflowerblue;
-		color: white;
-		display: inline-block;
-		padding: 5px;
-		margin-right: 10px;
-		border-radius: 10px;
-		float: right;
-		word-break: break-all;
-		font-size: 20px;
-		box-shadow: 2px 2px 2px #777777;
-	}
-	#footer {
-		position: fixed;
-		bottom: 20px;
-		/* 	right: 10px; */
-		width: 100%;
-		height: 60px;
-		float: left;
-		background-color: #5d9ef5;
-	}
-	#inputtxt {
-		width: 75vw;
-		margin-left: 10px;
-		margin-right: 10px;
-		border-radius: 30px;
-		height: 75%;
-		margin-top: 5px;
-		padding-left: 15px;
-		padding-right: 15px;
-		border: none;
-	}
-	#sendfly {
-		float: right;
-		color: white;
-		line-height: 40px;
-		margin-right: 20px;
-		cursor: pointer;
-		height: 100%;
-		background-color: #5d9ef5;
-		border: none;
-		font-size: 18px;
-	}
-	.pre_time {
-		/*    border: 1px solid red;*/
-		float: right;
-		height: 80px;
-		margin-right: 30px;
-		width: 70px;
-		text-align: center;
-		line-height: 60px;
-	}
-	.pre_time_p {
-/*        border: 1px solid pink;*/
-		float: left;
-		width: 100px;
-		text-align: center;
-		line-height: 30px;
-		font-size: 12px;
-		color: #535353;
-		white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-	}
-    /* -----!---------!---------!------!-------!--------!----!-------!-------- */
-    .pre_new_p{
-/*        border: 1px solid green;*/
-        height: 30px;
-        float: left;
-        width: 100px;
-        text-align: right;
-        line-height: 30px;
-        font-size: 12px;
-        color: #535353;
-        white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-    }
-    .pre_new_inside{
-/*        border: 1px solid black;*/
-        background-color: red;
-        padding: 2px; padding-left: 6px; padding-right: 6px;
-        margin-right: 10px;
-        color: white;
-        border-radius: 10px;
-    }
-     /* -----!---------!---------!------!-------!--------!----!-------!-------- */
-	.pre_start {
-		/*    border: 1px solid pink;*/
-		width: 65px;
-		height: 60px;
-		margin-top: 5px;
-	}
-	.ul_right{
-	    min-width: 500px;
-	/*    border: 1px solid black;*/
-	    float: right;
-	    margin-bottom: -3px;
-	}
-	.ul_left{
-	    min-width: 500px;
-	/*    border: 1px solid red;*/
-	    float: left;
-	    margin-bottom: -3px;
-	}
-}
-</style>
+<link rel="stylesheet" href="/resources/css/msg.css">
 </head>
 <body>
 	
 	<div class="ac1" id="ac1_1"><img src="/images/letter.png" style="width:50px;"></div>
 	<div id=collection>
-		<button id=toCollection>메시지 목록</button>
+		<button id=toCollection class=toColl>메시지 목록</button>
 	</div>
 			
 	<div id="view1">
 		<div class="ac2">
 		    <div id=cross>
-		    <img src="/images/cross.png" style="width:30px;">
+		    <img src="/images/close2.png" style="width:35px;">
             </div>
 		</div>
 		<div class="pre_top">
             <div class="pre_top_pf"><img src="/images/default_profile_img.png" class="pre_top_pf_img"></div>
-            <div class="pre_title">Messenger</div>
+            <div class="pre_title">친구</div>
           </div>
           
 <!--       <div class="search"> -->
@@ -591,10 +70,8 @@ ul { padding-bottom: 5px; }
  				dataType: "json"
  			}).done(function(resp){
  				$(".pre_top").children().remove();
- 				$(".pre_top").append("<div class='pre_top'>"
- 		 	            +"<div class='pre_top_pf'><img src='/images/default_profile_img.png' class='pre_top_pf_img'></div>"
- 		 	            +"<div class='pre_title'>Messenger</div>"
- 		 	          	+"</div>");
+ 				$(".pre_top").append("<div class='pre_top_pf'><img src='/images/default_profile_img.png' class='pre_top_pf_img'></div>"
+ 		 	            +"<div class='pre_title'>친구</div>");
  				
  				$(".sector_in").children().remove();
  				// 친구 목록
@@ -603,10 +80,13 @@ ul { padding-bottom: 5px; }
  							+"<div class='pre_pf'><img src='"+resp[i].profile_img+"' class='pre_pf_img'></div>"
  			        		+"<div class='pre_text'><b>"+resp[i].nickname+"</b></div>"
  			                +"<div class='pre_time'>"
- 			                +"<img src='/images/startMsg.png' class='pre_start' id='"+resp[i].fr_id+"' value='"+resp[i].nickname+"' name='"+resp[i].profile_img+"'>"
+ 			                +"<img src='/images/startMsg2.png' class='pre_start' id='"+resp[i].fr_id+"' value='"+resp[i].nickname+"' name='"+resp[i].profile_img+"'>"
  			                +"</div></div>");
 				}
  				$("#footer").children().remove();
+ 				$("#footer").append("<div class='toWhere ac1'><img src='/images/toFr_cl.png' id='toFrIcon'></div>"
+ 			            +"<div id='toBetween'></div>"
+ 			            +"<div class='toWhere toColl'><img src='/images/toMsg_un.png' id='toMsgIcon'></div>");
  				
  				// 메시지 상세 보기
  				$(".pre_start").on("click",function(){
@@ -622,9 +102,9 @@ ul { padding-bottom: 5px; }
  						dataType: "json"
  					 }).done(function(resp){
  						 $(".pre_top").children().remove();
- 						 $(".pre_top").append("<div class='pre_back'><img src='/images/left2.png' class='pre_back_img'></div>"
- 						            + "<div class='pre_top_fr_pf'><img src='"+friendImg+"' class='pre_top_fr_pf_img'></div>"
- 						            + "<div class='pre_text'><b>"+friendNick+"</b></div>");
+ 						 $(".pre_top").append("<div class='pre_back'><img src='/images/left4.png' class='pre_back_img'></div>"
+ 						            + "<div class='pre_top_pf'><img src='"+friendImg+"' class='pre_top_pf_img'></div>"
+ 						            + "<div class='pre_text'><span class='pre_text_name'>"+friendNick+"</span></div>");
  						 
  						 $(".sector_in").children().remove();
  						 $(".search").children().remove();
@@ -643,8 +123,10 @@ ul { padding-bottom: 5px; }
  						 var objDiv = document.getElementById("view1");
  			        	 objDiv.scrollTop=objDiv.scrollHeight;
  			        	 $("#footer").children().remove();
- 			        	 $("#footer").append("<input type='text' id='inputtxt' name='contents'>"
- 			        	            +"<button id='sendfly' type='submit'><b>SEND</b></button>");
+ 			        	 $("#footer").append("<div id='footer_cont'>"
+ 			                    	+"<input type='text' id='inputtxt' placeholder='Type a message...'>"
+ 			               			+"<button id='sendfly'><img src='/images/send.png' id=sendup></button>"
+ 			            			+"</div>");
  			        	
  			        	 // 메시지 엔터키 전송
  			        	$("#inputtxt").keydown(function(e) {
@@ -688,7 +170,7 @@ ul { padding-bottom: 5px; }
  				});
  				
  				// 미리 보기 리스트
- 				$("#toCollection").on("click",function(){
+ 				$(".toColl").on("click",function(){
  					$.ajax({
  		 				url:"${pageContext.request.contextPath}/message/previewList.msg",
  		 				method: "post",
@@ -698,10 +180,8 @@ ul { padding-bottom: 5px; }
  		 				dataType: "json"
  		 			}).done(function(resp){
  		 				$(".pre_top").children().remove();
- 		 				$(".pre_top").append("<div class='pre_top'>"
- 		 		 	            +"<div class='pre_top_pf'><img src='/images/default_profile_img.png' class='pre_top_pf_img'></div>"
- 		 		 	            +"<div class='pre_title'>Messenger</div>"
- 		 		 	          	+"</div>");
+ 		 				$(".pre_top").append("<div class='pre_top_pf'><img src='/images/default_profile_img.png' class='pre_top_pf_img'></div>"
+ 		 		 	            +"<div class='pre_title'>채팅</div>");
  		 				
  		 				$(".sector_in").children().remove();
  						 for(var i=0; i < resp.length; i++){
@@ -735,6 +215,13 @@ ul { padding-bottom: 5px; }
  							 
  						}
  						$("#footer").children().remove();
+ 						$("#footer").append("<div class='toWhere ac1'><img src='/images/toFr_un.png' id='toFrIcon'></div>"
+ 		 			            +"<div id='toBetween'></div>"
+ 		 			            +"<div class='toWhere toColl'><img src='/images/toMsg_cl.png' id='toMsgIcon'></div>");
+ 						
+ 						$(".ac1").on("click",function(){
+ 							document.getElementById("ac1_1").click();
+ 						});
  						
  						// 미리 보기 클릭 후 상세 보기로 가기
  						$(".pre_text_p").on("click",function(){
@@ -752,9 +239,9 @@ ul { padding-bottom: 5px; }
 		 						dataType: "json"
 		 					 }).done(function(resp){
 		 						 $(".pre_top").children().remove();
-		 						 $(".pre_top").append("<div class='pre_back'><img src='/images/left2.png' class='pre_back_img'></div>"
-		 						            + "<div class='pre_top_fr_pf'><img src='"+friendImg+"' class='pre_top_fr_pf_img'></div>"
-		 						            + "<div class='pre_text'><b>"+friendNick+"</b></div>");
+		 						$(".pre_top").append("<div class='pre_back'><img src='/images/left4.png' class='pre_back_img'></div>"
+	 						            + "<div class='pre_top_pf'><img src='"+friendImg+"' class='pre_top_pf_img'></div>"
+	 						            + "<div class='pre_text'><span class='pre_text_name'>"+friendNick+"</span></div>");
 		 						 
 		 						 $(".sector_in").children().remove();
 		 						 $(".search").children().remove();
@@ -773,8 +260,10 @@ ul { padding-bottom: 5px; }
 		 			        	 objDiv.scrollTop=objDiv.scrollHeight;
 		 			        	 
 		 			        	 $("#footer").children().remove();
-		 			        	 $("#footer").append("<input type='text' id='inputtxt' name='contents'>"
-		 			        	            +"<button id='sendfly' type='submit'><b>SEND</b></button>");
+		 			        	 $("#footer").append("<div id='footer_cont'>"
+	 			                    	+"<input type='text' id='inputtxt' placeholder='Type a message...'>"
+	 			               			+"<button id='sendfly'><img src='/images/send.png' id=sendup></button>"
+	 			            			+"</div>");
 		 			        	
 		 			        	 // 메시지 엔터키 전송
 		 			        	$("#inputtxt").keydown(function(e) {
