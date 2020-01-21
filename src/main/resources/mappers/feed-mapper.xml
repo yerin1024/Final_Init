@@ -102,6 +102,10 @@
 		dual
 	</select>
 
+	<select id="getTitle" resultType="String" parameterType="Integer">
+		select title from tb_feed where feed_seq = #{feed_seq}
+	</select>
+
 	<insert id="registerFeed" parameterType="kh.init.feeds.FeedDTO">
 		insert into tb_feed
 		values(#{feed_seq},#{email},#{nickname},#{title},#{contents},#{relation},sysdate,#{hashtag})

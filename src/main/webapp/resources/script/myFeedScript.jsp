@@ -14,7 +14,6 @@
 		function replyBtnOnclick(email) {
 			var writeReply = $("#writeReply");
 			var contents = writeReply.html();
-			
 			var feed_seq = $(".feedSeqDiv").html();
 			$.ajax({
 				type : "POST",
@@ -113,8 +112,7 @@
 			});
 		});
 		
-		
-		function deleteReply(ctxPath){
+		function deleteReply(self, ctxPath){
 			var reply_seq = $(this).val();
 			var deleteDiv = $(this).closest(".userInfo");
 			$.ajax({

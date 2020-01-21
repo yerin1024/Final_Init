@@ -57,6 +57,7 @@ public class FeedController {
 		}
 		return "feeds/myFeed";
 	}
+	
 	@RequestMapping(value = "/myFeedAjax", produces = "application/json; charset=UTF-8")
 	@ResponseBody
 	public String myFeedAjax(String page) {
@@ -388,11 +389,11 @@ public class FeedController {
 			dto = service.detailView(feed_seq);
 			likeCheck = service.likeCheck(feed_seq, ((MemberDTO)session.getAttribute("loginInfo")).getEmail());
 			bookmarkCheck = service.bookmarkCheck(feed_seq, ((MemberDTO)session.getAttribute("loginInfo")).getEmail());
-
 			list = service.getMediaList(feed_seq);
+			System.out.println(list.toString() + " 리스트의 투스트링입니다!");
 			replyList = service.viewAllReply(feed_seq);
-//			System.out.println("Email : "+dto.getEmail());
-//			System.out.println("memberDTO : "+mservice.getMemberDTO(dto.getEmail()));
+			System.out.println("Email : "+dto.getEmail());
+			System.out.println("memberDTO : "+mservice.getMemberDTO(dto.getEmail()));
 			obj.addProperty("writerProfile", g.toJson((mservice.getMemberDTO(dto.getEmail())).getProfile_img()));
 			obj.addProperty("likeCheck", g.toJson(likeCheck));
 			obj.addProperty("likeCheck", g.toJson(likeCheck));
@@ -413,7 +414,6 @@ public class FeedController {
 		int ipage = 1;
 		System.out.println("friendFeed 도착");
 		String email = ((MemberDTO)session.getAttribute("loginInfo")).getEmail();
-
 		String profile_img = ((MemberDTO)session.getAttribute("loginInfo")).getProfile_img();
 		try {
 			List<FeedDTO> list = service.getFriendFeed(ipage, email);
@@ -487,6 +487,7 @@ public class FeedController {
 		int ipage = Integer.parseInt(page);
 		System.out.println("friendFeed 도착");
 		String email = ((MemberDTO)session.getAttribute("loginInfo")).getEmail();
+		String profile_img = ((MemberDTO)session.getAttribute("loginInfo")).getProfile_img();
 		JsonObject obj = new JsonObject();
 		try {
 			List<FeedDTO> list = service.getFriendFeed(ipage, email);
@@ -494,18 +495,40 @@ public class FeedController {
 				return "{\"result\" : \"false\"}";
 			}
 			System.out.println("feed size : "+list.size());
+			List<String> profile_imgList = new ArrayList<>();
+			List<Integer> tfeed_seqList = new ArrayList<>();
+			List<Integer> declareCheckList = new ArrayList<>();
 			List<List<String>> mediaList = new ArrayList<>();
 			List<List<ReplyDTO>> replyList = new ArrayList<>();
 			List<Integer> likeCheckList = new ArrayList<>();
 			List<Integer> bookmarkCheckList = new ArrayList<>();
+			tfeed_seqList=service.getDeclare(email);
+			int index=0;
 			for(FeedDTO tmp : list) {
 				int feed_seq = tmp.getFeed_seq();
+				String tmpEmail = tmp.getEmail();
+				profile_imgList.add(service.getProfile_img(tmpEmail));
+				
+				for(int i=0; i<tfeed_seqList.size(); i++) {
+					System.out.println(tfeed_seqList.get(i));
+					if(tmp.getFeed_seq() == tfeed_seqList.get(i)) {
+						System.out.println("신고됨");
+						declareCheckList.add(index, 1);
+						break;
+					}else {
+						System.out.println("신고안됨");
+						declareCheckList.add(index, 0);
+					}
+				}
+				index++;
 				mediaList.add(service.getMediaList(feed_seq));
 //				replyList.add(service.viewAllReply(feed_seq));
 				likeCheckList.add(service.likeCheck(feed_seq, ((MemberDTO)session.getAttribute("loginInfo")).getEmail()));
 				bookmarkCheckList.add(service.bookmarkCheck(feed_seq, ((MemberDTO)session.getAttribute("loginInfo")).getEmail()));
 			}
 			System.out.println(list);
+			System.out.println(profile_imgList);
+			System.out.println(declareCheckList);
 			System.out.println(mediaList);
 			System.out.println(replyList);
 			System.out.println(likeCheckList);
@@ -514,6 +537,8 @@ public class FeedController {
 			Gson gson = new Gson();
 
 			obj.addProperty("list", gson.toJson(list));
+			obj.addProperty("profile_imgList",gson.toJson(profile_imgList));
+			obj.addProperty("declareCheckList", gson.toJson(declareCheckList));
 			obj.addProperty("mediaList", gson.toJson(mediaList));
 			obj.addProperty("replyList", gson.toJson(replyList));
 			obj.addProperty("likeCheckList", gson.toJson(likeCheckList));

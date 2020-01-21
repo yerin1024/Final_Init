@@ -73,6 +73,11 @@ public class FeedDAO {
 		return result;
 	}
 	
+	public String getTitle(int feed_seq) throws Exception{
+		String title = jdbc.selectOne("Feed.getTitle", feed_seq);
+		System.out.println("dao title : "+title);
+		return title;
+	}
 	public int selectAllCount(String keyword) throws Exception{
 		int result = jdbc.selectOne("Feed.selectAllCount", keyword);
 		return result;

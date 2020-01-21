@@ -31,7 +31,7 @@ public class FeedService {
 		int feed_seq = dao.getFeedSeq();
 		dto.setFeed_seq(feed_seq);
 		String contents = dto.getContents();
-		
+
 		//해시태그 찾아냄
 		Pattern p = Pattern.compile("(#[가-히a-zA-Z]*[가-히a-zA-Z])");
 		Matcher m = p.matcher(contents);
@@ -92,25 +92,25 @@ public class FeedService {
 		return "/mediaTmp/"+sysName;
 	}
 
-	
-	
+
+
 	//myFeed를 위한
 	public Map<String, Object> getMyFeed(int page, String email) throws Exception{
 		int totalFeed = dao.getMyFeedCount(email);
 		int startNum = 0;
-        int endNum = 0;
-        if (page==1){
-            startNum = 1;
-            endNum = 12;  //데이터를 10개씩 가져오겠다.
-        }else{
-        	startNum = page+(11*(page-1));  //10개씩 가져오고싶다면  9로 
-        	endNum = page*12;   //20, 40, 60
-        	if(startNum>totalFeed) {
-        		return null;
-        	}else if(endNum>totalFeed) {
-        		endNum = totalFeed;
-        	}
-        }
+		int endNum = 0;
+		if (page==1){
+			startNum = 1;
+			endNum = 12;  //데이터를 10개씩 가져오겠다.
+		}else{
+			startNum = page+(11*(page-1));  //10개씩 가져오고싶다면  9로 
+			endNum = page*12;   //20, 40, 60
+			if(startNum>totalFeed) {
+				return null;
+			}else if(endNum>totalFeed) {
+				endNum = totalFeed;
+			}
+		}
 		List<FeedDTO> list = (List<FeedDTO>)dao.getMyFeed(email, startNum, endNum).get("list");
 		List<Integer> rnum = (List<Integer>)dao.getMyFeed(email, startNum, endNum).get("rnum");
 		List<String> cover = new ArrayList<>();//전체피드의 바둑판 대문사진
@@ -131,7 +131,7 @@ public class FeedService {
 				}
 			}
 		}
-				
+
 		Map<String, Object> map = new HashMap<>();
 		map.put("list", list);
 		map.put("rnum", rnum);
@@ -191,20 +191,20 @@ public class FeedService {
 	public Map<String, Object> wholeFeed(int page, String keyword) throws Exception{
 		int totalFeed = dao.selectAllCount(keyword);
 		int startNum = 0;
-	    int endNum = 0;
-	    if (page==1){
-	        startNum = 1;
-	        endNum = 12;  //데이터를 10개씩 가져오겠다.
-	    }else{
-	    	startNum = page+(11*(page-1));  //10개씩 가져오고싶다면  9로 
-	    	endNum = page*12;   //20, 40, 60
-	    	if(startNum>totalFeed) {
-	    		return null;
-	    	}else if(endNum>totalFeed) {
-	    		endNum = totalFeed;
-	    	}
-	    }
-	
+		int endNum = 0;
+		if (page==1){
+			startNum = 1;
+			endNum = 12;  //데이터를 10개씩 가져오겠다.
+		}else{
+			startNum = page+(11*(page-1));  //10개씩 가져오고싶다면  9로 
+			endNum = page*12;   //20, 40, 60
+			if(startNum>totalFeed) {
+				return null;
+			}else if(endNum>totalFeed) {
+				endNum = totalFeed;
+			}
+		}
+
 		if(keyword!=null) {
 			keyword = "%"+keyword+"%";
 		}
@@ -352,13 +352,21 @@ public class FeedService {
 	//controller-detailView에서 media 목록을 얻기 위한 service
 	public List<String> getMediaList(int feed_seq) throws Exception{
 		List<String> list = dao.getMediaList(feed_seq);
-		for(int i=0; i<list.size(); i++) {
-			if(list.get(i).endsWith("mp4")) { //파일이 동영상일 경우
-				String video = "<video src=\""+list.get(i)+"\">";
-				list.set(i, video);
-			}else {//파일이 이미지
-				String img = "<img src=\""+list.get(i)+"\">";
-				list.set(i, img);
+		System.out.println("service list : "+list.toString());
+
+		if(list.size()==0) {
+			System.out.println("title입력");
+			String title = dao.getTitle(feed_seq);
+			list.add("<span class='cover'>"+title+"</span>");
+		}else {
+			for(int i=0; i<list.size(); i++) {
+				if(list.get(i).endsWith("mp4")) { //파일이 동영상일 경우
+					String video = "<video class='cover' src=\""+list.get(i)+"\">";
+					list.add(i, video);
+				}else {//파일이 이미지
+					String img = "<img class='cover' src=\""+list.get(i)+"\">";
+					list.add(i, img);
+				}
 			}
 		}
 		return list;
