@@ -513,12 +513,10 @@
 	
 	var feedState = 0; // 0:PersonalFeed 1:ScrapFeed
 	var myMail = '${mvo.email }';
-// 	$(function() {
-// 		$("#registerFeed").on("click", function() {
-// 			location.href = "writeFeed";
-// 		})
-// 	})
-    $(function() {
+	$(function() {
+		$("#registerFeed").on("click", function() {
+			location.href = "writeFeed";
+		})
 		$("#personalFeed").on("click", function() {
 			feedState = 0;
 			 page = 1;
@@ -570,8 +568,6 @@
 				}
 			})
 		})
-	})
-	$(function() {
 		$("#scrapFeed").on("click", function() {
 			feedState = 1;
 			page = 1;
@@ -798,14 +794,25 @@
 		<div class="profile">
 			<c:choose>
 				<c:when test="${loginInfo.email ne mvo.email}">
-					<div class="profileLayoutLeft">
-						<button class="btn btn-primary btn-lg" id="openModalBtn">＋</button>
-						<div class="btnText">친구요청</div>
-					</div>
-					<div class="profileLayoutCenter">
-						<div class="profileImageBox">
-							<img class="profileImg" src="${mvo.profile_img}" alt="">
-
+					<div class="profileLayout">
+						<div class="profileLayoutLeft">
+						<c:if test="${frResult == null || frResult == 0  }">
+							<button class="btn btn-primary btn-lg" id="openModalBtn">＋</button>
+							<div class="btnText">친구요청</div>
+						</c:if>			
+							<c:if test="${frResult == 1 }">
+						<button class="btn btn-primary btn-lg" >＋</button>
+							<div class="btnText">친구요청중</div>
+						</c:if>	
+						<c:if test="${frResult == 2  }">
+							<button class="btn btn-primary btn-lg" >＋</button>
+							<div class="btnText">친구</div>
+						</c:if>	
+						
+						</div>
+						<div class="profileLayoutCenter">
+							<div class="profileImageBox">
+								<img class="profileImg" src="${mvo.profile_img}" alt="">
 						</div>
 					</div>
 					<div class="profileMessageLayout">
@@ -849,9 +856,11 @@
 
 			</c:choose>
 		</div>
-		<div class=menubar style="height:200px;">
+
+		<div class="menubar" style="height:200px;">
 		<button type="button" id="personalFeed">Personal feed</button>
 		<button type="button" id="scrapFeed">scrap feed</button>
+
 		
 		<button type="button" id="registerFeed">게시물 등록</button>
 	
@@ -1314,10 +1323,6 @@
 						function() {
 							location.href = "${pageContext.request.contextPath}/member/goMyInfo";
 						})
-		
-						
-						
-						
 		$('#closeModalBtn2').on('click', function() {
 
 			$('#modalBox3').modal('hide');

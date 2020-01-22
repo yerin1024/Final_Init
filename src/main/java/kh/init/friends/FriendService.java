@@ -148,13 +148,13 @@ public class FriendService {
 		System.out.println("나의 리스트 사이즈 : " + myList.size());
 		System.out.println("친구의 리스트 사이즈 : " + frList.size());
 		 int result = 0;
-		 if(reqList.size()>0) {
+		 if(reqList.size() > 0) {
 			 result = 1;
-		 }else if(myList.size()>0 && frList.size()>0) {
+		 }else if(myList.size()> 0 && frList.size()> 0) {
 			 result = 2;
 		 }
 		 //기존 나의 친구 리스트 사이즈가 0일 때 바로 친구 요청
-		
+		System.out.println("친구여부 결과값은 "+result);
 			 
 		return result;
 				
