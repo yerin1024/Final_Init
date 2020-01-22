@@ -27,6 +27,8 @@
 
 
 <link rel="stylesheet" href="/resources/css/nav.css">
+<link rel="stylesheet" href="/resources/css/alr.css">
+<link rel="stylesheet" href="/resources/css/msg.css">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
@@ -416,6 +418,8 @@ html, body {
 </head>
 <body>
 	<jsp:include page="/resources/jsp/nav.jsp" />
+	<jsp:include page="/resources/jsp/alr.jsp"/>
+	<jsp:include page="/resources/jsp/msg.jsp"/>
 	<div id="wrapper" style="position: relative; top: 62px">
 		<!-- <h1>친구피드</h1> -->
 		<c:choose>

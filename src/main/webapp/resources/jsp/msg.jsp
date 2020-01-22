@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <div id=collection>
-		<button id=toCollection class=toColl>메시지 목록</button>
+		<button id=toCollection class=toColl style="display:none;">메시지 목록</button>
 	</div>
 			
 	<div id="view1">
