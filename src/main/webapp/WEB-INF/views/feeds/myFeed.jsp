@@ -788,11 +788,11 @@
 							<div class="btnText">친구요청</div>
 						</c:if>			
 							<c:if test="${frResult == 1 }">
-						
+						<button class="btn btn-primary btn-lg" >＋</button>
 							<div class="btnText">친구요청중</div>
 						</c:if>	
 						<c:if test="${frResult == 2  }">
-							
+							<button class="btn btn-primary btn-lg" >＋</button>
 							<div class="btnText">친구</div>
 						</c:if>	
 						
