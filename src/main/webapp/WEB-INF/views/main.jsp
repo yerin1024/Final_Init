@@ -64,7 +64,7 @@
     }
 
     #tab1_loginBtn {
-        width: 350px;
+        width: 300px;
         height: 50px;
         padding: 5px;
         margin: 10px;
@@ -76,7 +76,7 @@
     }
     
     #tab1_kakaoLoginBtn {
-    	width: 350px;
+    	width: 300px;
         height: 50px;
         margin: 10px;
         border: none;
@@ -178,12 +178,7 @@
         /* border: 1px thin gray; */
         font-size: 11px;
         overflow:hidden;
-    }    
-   	
-   	
-   	
-   	
-   	
+    }      	
    	.inp {
 	  position: relative;
 	  margin-bottom: 15px;
@@ -244,11 +239,11 @@
 	.inp input:focus + span + .border {
 	  transform: scaleX(1);
 	}
-   	
-   	
+	.inputLogin:focus {
+		background-color: transparent;
+	}  	
  
 </style>
-
 <body>
  <jsp:include page="/resources/script/index.jsp" flush="true"/>
     <!-- Modal start -->
