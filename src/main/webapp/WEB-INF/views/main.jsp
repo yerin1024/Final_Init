@@ -274,17 +274,17 @@
                                             <div class="tab1_body">
                                             
                                             	<label for="tab1_email" class="inp">
-												  <input type="text" id="tab1_email" name="email" placeholder="&nbsp;">
+												  <input type="text" class="inputLogin" id="tab1_email" name="email" placeholder="&nbsp;">
 												  <span class="label">Email</span>
 												  <span class="border"></span>
 												</label>
-												
+												<br>
 												<label for="tab1_pw" class="inp">
-												  <input type="text" id="tab1_pw" name="pw" placeholder="&nbsp;">
+												  <input type="password" class="inputLogin" id="tab1_pw" name="pw" placeholder="&nbsp;">
 												  <span class="label">Password</span>
 												  <span class="border"></span>
 												</label>
-												
+												<br>
                                                 <button type="button" id="tab1_loginBtn" onclick="toLogin();">로그인</button><br>
                                                 <img src="resources/images/kakaoLogin_btn.png" id="tab1_kakaoLoginBtn"><br>
 	                                            <div class="saveId">
