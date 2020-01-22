@@ -173,15 +173,25 @@
 				alert("yes!");
 			})
 		});
-		
+		var clickCnt;
 		//답글버튼 눌렀을 때 이벤트
 		$(document).on("click",".registerChildBtn", function(){
+			
+			console.log("답글클릭 : cnt : " + clickCnt);
+			
+				if(clickCnt == 0){	
+						console.log("왜 출력안돼;")
+						console.log("this 출력 : " + $(this));
+						$("div[value=1]").remove();
+				}
+			clickCnt = 0;
+			
 			var userNickname = '${loginInfo.nickname }';
 			var replyWriter = $(this).closest(".replyBtns").siblings(".userProfileID").html(); //부모댓글의 닉네임
 			var userInfo = $(this).closest(".userInfo");
 			var reply_seq = $(this).closest(".userInfo").attr("reply_seq");
 			//--------------------------------------------------------
-			var registerChildDiv = $("<div></div>");
+			var registerChildDiv = $("<div value='1'></div>");
 			registerChildDiv.addClass("childReply");
 			
 			var userProfile = $("<span></span>");
@@ -221,10 +231,10 @@
 			registerChildDiv.append(userReply);
 			registerChildDiv.append(replyBtns);
 			userReply.append(replyContents);
-			userInfo.append(registerChildDiv);	
+			userInfo.append(registerChildDiv);		
+			
 			var childReply = $(this).closest(".replyBtns").siblings(".childReply").eq(0);
 			console.log(childReply);
-		   	$(".childReply").not(childReply).remove();
 			//--------------------------------------------------------  		
 		});
 		$('#exampleModal').on('shown.bs.modal', function (event) {
@@ -271,47 +281,47 @@
 					cei.append(ol);
 					
 					var cInner = $("<div class='carousel-inner'></div>");
-					var replyList = "";
-					for(var i=0; i<replyList.length; i++){
-						if(replyList.parent = 0){
+// 					var replyList = "";
+// 					for(var i=0; i<replyList.length; i++){
+// 						if(replyList.parent = 0){
 							
-					replyList += "<div class='reply'>"
-					replyList += 	"<div class='writerInfo'>"
-					replyList +=    		"<span class='writerProfile'><img src='"+writerProfile.profile_img+"' class='writerProfileImg'></span>"
-					replyList += 		"<span class="writerProfileID">asdsadas</span>"
-					replyList += 		<span class="text"><p>asdasd</p></span>
-					replyList +=    </div>     
-					replyList += "<div class='userInfo' reply_seq='"+replyList.reply_seq+"'>"
-					replyList += <span class="userProfile">
-					replyList += 		<img class="userProfileImg" src="/resources/images/dog.jpg" alt="">
-					replyList +=   </span>
-					replyList +=           <div class="profileDiv">
-					replyList +=         	  <span class="userProfileID">qqqqq@naver.com</span>
-	             	replyList +=          <span class="userReply">
-	             	replyList +=       	  <div class="replyContents">sadasd</div>
-	             	replyList +=        </span>
-	             	replyList +=        </div>	               
-	             	replyList +=        <div class="replyBtns">
-	             	replyList +=        		<button type="button" class="modifyReply">수정</button><button type="button" class="deleteReply">삭제</button>
-	             	replyList +=        		<button type="button" class="registerChildBtn">답글</button>
-	             	replyList +=       </div>
-	             	replyList +=       <div class="childReply" reply_seq="968">
-	             	replyList +=     		<span class="userProfile">
-	               	replyList +=     			<img class="userProfileImg" src="/files/null_profile_img.jpg" alt="사진오류">
-	               	replyList +=      		</span>
-	             	replyList +=      		<span class="userProfileID">kimsewon</span>
-	               	replyList +=      <span class="userReply">
-	              	replyList +=      		<div class="replyContents" contenteditable="false">sadasd</div>
-	               	replyList +=      </span>
-	                replyList +=       <div class="replyBtns">
-	                replyList +=      		<button class="modifyChildBtn">수정</button>
-	               	replyList +=      		<button class="deleteChildReplyBtn">삭제</button>
-	               	replyList +=      </div>
-	               	replyList +=      </div>
-	               	replyList +=      </div>
-	                replyList +=      "</div>"
-						}
-					}
+// 					replyList += "<div class='reply'>"
+// 					replyList += 	"<div class='writerInfo'>"
+// 					replyList +=    		"<span class='writerProfile'><img src='"+writerProfile.profile_img+"' class='writerProfileImg'></span>"
+// 					replyList += 		"<span class="writerProfileID">asdsadas</span>"
+// 					replyList += 		<span class="text"><p>asdasd</p></span>
+// 					replyList +=    </div>     
+// 					replyList += "<div class='userInfo' reply_seq='"+replyList.reply_seq+"'>"
+// 					replyList += <span class="userProfile">
+// 					replyList += 		<img class="userProfileImg" src="/resources/images/dog.jpg" alt="">
+// 					replyList +=   </span>
+// 					replyList +=           <div class="profileDiv">
+// 					replyList +=         	  <span class="userProfileID">qqqqq@naver.com</span>
+// 	             	replyList +=          <span class="userReply">
+// 	             	replyList +=       	  <div class="replyContents">sadasd</div>
+// 	             	replyList +=        </span>
+// 	             	replyList +=        </div>	               
+// 	             	replyList +=        <div class="replyBtns">
+// 	             	replyList +=        		<button type="button" class="modifyReply">수정</button><button type="button" class="deleteReply">삭제</button>
+// 	             	replyList +=        		<button type="button" class="registerChildBtn">답글</button>
+// 	             	replyList +=       </div>
+// 	             	replyList +=       <div class="childReply" reply_seq="968">
+// 	             	replyList +=     		<span class="userProfile">
+// 	               	replyList +=     			<img class="userProfileImg" src="/files/null_profile_img.jpg" alt="사진오류">
+// 	               	replyList +=      		</span>
+// 	             	replyList +=      		<span class="userProfileID">kimsewon</span>
+// 	               	replyList +=      <span class="userReply">
+// 	              	replyList +=      		<div class="replyContents" contenteditable="false">sadasd</div>
+// 	               	replyList +=      </span>
+// 	                replyList +=       <div class="replyBtns">
+// 	                replyList +=      		<button class="modifyChildBtn">수정</button>
+// 	               	replyList +=      		<button class="deleteChildReplyBtn">삭제</button>
+// 	               	replyList +=      </div>
+// 	               	replyList +=      </div>
+// 	               	replyList +=      </div>
+// 	                replyList +=      "</div>"
+// 						}
+// 					}
 					var prevA = $("<a class='carousel-control-prev' href='#carouselExampleIndicators' role='button' data-slide='prev'></a>");
 					prevA.append("<span class='carousel-control-prev-icon' aria-hidden='ture'></span>");
 					prevA.append("<span class='sr-only'>Previous</span>");
@@ -370,9 +380,13 @@
 		
 		//답글등록버튼
 		$(document).on("click",".registerChildReply", function(){
+			clickCnt = 1;
 			var feed_seq = $("#exampleModal").attr("feed_seq");
 			var reply_seq = $(this).closest(".userInfo").attr("reply_seq");
 			var child_replySeq = $(this).closest(".childReply");
+			
+			child_replySeq.attr("value", 0);
+			
 			var replyWriter = $(this).closest(".childReply").siblings(".profileDiv").find(".userProfileID").html(); //부모댓글의 닉네임
 			var childReplyContents = $(this).closest(".replyBtns").siblings(".userReply").find(".replyContents").html();
 			var replyContents = $(this).closest(".replyBtns").siblings(".userReply").find(".replyContents");
@@ -390,6 +404,8 @@
 				btnsDiv.append(deleteChildReplyBtn);
 				replyContents.attr("contentEditable","false");
 				child_replySeq.attr("reply_seq",resp.reply_seq);
+				clickCnt = 2;
+				console.log("등록완료 : cnt : " + clickCnt);
 			}).fail(function(){
 				console.log("실패!");
 			})
