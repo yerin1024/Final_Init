@@ -471,9 +471,65 @@ body{
 }
 </style>
 <script>
+
+		
+	
+	var feedState = 0; // 0:PersonalFeed 1:ScrapFeed
+	var myMail = '${mvo.email }';
 	$(function() {
 		$("#registerFeed").on("click", function() {
 			location.href = "writeFeed";
+		})
+		$("#personalFeed").on("click", function() {
+			feedState = 0;
+			 page = 1;
+			$('.row').remove();
+			$.ajax({
+				url : "${pageContext.request.contextPath}/feed/myPersonalFeed",
+				type : "POST",
+				data : {
+					"email" : myMail
+				},
+				dataType : "json",
+				success : function(res) {
+					console.log(res);
+					var list = JSON.parse(res.list);
+			        var cover = JSON.parse(res.cover);
+			          console.log(list);
+					
+				
+			          var i = 0;
+			          var end = list.length;
+			          var index=0;
+			          var data = "";
+			          
+			          for(i; i<end; i++){
+			              data = data + "<div class='col-4 feed'><a class='btn btn-primary' data-toggle='modal' data-target='#exampleModal' href='#' data-id='"+list[index].feed_seq+"'>"+cover[index]+"</a></div>";
+			              console.log(i);
+			              if((i+1)%3==1){
+			                 console.log(i+"는 1");
+			                 data = "<div class='row' style='margin:0px'>" +data;
+			              }
+			              if((i+1)%3==0){
+			                 console.log(i+"는0");
+			                 data = data + "</div>";
+			                  $("#feeds").append(data); 
+			                  var data = "";
+			              }
+			              index++;
+			            }
+			            $("#feeds").append(data); 
+			           
+			            
+					
+				},//personalFeed done
+				error : function(
+						request,
+						status,
+						error) {
+					console.log("ajax call went wrong:"+ request.responseText);
+				}
+			})
 		})
 		$("#scrapFeed").on("click", function() {
 			feedState = 1;
@@ -549,14 +605,25 @@ body{
 				if ($(window).scrollTop() >= $(document).height()
 						- $(window).height() - 5) {
 					console.log("스크롤감지");
-					if (page == 1) {
-						console.log(page);
-						page++;
-					} else {
-						console.log(page);
-						getList(page);
-						page++;
-					}
+					if(feedState == 1){
+						if (page == 1) {
+							console.log(page);
+							page++;
+						} else {
+							console.log(page);
+							getScrapList(page);
+							page++;
+						}
+					}else{
+						if (page == 1) {
+							console.log(page);
+							page++;
+						} else {
+							console.log(page);
+							getList(page);
+							page++;
+						}
+				 }
 				}
 			});
 	
@@ -760,9 +827,6 @@ body{
 
 			</c:choose>
 		</div>
-		<div class=menubar style="height:200px;">
-		<button type="button">Personal feed</button>
-		<button type="button">scrap feed</button>
 		
 		<div class="wrapper">
 			
@@ -829,7 +893,7 @@ body{
 	</div>
 
 	<!-- 친구 목록 모달 영역 -->
-	<div id="modalBox2" class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+	<div id="modalBox3" class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
 		style="margin-top: 100px;">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
@@ -1249,245 +1313,15 @@ body{
 						function() {
 							location.href = "${pageContext.request.contextPath}/member/goMyInfo";
 						})
-		// 친구 모달 버튼에 이벤트를 건다.	
-		$('#friendsList')
-				.on(
-						'click',
-						function() {
-
-							$('.frInfo').remove();
-							$
-									.ajax({
-										url : "${pageContext.request.contextPath}/friend/selectFndList",
-										type : "POST",
-										dataType : "json",
-										success : function(res) {
-											console.log(res);
-											if (res.waitlist != null) {
-												var waitlist = JSON
-														.parse(res.waitlist);
-												for (var j = 0; j < waitlist.length; j++) {
-													$('.modal-body2')
-															.append(
-
-																	"<div class=frInfo><a href='${pageContext.request.contextPath}/feed/yourFeed?email="
-																			+ waitlist[j].email
-																			+ "'>"
-																			+ waitlist[j].email
-																			+ " </a> <button type=button class=frInfo id=acceptfr name="+waitlist[j].email+">친구 추가</button><button type=button class=frInfo id=cancelfr name="+waitlist[j].email+">취소</button></div>");
-
-												}
-											}
-											if (res.list != null) {
-												var list = JSON.parse(res.list);
-												for (var j = 0; j < list.length; j++) {
-													$('.modal-body2')
-															.append(
-
-																	"<div class=frInfo><a href='${pageContext.request.contextPath}/feed/yourFeed?email="
-																			+ list[j].email
-																			+ "'>"
-																			+ list[j].email
-																			+ " </a> <button type=button class=frInfo id=cutfr name="+list[j].email+">친구 끊기</button></div>");
-
-												}
-											}
-											// get the ajax response data
-											// var data = res.body;
-
-											// update modal content here
-											// you may want to format data or 
-											// update other modal elements here too
-											// 		                console.log(changedStr.waitlist);
-											// 		                console.log();
-
-											// show modal
-											$('#modalBox2').modal('show');
-
-											//친구수락 로직~
-											$("#acceptfr")
-													.on(
-															"click",
-															function() {
-																var yr_id = $(
-																		this)
-																		.attr(
-																				"name");
-																console
-																		.log(yr_id);
-																$
-																		.ajax({
-																			url : "${pageContext.request.contextPath}/friend/acceptFndRequest",
-																			type : "POST",
-																			data : {
-																				yr_id : yr_id
-																			},
-																			dataType : "text",
-																			success : function(
-																					res) {
-																				console
-																						.log(res);
-																				console
-																						.log(yr_id);
-																				$(
-																						'#friendsList')
-																						.click();
-
-																				//$('.modal-body2').append("<div class=frInfo>"+list[j].email+"  <button type=button class=frInfo id=cutfr name="+list[j].email+">친구 끊기</button></div>");
-
-																				// show modal
-
-																			},
-																			error : function(
-																					request,
-																					status,
-																					error) {
-																				console
-																						.log("ajax call went wrong:"
-																								+ request.responseText);
-																			}
-																		})
-															});
-											//친구 끊기
-											$("#cutfr")
-													.on(
-															"click",
-															function() {
-																var yr_id = $(
-																		this)
-																		.attr(
-																				"name");
-																console
-																		.log(yr_id);
-																$
-																		.ajax({
-																			url : "${pageContext.request.contextPath}/friend/cutFndRelation",
-																			type : "POST",
-																			data : {
-																				yr_id : yr_id
-																			},
-																			dataType : "text",
-																			success : function(
-																					res) {
-																				console
-																						.log(res);
-																				console
-																						.log(yr_id);
-																				$(
-																						'#friendsList')
-																						.click();
-
-																				//$('.modal-body2').append("<div class=frInfo>"+list[j].email+"  <button type=button class=frInfo id=cutfr name="+list[j].email+">친구 끊기</button></div>");
-
-																				// show modal
-
-																			},
-																			error : function(
-																					request,
-																					status,
-																					error) {
-																				console
-																						.log("ajax call went wrong:"
-																								+ request.responseText);
-																			}
-																		})
-															});
-											//친구 검색
-											$('#searchFriends')
-													.on(
-															'keyup',
-															function() {
-																var search = $(
-																		this)
-																		.val();
-																console
-																		.log(search);
-																$('.frInfo')
-																		.remove();
-																$
-																		.ajax({
-																			url : "${pageContext.request.contextPath}/friend/searchFndList",
-																			type : "POST",
-																			dataType : "json",
-																			data : {
-																				search : search
-																			},
-																			success : function(
-																					res) {
-
-																				console
-																						.log(res);
-																				if (res.waitlist != null) {
-																					var waitlist = JSON
-																							.parse(res.waitlist);
-																					for (var j = 0; j < waitlist.length; j++) {
-																						$(
-																								'.modal-body2')
-																								.append(
-																										"<div class=frInfo id=wfrNum"+j+"><a href='${pageContext.request.contextPath}/feed/yourFeed?email="
-																												+ waitlist[j].email
-																												+ "'>"
-																												+ waitlist[j].email
-																												+ " </a> <button type=button class=frInfo id=acceptfr name="+waitlist[j].email+">친구 추가</button><button type=button class=frInfo id=cancelfr name="+waitlist[j].email+">취소</button></div>");
-
-																					}
-																				}
-																				if (res.list != null) {
-																					var list = JSON
-																							.parse(res.list);
-																					for (var j = 0; j < list.length; j++) {
-																						$(
-																								'.modal-body2')
-																								.append(
-
-																										"<div class=frInfo id=frNum"+j+"><a href='${pageContext.request.contextPath}/feed/yourFeed?email="
-																												+ list[j].email
-																												+ "'>"
-																												+ list[j].email
-																												+ " </a> <button type=button class=frInfo id=cutfr name="+list[j].email+">친구 끊기</button></div>");
-
-																					}
-																				}
-																				// get the ajax response data
-																				// var data = res.body;
-
-																				// update modal content here
-																				// you may want to format data or 
-																				// update other modal elements here too
-																				// 		                console.log(changedStr.waitlist);
-																				// 		                console.log();
-
-																				// show modal
-
-																				//친구 검색
-																			},
-																			error : function(
-																					request,
-																					status,
-																					error) {
-																				console
-																						.log("ajax call went wrong:"
-																								+ request.responseText);
-																			}
-																		});
-
-															});
-										},
-										error : function(request, status, error) {
-											console.log("ajax call went wrong:"
-													+ request.responseText);
-										}
-									});
-
-						});
+		
 		$('#closeModalBtn2').on('click', function() {
 
-			$('#modalBox2').modal('hide');
+			$('#modalBox3').modal('hide');
 
 		});
 		$('#identifyModalBtn2').on('click', function() {
 
-			$('#modalBox2').modal('hide');
+			$('#modalBox3').modal('hide');
 		});
 
 		$('#openModalBtn').on('click', function() {
