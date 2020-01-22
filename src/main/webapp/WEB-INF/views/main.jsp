@@ -48,6 +48,11 @@
 
     .tab1_body {
         font-family: 'Noto Sans KR', sans-serif;
+        width: 70%;
+    }
+    
+    .tab1_logo {
+    	width: 30%;
     }
 
      .tab1_body .userInput {
@@ -64,25 +69,33 @@
     }
 
     #tab1_loginBtn {
-        width: 300px;
-        height: 50px;
+        width: 250px;
+        height: 60px;
         padding: 5px;
-        margin: 10px;
+        margin: 5px;
         border: none;
         border-radius: 8px;
-        font-size: 20px;
+        font-size: 19px;
         background-color: #0f4c81;
         color: #fffefc;
     }
     
     #tab1_kakaoLoginBtn {
-    	width: 300px;
-        height: 50px;
-        margin: 10px;
+    	width: 250px;
+        height: 60px;
+        margin: 5px;
         border: none;
         border-radius: 8px;
     }
-
+	
+	#logoDiv{
+		width: 100px;
+	}
+	
+	#logoDiv img{
+		width: 100%;
+	}
+	
     #tab1_saveIdCheck {
         margin: 10px;
         padding: 10px;
@@ -178,13 +191,15 @@
         /* border: 1px thin gray; */
         font-size: 11px;
         overflow:hidden;
-    }      	
+    }   
+       	
    	.inp {
 	  position: relative;
 	  margin-bottom: 15px;
 	  width: 100%;
 	  max-width: 280px;
 	}
+	
 	.inp .label {
 	  position: absolute;
 	  top: 16px;
@@ -195,6 +210,7 @@
 	  transform-origin: 0 0;
 	  transition: all 0.2s ease;
 	}
+	
 	.inp .border {
 	  position: absolute;
 	  bottom: 0;
@@ -206,6 +222,7 @@
 	  transition: all 0.15s ease;
 	  background: #0f4c81;
 	}
+	
 	.inp input {
 	  -webkit-appearance: none;
 	  width: 100%;
@@ -266,8 +283,12 @@
                                 <div class="tab1_container">
                                     <form action="${pageContext.request.contextPath}/member/loginProc.do" method="post" id="tab1_loginForm">
                                         <div class="tab1_loginContainer">
-                                            <div class="tab1_body">
-                                            
+                                        	<div class="tab1_logo">
+	                                        	<p id="logoDiv">
+	                                        		<img src="resources/images/login_logo.png">
+	                                        	</p>                                        		
+                                        	</div>
+                                            <div class="tab1_body">                                            
                                             	<label for="tab1_email" class="inp">
 												  <input type="text" class="inputLogin" id="tab1_email" name="email" placeholder="&nbsp;">
 												  <span class="label">Email</span>
@@ -281,7 +302,7 @@
 												</label>
 												<br>
                                                 <button type="button" id="tab1_loginBtn" onclick="toLogin();">로그인</button><br>
-                                                <img src="resources/images/kakaoLogin_btn.png" id="tab1_kakaoLoginBtn"><br>
+                                                <img src="resources/images/kakao_login_large.png" id="tab1_kakaoLoginBtn"><br>
 	                                            <div class="saveId">
 	                                            	<input type="checkbox" id="tab1_saveIdCheck" onChange="toCheckCbox();">
 	                                                <span>아이디 저장</span>
