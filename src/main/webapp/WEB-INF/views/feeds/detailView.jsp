@@ -64,6 +64,9 @@ img {
 	width: 100px;
 	height: 100px;
 }
+.row{
+	height:100%;
+}
 </style>
 <script>
 	$(function() {
@@ -254,7 +257,7 @@ img {
 		</div>
 		<div class="body">
 			<c:choose>
-				<c:when test="${fn:length(media) >0}">
+				<c:when test="${fn:length(media) >1 }">
 					<div class="row media">
 						<div id="carouselExampleIndicators" class="carousel slide"
 							data-interval="false">
@@ -295,7 +298,12 @@ img {
 						</div>
 					</div>
 				</c:when>
-				
+<!-- 				미디어가 없을때  -->
+				<c:otherwise>
+					<div class="row media">
+					${media }
+					</div>
+				</c:otherwise>
 				
 				
 				
