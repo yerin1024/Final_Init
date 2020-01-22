@@ -971,7 +971,7 @@
                      		<span class="writerProfileID">asdsadas</span>
                     </div>     
                 </div>
-                <div class="modal-btns">KobeKim</div>
+                <div class="modal-btns"></div>
             </div>
         </div>
 	      <div class="modal-header">
@@ -989,113 +989,6 @@
 	    $("#registerFeed").on("click", function() {
 	    	location.href = "${pageContext.request.contextPath}/feed/writeFeed";
 		});
-	    
-	$('#exampleModal').on('shown.bs.modal', function (event) {
-		var seq = $(event.relatedTarget).data('id');
-		console.log("seq : "+seq);
-		var feed_seq = $("#exampleModal").attr("feed_seq",seq);
-		console.log("##" + feed_seq)
-		$.ajax({
-			type:"post",
-			url:"/feed/detailView",
-			data:{
-				feed_seqS:seq
-			},
-			dataType:"json"
-		}).done(function(data){
-			console.log(data);
-			var writerProfile = data.writerProfile;
-			var likeCheck = data.likeCheck;
-			var bookmarkCheck = data.bookmarkCheck;
-			var mediaList = JSON.parse(data.media);
-			var dto = JSON.parse(data.dto);
-			console.log(mediaList.length);
-			//디테일뷰 미디어
-			if(mediaList.length>0){ //미디어가 존재하므로 캐러셀 만들어줌
-				console.log("캐러셀 시작");
-				var mediaRow = $("<div class='row media'></div>");
-				var cei = $("<div id='carouselExampleIndicators' class='carousel slide' data-interval='false'></div>");
-				var ol = $("<ol class='carousel-indicators'></ol>");
-				console.log(ol.html());
-				for(var i=0; i<mediaList.length; i++){
-					console.log(i);
-					if(i==0){
-						ol.append("<li data-target='#carouselExampleIndicators' data-slide-to='0' class='active'></li>");
-						console.log("i는 0");
-						console.log(ol.html());
-					}else{
-						ol.append("<li data-targer='#carouselExampleIndicators' data-slide-to='"+i+"'></li>");
-						console.log("i는 "+i);
-						console.log(ol.html());
-					}
-				}
-				cei.append(ol);
-				
-				var cInner = $("<div class='carousel-inner'></div>");
-				for(var i=0; i<mediaList.length; i++){
-					if(i==0){
-						var cItem = $("<div class='carousel-item active'>"+mediaList[i]+"</div>");
-					}else{
-						var cItem = $("<div class='carousel-item'>"+mediaList[i]+"</div>");
-					}
-					cInner.append(cItem);
-				}
-				var prevA = $("<a class='carousel-control-prev' href='#carouselExampleIndicators' role='button' data-slide='prev'></a>");
-				prevA.append("<span class='carousel-control-prev-icon' aria-hidden='ture'></span>");
-				prevA.append("<span class='sr-only'>Previous</span>");
-				var nextA = $("<a class='carousel-control-next' href='#carouselExampleIndicators' role='button' data-slide='next'></a>");
-				nextA.append("<span class='carousel-control-next-icon' aria-hidden='ture'></span>");
-				nextA.append("<span class='sr-only'>Next</span>");
-				
-				cInner.append(prevA);
-				cInner.append(nextA);
-				
-				cei.append(cInner);
-				mediaRow.append(cei);
-				$(".modal-body1").html(mediaRow);
-			}
-			//디테일뷰 글
-			var textRow = $("<span class='text'></span>");
-			textRow.append(dto.contents);
-			$(".writerInfo").append(textRow);
-			//디테일뷰 좋아요, 스크랩, 수정, 삭제 버튼
-			//좋아요버튼
-			if(likeCheck==0){
-				var likeA = $("<a href='#' id='like' class='"+dto.feed_seq+"'></a>");
-				var likeS = $("<span id='likeImg'></span>");
-				var likeI = $("<img id='likeBtn' class='likeBefore' src='${pageContext.request.contextPath}/resources/images/likeBefore.png'>");
-			}else{
-				var likeA = $("<a href='#' id='like' class='"+dto.feed_seq+"'></a>");
-				var likeS = $("<span id='likeImg'></span>");
-				var likeI = $("<img id='likeBtn' class='likeAfter' src='${pageContext.request.contextPath}/resources/images/likeAfter.png'>");
-			}
-			likeA.append(likeS);
-			likeS.append(likeI); 
-		
-			//스크랩버튼
-			if(bookmarkCheck==0){
-				var bookmarkA = $("<a href='#' id='bookmark' class='"+dto.feed_seq+"'></a>");
-				var bookmarkS = $("<span id='bookmarkImg'></span>");
-				var bookmarkI = $("<img id='bookmarkBtn' class='bookmarkBefore' src='${pageContext.request.contextPath}/resources/images/bookmarkBefore.png'>");
-			}else{
-				var bookmarkA = $("<a href='#' id='bookmark' class='"+dto.feed_seq+"'></a>");
-				var bookmarkS = $("<span id='bookmarkImg'></span>");
-				var bookmarkI = $("<img id='bookmarkBtn' class='bookmarkAfter' src='${pageContext.request.contextPath}/resources/images/bookmarkAfter.png'>");
-			}
-			bookmarkA.append(bookmarkS);
-			bookmarkS.append(bookmarkI); 
-			
-			$(".modal-btns").html("");
-			$(".modal-btns").append(likeA);
-			$(".modal-btns").append(bookmarkA);
-
-			$(".writerProfile").html("<img src="+writerProfile+" class='writerProfileImg'>");
-			
-		})
-		$('#myInput').trigger('focus');
-		
-	})
-
 			$(document).on("click", "#like", function(e){
 				e.preventDefault();   
 			var seq = $(this).attr("class");
