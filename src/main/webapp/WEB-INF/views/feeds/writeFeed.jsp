@@ -10,21 +10,13 @@
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
 <link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-	integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
-	crossorigin="anonymous">
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-	integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
-	crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
 <script
-	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-	integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-	crossorigin="anonymous"></script>
+	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
 <script
-	src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-	integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-	crossorigin="anonymous"></script>
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
 <script
@@ -34,12 +26,31 @@
 	rel="stylesheet">
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.js"></script>
+<link rel="stylesheet" href="/resources/css/nav.css"> 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
 <style>
+
+#mediaRow{
+	min-width:1000px;
+	margin:auto;
+}
+
+
+#writeForm{
+	border:2px solid red;
+  	margin:auto;
+  	padding-top:60px;
+}
+
+#title {
+	width:40%;
+}
 .dz-default {
-	border: 2px solid black;
+	border: 1px solid black;
+	width:90%;
+	margin-top:10px;
 }
 
 .dz-preview {
@@ -52,17 +63,76 @@
 }
 
 .carousel-inner * {
-	width: 600px;
-	height: 600px;
+	width: 14vw;
+	height: 14vw;
 }
 .carousel-inner{
-	width:100vw;
+	width:60vw;
+}
+#summernote{
+	width:55vw; 
+	min-width:670px;
+}
+.note-editable{
+	height:26vw;
+	min-height:400px;
+}
+.cover{
+	margin-left:18px;
+}
+/* All Device */
+/* 모든 해상도를 위한 공통 코드를 작성한다. 모든 해상도에서 이 코드가 실행됨. */
+
+/* Mobile Device */
+/* 768px 미만 해상도의 모바일 기기를 위한 코드를 작성한다. 모든 해상도에서 이 코드가 실행됨. 미디어 쿼리를 지원하지 않는 모바일 기기를 위해 미디어 쿼리 구문을 사용하지 않는다. */
+
+/* Tablet &amp; Desktop Device */
+@media all and (min-width:768px) {
+	/*     사용자 해상도가 768px 이상일 때 이 코드가 실행됨. 테블릿과 데스크톱의 공통 코드를 작성한다. */
+	body {
+		background-color: purple;
+	}
 }
 
+@media all and (max-width:768px) {
+	/*     사용자 해상도가 768px 이하일 때 이 코드가 실행됨. 테블릿과 데스크톱의 공통 코드를 작성한다. */
+	.section {
+		height: 150px;
+		margin: 0px;
+		padding: 0px;
+	}
+}
+/* Tablet Device */
+@media all and (max-width:1024px) {
+	/*     사용자 해상도가 768px 이상이고 1024px 이하일 때 이 코드가 실행됨. 아이패드 또는 비교적 작은 해상도의 랩탑이나 데스크톱에 대응하는 코드를 작성한다. */
+	.section {
+		height: 250px;
+		padding: 0px;
+	}
+	.profileImageBox {
+		height: 200px;
+		width: 200px;
+	}
+	.friendRequest {
+		width: 80px;
+		height: 80px;
+	}
+}
+#wrapper{
+	margin:auto;
+	min-width:1000px;
+}
+/* Desktop Device */
+@media all and (min-width:1025px) {
+	/*     사용자 해상도가 1025px 이상일 때 이 코드가 실행됨. 1025px 이상의 랩탑 또는 데스크톱에 대응하는 코드를 작성한다. */
+	body {
+		background-color: pink;
+	}
+}
 </style>
 <script>
 	$(function() {
-		$("#writeForm").on("submit", function() {
+		$("#writeFeedForm").on("submit", function() {
 			$(".note-editable img").removeAttr("style");
 			var note = $(".note-editable").html();
 			$("#contents").val(note);
@@ -70,50 +140,65 @@
 	})
 </script>
 </head>
+<jsp:include page="/resources/jsp/nav.jsp" />
 <body>
-<form action="/feed/mediaTmpUpload" class="dropzone"
-		id="my-awesome-dropzone" enctype="multipart/form-data"></form>
-
-
-	<div id="carouselExampleIndicators" class="carousel slide"
-		data-interval="false">
-		<ol class="carousel-indicators">
-
-		</ol>
-		<div class="carousel-inner"></div>
-		<a class="carousel-control-prev" href="#carouselExampleIndicators"
-			role="button" data-slide="prev"> <span
-			class="carousel-control-prev-icon" aria-hidden="true"></span> <span
-			class="sr-only">Previous</span>
-		</a> <a class="carousel-control-next" href="#carouselExampleIndicators"
-			role="button" data-slide="next"> <span
-			class="carousel-control-next-icon" aria-hidden="true"></span> <span
-			class="sr-only">Next</span>
-		</a>
+	<div id="wrapper">
+		<div id="writeForm">
+		<br>
+			<form action="writeFeedProc" method="post" enctype="multipart/form-data" id="writeFeedForm">
+				제목&nbsp;&nbsp;<input type="text" name="title" id="title">
+				<select name="relation">
+				<option value='0'>전체보기</option>
+				<option value='1'>지인</option>
+				<option value='2'>아는친구</option>
+				<option value='3'>절친</option>
+				<option value='4' selected>나만보기</option>
+				</select>
+				<textarea name="contents" style="display: none" id="contents"></textarea>
+				<button type="button" id="register">등록</button>
+			</form>
+			<br>
+			<br>
+		
+			<div class="row" id="mediaRow">
+				<div class="col-3">
+				<div class="row">
+					<div class="col-12">
+						<form action="/feed/mediaTmpUpload" class="dropzone"
+							id="my-awesome-dropzone" enctype="multipart/form-data"></form>
+					</div>
+					<div class="col-12" style="padding-top:40px">
+						<div id="carouselExampleIndicators" class="carousel slide"
+							data-interval="false" >
+							<ol class="carousel-indicators">
+					
+							</ol>
+							<div class="carousel-inner"></div>
+							<a class="carousel-control-prev" href="#carouselExampleIndicators"
+								role="button" data-slide="prev"> <span
+								class="carousel-control-prev-icon" aria-hidden="true"></span> <span
+								class="sr-only">Previous</span>
+							</a> <a class="carousel-control-next" href="#carouselExampleIndicators"
+								role="button" data-slide="next"> <span
+								class="carousel-control-next-icon" aria-hidden="true"></span> <span
+								class="sr-only">Next</span>
+							</a>
+						</div>
+					</div>
+				</div>
+				</div>
+				<!-- 	캐러셀에서 첫번째 미디어만 active가 붙어야 정상동작하는데 그떼 사용하기 위해 index div를 만들어놓고 display none을 시켜놨음 -->
+				<div class="col-8" style="margin:auto">
+				<div id="summernote"></div>
+				</div>
+			</div>
+			<span id="index" style="display: none">0</span>
+		</div>
 	</div>
-<!-- 	캐러셀에서 첫번째 미디어만 active가 붙어야 정상동작하는데 그떼 사용하기 위해 index div를 만들어놓고 display none을 시켜놨음 -->
-	<span id="index" style="display: none">0</span>
-<form action="writeFeedProc" method="post" enctype="multipart/form-data" id="writeForm">
-	제목:<input type="text" name="title">
-	<select name="relation">
-	<option value='0'>전체보기</option>
-	<option value='1'>지인</option>
-	<option value='2'>아는친구</option>
-	<option value='3'>절친</option>
-	<option value='4' selected>나만보기</option>
-	</select>
-	<textarea name="contents" style="display: none" id="contents"></textarea>
-	<button>등록</button>
-</form>
-<div id="summernote"></div>
-
-
 	<script>
 		$('#summernote').summernote({
-			placeholder : 'Hello bootstrap 4',
 			tabsize : 2,
-			height : 600,
-			width : 900,
+			disableResizeEditor: true,
 			toolbar: [
 	             // [groupName, [list of button]]
 	             ['style', ['bold', 'italic', 'underline', 'clear']],
@@ -135,8 +220,8 @@
 				    });
 					//성공했을때
 					this.on("success",function(file, response) {
-						$(".carousel-control-next").css("height","600px");
-						$(".carousel-control-prev").css("height","600px");
+// 						$(".carousel-control-next").css("height","600px");
+// 						$(".carousel-control-prev").css("height","600px");
 						console.log(file);
 						console.log(response);
 						//통신엔 성공했지만 파일유형이 image나 video가 아닌 겨우
@@ -148,9 +233,9 @@
 						var result = response.result;
 						var type = response.type;
 						if (type == "image") {
-							var media = "<img src=\""+response.result+"\">";
+							var media = "<img class='cover' src=\""+response.result+"\">";
 						} else {
-							var media = "<video src=\""+response.result+"\" controls>";
+							var media = "<video class='cover' src=\""+response.result+"\" controls>";
 						}
 
 						var index = Number($("#index").html());
@@ -166,6 +251,21 @@
 					})
 				}
 			};
+		$("#register").on("click", function(){
+			var regex = /(\w+)/;
+			var title = $("#title").val();
+			if(title.match(regex)==null){
+				alert("제목을 입력하세요");
+				return;
+			}
+			var contents = $(".note-editable").html();
+			console.log(contents);
+			if(contents=="<p><br></p>"){
+				alert("내용을 입력하세요");
+				return;
+			}
+			$("#writeFeedForm").submit();
+		})
 	</script>
 </body>
 </html>

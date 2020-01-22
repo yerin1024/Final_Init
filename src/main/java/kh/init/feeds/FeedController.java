@@ -259,6 +259,8 @@ public class FeedController {
 				
 				//writeFeedProc에서 media들의 경로가 필요해서 session에 넣어둠 , mediaList는 임시로 homeController에서 생성함
 				((ArrayList<String>)session.getAttribute("mediaList")).add(filePath);
+				System.out.println("session : "+session);
+				System.out.println("session.getAttribute(\"mediaList\")) : "+session.getAttribute("mediaList"));
 				returnVal = "{\"result\" : \""+filePath+"\", \"type\" : \""+fileType+"\"}";
 			}else {
 				//파일형식이 image나 video가 아닌 경우 업로드가 되지 않도록하고 fail을 리턴해서 alert창으로 불가능한 파일이라고 띄우도록 했음
@@ -340,7 +342,7 @@ public class FeedController {
 				}
 				obj.addProperty("option", "nfriend");
 		}catch(Exception e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 		}
 		
 		obj.addProperty("list", g.toJson(list));
@@ -390,6 +392,7 @@ public class FeedController {
 			likeCheck = service.likeCheck(feed_seq, ((MemberDTO)session.getAttribute("loginInfo")).getEmail());
 			bookmarkCheck = service.bookmarkCheck(feed_seq, ((MemberDTO)session.getAttribute("loginInfo")).getEmail());
 			list = service.getMediaList(feed_seq);
+			
 			System.out.println(list.toString() + " 리스트의 투스트링입니다!");
 			replyList = service.viewAllReply(feed_seq);
 			System.out.println("Email : "+dto.getEmail());
@@ -400,8 +403,9 @@ public class FeedController {
 			obj.addProperty("bookmarkCheck", g.toJson(bookmarkCheck));
 			obj.addProperty("replyList",  g.toJson(replyList));
 			obj.addProperty("media", g.toJson(list));
+			
 			obj.addProperty("dto", g.toJson(dto));	
-
+			System.out.println(obj.toString());
 		}catch(Exception e) {
 			e.printStackTrace();
 		}			
@@ -560,7 +564,7 @@ public class FeedController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "redirect:detailView?feed_seqS="+dto.getFeed_seq();
+		return "redirect:myFeed";
 	}
 	
 	@RequestMapping("/modifyFeedView")
