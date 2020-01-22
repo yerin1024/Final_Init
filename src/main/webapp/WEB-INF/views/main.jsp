@@ -248,9 +248,9 @@
    	
  
 </style>
-<jsp:include page="/resources/jsp/nav.jsp" />
+
 <body>
-<jsp:include page="/resources/script/index.jsp" flush="true"/>
+ <jsp:include page="/resources/script/index.jsp" flush="true"/>
     <!-- Modal start -->
     <div class="modal fade bd-example-modal-lg" id="indexModal" tabindex="-1" role="dialog"
         aria-labelledby="eindexModalTitle" aria-hidden="true">
