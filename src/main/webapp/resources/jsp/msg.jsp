@@ -1,22 +1,17 @@
-<div class="ac1" id="ac1_1"><img src="/images/letter.png" style="width:50px;"></div>
-	<div id=collection>
-		<button id=toCollection>메시지 목록</button>
+<div id=collection>
+		<button id=toCollection class=toColl>메시지 목록</button>
 	</div>
 			
 	<div id="view1">
 		<div class="ac2">
 		    <div id=cross>
-		    <img src="/images/cross.png" style="width:30px;">
+		    <img src="/images/close2.png" style="width:100%;">
             </div>
 		</div>
 		<div class="pre_top">
             <div class="pre_top_pf"><img src="/images/default_profile_img.png" class="pre_top_pf_img"></div>
-            <div class="pre_title">Messenger</div>
+            <div class="pre_title">친구</div>
           </div>
-          
-<!--       <div class="search"> -->
-<!--             <input type="text"> <img src="/images/search1.png" style="width: 20px;"> -->
-<!--         </div> -->
           
 		<div class="sector">
 <!--           ------------------------------------------------->
@@ -25,11 +20,6 @@
 <!--             <div class="pre_line"> -->
 <!--                 <div class="pre_pf"><img src="images/b1.png" class="pre_pf_img"></div> -->
 <!--                 <div class="pre_text"><b>yuri</b></div> -->
-<!--                 <div class="pre_time"><img src="images/startMsg.png" class="pre_start"></div> -->
-<!--             </div> -->
-<!--             <div class="pre_line"> -->
-<!--                 <div class="pre_pf"><img src="images/default.png" class="pre_pf_img"></div> -->
-<!--                 <div class="pre_text"><b>whoru</b></div> -->
 <!--                 <div class="pre_time"><img src="images/startMsg.png" class="pre_start"></div> -->
 <!--             </div> -->
 			
@@ -46,7 +36,7 @@
 	$(document).ready(function(){
 
 		// 열기
-		$("div[class='ac1']").click(function(){
+		$(".ac1").click(function(){
 			$("div[id='view1']").fadeIn(0); 
 			
 			$.ajax({
@@ -56,22 +46,23 @@
  				dataType: "json"
  			}).done(function(resp){
  				$(".pre_top").children().remove();
- 				$(".pre_top").append("<div class='pre_top'>"
- 		 	            +"<div class='pre_top_pf'><img src='/images/default_profile_img.png' class='pre_top_pf_img'></div>"
- 		 	            +"<div class='pre_title'>Messenger</div>"
- 		 	          	+"</div>");
+ 				$(".pre_top").append("<div class='pre_top_pf'><img src='/images/default_profile_img.png' class='pre_top_pf_img'></div>"
+ 		 	            +"<div class='pre_title'>친구</div>");
  				
  				$(".sector_in").children().remove();
  				// 친구 목록
  				for(var i=0; i < resp.length; i++){
- 					$(".sector_in").append("<div class='pre_line'>"		// img src 안에다가 dto 꺼내듯이 쓰면 됨
+ 					$(".sector_in").append("<div class='ppre_line'>"		// img src 안에다가 dto 꺼내듯이 쓰면 됨
  							+"<div class='pre_pf'><img src='"+resp[i].profile_img+"' class='pre_pf_img'></div>"
- 			        		+"<div class='pre_text'><b>"+resp[i].nickname+"</b></div>"
+ 			        		+"<div class='pre_text'>"+resp[i].nickname+"</div>"
  			                +"<div class='pre_time'>"
- 			                +"<img src='/images/startMsg.png' class='pre_start' id='"+resp[i].fr_id+"' value='"+resp[i].nickname+"' name='"+resp[i].profile_img+"'>"
+ 			                +"<img src='/images/startMsg2.png' class='pre_start' id='"+resp[i].fr_id+"' value='"+resp[i].nickname+"' name='"+resp[i].profile_img+"'>"
  			                +"</div></div>");
 				}
  				$("#footer").children().remove();
+ 				$("#footer").append("<div class='toWhere ac1'><img src='/images/toFr_cl.png' id='toFrIcon'></div>"
+ 			            +"<div id='toBetween'></div>"
+ 			            +"<div class='toWhere toColl'><img src='/images/toMsg_un.png' id='toMsgIcon'></div>");
  				
  				// 메시지 상세 보기
  				$(".pre_start").on("click",function(){
@@ -86,16 +77,18 @@
  						},
  						dataType: "json"
  					 }).done(function(resp){
+ 						 console.log("친구 목록에서");
+ 						console.log("${loginInfo.email}");
  						 $(".pre_top").children().remove();
- 						 $(".pre_top").append("<div class='pre_back'><img src='/images/left2.png' class='pre_back_img'></div>"
- 						            + "<div class='pre_top_fr_pf'><img src='"+friendImg+"' class='pre_top_fr_pf_img'></div>"
- 						            + "<div class='pre_text'><b>"+friendNick+"</b></div>");
+ 						 $(".pre_top").append("<div class='pre_back'><img src='/images/left4.png' class='pre_back_img'></div>"
+ 						            + "<div class='pre_top_pf'><img src='"+friendImg+"' class='pre_top_pf_img'></div>"
+ 						            + "<div class='pre_text'><span class='pre_text_name'>"+friendNick+"</span></div>");
  						 
  						 $(".sector_in").children().remove();
  						 $(".search").children().remove();
  						 for(var i=0; i < resp.length; i++){
  							 
- 							 if(resp[i].from_id=='123@123.123'){
+ 							 if(resp[i].from_id=="123@123.123"){
  								 $(".sector_in").append("<ul class='ul_right'>"
  							                +"<li class='from_id'>"+resp[i].contents+"</li><span class=time_right>"
  							                +resp[i].write_date+"</span><br></ul>");
@@ -108,8 +101,10 @@
  						 var objDiv = document.getElementById("view1");
  			        	 objDiv.scrollTop=objDiv.scrollHeight;
  			        	 $("#footer").children().remove();
- 			        	 $("#footer").append("<input type='text' id='inputtxt' name='contents'>"
- 			        	            +"<button id='sendfly' type='submit'><b>SEND</b></button>");
+ 			        	 $("#footer").append("<div id='footer_cont'>"
+ 			                    	+"<input type='text' id='inputtxt' placeholder='Type a message...'>"
+ 			               			+"<button id='sendfly'><img src='/images/send.png' id=sendup></button>"
+ 			            			+"</div>");
  			        	
  			        	 // 메시지 엔터키 전송
  			        	$("#inputtxt").keydown(function(e) {
@@ -153,7 +148,7 @@
  				});
  				
  				// 미리 보기 리스트
- 				$("#toCollection").on("click",function(){
+ 				$(".toColl").on("click",function(){
  					$.ajax({
  		 				url:"${pageContext.request.contextPath}/message/previewList.msg",
  		 				method: "post",
@@ -163,10 +158,8 @@
  		 				dataType: "json"
  		 			}).done(function(resp){
  		 				$(".pre_top").children().remove();
- 		 				$(".pre_top").append("<div class='pre_top'>"
- 		 		 	            +"<div class='pre_top_pf'><img src='/images/default_profile_img.png' class='pre_top_pf_img'></div>"
- 		 		 	            +"<div class='pre_title'>Messenger</div>"
- 		 		 	          	+"</div>");
+ 		 				$(".pre_top").append("<div class='pre_top_pf'><img src='/images/default_profile_img.png' class='pre_top_pf_img'></div>"
+ 		 		 	            +"<div class='pre_title'>채팅</div>");
  		 				
  		 				$(".sector_in").children().remove();
  						 for(var i=0; i < resp.length; i++){
@@ -200,6 +193,13 @@
  							 
  						}
  						$("#footer").children().remove();
+ 						$("#footer").append("<div class='toWhere ac1'><img src='/images/toFr_un.png' id='toFrIcon'></div>"
+ 		 			            +"<div id='toBetween'></div>"
+ 		 			            +"<div class='toWhere toColl'><img src='/images/toMsg_cl.png' id='toMsgIcon'></div>");
+ 						
+ 						$(".ac1").on("click",function(){
+ 							document.getElementById("ac1_1").click();
+ 						});
  						
  						// 미리 보기 클릭 후 상세 보기로 가기
  						$(".pre_text_p").on("click",function(){
@@ -217,9 +217,9 @@
 		 						dataType: "json"
 		 					 }).done(function(resp){
 		 						 $(".pre_top").children().remove();
-		 						 $(".pre_top").append("<div class='pre_back'><img src='/images/left2.png' class='pre_back_img'></div>"
-		 						            + "<div class='pre_top_fr_pf'><img src='"+friendImg+"' class='pre_top_fr_pf_img'></div>"
-		 						            + "<div class='pre_text'><b>"+friendNick+"</b></div>");
+		 						$(".pre_top").append("<div class='pre_back'><img src='/images/left4.png' class='pre_back_img'></div>"
+	 						            + "<div class='pre_top_pf'><img src='"+friendImg+"' class='pre_top_pf_img'></div>"
+	 						            + "<div class='pre_text'><span class='pre_text_name'>"+friendNick+"</span></div>");
 		 						 
 		 						 $(".sector_in").children().remove();
 		 						 $(".search").children().remove();
@@ -238,8 +238,10 @@
 		 			        	 objDiv.scrollTop=objDiv.scrollHeight;
 		 			        	 
 		 			        	 $("#footer").children().remove();
-		 			        	 $("#footer").append("<input type='text' id='inputtxt' name='contents'>"
-		 			        	            +"<button id='sendfly' type='submit'><b>SEND</b></button>");
+		 			        	 $("#footer").append("<div id='footer_cont'>"
+	 			                    	+"<input type='text' id='inputtxt' placeholder='Type a message...'>"
+	 			               			+"<button id='sendfly'><img src='/images/send.png' id=sendup></button>"
+	 			            			+"</div>");
 		 			        	
 		 			        	 // 메시지 엔터키 전송
 		 			        	$("#inputtxt").keydown(function(e) {
