@@ -472,10 +472,9 @@ body{
 </style>
 <script>
 	$(function() {
-<<<<<<< HEAD
 		$("#registerFeed").on("click", function() {
 			location.href = "writeFeed";
-=======
+		})
 		$("#scrapFeed").on("click", function() {
 			feedState = 1;
 			page = 1;
@@ -530,7 +529,6 @@ body{
 					console.log("ajax call went wrong:"+ request.responseText);
 				}
 			})
->>>>>>> 3657558524f89505e0c1671558ae8c1af850bf47
 		})
 	})
 
@@ -603,10 +601,6 @@ body{
 	              index++;
 	            }
 	            $("#feeds").append(data); 
-<<<<<<< HEAD
-=======
-	            
->>>>>>> 3657558524f89505e0c1671558ae8c1af850bf47
 //	          for(i; i<end; i++){
 //	             console.log(i);
 //	              var data = $("<div class='col-4 feed'></div>");
@@ -624,8 +618,6 @@ body{
 //	          }
 	      })
 	   }
-<<<<<<< HEAD
-=======
 	 function getScrapList(page){
 	       $.ajax({
 	           type : 'POST',  
@@ -687,8 +679,6 @@ body{
 //	          }
 	      })
 	   }
-	}
->>>>>>> 3657558524f89505e0c1671558ae8c1af850bf47
 </script>
 </head>
 
@@ -770,12 +760,9 @@ body{
 
 			</c:choose>
 		</div>
-<<<<<<< HEAD
 		<div class=menubar style="height:200px;">
 		<button type="button">Personal feed</button>
 		<button type="button">scrap feed</button>
-=======
->>>>>>> 3657558524f89505e0c1671558ae8c1af850bf47
 		
 		<div class="wrapper">
 			
@@ -1075,9 +1062,6 @@ body{
 				
 		})
 	
-<<<<<<< HEAD
-	
-=======
 		        // 친구 모달 버튼에 이벤트를 건다.	
         $('#friendsList').on('click', function () {
         	$('#modalBox3').modal('show');
@@ -1252,7 +1236,6 @@ body{
             });
 
         });
->>>>>>> 3657558524f89505e0c1671558ae8c1af850bf47
 
 		$("#changeProfile")
 				.on(
@@ -1266,7 +1249,6 @@ body{
 						function() {
 							location.href = "${pageContext.request.contextPath}/member/goMyInfo";
 						})
-<<<<<<< HEAD
 		// 친구 모달 버튼에 이벤트를 건다.	
 		$('#friendsList')
 				.on(
@@ -1498,9 +1480,6 @@ body{
 									});
 
 						});
-=======
-
->>>>>>> 3657558524f89505e0c1671558ae8c1af850bf47
 		$('#closeModalBtn2').on('click', function() {
 
 			$('#modalBox2').modal('hide');
