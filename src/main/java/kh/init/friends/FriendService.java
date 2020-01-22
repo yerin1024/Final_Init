@@ -137,4 +137,28 @@ public class FriendService {
 				
 			   
 		}
+	
+	@Transactional("txManager") //친구 요청하기
+	public int friendIsOkService(String fr_id,String my_id) throws Exception {
+		System.out.println("친구여부 서비스 도착");
+		List<FriendRequestDTO> reqList = dao.getFndRequestIsOk(fr_id, my_id);
+		System.out.println("리스트 사이즈 : " +reqList.size());
+		List<FriendDTO> myList = dao.getFriendsIsOk(my_id,fr_id);
+		List<FriendDTO> frList = dao.getFriendsIsOk(fr_id,my_id);
+		System.out.println("나의 리스트 사이즈 : " + myList.size());
+		System.out.println("친구의 리스트 사이즈 : " + frList.size());
+		 int result = 0;
+		 if(reqList.size() > 0) {
+			 result = 1;
+		 }else if(myList.size()> 0 && frList.size()> 0) {
+			 result = 2;
+		 }
+		 //기존 나의 친구 리스트 사이즈가 0일 때 바로 친구 요청
+		System.out.println("친구여부 결과값은 "+result);
+			 
+		return result;
+				
+				
+			   
+		}
 }

@@ -48,11 +48,11 @@
 									<option value="017" class="pOption1">017</option>
 									<option value="018" class="pOption1">018</option>
 									<option value="019" class="pOption1">019</option>
-								</select> - <input type="text" id="phone2" maxlength="4"
+								</select> - <input type="text" class="phone2" maxlength="4"
 									style="text-align: center; width: 80px;" value="${poption2}">
-								- <input type="text" id="phone3" maxlength="4"
+								- <input type="text" class="phone3" maxlength="4"
 									style="text-align: center; width: 80px;" value="${poption3}">
-								<input type="text" id="phone" name="phone" maxlength="11" hidden>
+								<input type="text" class="phone" name="phone" maxlength="11" hidden>
 								<p class="advise" id="advisePhone" readonly></p>
 								<p class="hiddenResp" id="hiddenRespPhone" hidden></p>
 								<!-- 인증번호 -->

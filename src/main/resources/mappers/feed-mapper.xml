@@ -57,6 +57,29 @@
 		where rnum
 		between #{startNum} and #{endNum}
 	</select>
+	<select id="getMyScrapFeed" resultType="kh.init.feeds.FeedDTO"
+		parameterType="java.util.Map">
+		select feed_seq, email, nickname, title, contents,
+		relation, write_date, hashtag
+		from (SELECT p.*, ROW_NUMBER()OVER(ORDER
+		BY P.FEED_SEQ) as rnum FROM (select * from tb_feed f where
+		f.feed_seq in (select s.feed_seq from tb_scrap s where s.email =
+		#{email})) p )
+		where rnum 
+		between #{startNum} and #{endNum}
+		
+	</select>
+
+	<select id="getMyScrapFeedRnum" resultType="Integer"
+		parameterType="java.util.Map">
+		select rnum
+		from (SELECT p.*, ROW_NUMBER()OVER(ORDER BY
+		P.FEED_SEQ) as rnum FROM (select * from tb_feed f where
+		f.feed_seq in (select s.feed_seq from tb_scrap s where s.email =
+		#{email})) p)
+		where rnum
+		between #{startNum} and #{endNum}
+	</select>
 
 	<select id="getMyFeedCount" resultType="Integer">
 		select count(*) from
@@ -117,7 +140,7 @@
 
 	<select id="getFriendFeedCount" resultType="Integer">
 		select count(*) from
-		tb_feed p join tb_friend r on p.email = r.my_id
+		tb_feed p left join tb_friend r on p.email = r.my_id
 		where r.fr_id =
 		#{email}
 		and p.relation >= r.relation
@@ -131,7 +154,7 @@
 		hashtag
 		from (select p.*, ROW_NUMBER() OVER(ORDER
 		BY p.feed_seq) rnum
-		from tb_feed p join tb_friend r on p.email =
+		from tb_feed p left join tb_friend r on p.email =
 		r.my_id
 		where r.fr_id = #{email} and p.relation >= r.relation
 		or p.email

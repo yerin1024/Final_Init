@@ -320,7 +320,7 @@
 	color:black;
 }
 .modal-dialog {
-    max-width: 1300px;
+    max-width: 1200px;
     margin: 1.75rem auto;
 }
 .row{
@@ -346,6 +346,7 @@
 
 .writerProfile,.userProfile,.myProfile{	
     margin-right: 16px;
+    line-height: 50px;
 }
 .writerProfileImg,.userProfileImg{
 	width:40px;
@@ -369,6 +370,7 @@
     margin-right: 0;
     padding: 12px 16px 0px 16px;
     display:flex;
+    flex-direction: column;
 }
 .childReply{
     margin-right: 0;
@@ -380,6 +382,7 @@
 	font-weight: 600;
     padding-left: 5px;
     margin: 0px 5px 0px -5px;
+    line-height: 50px;
 }
 .userReply,.text>p{
     border-radius: 16px;
@@ -424,7 +427,6 @@
     white-space: pre-wrap;
     width: 100%;
     word-break: break-all;
-    padding: 12px;
 }
 .modal-body1{
 	width:55%;
@@ -435,6 +437,28 @@
 }
 .media{
 	width:100%;
+}
+.childContentsBox{
+    width: 350px;
+}
+.childReplyContents{
+    border-radius: 16px;
+    border: 1px solid rgb(239, 239, 239);
+	background: transparent;
+    min-height: 50px;
+    font-size: 16px;
+    outline: 0px;
+    overflow-x: hidden;
+    resize: none;
+    width:100%;
+    height:100%;
+    white-space: pre-wrap;
+    word-break: break-all;
+    padding: 10px;
+    
+}
+.profileDiv{	
+    display: flex;
 }
 /* All Device */
 /* 모든 해상도를 위한 공통 코드를 작성한다. 모든 해상도에서 이 코드가 실행됨. */
@@ -489,12 +513,10 @@
 	
 	var feedState = 0; // 0:PersonalFeed 1:ScrapFeed
 	var myMail = '${mvo.email }';
-// 	$(function() {
-// 		$("#registerFeed").on("click", function() {
-// 			location.href = "writeFeed";
-// 		})
-// 	})
-    $(function() {
+	$(function() {
+		$("#registerFeed").on("click", function() {
+			location.href = "writeFeed";
+		})
 		$("#personalFeed").on("click", function() {
 			feedState = 0;
 			 page = 1;
@@ -546,8 +568,6 @@
 				}
 			})
 		})
-	})
-	$(function() {
 		$("#scrapFeed").on("click", function() {
 			feedState = 1;
 			page = 1;
@@ -761,6 +781,9 @@
 //	          }
 	      })
 	   }
+	 
+		
+	 
 	}
 </script>
 </head>
@@ -771,14 +794,25 @@
 		<div class="profile">
 			<c:choose>
 				<c:when test="${loginInfo.email ne mvo.email}">
-					<div class="profileLayoutLeft">
-						<button class="btn btn-primary btn-lg" id="openModalBtn">＋</button>
-						<div class="btnText">친구요청</div>
-					</div>
-					<div class="profileLayoutCenter">
-						<div class="profileImageBox">
-							<img class="profileImg" src="${mvo.profile_img}" alt="">
-
+					<div class="profileLayout">
+						<div class="profileLayoutLeft">
+						<c:if test="${frResult == null || frResult == 0  }">
+							<button class="btn btn-primary btn-lg" id="openModalBtn">＋</button>
+							<div class="btnText">친구요청</div>
+						</c:if>			
+							<c:if test="${frResult == 1 }">
+						<button class="btn btn-primary btn-lg" >＋</button>
+							<div class="btnText">친구요청중</div>
+						</c:if>	
+						<c:if test="${frResult == 2  }">
+							<button class="btn btn-primary btn-lg" >＋</button>
+							<div class="btnText">친구</div>
+						</c:if>	
+						
+						</div>
+						<div class="profileLayoutCenter">
+							<div class="profileImageBox">
+								<img class="profileImg" src="${mvo.profile_img}" alt="">
 						</div>
 					</div>
 					<div class="profileMessageLayout">
@@ -822,9 +856,11 @@
 
 			</c:choose>
 		</div>
-		<div class=menubar style="height:200px;">
+
+		<div class="menubar" style="height:200px;">
 		<button type="button" id="personalFeed">Personal feed</button>
 		<button type="button" id="scrapFeed">scrap feed</button>
+
 		
 		<button type="button" id="registerFeed">게시물 등록</button>
 	
@@ -914,7 +950,7 @@
 		</div>
 	</div>
 	
-	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="margin-top: 100px;">
+	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="margin-top: 60px;">
 	  <div class="modal-dialog" role="document">
 	    <div class="modal-content">
 	      <div class="modal-header">
@@ -931,19 +967,9 @@
             <div class="title">
                 <div class="reply">
                		<div class="writerInfo">
-                    		<span class="writerProfile"></span>
+                    		<span class="writerProfile"><img class="userProfileImg" src="${loginInfo.profile_img }" alt=""></span>
                      		<span class="writerProfileID">asdsadas</span>
-                    </div>
-                    <div class="userInfo">
-                    		<span class="userProfile"><img class="userProfileImg" src="${pageContext.request.contextPath }/resources/images/dog.jpg" alt=""></span>
-                     		<span class="userProfileID">asdsadas</span>
-                    		<span class="userReply"></span>
-                    </div>   
-                     <div class="userInfo">
-                    		<span class="userProfile"><img class="userProfileImg" src="${pageContext.request.contextPath }/resources/images/dog.jpg" alt=""></span>
-                     		<span class="userProfileID">asdsadas</span>
-                    		<span class="userReply"></span>
-                    </div>          
+                    </div>     
                 </div>
                 <div class="modal-btns">KobeKim</div>
             </div>
@@ -953,7 +979,7 @@
 	         		<span class="myProfile"><img class="userProfileImg" src="${loginInfo.profile_img }" alt=""></span>
 	       			 <h5 class="modal-title" id="exampleModalLabel">${loginInfo.nickname }</h5>
 	       			 <div id="writeReply" contenteditable="true"></div>
-	       			 <button type="button" id="replyBtn" onclick="replyBtnOnclick('${loginInfo.email }')">등록</button>
+	       			 <button type="button" class="replyBtn" onclick="replyBtnOnclick('${loginInfo.email}');">등록</button>
 				</div>
 	      </div>
 	    </div>
@@ -963,12 +989,12 @@
 	    $("#registerFeed").on("click", function() {
 	    	location.href = "${pageContext.request.contextPath}/feed/writeFeed";
 		});
+	    
 	$('#exampleModal').on('shown.bs.modal', function (event) {
-		var seq= $(event.relatedTarget).data('id');
+		var seq = $(event.relatedTarget).data('id');
 		console.log("seq : "+seq);
-		//피드시퀀스값
-		var feedSeqDiv = $("<div class=\"feedSeqDiv\" style=\"visibility:hidden\">"+seq+"</div>");
-		$(".writeReplyBox").append(feedSeqDiv);
+		var feed_seq = $("#exampleModal").attr("feed_seq",seq);
+		console.log("##" + feed_seq)
 		$.ajax({
 			type:"post",
 			url:"/feed/detailView",
@@ -1152,16 +1178,6 @@
                                 + " </a> <button type=button class=frInfo id=cutfr name=" + list[j].email + ">친구 끊기</button></div>");
                         }
                     }
-                    // get the ajax response data
-                    // var data = res.body;
-
-                    // update modal content here
-                    // you may want to format data or 
-                    // update other modal elements here too
-                    // 		                console.log(changedStr.waitlist);
-                    // 		                console.log();
-
-                    // show modal
                     
 
                     //친구수락 로직~
@@ -1307,10 +1323,6 @@
 						function() {
 							location.href = "${pageContext.request.contextPath}/member/goMyInfo";
 						})
-		
-						
-						
-						
 		$('#closeModalBtn2').on('click', function() {
 
 			$('#modalBox3').modal('hide');
@@ -1333,9 +1345,10 @@
 			$("#goReqFri").submit();
 			$('#modalBox').modal('hide');
 		});
-
-		//친구추가 ,취소 ,끊기
-	</script>	
-	  <jsp:include page="/resources/script/myFeedScript.jsp"></jsp:include>
+		//친구추가 ,취소 ,끊기		
+		
+	</script>		
+	
+   	<jsp:include page="/resources/script/myFeedScript.jsp" />
 </body>
 </html>
