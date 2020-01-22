@@ -85,3 +85,10 @@
 	background-color: white;
     float: right
 }
+
+#noAlarmExist{
+	text-align: center;
+	height: 290px;
+	line-height: 300px;
+    color: gray;
+}

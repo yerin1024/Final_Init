@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
 <div style="padding-top:60px;">
 		<button id=showAlarm>알람 확인하기</button> <button id=closeAlarm>알람 끄기</button>
 		<div id="alarmPreContainer">
@@ -41,6 +40,10 @@
 				dataType: "json"
 			}).done(function(resp){
 	        	 $(".a_sector").children().remove();
+	        	 
+	        	 if(resp.length <1){
+	        		 $(".a_sector").append("<div id='noAlarmExist'>알림 목록이 없습니다.</div>");
+	        	 }
 	        	 
 	        	 for(var i=0; i<resp.length; i++){
 	        		 

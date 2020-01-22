@@ -15,6 +15,70 @@
 	<link rel="stylesheet" href="/resources/css/msg.css">
 	<link rel="stylesheet" href="/resources/css/alr.css">
 	<link rel="stylesheet" href="/resources/css/test.css">
+	<style>
+    #noFriendExist{
+/*        border: 1px solid red;*/
+        position: absolute;
+        left: 50px; top: 150px;
+        color: #656565;
+        height: 100px;
+        text-align: center;
+    }
+        #searchTitle{
+/*            border: 1px solid blue;*/
+            height: 30px;
+            margin-bottom: 20px;
+        }
+        #searchFriend1{
+/*            border: 1px solid #d96d00;*/
+            float: left;
+            width: 20px; height: 20px;
+            margin-left: 16px; margin-right: 3px;
+            margin-top: 5px;
+        }
+        #searchFriendImg{
+            width: 100%;
+        }
+        #searchFriend2{
+/*            border: 1px solid black;*/
+            float: left;
+            width: 120px; height: 30px;
+            line-height: 30px;
+            color: white;
+            font-size: 14px;
+        }
+        #noFriendInside{
+/*            border: 1px solid green;*/
+            height: 50px; width: 170px;
+            margin: auto;
+            padding-top: 8px;
+            background-color: #3f62a0;
+            border-radius: 10px;
+        }
+        #noMessageExist{
+/*        border: 1px solid red;*/
+        color: #717171;
+        height: 400px;
+        line-height: 400px;
+        text-align: center;
+    }
+        
+
+    @media ( max-width : 700px ){
+        #noFriendExist{
+/*            border: 1px solid green;*/
+            position: static;
+            height: 100px;
+            text-align: center;
+            margin-top: 170px;
+        }
+        #noMessageExist{
+/*            border: 1px solid green;*/
+            height: 400px;
+            text-align: center;
+        }
+    }
+	</style>
 </head>
 <body>
 	<jsp:include page="/resources/jsp/nav_test.jsp"/>
@@ -75,6 +139,16 @@
  				
  				$(".sector_in").children().remove();
  				// 친구 목록
+ 				if(resp.length < 1){
+ 					$(".sector_in").append("<div id='noFriendExist'>"
+ 				              +"<div id='searchTitle'><b>지금 새로운 친구를 만들어 보세요!</b></div>"
+ 				              +"<a href='${pageContext.request.contextPath}/feed/wholeFeed'>"
+ 				               +"<div id='noFriendInside'>"
+ 				               +"<div id='searchFriend1'><img src='/images/searchFriend.png' id='searchFriendImg'></div>"
+ 				               +"<div id='searchFriend2'>친구 찾으러 가기</div>"
+ 				               +"</div></a></div>");
+ 				}
+ 				
  				for(var i=0; i < resp.length; i++){
  					$(".sector_in").append("<div class='ppre_line'>"		// img src 안에다가 dto 꺼내듯이 쓰면 됨
  							+"<div class='pre_pf'><img src='"+resp[i].profile_img+"' class='pre_pf_img'></div>"
@@ -186,6 +260,9 @@
  		 		 	            +"<div class='pre_title'>채팅</div>");
  		 				
  		 				$(".sector_in").children().remove();
+ 		 				if(resp.length < 1){
+ 		 					$(".sector_in").append("<div id='noMessageExist'>진행 중인 대화가 없습니다.</div>");
+ 		 				}
  						 for(var i=0; i < resp.length; i++){
  							 
  							 // data 없음

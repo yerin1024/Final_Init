@@ -15,6 +15,7 @@
 	<link rel="stylesheet" href="/resources/css/alr.css">
 	<link rel="stylesheet" href="/resources/css/msg.css">
 	<link rel="stylesheet" href="/resources/css/test.css">
+	
 <script>
 	$(function() {
 		$("#myFeed").on("click", function() {
@@ -48,7 +49,7 @@
 </script>
 </head>
 <body>
-	<jsp:include page="/resources/jsp/nav_test.jsp"/>
+	<jsp:include page="/resources/jsp/nav.jsp"/>
 	<jsp:include page="/resources/jsp/alr.jsp"/>
 	<jsp:include page="/resources/jsp/msg.jsp"/>
 

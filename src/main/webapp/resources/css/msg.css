@@ -1,22 +1,14 @@
 @charset "UTF-8";
 
-* {
-	box-sizing: border-box;
-}
-
-.ac1, #cross {
-	cursor: pointer;
-}
-
+* { box-sizing: border-box; }
+.ac1, #cross { cursor: pointer; }
 .ac2 {
 	position: fixed;
 	bottom: 530px;
 	right: 20px;
 	width: 40px;
 	height: 40px;
-	z-index: 9;
-}
-
+	z-index: 9;}
 .pre_top {
 	position: fixed;
 	bottom: 520px;
@@ -27,8 +19,7 @@
 	box-shadow: 0px 0px 4px 0px #c3c3c3;
 	color: black;
 	border-top-left-radius: 15px;
-	border-top-right-radius: 15px;
-}
+	border-top-right-radius: 15px;}
 
 #view1 {
 	background-color: #ffffff;
@@ -44,37 +35,27 @@
 	overflow: scroll;
 	overflow-x: hidden;
 	padding-top: 10px;
-    padding-bottom: 10px;
-}
+    padding-bottom: 10px;}
 
 #view1::-webkit-scrollbar-track {
 	-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
 	border-radius: 10px;
-	background-color: #F5F5F5;
-}
-
+	background-color: #F5F5F5;}
 #view1::-webkit-scrollbar {
 	width: 12px;
-	background-color: #F5F5F5;
-}
-
+	background-color: #F5F5F5;}
 #view1::-webkit-scrollbar-thumb {
 	border-radius: 10px;
 	-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
-	background-color: #8e8e8e;
-}
+	background-color: #8e8e8e;}
 
 #cross {
-/* 	border: 1px solid red; */
 	float: right;
 	width: 35px; height: 35px;
-	margin: 0px;
-}
+	margin: 0px;}
 
 .sector {
-	/*            border: 1px solid #e6abb5;*/
-	min-height: 60px;
-}
+	min-height: 60px;}
 
 /* -- pre 시작 ----------------------------------------- */
 .ppre_line {
@@ -86,10 +67,7 @@
 	height: 60px;
 }
 
-.pre_line_none {
-	display: none;
-}
-
+.pre_line_none { display: none; }
 .pre_line:hover {
 	background-color: #e8e8e8;
 	transition-duration: 0.2s;
@@ -439,6 +417,56 @@ margin-bottom: 1px;
 	margin-left: 10px;
 }
 
+#noFriendExist{
+/*        border: 1px solid red;*/
+        position: absolute;
+        left: 50px; top: 150px;
+        color: #656565;
+        height: 100px;
+        text-align: center;
+    }
+        #searchTitle{
+/*            border: 1px solid blue;*/
+            height: 30px;
+            margin-bottom: 20px;
+        }
+        #searchFriend1{
+/*            border: 1px solid #d96d00;*/
+            float: left;
+            width: 20px; height: 20px;
+            margin-left: 16px; margin-right: 3px;
+            margin-top: 5px;
+        }
+        #searchFriendImg{
+            width: 100%;
+        }
+        #searchFriend2{
+/*            border: 1px solid black; */
+            float: left;
+            width: 120px; height: 30px;
+            line-height: 30px;
+            color: white;
+            font-size: 14px;
+        }
+        #noFriendInside{
+/*            border: 1px solid green;*/
+            height: 50px; width: 170px;
+            margin: auto;
+            padding-top: 8px;
+            background-color: #3f62a0;
+            border-radius: 10px;
+        }
+        
+/* ---------------------------------------------------------------------------------------- */
+/* ---------------------------------------------------------------------------------------- */
+/* ---------------------------------------------------------------------------------------- */
+/* ---------------------------------------------------------------------------------------- */
+/* ---------------------------------------------------------------------------------------- */
+/* ---------------------------------------------------------------------------------------- */
+/* ---------------------------------------------------------------------------------------- */
+/* ---------------------------------------------------------------------------------------- */
+/* ---------------------------------------------------------------------------------------- */
+/* ---------------------------------------------------------------------------------------- */
 /* ---------------------------------------------------------------------------------------- */
 /* ---------------------------------------------------------------------------------------- */
 /* ---------------------------------------------------------------------------------------- */
@@ -460,6 +488,7 @@ margin-bottom: 1px;
 		height: 45px;
 		z-index: 9;
 	}
+	
 	.pre_top {
 		right: 0px;
 		position: fixed;
@@ -635,7 +664,7 @@ margin-bottom: 1px;
 	}
 	.pre_time {
 		/*            border: 1px solid blue;*/
-		width: 60px;
+		width: 60px; height: 70px;
 		text-align: center;
 		line-height: 60px;
 		float: right;
@@ -726,6 +755,10 @@ margin-bottom: 1px;
 	}
 
 	/*    [class^=pre] { height: 60px; }*/
+	.ppre_line {
+		padding-top: 8px;
+		height: 80px;
+	}
 	.pre_line {
 		/*	 border: 1px solid black;   */
 		padding-top: 8px;
@@ -844,4 +877,13 @@ margin-bottom: 1px;
 		color: white;
 		border-radius: 10px;
 	}
+	
+/* 친구를 만들어 보세요 ------------------------------------------------------- */
+	#noFriendExist{
+/*            border: 1px solid green;*/
+            position: static;
+            height: 100px;
+            text-align: center;
+            margin-top: 170px;
+        }
 }

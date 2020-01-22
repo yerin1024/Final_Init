@@ -97,6 +97,11 @@
 	background-color: white;
     float: right
 }
+#noAlarmExist{
+	text-align: center;
+	height: 290px;
+	line-height: 300px;
+}
 </style>
 </head>
 <body>
@@ -140,6 +145,10 @@
 				dataType: "json"
 			}).done(function(resp){
 	        	 $(".a_sector").children().remove();
+	        	 
+	        	 if(resp.length <1){
+	        		 $(".a_sector").append("<div id='noAlarmExist'>알림 목록이 없습니다.</div>");
+	        	 }
 	        	 
 	        	 for(var i=0; i<resp.length; i++){
 	        		 

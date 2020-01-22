@@ -1,3 +1,7 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <div id=collection>
 		<button id=toCollection class=toColl>메시지 목록</button>
 	</div>
@@ -16,12 +20,6 @@
 		<div class="sector">
 <!--           ------------------------------------------------->
 			<div class="sector_in">
-
-<!--             <div class="pre_line"> -->
-<!--                 <div class="pre_pf"><img src="images/b1.png" class="pre_pf_img"></div> -->
-<!--                 <div class="pre_text"><b>yuri</b></div> -->
-<!--                 <div class="pre_time"><img src="images/startMsg.png" class="pre_start"></div> -->
-<!--             </div> -->
 			
 			</div>
 <!--           ------------------------------------------------->
@@ -51,6 +49,16 @@
  				
  				$(".sector_in").children().remove();
  				// 친구 목록
+ 				if(resp.length < 1){
+ 					$(".sector_in").append("<div id='noFriendExist'>"
+ 				              +"<div id='searchTitle'><b>지금 새로운 친구를 만들어 보세요!</b></div>"
+ 				              +"<a href='${pageContext.request.contextPath}/feed/wholeFeed'>"
+ 				               +"<div id='noFriendInside'>"
+ 				               +"<div id='searchFriend1'><img src='/images/searchFriend.png' id='searchFriendImg'></div>"
+ 				               +"<div id='searchFriend2'>친구 찾으러 가기</div>"
+ 				               +"</div></a></div>");
+ 				}
+ 				
  				for(var i=0; i < resp.length; i++){
  					$(".sector_in").append("<div class='ppre_line'>"		// img src 안에다가 dto 꺼내듯이 쓰면 됨
  							+"<div class='pre_pf'><img src='"+resp[i].profile_img+"' class='pre_pf_img'></div>"
@@ -162,6 +170,9 @@
  		 		 	            +"<div class='pre_title'>채팅</div>");
  		 				
  		 				$(".sector_in").children().remove();
+ 		 				if(resp.length < 1){
+ 		 					$(".sector_in").append("<div id='noMessageExist'>진행 중인 대화가 없습니다.</div>");
+ 		 				}
  						 for(var i=0; i < resp.length; i++){
  							 
  							 // data 없음
