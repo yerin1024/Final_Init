@@ -15,7 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
-import kh.init.admin.DeclareDTO;
+import kh.init.friends.FriendService;
 import kh.init.members.MemberDTO;
 import kh.init.members.MemberService;
 
@@ -25,6 +25,8 @@ public class FeedController {
 
 	@Autowired
 	private FeedService service;
+	@Autowired
+	private FriendService fservice;
 	@Autowired
 	private MemberService mservice;
 	@Autowired
@@ -36,13 +38,18 @@ public class FeedController {
 		int ipage = 1;
 		List<FeedDTO> list = null;
 		List<String> cover = new ArrayList<>();
+		String myEmail = ((MemberDTO)session.getAttribute("loginInfo")).getEmail();
 		try {
-
+			if(!(email.equalsIgnoreCase(myEmail))) {
+            int frResult = fservice.friendIsOkService(email, myEmail);
+            model.addAttribute("frResult", frResult);
+            }
 			MemberDTO dto = mservice.getMyPageService(email);
 			list = (List<FeedDTO>)service.getMyFeed(ipage, email).get("list");
 			cover = (List<String>)service.getMyFeed(ipage, email).get("cover");
 			System.out.println("dto 이메일값 확인 : "+dto.getEmail()+dto.getName());
 			model.addAttribute("mvo", dto);
+			
 			model.addAttribute("list", list);
 			model.addAttribute("cover", cover);
 		}catch(Exception e) {
@@ -116,7 +123,7 @@ public class FeedController {
 	@RequestMapping(value = "/myScrapFeed", produces = "application/json; charset=UTF-8")
 	@ResponseBody
 	public String myScrapFeed(String page) {
-		System.out.println("scrapFeedAjax 도착");
+		System.out.println("myScrapFeed 도착");
 		int ipage = Integer.parseInt(page);
 		System.out.println("ipage :  "+ipage);
 		String email = ((MemberDTO)session.getAttribute("loginInfo")).getEmail();
@@ -127,8 +134,8 @@ public class FeedController {
 		List<FeedDTO> scrapList = new ArrayList<>();
 
 		try {
-			scrapList = (List<FeedDTO>)service.scrapFeed(email).get("scrapList");
-			cover = (List<String>)service.scrapFeed(email).get("cover");
+			scrapList = (List<FeedDTO>)service.getMyScrapFeed(ipage, email).get("list");
+			cover = (List<String>)service.getMyScrapFeed(ipage, email).get("cover");
 			System.out.println("list.size : "+scrapList.size());
 		
 			
@@ -161,13 +168,13 @@ public class FeedController {
 //				System.out.println("list는 null입니다.");
 //				return "{\"result\" : \"false\"}";
 //			}
-			list = (List<FeedDTO>)service.getMyFeed(ipage, email).get("list");
-			rnum = (List<Integer>)service.getMyFeed(ipage, email).get("rnum");
-			cover = (List<String>)service.getMyFeed(ipage, email).get("cover");
+			list = (List<FeedDTO>)service.getMyScrapFeed(ipage, email).get("list");
+			rnum = (List<Integer>)service.getMyScrapFeed(ipage, email).get("rnum");
+			cover = (List<String>)service.getMyScrapFeed(ipage, email).get("cover");
 			System.out.println("1 : "+service);
-			System.out.println("2 : "+service.getMyFeed(ipage, email));
-			System.out.println("3 : "+service.getMyFeed(ipage, email).get("list"));
-			System.out.println("3 : "+service.getMyFeed(ipage, email).get("rnum"));
+			System.out.println("2 : "+service.getMyScrapFeed(ipage, email));
+			System.out.println("3 : "+service.getMyScrapFeed(ipage, email).get("list"));
+			System.out.println("3 : "+service.getMyScrapFeed(ipage, email).get("rnum"));
 			
 		}catch(Exception e) {
 			return "{\"result\" : \"false\"}";
@@ -411,7 +418,6 @@ public class FeedController {
 		int ipage = 1;
 		System.out.println("friendFeed 도착");
 		String email = ((MemberDTO)session.getAttribute("loginInfo")).getEmail();
-
 		String profile_img = ((MemberDTO)session.getAttribute("loginInfo")).getProfile_img();
 		try {
 			List<FeedDTO> list = service.getFriendFeed(ipage, email);
@@ -485,6 +491,7 @@ public class FeedController {
 		int ipage = Integer.parseInt(page);
 		System.out.println("friendFeed 도착");
 		String email = ((MemberDTO)session.getAttribute("loginInfo")).getEmail();
+		String profile_img = ((MemberDTO)session.getAttribute("loginInfo")).getProfile_img();
 		JsonObject obj = new JsonObject();
 		try {
 			List<FeedDTO> list = service.getFriendFeed(ipage, email);
@@ -492,18 +499,40 @@ public class FeedController {
 				return "{\"result\" : \"false\"}";
 			}
 			System.out.println("feed size : "+list.size());
+			List<String> profile_imgList = new ArrayList<>();
+			List<Integer> tfeed_seqList = new ArrayList<>();
+			List<Integer> declareCheckList = new ArrayList<>();
 			List<List<String>> mediaList = new ArrayList<>();
 			List<List<ReplyDTO>> replyList = new ArrayList<>();
 			List<Integer> likeCheckList = new ArrayList<>();
 			List<Integer> bookmarkCheckList = new ArrayList<>();
+			tfeed_seqList=service.getDeclare(email);
+			int index=0;
 			for(FeedDTO tmp : list) {
 				int feed_seq = tmp.getFeed_seq();
+				String tmpEmail = tmp.getEmail();
+				profile_imgList.add(service.getProfile_img(tmpEmail));
+				
+				for(int i=0; i<tfeed_seqList.size(); i++) {
+					System.out.println(tfeed_seqList.get(i));
+					if(tmp.getFeed_seq() == tfeed_seqList.get(i)) {
+						System.out.println("신고됨");
+						declareCheckList.add(index, 1);
+						break;
+					}else {
+						System.out.println("신고안됨");
+						declareCheckList.add(index, 0);
+					}
+				}
+				index++;
 				mediaList.add(service.getMediaList(feed_seq));
 //				replyList.add(service.viewAllReply(feed_seq));
 				likeCheckList.add(service.likeCheck(feed_seq, ((MemberDTO)session.getAttribute("loginInfo")).getEmail()));
 				bookmarkCheckList.add(service.bookmarkCheck(feed_seq, ((MemberDTO)session.getAttribute("loginInfo")).getEmail()));
 			}
 			System.out.println(list);
+			System.out.println(profile_imgList);
+			System.out.println(declareCheckList);
 			System.out.println(mediaList);
 			System.out.println(replyList);
 			System.out.println(likeCheckList);
@@ -512,6 +541,8 @@ public class FeedController {
 			Gson gson = new Gson();
 
 			obj.addProperty("list", gson.toJson(list));
+			obj.addProperty("profile_imgList",gson.toJson(profile_imgList));
+			obj.addProperty("declareCheckList", gson.toJson(declareCheckList));
 			obj.addProperty("mediaList", gson.toJson(mediaList));
 			obj.addProperty("replyList", gson.toJson(replyList));
 			obj.addProperty("likeCheckList", gson.toJson(likeCheckList));
