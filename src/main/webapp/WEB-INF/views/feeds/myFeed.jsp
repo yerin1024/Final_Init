@@ -838,7 +838,6 @@
 							<div class="profileImageBox">
 								<img class="profileImg" src="${mvo.profile_img}" alt="">
 								<button type="button" id="changeProfile">프로필 편집</button>
-
 						</div>
 						</div>
 						<c:if test="${loginInfo.id_type eq 'E'}">

@@ -93,6 +93,8 @@
 		modifyCancelBtn.addClass("modifyReplyCancel");
 		
 		$(document).on("click",".modifyReply", function(){
+			$("div[value=1]").remove();
+			childReplyButton.attr("hidden", false);
 			var oriReply = $(this).closest(".replyBtns").siblings(".profileDiv").find(".replyContents");
 			oriReply.attr("contentEditable","true");
 			temporaryReply = oriReply.html();
@@ -107,6 +109,9 @@
 		});
 		
 		$(document).on("click",".modifyReplySuccess", function(){
+			
+			childReplyButton.attr("hidden", false);
+			
 			var oriReply = $(this).closest(".replyBtns").siblings(".profileDiv").find(".replyContents");
 			var replyContents = $(this).closest(".replyBtns").siblings(".profileDiv").find(".replyContents").html();
 			var currentReply = oriReply.html();
@@ -174,15 +179,18 @@
 			})
 		});
 		var clickCnt;
+		var childReplyButton;
 		//답글버튼 눌렀을 때 이벤트
 		$(document).on("click",".registerChildBtn", function(){
-			
+			childReplyButton = $(this);
+			childReplyButton.attr("hidden", true);
 			console.log("답글클릭 : cnt : " + clickCnt);
 			
 				if(clickCnt == 0){	
 						console.log("왜 출력안돼;")
 						console.log("this 출력 : " + $(this));
 						$("div[value=1]").remove();
+						childReplyButton.attr("hidden", false);
 				}
 			clickCnt = 0;
 			
@@ -231,7 +239,7 @@
 			registerChildDiv.append(userReply);
 			registerChildDiv.append(replyBtns);
 			userReply.append(replyContents);
-			userInfo.append(registerChildDiv);		
+			userInfo.append(registerChildDiv); // 유저인포밑에 어펜드..		
 			
 			var childReply = $(this).closest(".replyBtns").siblings(".childReply").eq(0);
 			console.log(childReply);
@@ -380,6 +388,7 @@
 		
 		//답글등록버튼
 		$(document).on("click",".registerChildReply", function(){
+			childReplyButton.attr("hidden", false);
 			clickCnt = 1;
 			var feed_seq = $("#exampleModal").attr("feed_seq");
 			var reply_seq = $(this).closest(".userInfo").attr("reply_seq");
@@ -408,8 +417,7 @@
 				console.log("등록완료 : cnt : " + clickCnt);
 			}).fail(function(){
 				console.log("실패!");
-			})
-
+			});
 		});
 		//답글삭제버튼
 		$(document).on("click",".deleteChildReplyBtn", function(){
@@ -428,10 +436,13 @@
 		});
 		//답글을 취소했을 때
 		$(document).on("click",".childReplyCancel", function() {
+			childReplyButton.attr("hidden", false);
 			$(this).closest(".childReply").remove();			
 		})
 		//답글버튼 눌렀을 떄
 		$(document).on("click",".modifyChildBtn", function() {
+			$("div[value=1]").remove(); // 빈답글 지우기
+			childReplyButton.attr("hidden", false); // 답글버튼 보이기
 			var oriReply = $(this).closest(".replyBtns").siblings(".userReply").find(".replyContents");
 			var replyBtns = $(this).closest(".replyBtns");
 			temporaryReply = oriReply.html();
