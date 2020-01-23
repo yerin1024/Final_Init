@@ -41,6 +41,8 @@ public class FeedController {
 		String myEmail = ((MemberDTO)session.getAttribute("loginInfo")).getEmail();
 		try {
 			if(!(email.equalsIgnoreCase(myEmail))) {
+				System.out.println(email);
+				System.out.println(myEmail);
             int frResult = fservice.friendIsOkService(email, myEmail);
             model.addAttribute("frResult", frResult);
             }

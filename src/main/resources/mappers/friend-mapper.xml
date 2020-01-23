@@ -23,7 +23,7 @@
     <if test="fr_id != null">
        and fr_id = #{fr_id} 
     </if>
-     and fr_id not in (select from_id from tb_block where to_id = #{id})
+     
       
     </trim>
   </select>
@@ -49,7 +49,7 @@
   <select id="selectListReqById2" resultType="kh.init.friends.FriendRequestDTO">
       select * from tb_friend_request 
       <trim prefix="where" prefixOverrides="and|or">
-    <if test="to_id != null">
+    <if test="id != null">
       to_id = #{id}
     </if>
     <if test="from_id != null">

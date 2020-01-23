@@ -1052,7 +1052,7 @@
                         var waitlist = JSON
                             .parse(res.waitlist);
                         for (var j = 0; j < waitlist.length; j++) {
-                            $('.modal-body2').append("<div class=frInfo><a href='${pageContext.request.contextPath}/feed/yourFeed?email="
+                            $('.modal-body2').append("<div class=frInfo><a href='${pageContext.request.contextPath}/feed/myFeed?email="
                                 + waitlist[j].email
                                 + "'>"
                                 + waitlist[j].email
@@ -1063,7 +1063,7 @@
                         var list = JSON.parse(res.list);
                         for (var j = 0; j < list.length; j++) {
                             $('.modal-body2').append(
-                                "<div class=frInfo><a href='${pageContext.request.contextPath}/feed/yourFeed?email="
+                                "<div class=frInfo><a href='${pageContext.request.contextPath}/feed/myFeed?email="
                                 + list[j].email
                                 + "'>"
                                 + list[j].email
@@ -1152,7 +1152,7 @@
                                 if (res.waitlist != null) {
                                     var waitlist = JSON.parse(res.waitlist);
                                     for (var j = 0; j < waitlist.length; j++) {
-                                        $('.modal-body2').append("<div class=frInfo id=wfrNum" + j + "><a href='${pageContext.request.contextPath}/feed/yourFeed?email="
+                                        $('.modal-body2').append("<div class=frInfo id=wfrNum" + j + "><a href='${pageContext.request.contextPath}/feed/myFeed?email="
                                             + waitlist[j].email
                                             + "'>"
                                             + waitlist[j].email
@@ -1163,7 +1163,7 @@
                                     var list = JSON.parse(res.list);
                                     for (var j = 0; j < list.length; j++) {
                                         $('.modal-body2').append(
-                                            "<div class=frInfo id=frNum" + j + "><a href='${pageContext.request.contextPath}/feed/yourFeed?email="
+                                            "<div class=frInfo id=frNum" + j + "><a href='${pageContext.request.contextPath}/feed/myFeed?email="
                                             + list[j].email
                                             + "'>"
                                             + list[j].email
