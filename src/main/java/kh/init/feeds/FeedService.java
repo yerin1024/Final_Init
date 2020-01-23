@@ -14,7 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.Gson;
 
-import kh.init.admin.DeclareDTO;
+import kh.init.alarm.AlarmDAO;
 import kh.init.members.MemberDTO;
 
 
@@ -25,6 +25,8 @@ public class FeedService {
 	private FeedDAO dao;
 	@Autowired
 	private ReplyDAO replyDAO;
+	@Autowired
+	private AlarmDAO aldao;
 
 	@Transactional
 	public int registerFeed(FeedDTO dto, List<String> mediaList, String mediaPath, String realPath) throws Exception{
@@ -188,8 +190,8 @@ public class FeedService {
 		}
 
 
-	public Map<String, Object> wholeFeed(int page, String keyword) throws Exception{
-		int totalFeed = dao.selectAllCount(keyword);
+	public Map<String, Object> wholeFeed(int page, String keyword, String email) throws Exception{
+		int totalFeed = dao.selectAllCount(keyword, email);
 		int startNum = 0;
 		int endNum = 0;
 		if (page==1){
@@ -208,9 +210,9 @@ public class FeedService {
 		if(keyword!=null) {
 			keyword = "%"+keyword+"%";
 		}
-		List<FeedDTO> list = (List<FeedDTO>)dao.selectAll(keyword, startNum, endNum).get("list");
+		List<FeedDTO> list = (List<FeedDTO>)dao.selectAll(keyword, startNum, endNum, email).get("list");
 		System.out.println("service list : "+list.toString());
-		List<Integer> rnum = (List<Integer>)dao.selectAll(keyword, startNum, endNum).get("rnum");
+		List<Integer> rnum = (List<Integer>)dao.selectAll(keyword, startNum, endNum, email).get("rnum");
 		List<String> cover = new ArrayList<>();//전체피드의 바둑판 대문사진
 
 		//미디어리스트 체크
@@ -404,6 +406,8 @@ public class FeedService {
 	public int insertLike(int feed_seq, String email) throws Exception{
 		int like_seq = dao.getLikeSeq();
 		int result = dao.insertLike(like_seq, feed_seq, email);
+		String receiverEmail = aldao.alarmReceiver(feed_seq);	//--- 좋아요 당한 사람 찾기
+		aldao.alarmLike(like_seq, receiverEmail); 				//--- 좋아요 알림 추가
 		return result;
 	}
 	public int deleteLike(int feed_seq, String email) throws Exception{
@@ -432,6 +436,8 @@ public class FeedService {
 		int reply_seq = replyDAO.replyNextSeq();
 		dto.setReply_seq(reply_seq);
 		replyDAO.registerReply(dto);
+		String receiverEmail = aldao.alarmReceiver(dto.getFeed_seq());	//--- 댓글 주인 찾기
+		aldao.alarmReply(reply_seq, receiverEmail);						//--- 댓글 알림 추가
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("email", dto.getEmail());
 		map.put("contents", dto.getContents());
