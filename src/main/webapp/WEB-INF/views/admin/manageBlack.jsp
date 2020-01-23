@@ -148,6 +148,7 @@
 		}).done(function(resp) {
 			if (resp == withdrawal) {
 				alert("탈퇴되었습니다.");
+				location.reload();
 			} else {
 				alert("탈퇴시키는 것에 실패하셨습니다.");
 				location.reload();
