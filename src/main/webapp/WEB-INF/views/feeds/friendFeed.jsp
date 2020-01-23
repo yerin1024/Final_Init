@@ -610,21 +610,15 @@ html, body {
 							</div>
 						</div>
 					</div>
-
 				</c:forEach>
 			</c:otherwise>
 		</c:choose>
-
-
-
 	</div>
 
 	<script>	
 	//신고확인 기능 모달
 	$(document).on("click",".sirenBtn",function(){
  		 var seq = $(this).attr("id");
- 		 console.log("웨굳개ㅑ덕ㄴ이란");
- 		 console.log("dssss"+seq);
 		 seq = $("#dr").val(seq);
 		 console.log(seq);
 		$("#declareModal").modal('show');
