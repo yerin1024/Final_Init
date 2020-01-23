@@ -34,6 +34,8 @@
 		}
 		
 		var temporaryReply;
+		var clickCnt;
+		var childReplyButton;
 		
 		//답글등록버튼
 		var registerReplyBtn = $("<button></button>");
@@ -94,7 +96,9 @@
 		
 		$(document).on("click",".modifyReply", function(){
 			$("div[value=1]").remove();
-			childReplyButton.attr("hidden", false);
+			if(childReplyButton != null){
+				childReplyButton.attr("hidden", false);
+			}			
 			var oriReply = $(this).closest(".replyBtns").siblings(".profileDiv").find(".replyContents");
 			oriReply.attr("contentEditable","true");
 			temporaryReply = oriReply.html();
@@ -178,8 +182,7 @@
 				alert("yes!");
 			})
 		});
-		var clickCnt;
-		var childReplyButton;
+
 		//답글버튼 눌렀을 때 이벤트
 		$(document).on("click",".registerChildBtn", function(){
 			childReplyButton = $(this);
@@ -388,7 +391,9 @@
 		
 		//답글등록버튼
 		$(document).on("click",".registerChildReply", function(){
-			childReplyButton.attr("hidden", false);
+			if($(".replyContents").html.length > 0){
+				childReplyButton.attr("hidden", false);
+			}		
 			clickCnt = 1;
 			var feed_seq = $("#exampleModal").attr("feed_seq");
 			var reply_seq = $(this).closest(".userInfo").attr("reply_seq");
