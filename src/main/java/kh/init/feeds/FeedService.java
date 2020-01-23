@@ -142,10 +142,56 @@ public class FeedService {
 		map.put("endtNum", endNum);
 		return map;
 	}
+	//myFeed를 위한
+		public Map<String, Object> getMyScrapFeed(int page, String email) throws Exception{
+			int totalFeed = dao.getMyFeedCount(email);
+			int startNum = 0;
+	        int endNum = 0;
+	        if (page==1){
+	            startNum = 1;
+	            endNum = 12;  //데이터를 10개씩 가져오겠다.
+	        }else{
+	        	startNum = page+(11*(page-1));  //10개씩 가져오고싶다면  9로 
+	        	endNum = page*12;   //20, 40, 60
+	        	if(startNum>totalFeed) {
+	        		return null;
+	        	}else if(endNum>totalFeed) {
+	        		endNum = totalFeed;
+	        	}
+	        }
+			List<FeedDTO> list = (List<FeedDTO>)dao.getMyScrapFeed(email, startNum, endNum).get("list");
+			List<Integer> rnum = (List<Integer>)dao.getMyScrapFeed(email, startNum, endNum).get("rnum");
+			List<String> cover = new ArrayList<>();//전체피드의 바둑판 대문사진
+
+			//미디어리스트 체크
+			for(FeedDTO tmp : list) {
+				int feed_seq = tmp.getFeed_seq();
+				List<String> media = dao.getMediaList(feed_seq);
+				if(media.size()==0) { //이미지나 비디오가 없기 때문에 제목으로 커버를 만들어야되는 경우
+					cover.add("<span class='cover' style='width:100%;height:100%'>"+tmp.getTitle()+"</span>");
+				}else {
+					if(media.get(0).endsWith("mp4")) { //파일이 동영상일 경우
+						String video = "<video class='cover' style='width:100%;height:100%' src=\""+media.get(0)+"\">";
+						cover.add(video);
+					}else {//파일이 이미지
+						String img = "<img class='cover' style='width:100%;height:100%' src=\""+media.get(0)+"\">";
+						cover.add(img);
+					}
+				}
+			}
+					
+			Map<String, Object> map = new HashMap<>();
+			map.put("list", list);
+			map.put("rnum", rnum);
+			map.put("cover", cover);
+			map.put("startNum", startNum);
+			map.put("endtNum", endNum);
+			return map;
+		}
 
 
-	public Map<String, Object> wholeFeed(int page, String keyword) throws Exception{
-		int totalFeed = dao.selectAllCount(keyword);
+	public Map<String, Object> wholeFeed(int page, String keyword, String email) throws Exception{
+		int totalFeed = dao.selectAllCount(keyword, email);
 		int startNum = 0;
 		int endNum = 0;
 		if (page==1){
@@ -164,9 +210,9 @@ public class FeedService {
 		if(keyword!=null) {
 			keyword = "%"+keyword+"%";
 		}
-		List<FeedDTO> list = (List<FeedDTO>)dao.selectAll(keyword, startNum, endNum).get("list");
+		List<FeedDTO> list = (List<FeedDTO>)dao.selectAll(keyword, startNum, endNum, email).get("list");
 		System.out.println("service list : "+list.toString());
-		List<Integer> rnum = (List<Integer>)dao.selectAll(keyword, startNum, endNum).get("rnum");
+		List<Integer> rnum = (List<Integer>)dao.selectAll(keyword, startNum, endNum, email).get("rnum");
 		List<String> cover = new ArrayList<>();//전체피드의 바둑판 대문사진
 
 		//미디어리스트 체크
@@ -174,7 +220,7 @@ public class FeedService {
 			int feed_seq = tmp.getFeed_seq();
 			List<String> media = dao.getMediaList(feed_seq);
 			if(media.size()==0) { //이미지나 비디오가 없기 때문에 제목으로 커버를 만들어야되는 경우
-				cover.add("<div class='title'>"+tmp.getTitle()+"</div>");
+				cover.add("<div class='cover' style='display:inline-block;'>"+tmp.getTitle()+"</div>");
 			}else {
 				if(media.get(0).endsWith("mp4")) { //파일이 동영상일 경우
 					String video = "<video class='cover' src=\""+media.get(0)+"\">";
@@ -222,7 +268,7 @@ public class FeedService {
 			int feed_seq = tmp.getFeed_seq();
 			List<String> media = dao.getMediaList(feed_seq);
 			if(media.size()==0) {
-				cover.add("<span class='cover'>"+tmp.getTitle()+"</span>");
+				cover.add("<div class='cover' style='display:inline-block;'>"+tmp.getTitle()+"</div>");
 			}else {
 				if(media.get(0).endsWith("mp4")) { //파일이 동영상일 경우
 					String video = "<video class='cover' src=\""+media.get(0)+"\">";
@@ -257,7 +303,6 @@ public class FeedService {
 			}
 		}
 		dto.setContents(contents);
-		System.out.println(contents);
 		return dto;
 	}
 
@@ -313,15 +358,18 @@ public class FeedService {
 		if(list.size()==0) {
 			System.out.println("title입력");
 			String title = dao.getTitle(feed_seq);
-			list.add("<span class='cover'>"+title+"</span>");
+			list.add("<div class='cover' style='display:inline-block;'>"+title+"</div>");
 		}else {
+			System.out.println("list size = "+list.size());
 			for(int i=0; i<list.size(); i++) {
 				if(list.get(i).endsWith("mp4")) { //파일이 동영상일 경우
+					System.out.println("파일이 동영상입니다.");
 					String video = "<video class='cover' src=\""+list.get(i)+"\">";
-					list.add(i, video);
+					list.set(i, video);
 				}else {//파일이 이미지
+					System.out.println("파일이 이미지입니다.");
 					String img = "<img class='cover' src=\""+list.get(i)+"\">";
-					list.add(i, img);
+					list.set(i, img);
 				}
 			}
 		}

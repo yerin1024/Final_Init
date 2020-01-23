@@ -6,32 +6,23 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-<script
-	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-<script
-	src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.css">
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.js"></script>
-
-
-<link rel="stylesheet" href="/resources/css/nav.css">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Insert title here</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="/resources/css/nav.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.css">
+
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.js"></script>
+
 
 <style>
-
 #wrapper {
 	border: 1px solid red;
 	margin: auto;
@@ -59,27 +50,41 @@ html, body {
 	display: none;
 }
 
-.carousel-item {
-	margin: auto;
-	text-align: center;
+#carouselExampleIndicators {
+	 width: 100%; 
 }
 
-/* 	.carousel-inner { */
-/* 		width: 100vw; */
-/* 	} */
+.carousel-inner {
+	/* width: 720px; */
+	width:1600px;
+		overflow: hidden;
+}
+
+.carousel-item {
+	margin: auto;
+	/* width: 1600px; */
+	 width: 720px;
+	text-align: center;
+	
+}
+
 .carousel-item * {
 	width: 100%;
 	height: 100%;
 }
 
-/* .carousel-inner{
+.carousel-inner>img {
 	width: 100%;
 	height: 100%;
-} */
-/* .carousel-inner>img{
-	width: 100%;
-	height: 100%;
-} */
+}
+
+  .carousel-inner > .item > img {
+      top: 0;
+      left: 0;
+      min-width: 100%;
+      min-height: 720px;
+  }  
+
 .slide {
 	width: 99.5%;
 }
@@ -149,6 +154,8 @@ html, body {
 	border: none;
 	background: none;
 }
+
+
 /* .modal {
           text-align: center;
         } */
@@ -284,7 +291,6 @@ html, body {
 								 var Img = $("<div class='row profileImg'></div>") 
 								 Img.append(profile_imgList[i]); 
 								 profile.append(Img);
-								 feed.append(profile);
 								 var nick = $("<div class='row profileNickname'></div>");
 								 nick.append(list[i].nickname);
 								 profile.append(nick);
@@ -292,10 +298,11 @@ html, body {
 								 feedDeclaration.attr("seq",list[i].feed_seq);
 								 var afterDec = $("<img class='sirenImg' src='${pageContext.request.contextPath}/resources/images/siren2.png'>")
 								 afterDec.attr("id","srI2_"+list[i].feed_seq);
-								 var beforeDec = $("<button type='button' role='btton' seq='${feed.feed_seq}' class='sirenBtn' data-toggle='modal' data-target='#declareModal' data-backdrop='static'> </button>");	
+								 var beforeDec = $("<button type='button' class='sirenBtn' role='btton' data-toggle='modal' data-target='#declareModal' data-backdrop='static'></button>");	
+								 beforeDec.attr("seq",list[i].feed_seq);
 								 beforeDec.attr("id","srB_"+list[i].feed_seq);
 								 console.log("srB_"+list[i].feed_seq);
-								 var beforeDecImg = $("<img class='sirenImg' src='${pageContext.request.contextPath }/resources/images/siren.png'>");
+								 var beforeDecImg = $("<img class='sirenImg' src='${pageContext.request.contextPath}/resources/images/siren.png'>");
 								 beforeDecImg.attr("id","srI_"+list[i].feed_seq);
 								 console.log("srI_"+list[i].feed_seq);
 								 beforeDec.append(beforeDecImg);
@@ -306,15 +313,16 @@ html, body {
 									 feedDeclaration.append(beforeDec);	 
 									 profile.append(feedDeclaration); 
 								 }
-								
+								feed.append(profile);
 								var media = $("<div class='row media'></div>");
 
-								var CEI = $("<div id='carouselExampleIndicators' class='carousel slide' data-interval='false'></div>");
-
+								var CEI = $("<div class='carousel slide' data-interval='false'></div>");
+								CEI.attr("id",'carouselExampleIndicators'+list[i].feed_seq);
 								var olCEI = $("<ol class='carousel-indicators'></ol>");
 
 								for (var m = 0; m < mediaList[i].length; m++) {
-									var liCEI = $("<li data-target='#carouselExampleIndicators'></li>");
+									var liCEI = $("<li></li>");
+									liCEI.attr("data-target",'#carouselExampleIndicators'+list[i].feed_seq);
 									if (m == 0) {
 										liCEI.attr("data-slide-to", 0);
 										liCEI.addClass("active");
@@ -337,13 +345,19 @@ html, body {
 									}
 									ci.append(divCI);
 								}
-								ci.append("<a class='carousel-control-prev' href='#carouselExampleIndicators' role='button' data-slide='prev'>");
+								//ci.append("<a class='carousel-control-prev' role='button' data-slide='prev'>");
+								var a = $("<a class='carousel-control-prev' role='button' data-slide='prev'>");
+								a.attr("href",'#carouselExampleIndicators'+list[i].feed_seq);
+								ci.append(a);
 								ci.append("<span class='carousel-control-prev-icon' aria-hidden='true'></span> <span class='sr-only'>Previous</span></a>");
-								ci.append("<a class='carousel-control-next' href='#carouselExampleIndicators' role='button' data-slide='next'>");
+								
+								//ci.append("<a class='carousel-control-next' role='button' data-slide='next'>");
+								var b = $("<a class='carousel-control-next' role='button' data-slide='next'>");
+								b.attr("href",'#carouselExampleIndicators'+list[i].feed_seq);
+								ci.append(b);
 								ci.append("<span class='carousel-control-next-icon' aria-hidden='true'></span> <span class='sr-only'>Next</span></a>");
 
 								media.append(ci);
-								feed.append(profile);
 								feed.append(media);
 
 								var contents = $("<div class='row contents' style='height:100px'></div>");
@@ -431,6 +445,9 @@ html, body {
 								${profile_imgList[status.index]}</div>
 							<div class="row profileNickname">${feed.nickname}</div>
 
+
+					<c:choose>
+					<c:when test="${feed.email ne loginInfo.email}">
 							<div class="row profilefeedDeclaration" seq="${feed.feed_seq}">
 								<c:choose>
 									<c:when test="${declareCheckList[status.index] == 1}">
@@ -447,48 +464,49 @@ html, body {
 									</c:otherwise>
 								</c:choose>
 							</div>
-
+						</c:when>
+						<c:otherwise>
+						</c:otherwise>
+						</c:choose>
+							
 						</div>
-						<div class="row media">
-							<div id="carouselExampleIndicators" class="carousel slide"
-								data-interval="false">
+					<div class="row media">
+						<div id="carouselExampleIndicators${feed.feed_seq }" class="carousel slide" data-interval="false">
 								<ol class="carousel-indicators">
-									<c:forEach items="${mediaList[status.index] }" var="media"
-										varStatus="status1">
+									<c:forEach items="${mediaList[status.index] }" var="media" varStatus="status1">
 										<c:if test="${status1.index ==0}">
-											<li data-target="#carouselExampleIndicators"
-												data-slide-to="0" class="active"></li>
+											<li data-target="#carouselExampleIndicators${feed.feed_seq }" data-slide-to="0"
+												class="active"></li>
 										</c:if>
 										<c:if test="${status1.index !=0}">
-											<li data-target="#carouselExampleIndicators"
-												data-slide-to="${status.index }"></li>
+											<li data-target="#carouselExampleIndicators${feed.feed_seq }"
+												data-slide-to="${status1.index }"></li>
 										</c:if>
 									</c:forEach>
 								</ol>
 								<div class="carousel-inner">
-									<c:forEach items="${mediaList[status.index] }" var="media"
-										varStatus="status1">
-										<c:if test="${status1.index ==0}">
-											<div class="carousel-item active">${media }</div>
-										</c:if>
-										<c:if test="${status1.index !=0}">
-											<div class="carousel-item">${media }</div>
-										</c:if>
-									</c:forEach>
-									<a class="carousel-control-prev"
-										href="#carouselExampleIndicators" role="button"
-										data-slide="prev"> <span
-										class="carousel-control-prev-icon" aria-hidden="true"></span>
-										<span class="sr-only">Previous</span>
-									</a> <a class="carousel-control-next"
-										href="#carouselExampleIndicators" role="button"
-										data-slide="next"> <span
-										class="carousel-control-next-icon" aria-hidden="true"></span>
-										<span class="sr-only">Next</span>
-									</a>
+								<c:forEach items="${mediaList[status.index] }" var="media" varStatus="status1">
+									<c:if test="${status1.index ==0}">
+										<div class="carousel-item active">${media }</div>
+									</c:if>
+									<c:if test="${status1.index !=0}">
+										<div class="carousel-item">${media }</div>
+									</c:if>
+								</c:forEach>
 								</div>
-							</div>
+								<a class="carousel-control-prev"
+									href="#carouselExampleIndicators${feed.feed_seq }" role="button" data-slide="prev"> 
+									<span class="carousel-control-prev-icon"
+									aria-hidden="true"></span> 
+									<span class="sr-only">Previous</span>
+								</a> 
+								<a class="carousel-control-next"
+									href="#carouselExampleIndicators${feed.feed_seq }" role="button"
+									data-slide="next"> <span class="carousel-control-next-icon"
+									aria-hidden="true"></span> <span class="sr-only">Next</span>
+								</a>
 						</div>
+					</div>
 						<div class="row contents" style="height: 100px;">
 							${feed.contents }</div>
 						<div class="row replys">
@@ -611,20 +629,19 @@ html, body {
 							</div>
 						</div>
 					</div>
-
 				</c:forEach>
 			</c:otherwise>
 		</c:choose>
-
-
-
 	</div>
 
 	<script>	
+	
+	
+	
 	//신고확인 기능 모달
-	 $(".sirenBtn").on("click", function(){
-		 var seq = $(this).attr("id");
-		 $("#dr").val(seq);
+	$(document).on("click",".sirenBtn",function(){
+ 		 var seq = $(this).attr("id");
+		 seq = $("#dr").val(seq);
 		 console.log(seq);
 		$("#declareModal").modal('show');
 		$(".profileDisplay").html(seq);
@@ -637,7 +654,7 @@ html, body {
 	
 	//사유데이터 처리
 	$(".declareReason").on("click", function(){
-		var seq = $("#dr").val();
+ 		var seq = $("#dr").val();
 		var reason = $("input:radio[name=declare_reason]:checked").val();
 		 console.log(seq);
 		 console.log(reason);

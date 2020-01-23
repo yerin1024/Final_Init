@@ -5,9 +5,13 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+
 <title>Init</title>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 <link href="https://fonts.googleapis.com/css?family=Do+Hyeon|Nanum+Gothic+Coding|Noto+Sans+KR|Noto+Serif+KR&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/resources/css/index.css">
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
@@ -30,7 +34,7 @@
     .modal-body {
         padding: 100px;
     }
-
+    
     #indexModalTitle {
         font-size: 50px;
         font-family: 'Noto Sans KR', sans-serif;
@@ -44,41 +48,54 @@
 
     .tab1_body {
         font-family: 'Noto Sans KR', sans-serif;
+        width: 70%;
+    }
+    
+    .tab1_logo {
+    	width: 30%;
     }
 
-    .tab1_body .userInput {
-        width: 400px;
-        height: 50px;
-        padding: 5px;
-        margin: 5px;
-        border-radius: 8px;
-        font-size: 15px;
-    }
+     .tab1_body .userInput {
+         width: 300px;
+         height: 50px;
+         padding: 5px;
+         margin: 5px;
+         border-radius: 8px;
+         font-size: 15px;
+     } 
 
     .userInput:focus {
         outline: none;
     }
 
     #tab1_loginBtn {
-        width: 400px;
-        height: 50px;
+        width: 250px;
+        height: 60px;
         padding: 5px;
-        margin: 10px;
+        margin: 5px;
         border: none;
         border-radius: 8px;
-        font-size: 20px;
+        font-size: 19px;
         background-color: #0f4c81;
         color: #fffefc;
     }
     
     #tab1_kakaoLoginBtn {
-    	width: 400px;
-        height: 50px;
-        margin: 10px;
+    	width: 250px;
+        height: 60px;
+        margin: 5px;
         border: none;
         border-radius: 8px;
     }
-
+	
+	#logoDiv{
+		width: 100px;
+	}
+	
+	#logoDiv img{
+		width: 100%;
+	}
+	
     #tab1_saveIdCheck {
         margin: 10px;
         padding: 10px;
@@ -174,24 +191,85 @@
         /* border: 1px thin gray; */
         font-size: 11px;
         overflow:hidden;
-    }
-
+    }   
+       	
+   	.inp {
+	  position: relative;
+	  margin-bottom: 15px;
+	  width: 100%;
+	  max-width: 280px;
+	}
+	
+	.inp .label {
+	  position: absolute;
+	  top: 16px;
+	  left: 0;
+	  font-size: 16px;
+	  color: #9098a9;
+	  font-weight: 500;
+	  transform-origin: 0 0;
+	  transition: all 0.2s ease;
+	}
+	
+	.inp .border {
+	  position: absolute;
+	  bottom: 0;
+	  left: 0;
+	  height: 2px;
+	  width: 100%;
+	  transform: scaleX(0);
+	  transform-origin: 0 0;
+	  transition: all 0.15s ease;
+	  background: #0f4c81;
+	}
+	
+	.inp input {
+	  -webkit-appearance: none;
+	  width: 100%;
+	  border: 0;
+	  font-family: inherit;
+	  padding: 12px 0;
+	  height: 48px;
+	  font-size: 16px;
+	  font-weight: 500;
+	  border-bottom: 2px solid #c8ccd4;
+	  background: none;
+	  border-radius: 0;
+	  color: #223254;
+	  transition: all 0.15s ease;
+	}
+	.inp input:hover {
+	  background: rgba(34,50,84,0.03);
+	}
+	.inp input:not(:placeholder-shown) + span {
+	  color: #5a667f;
+	  transform: translateY(-26px) scale(0.75);
+	}
+	.inp input:focus {
+	  background: none;
+	  outline: none;
+	}
+	.inp input:focus + span {
+	  color: #07f;
+	  transform: translateY(-26px) scale(0.75);
+	}
+	.inp input:focus + span + .border {
+	  transform: scaleX(1);
+	}
+	.inputLogin:focus {
+		background-color: transparent;
+	}  	
+ 
 </style>
-
 <body>
-    <!-- modal popup 임시버튼 -->
-    <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#indexModal"
-        style="margin:100px;width:200px;height:200px;">
-        Modal
-    </button> -->
-
+ <jsp:include page="/resources/script/index.jsp" flush="true"/>
     <!-- Modal start -->
     <div class="modal fade bd-example-modal-lg" id="indexModal" tabindex="-1" role="dialog"
         aria-labelledby="eindexModalTitle" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h2 class="modal-title" id="indexModalTitle">Init</h2>
+                    <h2 class="modal-title" id="indexModalTitle" style="letter-spacing:5px;">In;t</h2>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true" id="closeBtn">&times;</span>
                     </button>
@@ -205,11 +283,26 @@
                                 <div class="tab1_container">
                                     <form action="${pageContext.request.contextPath}/member/loginProc.do" method="post" id="tab1_loginForm">
                                         <div class="tab1_loginContainer">
-                                            <div class="tab1_body">
-                                                <input type="text" class="userInput" id="tab1_email" name="email" placeholder="아이디 입력"><br>
-                                                <input type="password" class="userInput" autocomplete="off" id="tab1_pw" name="pw" placeholder="비밀번호 입력"><br>
+                                        	<div class="tab1_logo">
+	                                        	<p id="logoDiv">
+	                                        		<img src="resources/images/login_logo.png">
+	                                        	</p>                                        		
+                                        	</div>
+                                            <div class="tab1_body">                                            
+                                            	<label for="tab1_email" class="inp">
+												  <input type="text" class="inputLogin" id="tab1_email" name="email" placeholder="&nbsp;">
+												  <span class="label">Email</span>
+												  <span class="border"></span>
+												</label>
+												<br>
+												<label for="tab1_pw" class="inp">
+												  <input type="password" class="inputLogin" id="tab1_pw" name="pw" placeholder="&nbsp;">
+												  <span class="label">Password</span>
+												  <span class="border"></span>
+												</label>
+												<br>
                                                 <button type="button" id="tab1_loginBtn" onclick="toLogin();">로그인</button><br>
-                                                <img src="resources/images/kakaoLogin_btn.png" id="tab1_kakaoLoginBtn"><br>
+                                                <img src="resources/images/kakao_login_large.png" id="tab1_kakaoLoginBtn"><br>
 	                                            <div class="saveId">
 	                                            	<input type="checkbox" id="tab1_saveIdCheck" onChange="toCheckCbox();">
 	                                                <span>아이디 저장</span>
@@ -442,23 +535,18 @@
         
         window.onload = function () {
         	Kakao.init("798b7f7028249ef2a4388b4944cf88ce");
-        	
-            $("#indexModal").modal({backdrop: 'static', keyboard: false, show: true});//일단 예제로 띄우기
-            clearInput(userInput, userInput.length);           
-            
-            var url = document.location.toString();
-            	$('#main').tab('show'); //예제 연습                   	
-            	toCheckCookie();                	
-        		          
+        	              
+			doc.getElementById("popupIndexModal").addEventListener("click", function(){
+				$("#indexModal").modal({backdrop: 'static', keyboard: false});
+				clearInput(userInput, userInput.length);
+				doc.getElementById("mainTab").click();
+				toCheckCookie();             	
+            })      
         }    
         //tab1_로그인 start
         var login = doc.getElementById("tab1_loginBtn");
-//         var email = doc.getElementById("tab1_email");
-//         var pw = doc.getElementById("tab1_pw");
         
         function toLogin() { //로그인 시도
-//         	var email = doc.getElementById("tab1_email");
-//             var pw = doc.getElementById("tab1_pw");
         	if(doc.getElementById("tab1_email").value == ""){
         		alert("이메일을 입력해 주세요.");
         		return;
@@ -500,7 +588,6 @@
         //아이디 저장 쿠키 연관 함수 start
         var exdate = new Date();
      
-
         function toCheckCbox() {
             if (saveIdCheck.checked == true) {
                 exdate.setDate(exdate.getDate() + 30);
@@ -728,7 +815,7 @@
             }
         });
         //닉네임 유효성 검사 end
-			doc.getElementById("tab5-2_signupBtn").addEventListener("click", function(){
+		doc.getElementById("tab5-2_signupBtn").addEventListener("click", function(){
 				
 				if (nickname.value === "") {
 					adviseNickname.innerHTML = "필수 입력사항입니다."
@@ -1062,31 +1149,34 @@
                             verifyCode.value = "";
                             verifyCode.disabled = false;
                             confirmVerifyCode.hidden = true;
-                            $.ajax({
-                                url: "${pageContext.request.contextPath}/guest/sendVerifCode.do",
-                                data: { phone: phone.value },
-                                dataType: "json",
-                                type: "post"
-                            }).done(function (resp) {
-                            console.log("인증번호 서버 전송 결과: " + resp.result);            
-                            if (resp.result != "Verify Code sent") {
-                                adviseVerifCode.innerHTML("인증번호 전송에 실패했습니다.");
-                                adviseVerifCode.style.color = "red";
-                                hiddenRespPhone.innerHTML = "사용불가";
-                                hiddenRespVerifCode.innerHTML = "인증실패";
-                                confirmVerifyCode.hidden = true;
-                                sendCode.hidden = false;
-                                resendCode.hidden = true;
-                                verifyCode.disabled = true;
-                            }else{
-                                console.log("인증 코드 발송 완료");
-                                confirmVerifyCode.hidden = false;                  
-                            }              
-                            }).fail(function (a, b, c) {
-                                console.log(a);
-                                console.log(b);
-                                console.log(c);
-                            });
+                            //잠시 테스트 
+                             hiddenRespPhone.innerHTML = "사용가능";
+                            //
+//                             $.ajax({
+//                                 url: "${pageContext.request.contextPath}/guest/sendVerifCode.do",
+//                                 data: { phone: phone.value },
+//                                 dataType: "json",
+//                                 type: "post"
+//                             }).done(function (resp) {
+//                             console.log("인증번호 서버 전송 결과: " + resp.result);            
+//                             if (resp.result != "Verify Code sent") {
+//                                 adviseVerifCode.innerHTML("인증번호 전송에 실패했습니다.");
+//                                 adviseVerifCode.style.color = "red";
+//                                 hiddenRespPhone.innerHTML = "사용불가";
+//                                 hiddenRespVerifCode.innerHTML = "인증실패";
+//                                 confirmVerifyCode.hidden = true;
+//                                 sendCode.hidden = false;
+//                                 resendCode.hidden = true;
+//                                 verifyCode.disabled = true;
+//                             }else{
+//                                 console.log("인증 코드 발송 완료");
+//                                 confirmVerifyCode.hidden = false;                  
+//                             }              
+//                             }).fail(function (a, b, c) {
+//                                 console.log(a);
+//                                 console.log(b);
+//                                 console.log(c);
+//                             });
                         } else if (resp.result == "unavailable") {
                             advisePhone.innerHTML = "중복된 번호입니다.";
                             advisePhone.style.color = "red";
@@ -1105,40 +1195,40 @@
             }
         	//인증번호 전송 end
             //사용자 입력 인증번호 일치여부 검사 start
-                function confirmVerifCode() {
-                    $.ajax({
-                        url: "${pageContext.request.contextPath}/guest/verifyUser.do",
-                        data: { verifyCode: verifyCode.value },
-                        dataType: "json",
-                        type: "post",
-                    }).done(function (resp) {
-                        console.log("인증번호 서버 검증 결과 : " + resp.result);
-        	          if (resp.result == "verified") {
-        	            console.log("인증 완료 ");
-                        adviseVerifCode.innerHTML = "인증완료";
-                        adviseVerifCode.style.color = "green";
-                        hiddenRespPhone.innerHTML = "사용가능";
-                        hiddenRespVerifCode.innerHTML = "사용가능";
-                        sendCode.hidden = true;
-                        resendCode.hidden = true;
-                        verifyCode.disabled = true;
-        	          } else if (resp.result == "unverified") {
-        	            console.log("인증 실패 ");
-        	            adviseVerifCode.innerHTML = "인증실패";
-        	            adviseVerifCode.style.color = "red";
-        	            hiddenRespPhone.innerHTML = "사용불가";
-        	            hiddenRespVerifCode.innerHTML = "인증실패";
-        	            sendCode.hidden = true;
-        	            resendCode.hidden = false;
-        	            verifyCode.disabled = false;
-        	          };
-                    }).fail(function (a, b, c) {
-                        console.log(a);
-                        console.log(b);
-                        console.log(c);
-                        return false;
-                    });
-                }
+//                 function confirmVerifCode() {
+//                     $.ajax({
+//                         url: "${pageContext.request.contextPath}/guest/verifyUser.do",
+//                         data: { verifyCode: verifyCode.value },
+//                         dataType: "json",
+//                         type: "post",
+//                     }).done(function (resp) {
+//                         console.log("인증번호 서버 검증 결과 : " + resp.result);
+//         	          if (resp.result == "verified") {
+//         	            console.log("인증 완료 ");
+//                         adviseVerifCode.innerHTML = "인증완료";
+//                         adviseVerifCode.style.color = "green";
+//                         hiddenRespPhone.innerHTML = "사용가능";
+//                         hiddenRespVerifCode.innerHTML = "사용가능";
+//                         sendCode.hidden = true;
+//                         resendCode.hidden = true;
+//                         verifyCode.disabled = true;
+//         	          } else if (resp.result == "unverified") {
+//         	            console.log("인증 실패 ");
+//         	            adviseVerifCode.innerHTML = "인증실패";
+//         	            adviseVerifCode.style.color = "red";
+//         	            hiddenRespPhone.innerHTML = "사용불가";
+//         	            hiddenRespVerifCode.innerHTML = "인증실패";
+//         	            sendCode.hidden = true;
+//         	            resendCode.hidden = false;
+//         	            verifyCode.disabled = false;
+//         	          };
+//                     }).fail(function (a, b, c) {
+//                         console.log(a);
+//                         console.log(b);
+//                         console.log(c);
+//                         return false;
+//                     });
+//                 }
                 //사용자 입력 인증번호 일치여부 검사 end  
             //인증번호 제한시간 이벤트 start
             function msg_time() {

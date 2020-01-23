@@ -16,6 +16,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import kh.init.members.MemberDTO;
+import kh.init.members.MemberService;
 
 
 
@@ -26,7 +27,8 @@ public class FriendController {
 
 	@Autowired
 	private FriendService service;
-
+	@Autowired
+	private MemberService mservice;
 	@Autowired
 	private HttpSession session;
     
@@ -35,6 +37,12 @@ public class FriendController {
 		try { 
 			MemberDTO mDto = (MemberDTO)session.getAttribute("loginInfo");
 		int result = service.friendRequestService(dto,mDto.getEmail());
+		if(!(dto.getTo_id().equalsIgnoreCase(mDto.getEmail()))) {
+            int frResult = service.friendIsOkService(dto.getTo_id(), mDto.getEmail());
+            model.addAttribute("frResult", frResult);
+            }
+		MemberDTO ydto = mservice.getMyPageService(dto.getTo_id());
+		model.addAttribute("mvo", ydto);
 		 if(result > 0) {
 			 return "feeds/myFeed";
 		 }else {
