@@ -5,37 +5,44 @@
 <mapper namespace="Feed">
 	<select id="selectAll" resultType="kh.init.feeds.FeedDTO"
 		parameterType="java.util.Map">
-		select feed_seq, email, nickname, title, contents, relation,
-		write_date, hashtag
-		from (select p.*, row_number()over(order by
-		p.feed_seq) rnum
-		from tb_feed p where relation='0'
-		<if test="keyword != null">
-			and hashtag Like #{keyword}
-		</if>
-		)where rnum between #{startNum} and #{endNum}
+		select feed_seq, email, nickname, title, contents, relation, write_date, hashtag
+		from (select p.*, row_number()over(order by p.feed_seq) rnum
+			from tb_feed p where relation='0'
+			                     and 
+			                    (p.email not in (select to_id from tb_block where from_id = #{email}) and 
+			                    p.email not in (select from_id from tb_block where to_id = #{email}))
+								<if test="keyword != null">
+									and hashtag Like #{keyword}
+								</if>
+			)
+		where rnum between #{startNum} and #{endNum} 
 	</select>
+ 	
 
 	<select id="selectAllRnum" resultType="Integer"
 		parameterType="java.util.Map">
 		select rnum
-		from (select p.*, row_number()over(order by p.feed_seq)
-		rnum
-		from tb_feed p where relation='0'
-		<if test="keyword != null">
-			and hashtag Like #{keyword}
-		</if>
-		)where rnum between #{startNum} and #{endNum}
+		from (select p.*, row_number()over(order by p.feed_seq) rnum
+			from tb_feed p where relation='0'
+			                     and 
+			                    (p.email not in (select to_id from tb_block where from_id = #{email}) and 
+			                    p.email not in (select from_id from tb_block where to_id = #{email}))
+								<if test="keyword != null">
+									and hashtag Like #{keyword}
+								</if>
+		)
 	</select>
 
-	<select id="selectAllCount" resultType="Integer">
+	<select id="selectAllCount" resultType="Integer" parameterType="java.util.Map">
 		select count(*)
-		from (select p.*, row_number()over(order by p.feed_seq)
-		rnum
-		from tb_feed p where relation='0'
-		<if test="keyword != null">
-			and hashtag Like #{keyword}
-		</if>
+		from (select p.*, row_number()over(order by p.feed_seq) rnum
+			from tb_feed p where relation='0'
+			                     and 
+			                    (p.email not in (select to_id from tb_block where from_id = #{email}) and 
+			                    p.email not in (select from_id from tb_block where to_id = #{email}))
+								<if test="keyword != null">
+									and hashtag Like #{keyword}
+								</if>
 		)
 	</select>
 
@@ -139,27 +146,58 @@
 	</select>
 
 	<select id="getFriendFeedCount" resultType="Integer">
-		select count(*) from
-		tb_feed p left join tb_friend r on p.email = r.my_id
-		where r.fr_id =
-		#{email}
-		and p.relation >= r.relation
-		or p.email = #{email}
+	select count(*) 
+	from tb_feed p left join tb_friend r on p.email = r.my_id
+	where 
+        (r.fr_id = #{email} and 
+        p.relation >= r.relation and 
+        p.email not in (select to_id from tb_block where from_id = #{email}) and 
+        p.email not in (select from_id from tb_block where to_id = #{email}))
+        
+        or p.email = #{email} and
+        (r.fr_id not in (select to_id from tb_block where from_id = #{email}) and 
+        r.fr_id not in (select from_id from tb_block where to_id = #{email}))
+        ;
+	
+	
+<!-- 		select count(*) from -->
+<!-- 		tb_feed p left join tb_friend r on p.email = r.my_id -->
+<!-- 		where r.fr_id = -->
+<!-- 		#{email} -->
+<!-- 		and p.relation >= r.relation -->
+<!-- 		or p.email = #{email} -->
 	</select>
 
 	<select id="getFriendFeed" parameterType="java.util.Map"
 		resultType="kh.init.feeds.FeedDTO">
-		select feed_seq, email, nickname, title, contents,
-		relation, write_date,
-		hashtag
-		from (select p.*, ROW_NUMBER() OVER(ORDER
-		BY p.feed_seq) rnum
-		from tb_feed p left join tb_friend r on p.email =
-		r.my_id
-		where r.fr_id = #{email} and p.relation >= r.relation
-		or p.email
-		= #{email})
+		select feed_seq, email, nickname, title, contents, relation, write_date, hashtag
+		from
+    		(select p.*, r.fr_id, r.relation as fr_rel, ROW_NUMBER() OVER(ORDER BY p.feed_seq) rnum 
+    		from tb_feed p left join tb_friend r on p.email = r.my_id
+   			 where 
+	            (r.fr_id = #{email} and 
+	            p.relation >= r.relation and 
+	            p.email not in (select to_id from tb_block where from_id = #{email}) and 
+	            p.email not in (select from_id from tb_block where to_id = #{email}))
+	            
+	            or p.email = #{email} and
+	            (r.fr_id not in (select to_id from tb_block where from_id = #{email}) and 
+	            r.fr_id not in (select from_id from tb_block where to_id = #{email})) )
 		where rnum between #{startNum} and #{endNum}
+		
+		
+		
+<!-- 		select feed_seq, email, nickname, title, contents, -->
+<!-- 		relation, write_date, -->
+<!-- 		hashtag -->
+<!-- 		from (select p.*, ROW_NUMBER() OVER(ORDER -->
+<!-- 		BY p.feed_seq) rnum -->
+<!-- 		from tb_feed p left join tb_friend r on p.email = -->
+<!-- 		r.my_id -->
+<!-- 		where r.fr_id = #{email} and p.relation >= r.relation -->
+<!-- 		or p.email -->
+<!-- 		= #{email}) -->
+<!-- 		where rnum between #{startNum} and #{endNum} -->
 	</select>
 
    <!-- 신고 버튼을 위한 쿼리 -->

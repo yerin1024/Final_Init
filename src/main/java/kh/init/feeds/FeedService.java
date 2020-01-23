@@ -188,8 +188,8 @@ public class FeedService {
 		}
 
 
-	public Map<String, Object> wholeFeed(int page, String keyword) throws Exception{
-		int totalFeed = dao.selectAllCount(keyword);
+	public Map<String, Object> wholeFeed(int page, String keyword, String email) throws Exception{
+		int totalFeed = dao.selectAllCount(keyword, email);
 		int startNum = 0;
 		int endNum = 0;
 		if (page==1){
@@ -208,9 +208,9 @@ public class FeedService {
 		if(keyword!=null) {
 			keyword = "%"+keyword+"%";
 		}
-		List<FeedDTO> list = (List<FeedDTO>)dao.selectAll(keyword, startNum, endNum).get("list");
+		List<FeedDTO> list = (List<FeedDTO>)dao.selectAll(keyword, startNum, endNum, email).get("list");
 		System.out.println("service list : "+list.toString());
-		List<Integer> rnum = (List<Integer>)dao.selectAll(keyword, startNum, endNum).get("rnum");
+		List<Integer> rnum = (List<Integer>)dao.selectAll(keyword, startNum, endNum, email).get("rnum");
 		List<String> cover = new ArrayList<>();//전체피드의 바둑판 대문사진
 
 		//미디어리스트 체크
