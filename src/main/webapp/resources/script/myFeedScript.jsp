@@ -4,7 +4,7 @@
 		function replyBtnOnclick(email) {
 			var writeReply = $("#writeReply");
 			var contents = writeReply.html();
-			if(contents == ""){ //컨텐츠가 null 값일 경우 등록 동작 X
+			if(contents == ""){ //컨텐츠가 null 값일 경우 등록 동작
 				return false;
 			}
 			var feed_seq = $("#exampleModal").attr("feed_seq");
