@@ -984,7 +984,7 @@
 	    $("#registerFeed").on("click", function() {
 	    	location.href = "${pageContext.request.contextPath}/feed/writeFeed";
 		});
-<<<<<<< HEAD
+
 	    
 	$('#exampleModal').on('shown.bs.modal', function (event) {
 		var seq = $(event.relatedTarget).data('id');
@@ -1092,8 +1092,6 @@
 		
 	})
 
-=======
->>>>>>> 48c840d7475e44dd1ee81506733649e0d355cfc2
 			$(document).on("click", "#like", function(e){
 				e.preventDefault();   
 			var seq = $(this).attr("class");
