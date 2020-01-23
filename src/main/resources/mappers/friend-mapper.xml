@@ -10,7 +10,7 @@
 		insert into tb_friend_Request values(#{seq}, #{from_id},#{to_id},#{relation}) 
 	</insert>
     <select id="selectById" resultType="kh.init.friends.FriendDTO">
-    select * from tb_friend where my_id = #{id}  and fr_id not in (select from_id from tb_block where to_id = #{id})
+    select fr_id from tb_friend where my_id = #{id}  and fr_id not in (select from_id from tb_block where to_id = #{id})
      
   </select>
    <select id="selectByIdOk" resultType="kh.init.friends.FriendDTO">
