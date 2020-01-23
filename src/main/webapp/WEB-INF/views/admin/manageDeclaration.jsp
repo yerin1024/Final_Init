@@ -86,7 +86,7 @@
 												id="${ddto.feed_seq}">삭제</button></td>
 										</c:when>
 										<c:when test="${ddto.delete_feed == 'Y'}">
-										<td><button type="button" class="dBtn btn-danger"
+										<td><button type="button" class="bBtn btn-danger"
 												id="b_${ddto.feed_seq}">블랙경고</button></td>
 										</c:when>
 									<%-- 	<c:otherwise>

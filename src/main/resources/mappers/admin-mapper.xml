@@ -29,16 +29,16 @@
 		select * from tb_member where black = 'N' and admin = 'N'
 		<choose>
 			<when test="search != ''">
-				and ${searchTag} like '%' ||#{search}||'%'
+				and (${searchTag} like '%' ||lower(#{search})||'%' or ${searchTag} like '%' ||upper(#{search})||'%')
 			</when>
 
 		</choose>
 	</select>
 	<select id="searchForBlack" resultType="kh.init.members.MemberDTO" parameterType="java.util.Map">
-		select * from tb_member where black = 'Y' and admin = 'N'
+		select * from tb_member where black = 'Y' and admin = 'N' 
 		<choose>
 			<when test="search != ''">
-				and ${searchTag} like '%' ||#{search}||'%'
+				and (${searchTag} like '%' ||lower(#{search})||'%' or ${searchTag} like '%' ||upper(#{search})||'%')
 			</when>
 		</choose>
 	</select>
@@ -59,7 +59,7 @@
 		'N'
 		<choose>
 			<when test="search != ''">
-				and ${searchTag} like '%' ||#{search}||'%'
+				and (${searchTag} like '%' ||lower(#{search})||'%' or ${searchTag} like '%' ||upper(#{search})||'%')
 			</when>
 		</choose>
 	</select>
@@ -69,7 +69,7 @@
 		desc) as rown from tb_member where admin = 'N' and black = 'N'
 		<choose>
 			<when test="search != ''">
-				and ${searchTag} like '%' ||#{search}||'%'
+				and (${searchTag} like '%' ||lower(#{search})||'%' or ${searchTag} like '%' ||upper(#{search})||'%')
 			</when>
 		</choose>
 		) where rown between ${start} and ${end}
