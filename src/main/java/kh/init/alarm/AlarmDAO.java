@@ -24,6 +24,13 @@ public class AlarmDAO {
 		return jdbc.selectOne("Alarm.alarmReplyWho",prm);
 	}
 	
+	// 피드 작성자 찾기
+	public String alarmReceiver(int feed_seq) {
+		Map<String, Object> prm = new HashMap<>();
+		prm.put("feed_seq", feed_seq);
+		return jdbc.selectOne("Alarm.alarmReceiver",prm);
+	}
+	
 	// 댓글 알림 추가			dual 리턴값 받아서 넣기 // email에 alarmWho 리턴값 넣기
 	public int alarmReply(int sharedSeq, String email) {
 		Map<String, Object> prm = new HashMap<>();

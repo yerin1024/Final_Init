@@ -14,17 +14,15 @@
 	<link rel="stylesheet" href="/resources/css/nav.css">
 	<link rel="stylesheet" href="/resources/css/alr.css">
 	<link rel="stylesheet" href="/resources/css/msg.css">
+	<link rel="stylesheet" href="/resources/css/test.css">
 <script>
 	$(function() {
 		$("#myFeed").on("click", function() {
 			location.href = "${pageContext.request.contextPath}/feed/myFeed";
 		})
-		$("#wholeFeed")
-				.on(
-						"click",
-						function() {
-							location.href = "${pageContext.request.contextPath}/feed/wholeFeed";
-						})
+		$("#wholeFeed").on("click", function() {
+			location.href = "${pageContext.request.contextPath}/feed/wholeFeed";
+			})
 		$("#messenger").on("click", function() {
 			
 		})
