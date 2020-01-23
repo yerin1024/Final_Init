@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-	<script>
+<script>
 		function replyBtnOnclick(email) {
 			var writeReply = $("#writeReply");
 			var contents = writeReply.html();
@@ -271,47 +271,8 @@
 					cei.append(ol);
 					
 					var cInner = $("<div class='carousel-inner'></div>");
-					var replyList = "";
-					for(var i=0; i<replyList.length; i++){
-						if(replyList.parent = 0){
-							
-					replyList += "<div class='reply'>"
-					replyList += 	"<div class='writerInfo'>"
-					replyList +=    		"<span class='writerProfile'><img src='"+writerProfile.profile_img+"' class='writerProfileImg'></span>"
-					replyList += 		"<span class="writerProfileID">asdsadas</span>"
-					replyList += 		<span class="text"><p>asdasd</p></span>
-					replyList +=    </div>     
-					replyList += "<div class='userInfo' reply_seq='"+replyList.reply_seq+"'>"
-					replyList += <span class="userProfile">
-					replyList += 		<img class="userProfileImg" src="/resources/images/dog.jpg" alt="">
-					replyList +=   </span>
-					replyList +=           <div class="profileDiv">
-					replyList +=         	  <span class="userProfileID">qqqqq@naver.com</span>
-	             	replyList +=          <span class="userReply">
-	             	replyList +=       	  <div class="replyContents">sadasd</div>
-	             	replyList +=        </span>
-	             	replyList +=        </div>	               
-	             	replyList +=        <div class="replyBtns">
-	             	replyList +=        		<button type="button" class="modifyReply">수정</button><button type="button" class="deleteReply">삭제</button>
-	             	replyList +=        		<button type="button" class="registerChildBtn">답글</button>
-	             	replyList +=       </div>
-	             	replyList +=       <div class="childReply" reply_seq="968">
-	             	replyList +=     		<span class="userProfile">
-	               	replyList +=     			<img class="userProfileImg" src="/files/null_profile_img.jpg" alt="사진오류">
-	               	replyList +=      		</span>
-	             	replyList +=      		<span class="userProfileID">kimsewon</span>
-	               	replyList +=      <span class="userReply">
-	              	replyList +=      		<div class="replyContents" contenteditable="false">sadasd</div>
-	               	replyList +=      </span>
-	                replyList +=       <div class="replyBtns">
-	                replyList +=      		<button class="modifyChildBtn">수정</button>
-	               	replyList +=      		<button class="deleteChildReplyBtn">삭제</button>
-	               	replyList +=      </div>
-	               	replyList +=      </div>
-	               	replyList +=      </div>
-	                replyList +=      "</div>"
-						}
-					}
+					
+					
 					var prevA = $("<a class='carousel-control-prev' href='#carouselExampleIndicators' role='button' data-slide='prev'></a>");
 					prevA.append("<span class='carousel-control-prev-icon' aria-hidden='ture'></span>");
 					prevA.append("<span class='sr-only'>Previous</span>");
@@ -326,6 +287,45 @@
 					mediaRow.append(cei);
 					$(".modal-body1").html(mediaRow);
 				}
+				var replyhtml = "";
+				for(var i=0; i<replyList.length; i++){
+					console.log("부모댓글 : "+replyList[i].parent);
+					console.log("시퀀스 : "+replyList[i].reply_seq);
+					if(replyList[i].parent == 0){
+						replyhtml += "<div class='userInfo' reply_seq='"+replyList[i].reply_seq+"'>"
+						replyhtml += "<span class='userProfile'>"
+						replyhtml += 		"<img class='userProfileImg' src=${loginInfo.profile_img } alt=''>"
+						replyhtml +=   "</span>"
+						replyhtml +=           "<div class='profileDiv'>"
+						replyhtml +=         	"<span class='userProfileID'>${loginInfo.nickname }</span>"
+						replyhtml +=          "<span class='userReply'>"
+		             	replyhtml +=       	  "<div class='replyContents'>"+replyList[i].contents+"</div>"
+		             	replyhtml +=       "</span>"
+		             	replyhtml +=        "</div>"	               
+		             	replyhtml +=        "<div class='replyBtns'>"
+		             	replyhtml +=        		"<button type='button' class='modifyReply'>수정</button><button type='button' class='deleteReply'>삭제</button>"
+		             	replyhtml +=        		"<button type='button' class='registerChildBtn'>답글</button>"
+		             	replyhtml +=       "</div>"
+		             	replyhtml +=   "</div>"
+					}else{
+						replyhtml +=       "<div class='childReply' reply_seq='"+replyList[i].reply_seq+"'>"
+						replyhtml +=     		"<span class='userProfile'>"
+							replyhtml +=     			"<img class='userProfileImg' src=${loginInfo.profile_img } alt='사진오류'>"
+									replyhtml +=      		"</span>"
+										replyhtml +=      		"<span class='userProfileID'>"+replyList[i].email+"</span>"
+								replyhtml +=      "<span class='userReply'>"
+				             		replyhtml +=      		"<div class='replyContents' contenteditable='false'>"+replyList[i].contents+"</div>"
+				             	replyhtml +=      "</span>"
+				             		replyhtml +=      "<div class='replyBtns'>"
+				            		replyhtml +=      		"<button class='modifyChildBtn'>수정</button>"
+				             		replyhtml +=      		"<button class='deleteChildReplyBtn'>삭제</button>"
+				             		replyhtml +=      "</div>"
+				             		replyhtml +=      "</div>"   
+							}					
+						}
+    			$(".reply").append(replyhtml);
+				
+				
 				//디테일뷰 글
 				var textRow = $("<span class='text'></span>");
 				textRow.append(dto.contents);
