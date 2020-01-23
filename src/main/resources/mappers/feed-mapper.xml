@@ -157,7 +157,7 @@
         or p.email = #{email} and
         (r.fr_id not in (select to_id from tb_block where from_id = #{email}) and 
         r.fr_id not in (select from_id from tb_block where to_id = #{email}))
-        ;
+        
 	
 	
 <!-- 		select count(*) from -->
