@@ -281,11 +281,12 @@ public class FeedController {
 		List<FeedDTO> list = new ArrayList<>();
 		List<MemberDTO> friendList = new ArrayList<>();
 		List<String> cover = new ArrayList<>();
+		String email = ((MemberDTO)session.getAttribute("loginInfo")).getEmail();
 		try {
 				if(keyword==null || keyword.startsWith("#")) {//전체피드 가져오기 또는 해시태그 검색
 					System.out.println("해시태그검색");
-					list = (List<FeedDTO>)service.wholeFeed(ipage, keyword).get("list");
-					cover = (List<String>)service.wholeFeed(ipage, keyword).get("cover");
+					list = (List<FeedDTO>)service.wholeFeed(ipage, keyword, email).get("list");
+					cover = (List<String>)service.wholeFeed(ipage, keyword, email).get("cover");
 					for(int i=0; i<list.size(); i++) {
 						System.out.println("list("+i+") : " +list.get(i));
 						System.out.println("cover("+i+") : " +cover.get(i));
@@ -317,7 +318,7 @@ public class FeedController {
 		List<Integer> rnum = new ArrayList<>();
 		List<MemberDTO> friendList = new ArrayList<>();
 		List<String> cover = new ArrayList<>();
-		
+		String email = ((MemberDTO)session.getAttribute("loginInfo")).getEmail();
 		System.out.println("rnum : "+rnum.toString());
 		Gson g = new Gson();
 		
@@ -325,9 +326,9 @@ public class FeedController {
 		try {
 				if(keyword==null || keyword.startsWith("#")) {//전체피드 가져오기 또는 해시태그 검색
 					System.out.println("해시태그검색");
-					list = (List<FeedDTO>)service.wholeFeed(ipage, keyword).get("list");
-					rnum = (List<Integer>)service.wholeFeed(ipage, keyword).get("rnum");
-					cover = (List<String>)service.wholeFeed(ipage, keyword).get("cover");
+					list = (List<FeedDTO>)service.wholeFeed(ipage, keyword, email).get("list");
+					rnum = (List<Integer>)service.wholeFeed(ipage, keyword, email).get("rnum");
+					cover = (List<String>)service.wholeFeed(ipage, keyword, email).get("cover");
 					for(int i=0; i<list.size(); i++) {
 						System.out.println("list("+i+") : " +list.get(i));
 						System.out.println("rnum("+i+") : " +rnum.get(i));

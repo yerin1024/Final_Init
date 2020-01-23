@@ -6,21 +6,21 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
 <title>Insert title here</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>	
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="/resources/css/nav.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.css">
+
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.js"></script>
 
-
-<link rel="stylesheet" href="/resources/css/nav.css">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="X-UA-Compatible" content="ie=edge">
 
 <style>
 #wrapper {
@@ -154,6 +154,8 @@ html, body {
 	border: none;
 	background: none;
 }
+
+
 /* .modal {
           text-align: center;
         } */
@@ -344,15 +346,15 @@ html, body {
 									ci.append(divCI);
 								}
 								//ci.append("<a class='carousel-control-prev' role='button' data-slide='prev'>");
-								var a = "<a class='carousel-control-prev' role='button' data-slide='prev'>";
+								var a = $("<a class='carousel-control-prev' role='button' data-slide='prev'>");
 								a.attr("href",'#carouselExampleIndicators'+list[i].feed_seq);
 								ci.append(a);
 								ci.append("<span class='carousel-control-prev-icon' aria-hidden='true'></span> <span class='sr-only'>Previous</span></a>");
 								
 								//ci.append("<a class='carousel-control-next' role='button' data-slide='next'>");
-								var b = "<a class='carousel-control-next' role='button' data-slide='next'>"
+								var b = $("<a class='carousel-control-next' role='button' data-slide='next'>");
 								b.attr("href",'#carouselExampleIndicators'+list[i].feed_seq);
-								ci.appent(b);
+								ci.append(b);
 								ci.append("<span class='carousel-control-next-icon' aria-hidden='true'></span> <span class='sr-only'>Next</span></a>");
 
 								media.append(ci);
@@ -468,40 +470,43 @@ html, body {
 						</c:choose>
 							
 						</div>
-						
-						<div class="row media">
-							<div id="carouselExampleIndicators${feed.feed_seq}" class="carousel slide" data-interval="false">
+					<div class="row media">
+						<div id="carouselExampleIndicators${feed.feed_seq }" class="carousel slide" data-interval="false">
 								<ol class="carousel-indicators">
-									<c:forEach items="${mediaList[status.index]}" var="media" varStatus="status1">
+									<c:forEach items="${mediaList[status.index] }" var="media" varStatus="status1">
 										<c:if test="${status1.index ==0}">
-											<li data-target="#carouselExampleIndicators${feed.feed_seq}" data-slide-to="0" class="active"></li>
+											<li data-target="#carouselExampleIndicators${feed.feed_seq }" data-slide-to="0"
+												class="active"></li>
 										</c:if>
 										<c:if test="${status1.index !=0}">
-											<li data-target="#carouselExampleIndicators${feed.feed_seq}" data-slide-to="${status1.index}"></li>
+											<li data-target="#carouselExampleIndicators${feed.feed_seq }"
+												data-slide-to="${status1.index }"></li>
 										</c:if>
 									</c:forEach>
 								</ol>
 								<div class="carousel-inner">
-									<c:forEach items="${mediaList[status.index]}" var="media" varStatus="status1">
-										<c:if test="${status1.index ==0}">
-											<div class="carousel-item active">${media}</div>
-										</c:if>
-										<c:if test="${status1.index !=0}">
-											<div class="carousel-item">${media}</div>
-										</c:if>
-									</c:forEach>
+								<c:forEach items="${mediaList[status.index] }" var="media" varStatus="status1">
+									<c:if test="${status1.index ==0}">
+										<div class="carousel-item active">${media }</div>
+									</c:if>
+									<c:if test="${status1.index !=0}">
+										<div class="carousel-item">${media }</div>
+									</c:if>
+								</c:forEach>
 								</div>
-									<a class="carousel-control-prev" href="#carouselExampleIndicators${feed.feed_seq}" role="button" data-slide="prev"> 
-										<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-										<span class="sr-only">Previous</span>
-									</a> 
-									<a class="carousel-control-next" href="#carouselExampleIndicators${feed.feed_seq}" role="button" data-slide="next"> 
-										<span class="carousel-control-next-icon" aria-hidden="true"></span>
-										<span class="sr-only">Next</span>
-									</a>
-							</div>
+								<a class="carousel-control-prev"
+									href="#carouselExampleIndicators${feed.feed_seq }" role="button" data-slide="prev"> 
+									<span class="carousel-control-prev-icon"
+									aria-hidden="true"></span> 
+									<span class="sr-only">Previous</span>
+								</a> 
+								<a class="carousel-control-next"
+									href="#carouselExampleIndicators${feed.feed_seq }" role="button"
+									data-slide="next"> <span class="carousel-control-next-icon"
+									aria-hidden="true"></span> <span class="sr-only">Next</span>
+								</a>
 						</div>
-						
+					</div>
 						<div class="row contents" style="height: 100px;">
 							${feed.contents }</div>
 						<div class="row replys">
@@ -630,6 +635,9 @@ html, body {
 	</div>
 
 	<script>	
+	
+	
+	
 	//신고확인 기능 모달
 	$(document).on("click",".sirenBtn",function(){
  		 var seq = $(this).attr("id");
