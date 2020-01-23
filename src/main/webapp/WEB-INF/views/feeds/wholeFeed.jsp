@@ -744,10 +744,8 @@ function getList(page){
 				var nextA = $("<a class='carousel-control-next' href='#carouselExampleIndicators' role='button' data-slide='next'></a>");
 				nextA.append("<span class='carousel-control-next-icon' aria-hidden='true'></span>");
 				nextA.append("<span class='sr-only'>Next</span>");
-				
 				cInner.append(prevA);
 				cInner.append(nextA);
-				
 				cei.append(cInner);
 				mediaRow.append(cei);
 			}else{

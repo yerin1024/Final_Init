@@ -22,7 +22,7 @@
             <li class="nav-item a_ac1_nav" id="a_ac1_1">
               <a class="nav-link" style="padding-top: 15px;"><img id="notification" src="/resources/images/notification.png"></a>
             </li>
-         
+
             <li class="nav-item">
               <a class="nav-link" href="${pageContext.request.contextPath}/message/messageMain" style="padding-top: 15px;"><img id="msg" src="/resources/images/msg.png"></a>
             </li>

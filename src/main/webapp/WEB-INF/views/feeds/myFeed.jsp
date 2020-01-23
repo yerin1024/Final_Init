@@ -834,7 +834,6 @@
 							<div class="profileImageBox">
 								<img class="profileImg" src="${mvo.profile_img}" alt="">
 								<button type="button" id="changeProfile">프로필 편집</button>
-
 						</div>
 						</div>
 						<c:if test="${loginInfo.id_type eq 'E'}">
@@ -967,7 +966,7 @@
                      		<span class="writerProfileID">asdsadas</span>
                     </div>     
                 </div>
-                <div class="modal-btns">KobeKim</div>
+                <div class="modal-btns"></div>
             </div>
         </div>
 	      <div class="modal-header">
@@ -985,6 +984,7 @@
 	    $("#registerFeed").on("click", function() {
 	    	location.href = "${pageContext.request.contextPath}/feed/writeFeed";
 		});
+<<<<<<< HEAD
 	    
 	$('#exampleModal').on('shown.bs.modal', function (event) {
 		var seq = $(event.relatedTarget).data('id');
@@ -1092,6 +1092,8 @@
 		
 	})
 
+=======
+>>>>>>> 48c840d7475e44dd1ee81506733649e0d355cfc2
 			$(document).on("click", "#like", function(e){
 				e.preventDefault();   
 			var seq = $(this).attr("class");

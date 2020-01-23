@@ -4,6 +4,12 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="Alarm">
 
+	
+	<!-- 시퀀스로 피드 작성자 찾기 -->
+	<select id="alarmReceiver" resultType="java.lang.String">
+		select email from tb_feed where feed_seq = #{feed_seq}
+	</select>
+	
 	<!-- 알림 추가 -->
 	<insert id="insertAlarm_m"> 
 		insert into tb_alarm values(alarm_seq.nextval, 'M', #{sharedSeq}, sysdate, 'N', #{email})
@@ -29,6 +35,11 @@
 		full outer join tb_like lk on fe.feed_seq = lk.feed_seq 
 		where fe.feed_seq=#{feed_seq}
 	</select>
+<!-- 	select * -->
+<!-- 	from tb_alarm al  -->
+<!-- 	full outer join tb_reply re on al.applied_seq = re.reply_seq  -->
+<!-- 	full outer join tb_feed fe on fe.feed_seq = re.feed_seq  -->
+<!-- 	full outer join tb_member mem on fe.email = mem.email; -->
 	
 	<!-- 알림 추가 / 친구 요청 -->
 	<insert id="alarmFriend"> 

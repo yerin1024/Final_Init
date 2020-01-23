@@ -10,34 +10,36 @@
 		insert into tb_friend_Request values(#{seq}, #{from_id},#{to_id},#{relation}) 
 	</insert>
     <select id="selectById" resultType="kh.init.friends.FriendDTO">
-select b.* from tb_friend b full outer join tb_block a on a.to_id != b.fr_id where b.my_id= #{id} or a.from_id != #{id}
+    select * from tb_friend where my_id = #{id}  and fr_id not in (select from_id from tb_block where to_id = #{id})
      
   </select>
    <select id="selectByIdOk" resultType="kh.init.friends.FriendDTO">
-select b.* from tb_friend b full outer join tb_block a on a.to_id != b.fr_id 
+   select * from tb_friend 
       <trim prefix="where" prefixOverrides="and|or">
     <if test="id != null">
-    b.my_id= #{id} or a.from_id != #{id}
+    my_id =  #{id}
     </if>
     
     <if test="fr_id != null">
-       and b.fr_id = #{fr_id} 
+       and fr_id = #{fr_id} 
     </if>
-     
+     and fr_id not in (select from_id from tb_block where to_id = #{id})
       
     </trim>
   </select>
   <select id="selectBySearch" parameterType="java.util.Map" resultType="kh.init.friends.FriendDTO">
-     select b.* from tb_friend b full outer join tb_block a on a.to_id != b.fr_id 
+      
+     select * from tb_friend   
       <trim prefix="where" prefixOverrides="and|or">
     
     <if test="id != null">
-	   b.my_id= #{id} or a.from_id != #{id}
+    my_id =  #{id}
+	  
     </if>
     <if test="fr_id != null">
-       and b.fr_id like #{fr_id} 
+     and fr_id like #{fr_id} 
     </if>
-     
+     and fr_id not in (select from_id from tb_block where to_id = #{id})
       
     </trim>
   </select>

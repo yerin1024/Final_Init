@@ -10,7 +10,7 @@
             </div>
             <div class="nav-center"></div>
         <div class="nav-right">
-        <ul class="nav justify-content-end">
+        <ul class="nav justify-content-end bubblemenu">
             <li class="nav-item">
               <a class="nav-link active" href="${pageContext.request.contextPath}/feed/wholeFeed" style="padding-top: 12px;"><img id="total_feed" src="/resources/images/friends.png"></a>
             </li>
@@ -19,7 +19,7 @@
               <img id="notification" src="/resources/images/notification.png"></a>
             </li>
 			
-            <li class="nav-item ac1_nav" id="ac1_1">
+            <li class="nav-item ac1" id="ac1_1">
               <a class="nav-link" id="msg_exist" style="padding-top: 15px;">
               <img id="msg" src="/resources/images/msg.png"></a>
             </li>
@@ -59,13 +59,49 @@ $(function() {
          $("#total_feed").attr("src", $("#total_feed").attr("src").replace("/resources/images/friends3.png", "/resources/images/friends2.png"));  
     });  
      $("#notification").mouseenter(function(){
-         $("#notification").attr("src", $("#notification").attr("src").replace("/resources/images/notification2.png", "/resources/images/notification3.png"));  
-        });
+         
+         $.ajax({
+				url:"${pageContext.request.contextPath}/alarm/isNewAlarm.al",
+				method: "post",
+				data: {},
+				dataType: "json"
+			}).done(function(resp){
+				console.log(resp);
+				 $("#a_ac1_1").children().remove();
+		         $("#a_ac1_1").append("<a class='nav-link gold' id='alarm_exist' style='padding-top: 15px;' data-bubble='"+resp+"'>"
+		         			+"<img id='notification' src='/resources/images/notification2.png'></a>");
+		         $("#notification").attr("src", $("#notification").attr("src").replace("/resources/images/notification2.png", "/resources/images/notification3.png"));  
+		         $("#notification").mouseleave(function(){
+		             $("#notification").attr("src", $("#notification").attr("src").replace("/resources/images/notification3.png", "/resources/images/notification2.png"));
+		        });
+			}).fail(function(a,b,c){
+				console.log(a); console.log(b); console.log(c);
+			})
+     
+     });
      $("#notification").mouseleave(function(){
-         $("#notification").attr("src", $("#notification").attr("src").replace("/resources/images/notification3.png", "/resources/images/notification2.png"));  
+         $("#notification").attr("src", $("#notification").attr("src").replace("/resources/images/notification3.png", "/resources/images/notification2.png"));
     });
      $("#msg").mouseenter(function(){
          $("#msg").attr("src", $("#msg").attr("src").replace("/resources/images/msg2.png", "/resources/images/msg3.png"));  
+         
+         $.ajax({
+				url:"${pageContext.request.contextPath}/message/isNewMsg.msg",
+				method: "post",
+				data: {},
+				dataType: "json"
+			}).done(function(resp){
+				console.log(resp);
+				 $("#ac1_1").children().remove();
+		         $("#ac1_1").append("<a class='nav-link gold' id='msg_exist' style='padding-top: 15px;' data-bubble='"+resp+"'>"
+		         			+"<img id='msg' src='/resources/images/msg3.png'></a>");
+		         $("#msg").mouseleave(function(){
+		             $("#msg").attr("src", $("#msg").attr("src").replace("/resources/images/msg3.png", "/resources/images/msg2.png"));  
+		        });
+			}).fail(function(a,b,c){
+				console.log(a); console.log(b); console.log(c);
+			})
+			
         });
      $("#msg").mouseleave(function(){
          $("#msg").attr("src", $("#msg").attr("src").replace("/resources/images/msg3.png", "/resources/images/msg2.png"));  
@@ -85,75 +121,5 @@ $(function() {
 });
      
      
-     $(function() {
-    	 timer = setInterval(function() {
-    		 console.log("타이머 시작");
-
-    	     $.ajax ({
-    	         url : "${pageContext.request.contextPath}/alarm/isNewAlarm.al",
-    	         method : "post",
-    	         cache : false,
-    	         dataType : "json",
-    	         contentType:"application/json"
-    	     }).done(function(resp){
-    	    	 if(resp != '0'){
-    	    		 $("#alarm_exist").children().remove();
-    	    		 $("#alarm_exist").append("<img id='notification' src='/resources/images/notification.png'>");
-    	    		 $("#alarm_exist").append("<img id='redCircle1' src='/resources/images/red_circle.png'>");
-    	    	 }else if(resp == '0'){
-    	    		 $("#alarm_exist").children().remove();
-    	    		 $("#alarm_exist").append("<img id='notification' src='/resources/images/notification.png'>");
-    	    	 }
-    	    	 
-    	     }).fail(function(a,b,c){
-    	    	 console.log(a); console.log(b); console.log(c);
-    	     })
-    	     
-    	     
-    	     $.ajax ({
-    	         url : "${pageContext.request.contextPath}/message/isNewMsg.msg",
-    	         method : "post",
-    	         cache : false,
-    	         dataType : "json",
-    	         contentType:"application/json"
-    	     }).done(function(resp){
-    	    	 if(resp != '0'){
-    	    		 $("#msg_exist").children().remove();
-    	    		 $("#msg_exist").append("<img id='msg' src='/resources/images/msg.png'>");
-    	    		 $("#msg_exist").append("<img id='redCircle2' src='/resources/images/red_circle.png'>");
-    	    	 }else if(resp == '0'){
-    	    		 $("#msg_exist").children().remove();
-    	    		 $("#msg_exist").append("<img id='msg' src='/resources/images/msg.png'>");
-    	    		 
-    	    	 }
-    	    	 
-    	    	 $(".header").mouseenter(function(){
-   	    	        $("#notification").attr("src", $("#notification").attr("src").replace("/resources/images/notification.png", "/resources/images/notification2.png"));  
-   	    	        $("#msg").attr("src", $("#msg").attr("src").replace("/resources/images/msg.png", "/resources/images/msg2.png"));  
-   	    	     });
-   	    	     $(".header").mouseleave(function(){
-   	    	        $("#notification").attr("src", $("#notification").attr("src").replace("/resources/images/notification2.png", "/resources/images/notification.png"));  
-   	    	        $("#msg").attr("src", $("#msg").attr("src").replace("/resources/images/msg2.png", "/resources/images/msg.png"));  
-   	    	        
-   	    	     });
-   	    	     $("#notification").mouseenter(function(){
-   	    	         $("#notification").attr("src", $("#notification").attr("src").replace("/resources/images/notification2.png", "/resources/images/notification3.png"));  
-   	    	        });
-   	    	     $("#notification").mouseleave(function(){
-   	    	         $("#notification").attr("src", $("#notification").attr("src").replace("/resources/images/notification3.png", "/resources/images/notification2.png"));  
-   	    	    });
-   	    	     $("#msg").mouseenter(function(){
-   	    	         $("#msg").attr("src", $("#msg").attr("src").replace("/resources/images/msg2.png", "/resources/images/msg3.png"));  
-   	    	        });
-   	    	     $("#msg").mouseleave(function(){
-   	    	         $("#msg").attr("src", $("#msg").attr("src").replace("/resources/images/msg3.png", "/resources/images/msg2.png"));  
-   	    	    });
-   	    	     
-    	     }).fail(function(a,b,c){
-    	    	 console.log(a); console.log(b); console.log(c);
-    	     })
-    	     
-    	     }, 3000);
-    	 });
      
     </script>
