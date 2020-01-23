@@ -4,6 +4,9 @@
 		function replyBtnOnclick(email) {
 			var writeReply = $("#writeReply");
 			var contents = writeReply.html();
+			if(contents == ""){ //컨텐츠가 null 값일 경우 등록 동작 X
+				return false;
+			}
 			var feed_seq = $("#exampleModal").attr("feed_seq");
 			console.log(feed_seq + " ## ?");
 			$.ajax({
@@ -28,8 +31,10 @@
           			html += "</div>"
 					$(".reply").append(html);
 					writeReply.html("");
-			}).fail(function() {
-				alert("sad");
+			}).fail(function(a, b, c) {
+				console.log(a);
+				console.log(b);
+				console.log(c);
 			})
 		}
 		
