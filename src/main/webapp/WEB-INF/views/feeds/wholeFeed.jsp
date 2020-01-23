@@ -739,10 +739,10 @@ function getList(page){
 					cInner.append(cItem);
 				}
 				var prevA = $("<a class='carousel-control-prev' href='#carouselExampleIndicators' role='button' data-slide='prev'></a>");
-				prevA.append("<span class='carousel-control-prev-icon' aria-hidden='ture'></span>");
+				prevA.append("<span class='carousel-control-prev-icon' aria-hidden='true'></span>");
 				prevA.append("<span class='sr-only'>Previous</span>");
 				var nextA = $("<a class='carousel-control-next' href='#carouselExampleIndicators' role='button' data-slide='next'></a>");
-				nextA.append("<span class='carousel-control-next-icon' aria-hidden='ture'></span>");
+				nextA.append("<span class='carousel-control-next-icon' aria-hidden='true'></span>");
 				nextA.append("<span class='sr-only'>Next</span>");
 				
 				cInner.append(prevA);
@@ -818,8 +818,6 @@ function getList(page){
 		$('#myInput').trigger('focus');
 		
 	})
-
-
 			$(document).on("click", "#like", function(){
 			var seq = $(this).attr("class");
 			var likeCheck = $("#likeBtn").attr("class");

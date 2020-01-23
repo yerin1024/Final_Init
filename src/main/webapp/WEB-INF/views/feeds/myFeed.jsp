@@ -81,10 +81,6 @@
 	box-sizing: border-box;
 }
 
-
-
-
-
 .cover {
 	border: 1px solid black;
 	width: 100%;
@@ -1024,7 +1020,7 @@
 						console.log("i는 0");
 						console.log(ol.html());
 					}else{
-						ol.append("<li data-targer='#carouselExampleIndicators' data-slide-to='"+i+"'></li>");
+						ol.append("<li data-target='#carouselExampleIndicators' data-slide-to='"+i+"'></li>");
 						console.log("i는 "+i);
 						console.log(ol.html());
 					}
@@ -1041,10 +1037,10 @@
 					cInner.append(cItem);
 				}
 				var prevA = $("<a class='carousel-control-prev' href='#carouselExampleIndicators' role='button' data-slide='prev'></a>");
-				prevA.append("<span class='carousel-control-prev-icon' aria-hidden='ture'></span>");
+				prevA.append("<span class='carousel-control-prev-icon' aria-hidden='true'></span>");
 				prevA.append("<span class='sr-only'>Previous</span>");
 				var nextA = $("<a class='carousel-control-next' href='#carouselExampleIndicators' role='button' data-slide='next'></a>");
-				nextA.append("<span class='carousel-control-next-icon' aria-hidden='ture'></span>");
+				nextA.append("<span class='carousel-control-next-icon' aria-hidden='true'></span>");
 				nextA.append("<span class='sr-only'>Next</span>");
 				
 				cInner.append(prevA);
