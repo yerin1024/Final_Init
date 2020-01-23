@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <div style="padding-top:60px;">
-		<button id=showAlarm>알람 확인하기</button> <button id=closeAlarm>알람 끄기</button>
+<!-- 		<button id=showAlarm>알람 확인하기</button> <button id=closeAlarm>알람 끄기</button> -->
 		<div id="alarmPreContainer">
 			<div id="alarmContainer"></div>
 		</div>
@@ -11,7 +11,7 @@
 		
 <!-- 		<div class="a_ac1" id="a_ac1_1"><img src="/images/letter.png" style="width:50px;"></div> -->
 
-	<div id="a_view1">
+	<div id="a_view1" style="background-color:white; z-index:9;">
 		<div class="a_ac2">
 		    <div id=a_cross>
 		    <img src="/images/cross.png" style="width:30px;">
@@ -41,6 +41,11 @@
 				dataType: "json"
 			}).done(function(resp){
 	        	 $(".a_sector").children().remove();
+	        	 
+	        	 if(resp.length < 1){
+	        		 $(".a_sector").append("<div class='alarmNotExist'>등록된 알림이 없습니다.</div>");
+	        		 
+	        	 }
 	        	 
 	        	 for(var i=0; i<resp.length; i++){
 	        		 

@@ -14,6 +14,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="/resources/css/nav.css"> 
+<link rel="stylesheet" href="/resources/css/msg.css"> 
+<link rel="stylesheet" href="/resources/css/alr.css"> 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 <style>
@@ -578,6 +580,8 @@ function getList(page){
 </head>
 <body>
  <jsp:include page="/resources/jsp/nav.jsp" />
+ <jsp:include page="/resources/jsp/msg.jsp" />
+ <jsp:include page="/resources/jsp/alr.jsp" />
 	<div id="wrapper">
 		<div id="search">
 			<br><br>

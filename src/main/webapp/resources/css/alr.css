@@ -17,6 +17,7 @@
         #a_view1{
             display:none;
             position: fixed;
+            background-color: white;
             top: 110px; right: 10px;
             width: 450px; height: 300px;
             border:1px solid #9f9f9f;
@@ -85,3 +86,9 @@
 	background-color: white;
     float: right
 }
+.alarmNotExist{
+     text-align: center;
+     height: 290px;
+     line-height: 300px;
+     color: #9b9b9b;
+ }
