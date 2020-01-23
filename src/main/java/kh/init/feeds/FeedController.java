@@ -48,8 +48,7 @@ public class FeedController {
 			list = (List<FeedDTO>)service.getMyFeed(ipage, email).get("list");
 			cover = (List<String>)service.getMyFeed(ipage, email).get("cover");
 			System.out.println("dto 이메일값 확인 : "+dto.getEmail()+dto.getName());
-			model.addAttribute("mvo", dto);
-			
+			model.addAttribute("mvo", dto);		
 			model.addAttribute("list", list);
 			model.addAttribute("cover", cover);
 		}catch(Exception e) {
@@ -382,18 +381,14 @@ public class FeedController {
 		int bookmarkCheck = 0; //0은 안한것 1은 한것
 		FeedDTO dto = null;
 		List<String> list = new ArrayList<>();
-
 		JsonObject obj = new JsonObject();
 		Gson g = new Gson();
-
 		List<ReplyDTO> replyList = new ArrayList<>();
 		try {
 			dto = service.detailView(feed_seq);
 			likeCheck = service.likeCheck(feed_seq, ((MemberDTO)session.getAttribute("loginInfo")).getEmail());
 			bookmarkCheck = service.bookmarkCheck(feed_seq, ((MemberDTO)session.getAttribute("loginInfo")).getEmail());
 			list = service.getMediaList(feed_seq);
-			
-			System.out.println(list.toString() + " 리스트의 투스트링입니다!");
 			replyList = service.viewAllReply(feed_seq);
 			System.out.println("Email : "+dto.getEmail());
 			System.out.println("memberDTO : "+mservice.getMemberDTO(dto.getEmail()));
@@ -402,8 +397,7 @@ public class FeedController {
 			obj.addProperty("likeCheck", g.toJson(likeCheck));
 			obj.addProperty("bookmarkCheck", g.toJson(bookmarkCheck));
 			obj.addProperty("replyList",  g.toJson(replyList));
-			obj.addProperty("media", g.toJson(list));
-			
+			obj.addProperty("media", g.toJson(list));			
 			obj.addProperty("dto", g.toJson(dto));	
 			System.out.println(obj.toString());
 		}catch(Exception e) {

@@ -20,6 +20,20 @@ public class AlarmService {
 //		return dao.alarmList(email);
 //	}
 	
+	// 피드 작성자 찾기 + 좋아요 추가 / 참고용
+	@Transactional("txManager")
+	public int alarmLikeWho(int feed_seq, int sharedSeq) {
+		String receiverEmail = dao.alarmReceiver(feed_seq);
+		return dao.alarmLike(sharedSeq, receiverEmail);
+	}
+	
+	// 피드 작성자 찾기 + 댓글 알림 추가 / 참고용
+	@Transactional("txManager")
+	public int alarmReplyWho(int feed_seq, int reply_seq) {
+		String receiverEmail = dao.alarmReceiver(feed_seq);
+		return dao.alarmReply(reply_seq, receiverEmail);
+	}
+	
 	@Transactional("txManager")
 	public List<AlarmVO> alarmList(String email){
 		return dao.alarmList(email);
