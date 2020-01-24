@@ -4,6 +4,9 @@
 		function replyBtnOnclick(email) {
 			var writeReply = $("#writeReply");
 			var contents = writeReply.html();
+			if(contents == ""){ //컨텐츠가 null 값일 경우 등록 동작
+				return false;
+			}
 			var feed_seq = $("#exampleModal").attr("feed_seq");
 			console.log(feed_seq + " ## ?");
 			$.ajax({
@@ -28,12 +31,16 @@
           			html += "</div>"
 					$(".reply").append(html);
 					writeReply.html("");
-			}).fail(function() {
-				alert("sad");
+			}).fail(function(a, b, c) {
+				console.log(a);
+				console.log(b);
+				console.log(c);
 			})
 		}
 		
 		var temporaryReply;
+		var clickCnt;
+		var childReplyButton;
 		
 		//답글등록버튼
 		var registerReplyBtn = $("<button></button>");
@@ -94,7 +101,9 @@
 		
 		$(document).on("click",".modifyReply", function(){
 			$("div[value=1]").remove();
-			childReplyButton.attr("hidden", false);
+			if(childReplyButton != null){
+				childReplyButton.attr("hidden", false);
+			}			
 			var oriReply = $(this).closest(".replyBtns").siblings(".profileDiv").find(".replyContents");
 			oriReply.attr("contentEditable","true");
 			temporaryReply = oriReply.html();
@@ -178,8 +187,7 @@
 				alert("yes!");
 			})
 		});
-		var clickCnt;
-		var childReplyButton;
+
 		//답글버튼 눌렀을 때 이벤트
 		$(document).on("click",".registerChildBtn", function(){
 			childReplyButton = $(this);
@@ -388,7 +396,9 @@
 		
 		//답글등록버튼
 		$(document).on("click",".registerChildReply", function(){
-			childReplyButton.attr("hidden", false);
+			if($(".replyContents").html.length > 0){
+				childReplyButton.attr("hidden", false);
+			}		
 			clickCnt = 1;
 			var feed_seq = $("#exampleModal").attr("feed_seq");
 			var reply_seq = $(this).closest(".userInfo").attr("reply_seq");
