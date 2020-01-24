@@ -851,15 +851,13 @@
 
 			</c:choose>
 		</div>
-
-		<div class="menubar" style="height:200px;">
-		<button type="button" id="personalFeed">Personal feed</button>
-		<button type="button" id="scrapFeed">scrap feed</button>
-
-		
-		<button type="button" id="registerFeed">게시물 등록</button>
-	
-		</div>
+		<c:if test="${loginInfo.email eq mvo.email}">
+			<div class="menubar" style="height:200px;">
+				<button type="button" id="personalFeed">Personal feed</button>
+				<button type="button" id="scrapFeed">scrap feed</button>
+				<button type="button" id="registerFeed">게시물 등록</button>
+			</div>
+		</c:if>
 		<div class="wrapper">
 			
 			<div id="myFeed">

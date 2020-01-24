@@ -17,6 +17,8 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 
 import com.google.gson.JsonObject;
 
+import kh.init.configuration.Configuration;
+
 @RequestMapping("/member")
 @Controller
 public class MemberController {
@@ -223,7 +225,7 @@ public class MemberController {
 			MemberDTO mDto = (MemberDTO)session.getAttribute("loginInfo");
 			MemberDTO dto = service.identifyMemPwService(mDto.getEmail());
 			System.out.println("비번은 "+dto.getPw());
-			if(pw.equalsIgnoreCase(dto.getPw())) {
+			if(Configuration.encrypt(pw).equalsIgnoreCase(dto.getPw())) {
 				return "yes";
 			}else {
 				return "no";
