@@ -21,6 +21,11 @@ public class HomeController {
 		return "main";
 	}
 
+	@RequestMapping("/adminHome")
+	public String toadminHome() {
+		return "adminHome";
+		
+	}
 	@RequestMapping("/home")
 	public String home() {
 		session.setAttribute("mediaList", new ArrayList<String>());
