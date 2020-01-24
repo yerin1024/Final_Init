@@ -448,7 +448,7 @@ public class FeedController {
 				}
 				
 				index++;
-				mediaList.add(service.getMediaList(feed_seq));
+				mediaList.add(service.getMediaListForFriendFeed(feed_seq));
 //				replyList.add(service.viewAllReply(feed_seq));
 				likeCheckList.add(service.likeCheck(feed_seq, ((MemberDTO)session.getAttribute("loginInfo")).getEmail()));
 				bookmarkCheckList.add(service.bookmarkCheck(feed_seq, ((MemberDTO)session.getAttribute("loginInfo")).getEmail()));
@@ -520,7 +520,7 @@ public class FeedController {
 					}
 				}
 				index++;
-				mediaList.add(service.getMediaList(feed_seq));
+				mediaList.add(service.getMediaListForFriendFeed(feed_seq));
 //				replyList.add(service.viewAllReply(feed_seq));
 				likeCheckList.add(service.likeCheck(feed_seq, ((MemberDTO)session.getAttribute("loginInfo")).getEmail()));
 				bookmarkCheckList.add(service.bookmarkCheck(feed_seq, ((MemberDTO)session.getAttribute("loginInfo")).getEmail()));
