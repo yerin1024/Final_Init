@@ -980,117 +980,45 @@
 	    </div>
 	  </div>
 	  </div>
+	  
+	  <!-- 친구 수락 모달 영역 -->
+	<div id="modalBox1" class="modal fade" id="myModal"
+		role="dialog"  tabindex="-1" aria-labelledby="myModalLabel"
+		style="margin-top: 100px;">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title" id="myModalLabel">친구 관계 설정</h4>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+
+				</div>
+
+				<div class="modal-body1">
+					
+						<input type=radio name="relation" value="1"> 아는 사람<br>
+						<input type=radio name="relation" value="2"> 친구<br> 
+						<input type=radio name="relation" value="3"> 절친<br> 
+						<input type=radio name="relation" value="4"> x새끼<br>
+					
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" id="acceptModalBtn">확인</button>
+					<button type="button" class="btn btn-default" id="closeModalBtn3">취소</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	  
 	<script>	
 	    $("#registerFeed").on("click", function() {
 	    	location.href = "${pageContext.request.contextPath}/feed/writeFeed";
 		});
 
 	    
-	$('#exampleModal').on('shown.bs.modal', function (event) {
-		var seq = $(event.relatedTarget).data('id');
-		console.log("seq : "+seq);
-		var feed_seq = $("#exampleModal").attr("feed_seq",seq);
-		console.log("##" + feed_seq)
-		$.ajax({
-			type:"post",
-			url:"/feed/detailView",
-			data:{
-				feed_seqS:seq
-			},
-			dataType:"json"
-		}).done(function(data){
-			console.log(data);
-			var writerProfile = data.writerProfile;
-			var likeCheck = data.likeCheck;
-			var bookmarkCheck = data.bookmarkCheck;
-			var mediaList = JSON.parse(data.media);
-			var dto = JSON.parse(data.dto);
-			console.log(mediaList.length);
-			//디테일뷰 미디어
-			if(mediaList.length>0){ //미디어가 존재하므로 캐러셀 만들어줌
-				console.log("캐러셀 시작");
-				var mediaRow = $("<div class='row media'></div>");
-				var cei = $("<div id='carouselExampleIndicators' class='carousel slide' data-interval='false'></div>");
-				var ol = $("<ol class='carousel-indicators'></ol>");
-				console.log(ol.html());
-				for(var i=0; i<mediaList.length; i++){
-					console.log(i);
-					if(i==0){
-						ol.append("<li data-target='#carouselExampleIndicators' data-slide-to='0' class='active'></li>");
-						console.log("i는 0");
-						console.log(ol.html());
-					}else{
-						ol.append("<li data-target='#carouselExampleIndicators' data-slide-to='"+i+"'></li>");
-						console.log("i는 "+i);
-						console.log(ol.html());
-					}
-				}
-				cei.append(ol);
-				
-				var cInner = $("<div class='carousel-inner'></div>");
-				for(var i=0; i<mediaList.length; i++){
-					if(i==0){
-						var cItem = $("<div class='carousel-item active'>"+mediaList[i]+"</div>");
-					}else{
-						var cItem = $("<div class='carousel-item'>"+mediaList[i]+"</div>");
-					}
-					cInner.append(cItem);
-				}
-				var prevA = $("<a class='carousel-control-prev' href='#carouselExampleIndicators' role='button' data-slide='prev'></a>");
-				prevA.append("<span class='carousel-control-prev-icon' aria-hidden='true'></span>");
-				prevA.append("<span class='sr-only'>Previous</span>");
-				var nextA = $("<a class='carousel-control-next' href='#carouselExampleIndicators' role='button' data-slide='next'></a>");
-				nextA.append("<span class='carousel-control-next-icon' aria-hidden='true'></span>");
-				nextA.append("<span class='sr-only'>Next</span>");
-				
-				cInner.append(prevA);
-				cInner.append(nextA);
-				
-				cei.append(cInner);
-				mediaRow.append(cei);
-				$(".modal-body1").html(mediaRow);
-			}
-			//디테일뷰 글
-			var textRow = $("<span class='text'></span>");
-			textRow.append(dto.contents);
-			$(".writerInfo").append(textRow);
-			//디테일뷰 좋아요, 스크랩, 수정, 삭제 버튼
-			//좋아요버튼
-			if(likeCheck==0){
-				var likeA = $("<a href='#' id='like' class='"+dto.feed_seq+"'></a>");
-				var likeS = $("<span id='likeImg'></span>");
-				var likeI = $("<img id='likeBtn' class='likeBefore' src='${pageContext.request.contextPath}/resources/images/likeBefore.png'>");
-			}else{
-				var likeA = $("<a href='#' id='like' class='"+dto.feed_seq+"'></a>");
-				var likeS = $("<span id='likeImg'></span>");
-				var likeI = $("<img id='likeBtn' class='likeAfter' src='${pageContext.request.contextPath}/resources/images/likeAfter.png'>");
-			}
-			likeA.append(likeS);
-			likeS.append(likeI); 
-		
-			//스크랩버튼
-			if(bookmarkCheck==0){
-				var bookmarkA = $("<a href='#' id='bookmark' class='"+dto.feed_seq+"'></a>");
-				var bookmarkS = $("<span id='bookmarkImg'></span>");
-				var bookmarkI = $("<img id='bookmarkBtn' class='bookmarkBefore' src='${pageContext.request.contextPath}/resources/images/bookmarkBefore.png'>");
-			}else{
-				var bookmarkA = $("<a href='#' id='bookmark' class='"+dto.feed_seq+"'></a>");
-				var bookmarkS = $("<span id='bookmarkImg'></span>");
-				var bookmarkI = $("<img id='bookmarkBtn' class='bookmarkAfter' src='${pageContext.request.contextPath}/resources/images/bookmarkAfter.png'>");
-			}
-			bookmarkA.append(bookmarkS);
-			bookmarkS.append(bookmarkI); 
-			
-			$(".modal-btns").html("");
-			$(".modal-btns").append(likeA);
-			$(".modal-btns").append(bookmarkA);
-
-			$(".writerProfile").html("<img src="+writerProfile+" class='writerProfileImg'>");
-			
-		})
-		$('#myInput').trigger('focus');
-		
-	})
+	
 
 			$(document).on("click", "#like", function(e){
 				e.preventDefault();   
@@ -1156,35 +1084,37 @@
                         var waitlist = JSON
                             .parse(res.waitlist);
                         for (var j = 0; j < waitlist.length; j++) {
-                            $('.modal-body2').append("<div class=frInfo><a href='${pageContext.request.contextPath}/feed/yourFeed?email="
+                            $('.modal-body2').append("<div class=frInfo><a href='${pageContext.request.contextPath}/feed/myFeed?email="
                                 + waitlist[j].email
                                 + "'>"
                                 + waitlist[j].email
-                                + " </a> <button type=button class=frInfo id=acceptfr name=" + waitlist[j].email + ">친구 추가</button><button type=button class=frInfo id=cancelfr name=" + waitlist[j].email + ">취소</button></div>");
+                                + " </a> <button type=button class='frInfo acceptfr' name=" + waitlist[j].email + ">친구 추가</button><button type=button class='frInfo cancelfr' name=" + waitlist[j].email + ">취소</button></div>");
                         }
                     }
                     if (res.list != null) {
                         var list = JSON.parse(res.list);
                         for (var j = 0; j < list.length; j++) {
                             $('.modal-body2').append(
-                                "<div class=frInfo><a href='${pageContext.request.contextPath}/feed/yourFeed?email="
+                                "<div class=frInfo><a href='${pageContext.request.contextPath}/feed/myFeed?email="
                                 + list[j].email
                                 + "'>"
                                 + list[j].email
-                                + " </a> <button type=button class=frInfo id=cutfr name=" + list[j].email + ">친구 끊기</button></div>");
+                                + " </a> <button type=button class='frInfo cutfr' name=" + list[j].email + ">친구 끊기</button></div>");
                         }
                     }
                     
 
                     //친구수락 로직~
-                    $("#acceptfr").on("click", function () {
-                        var yr_id = $(this).attr("name");
+                    $("#acceptModalBtn").on("click", function () {
+                        var yr_id = $('.acceptfr').attr("name");
+                        var relation = $('input[name=relation]').val();
                         console.log(yr_id);
                         $.ajax({
                             url: "${pageContext.request.contextPath}/friend/acceptFndRequest",
                             type: "POST",
                             data: {
-                                yr_id: yr_id
+                                yr_id: yr_id,
+                                relation : relation
                             },
                             dataType: "text",
                             success: function (
@@ -1210,7 +1140,7 @@
                         })
                     });
                     //친구 끊기
-                    $("#cutfr").on("click", function () {
+                    $(".cutfr").on("click", function () {
                         var yr_id = $(this).attr("name");
                         console.log(yr_id);
                         $.ajax({
@@ -1256,22 +1186,22 @@
                                 if (res.waitlist != null) {
                                     var waitlist = JSON.parse(res.waitlist);
                                     for (var j = 0; j < waitlist.length; j++) {
-                                        $('.modal-body2').append("<div class=frInfo id=wfrNum" + j + "><a href='${pageContext.request.contextPath}/feed/yourFeed?email="
+                                        $('.modal-body2').append("<div class=frInfo id=wfrNum" + j + "><a href='${pageContext.request.contextPath}/feed/myFeed?email="
                                             + waitlist[j].email
                                             + "'>"
                                             + waitlist[j].email
-                                            + " </a> <button type=button class=frInfo id=acceptfr name=" + waitlist[j].email + ">친구 추가</button><button type=button class=frInfo id=cancelfr name=" + waitlist[j].email + ">취소</button></div>");
+                                            + " </a> <button type=button class='frInfo acceptfr'   name=" + waitlist[j].email + ">친구 추가</button><button type=button class='frInfo cancelfr' name=" + waitlist[j].email + ">취소</button></div>");
                                     }
                                 }
                                 if (res.list != null) {
                                     var list = JSON.parse(res.list);
                                     for (var j = 0; j < list.length; j++) {
                                         $('.modal-body2').append(
-                                            "<div class=frInfo id=frNum" + j + "><a href='${pageContext.request.contextPath}/feed/yourFeed?email="
+                                            "<div class=frInfo id=frNum" + j + "><a href='${pageContext.request.contextPath}/feed/myFeed?email="
                                             + list[j].email
                                             + "'>"
                                             + list[j].email
-                                            + " </a> <button type=button class=frInfo id=cutfr name=" + list[j].email + ">친구 끊기</button></div>");
+                                            + " </a> <button type=button class='frInfo cutfr' name=" + list[j].email + ">친구 끊기</button></div>");
 
                                     }
                                 }
@@ -1296,8 +1226,12 @@
                                     + request.responseText);
                             }
                         });
+                        
 
                     });
+                    $('.acceptfr').on('click', function() {
+            			$('#modalBox1').modal('show');
+            		});
                 },
                 error: function (request, status, error) {
                     console.log("ajax call went wrong:"
@@ -1332,8 +1266,12 @@
 		$('#openModalBtn').on('click', function() {
 			$('#modalBox').modal('show');
 		});
+		
 		// 모달 안의 취소 버튼에 이벤트를 건다.	
 		$('#closeModalBtn').on('click', function() {
+			$('#modalBox').modal('hide');
+		});
+		$('#closeModalBtn3').on('click', function() {
 			$('#modalBox').modal('hide');
 		});
 		
