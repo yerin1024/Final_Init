@@ -104,9 +104,11 @@ public class FriendDAO {
 		return jdbc.selectOne("Friend.selectReqById2",param);
 
 	}
-	public int deleteRequest(String from_id) throws Exception {
-
-		return jdbc.delete("Friend.deleteRequest",from_id);
+	public int deleteRequest(String from_id,String to_id) throws Exception {
+		Map<String,String> param= new HashMap<>();
+		param.put("from_id", from_id);
+		param.put("to_id", to_id);
+		return jdbc.delete("Friend.deleteRequest",param);
 	}
 	public int insertFndRequest(FriendRequestDTO dto,String id,int seq) throws Exception {
 		Map<String,Object> param= new HashMap<>();

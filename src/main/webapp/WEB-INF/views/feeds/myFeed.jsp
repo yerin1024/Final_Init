@@ -797,11 +797,11 @@
 							<div class="btnText">친구요청</div>
 						</c:if>			
 							<c:if test="${frResult == 1 }">
-						<button class="btn btn-primary btn-lg" >＋</button>
+						<button class="btn btn-primary btn-lg" id="ingReq">＋</button>
 							<div class="btnText">친구요청중</div>
 						</c:if>	
 						<c:if test="${frResult == 2  }">
-							<button class="btn btn-primary btn-lg" >＋</button>
+							<button class="friend btn btn-primary btn-lg" id="openFrModal" >＋</button>
 							<div class="btnText">친구</div>
 						</c:if>	
 						
@@ -901,14 +901,11 @@
 				</div>
 
 				<div class="modal-body">
-					<form
-						action="${pageContext.request.contextPath}/friend/friendRequest?to_id=${mvo.email}"
-						method="post" id="goReqFri">
+					
 						<input type=radio name="relation" value="1"> 아는 사람<br>
 						<input type=radio name="relation" value="2"> 친구<br> <input
-							type=radio name="relation" value="3"> 절친<br> <input
-							type=radio name="relation" value="4"> x새끼<br>
-					</form>
+							type=radio name="relation" value="3"> 절친<br> 
+					
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-primary" id="identifyModalBtn">확인</button>
@@ -939,7 +936,7 @@
 				<div class="modal-footer">
 					<button type="button" class="btn btn-primary"
 						id="identifyModalBtn2">확인</button>
-					<button type="button" class="btn btn-default" id="closeModalBtn2">취소</button>
+					<button type="button" class="btn btn-default" id="closeModalBtn3">취소</button>
 				</div>
 			</div>
 		</div>
@@ -1001,17 +998,46 @@
 						<input type=radio name="relation" value="1"> 아는 사람<br>
 						<input type=radio name="relation" value="2"> 친구<br> 
 						<input type=radio name="relation" value="3"> 절친<br> 
-						<input type=radio name="relation" value="4"> x새끼<br>
+						
 					
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-primary" id="acceptModalBtn">확인</button>
-					<button type="button" class="btn btn-default" id="closeModalBtn3">취소</button>
+					<button type="button" class="btn btn-default" id="closeModalBtn1">취소</button>
 				</div>
 			</div>
 		</div>
 	</div>
 	  
+	  <!-- 친구 특징 버튼 모달 영역 -->
+	<div id="modalBox2" class="modal fade" id="myModal"
+		role="dialog"  tabindex="-1" aria-labelledby="myModalLabel"
+		style="margin-top: 100px;">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title" id="myModalLabel">친구 관계 설정</h4>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+
+				</div>
+
+				<div class="modal-body2">
+					
+						<button type=button>친구 끊기</button> 
+						
+						
+					
+				</div>
+				<div class="modal-footer">
+					
+					<button type="button" class="btn btn-default" id="closeModalBtn2">확인</button>
+				</div>
+			</div>
+		</div>
+	</div>
 	<script>	
 	    $("#registerFeed").on("click", function() {
 	    	location.href = "${pageContext.request.contextPath}/feed/writeFeed";
@@ -1124,7 +1150,7 @@
                                 console
                                     .log(yr_id);
                                 $('#friendsList').click();
-
+                                $('#modalBox1').modal('hide');
                                 //$('.modal-body2').append("<div class=frInfo>"+list[j].email+"  <button type=button class=frInfo id=cutfr name="+list[j].email+">친구 끊기</button></div>");
 
                                 // show modal
@@ -1232,6 +1258,36 @@
                     $('.acceptfr').on('click', function() {
             			$('#modalBox1').modal('show');
             		});
+                    //친구요청 취소
+                    $(".cancelfr").on("click", function () {
+                        var yr_id = $(this).attr("name");
+                        console.log(yr_id);
+                        $.ajax({
+                            url: "${pageContext.request.contextPath}/friend/rejectFndRequest",
+                            type: "POST",
+                            data: {
+                                yr_id: yr_id
+                            },
+                            dataType: "text",
+                            success: function (res) {
+                                console.log(res);
+                                
+                                $('#friendsList').click();
+
+                                //$('.modal-body2').append("<div class=frInfo>"+list[j].email+"  <button type=button class=frInfo id=cutfr name="+list[j].email+">친구 끊기</button></div>");
+
+                                // show modal
+
+                            },
+                            error: function (
+                                request,
+                                status,
+                                error) {
+                                console.log("ajax call went wrong:"
+                                    + request.responseText);
+                            }
+                        })
+                    });
                 },
                 error: function (request, status, error) {
                     console.log("ajax call went wrong:"
@@ -1266,20 +1322,68 @@
 		$('#openModalBtn').on('click', function() {
 			$('#modalBox').modal('show');
 		});
+		$('#openFrModal').on('click', function() {
+			$('#modalBox2').modal('show');
+		});
+		$('#closeModalBtn2').on('click', function() {
+			$('#modalBox2').modal('hide');
+		});
 		
 		// 모달 안의 취소 버튼에 이벤트를 건다.	
 		$('#closeModalBtn').on('click', function() {
 			$('#modalBox').modal('hide');
 		});
 		$('#closeModalBtn3').on('click', function() {
-			$('#modalBox').modal('hide');
+			$('#modalBox3').modal('hide');
 		});
 		
-		$('#identifyModalBtn').on('click', function() {
-			$("#goReqFri").submit();
-			$('#modalBox').modal('hide');
+		$('#closeModalBtn1').on('click', function() {
+			$('#modalBox1').modal('hide');
 		});
-		//친구추가 ,취소 ,끊기		
+		
+		
+		$('#identifyModalBtn').on('click', function () {
+			var relation = $('input[name=relation]').val();
+            
+            
+            $.ajax({
+                url: "${pageContext.request.contextPath}/friend/friendRequest?to_id=${mvo.email}",
+                type: "POST",
+                dataType: "text",
+                data: {
+                    relation: relation
+                },
+                success: function (res) {
+                	$('#modalBox').modal('hide');
+                	console.log(res);
+                    if(res == 'complete'){
+                        alert("성공적으로 친구요청되었습니다.");
+                        $(".btn-lg").remove();
+                        $(".btnText").remove();
+                        $(".profileLayoutLeft").append("<button class=btn btn-primary btn-lg >＋</button><div class=btnText>친구요청중</div>");
+                        
+                    }else if(res == 'alreadyFriend'){
+                    	alert("이미 친구입니다.");
+                    }else if(res == 'alreadyApply'){
+                    	alert("친구요청진행중입니다.");
+                    }
+                    
+                    
+                    
+                    //친구 검색
+                },
+                error: function (
+                    request,
+                    status,
+                    error) {
+                    console.log("ajax call went wrong:"
+                        + request.responseText);
+                }
+            });
+            
+
+        });
+		
 		
 	</script>		
 	
