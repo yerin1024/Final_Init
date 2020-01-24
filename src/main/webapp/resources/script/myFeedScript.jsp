@@ -176,7 +176,7 @@
 		var clickCnt;
 		//답글버튼 눌렀을 때 이벤트
 		$(document).on("click",".registerChildBtn", function(){
-			
+			$(this).closest(".registerChildBtn").attr("hidden", true);
 			console.log("답글클릭 : cnt : " + clickCnt);
 			
 				if(clickCnt == 0){	
@@ -380,6 +380,9 @@
 		
 		//답글등록버튼
 		$(document).on("click",".registerChildReply", function(){
+			
+			$(this).parent().parent().closest(".replyBtns > .registerChildBtn").attr("hidden", false);
+			
 			clickCnt = 1;
 			var feed_seq = $("#exampleModal").attr("feed_seq");
 			var reply_seq = $(this).closest(".userInfo").attr("reply_seq");
