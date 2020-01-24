@@ -45,7 +45,13 @@
         font-size: 30px;
         color: #fffefc;
     }
-
+    
+    .tab1_container{
+    	width: 100%;
+    }
+	.tab1_loginContainer{
+		width: 100%;
+	}
     .tab1_body {
         font-family: 'Noto Sans KR', sans-serif;
         width: 70%;
@@ -53,19 +59,21 @@
     
     .tab1_logo {
     	width: 30%;
+    	height: 100%;
     }
 
-     .tab1_body .userInput {
-         width: 300px;
-         height: 50px;
-         padding: 5px;
-         margin: 5px;
-         border-radius: 8px;
-         font-size: 15px;
-     } 
+    .tab1_body .userInput {
+        width: 300px; 
+        height: 50px;
+        padding: 5px;
+        margin: 5px; 
+        border-radius: 8px;
+        font-size: 15px;
+    } 
 
     .userInput:focus {
         outline: none;
+        background-color: transparent;
     }
 
     #tab1_loginBtn {
@@ -89,7 +97,7 @@
     }
 	
 	#logoDiv{
-		width: 100px;
+ 		width: 100%; 
 	}
 	
 	#logoDiv img{
@@ -103,6 +111,7 @@
     
     .tab1_footer {
         margin-top: 10px;
+        width: 100%;
     }
 
     .tab1_footer a {
@@ -250,7 +259,7 @@
 	  outline: none;
 	}
 	.inp input:focus + span {
-	  color: #07f;
+ 	  color: #07f; 
 	  transform: translateY(-26px) scale(0.75);
 	}
 	.inp input:focus + span + .border {
@@ -284,9 +293,9 @@
                                     <form action="${pageContext.request.contextPath}/member/loginProc.do" method="post" id="tab1_loginForm">
                                         <div class="tab1_loginContainer">
                                         	<div class="tab1_logo">
-	                                        	<p id="logoDiv">
-	                                        		<img src="resources/images/login_logo.png">
-	                                        	</p>                                        		
+	                                        	<div id="logoDiv">
+	                                        		<img src="resources/images/test03.png">
+	                                        	</div>                                        		
                                         	</div>
                                             <div class="tab1_body">                                            
                                             	<label for="tab1_email" class="inp">
@@ -815,7 +824,7 @@
             }
         });
         //닉네임 유효성 검사 end
-			doc.getElementById("tab5-2_signupBtn").addEventListener("click", function(){
+		doc.getElementById("tab5-2_signupBtn").addEventListener("click", function(){
 				
 				if (nickname.value === "") {
 					adviseNickname.innerHTML = "필수 입력사항입니다."
@@ -1130,25 +1139,28 @@
             setTime = 300; //카운트다운 초기화
             if(phone2.value != "" && phone3.value != ""){    		
                 timer.innerHTML = "";
-                phone.value = phone1.value + phone2.value + phone3.value;   	        
+                phone.value = phone1.value + phone2.value + phone3.value;   	
                 
-//                 if (phone.value != "") {
-//                     $.ajax({
-//                         url: "${pageContext.request.contextPath}/guest/checkOverlap.do",
-//                         data: { phone: phone.value },
-//                         dataType: "json",
-//                         type: "post",
-//                     }).done(function (resp) {
-//                         console.log("phone 중복여부 서버 검증 결과: " + resp.result);    	          
-//                         //전화번호 중복 검사 end
-//                         //인증번호 전송 start
-//                         if (resp.result == "available") {
-//                             tid=setInterval('msg_time()', 1000); //인증번호 전송 시 카운트다운 시작 
-//                             sendCode.hidden = true;
-//                             resendCode.hidden = false;
-//                             verifyCode.value = "";
-//                             verifyCode.disabled = false;
-//                             confirmVerifyCode.hidden = true;
+                if (phone.value != "") {
+                    $.ajax({
+                        url: "${pageContext.request.contextPath}/guest/checkOverlap.do",
+                        data: { phone: phone.value },
+                        dataType: "json",
+                        type: "post",
+                    }).done(function (resp) {
+                        console.log("phone 중복여부 서버 검증 결과: " + resp.result);    	          
+                        //전화번호 중복 검사 end
+                        //인증번호 전송 start
+                        if (resp.result == "available") {
+                            tid=setInterval('msg_time()', 1000); //인증번호 전송 시 카운트다운 시작 
+                            sendCode.hidden = true;
+                            resendCode.hidden = false;
+                            verifyCode.value = "";
+                            verifyCode.disabled = false;
+                            confirmVerifyCode.hidden = true;
+                            //잠시 테스트 
+                             hiddenRespPhone.innerHTML = "사용가능";
+                            //
 //                             $.ajax({
 //                                 url: "${pageContext.request.contextPath}/guest/sendVerifCode.do",
 //                                 data: { phone: phone.value },
@@ -1174,18 +1186,18 @@
 //                                 console.log(b);
 //                                 console.log(c);
 //                             });
-//                         } else if (resp.result == "unavailable") {
-//                             advisePhone.innerHTML = "중복된 번호입니다.";
-//                             advisePhone.style.color = "red";
-//                             hiddenRespPhone.innerHTML = "사용불가";
-//                         }
-//                     }).fail(function (a, b, c) {
-//                         console.log(a);
-//                         console.log(b);
-//                         console.log(c);
-//                         return false;
-//                     });
-//                 	}    
+                        } else if (resp.result == "unavailable") {
+                            advisePhone.innerHTML = "중복된 번호입니다.";
+                            advisePhone.style.color = "red";
+                            hiddenRespPhone.innerHTML = "사용불가";
+                        }
+                    }).fail(function (a, b, c) {
+                        console.log(a);
+                        console.log(b);
+                        console.log(c);
+                        return false;
+                    });
+                	}    
                 }else{
                     alert("전화번호를 입력해 주세요.");
                 }    		

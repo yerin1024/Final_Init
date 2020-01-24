@@ -168,7 +168,7 @@
 							id="my-awesome-dropzone" enctype="multipart/form-data"></form>
 					</div>
 					<div class="col-12" style="padding-top:40px">
-						<div id="carouselExampleIndicators" class="carousel slide"
+						<div id="carouselExampleIndicators" class=" slide"
 							data-interval="false" >
 							<ol class="carousel-indicators">
 					

@@ -41,6 +41,8 @@ public class FeedController {
 		String myEmail = ((MemberDTO)session.getAttribute("loginInfo")).getEmail();
 		try {
 			if(!(email.equalsIgnoreCase(myEmail))) {
+				System.out.println(email);
+				System.out.println(myEmail);
             int frResult = fservice.friendIsOkService(email, myEmail);
             model.addAttribute("frResult", frResult);
             }
@@ -281,11 +283,12 @@ public class FeedController {
 		List<FeedDTO> list = new ArrayList<>();
 		List<MemberDTO> friendList = new ArrayList<>();
 		List<String> cover = new ArrayList<>();
+		String email = ((MemberDTO)session.getAttribute("loginInfo")).getEmail();
 		try {
 				if(keyword==null || keyword.startsWith("#")) {//전체피드 가져오기 또는 해시태그 검색
 					System.out.println("해시태그검색");
-					list = (List<FeedDTO>)service.wholeFeed(ipage, keyword).get("list");
-					cover = (List<String>)service.wholeFeed(ipage, keyword).get("cover");
+					list = (List<FeedDTO>)service.wholeFeed(ipage, keyword, email).get("list");
+					cover = (List<String>)service.wholeFeed(ipage, keyword, email).get("cover");
 					for(int i=0; i<list.size(); i++) {
 						System.out.println("list("+i+") : " +list.get(i));
 						System.out.println("cover("+i+") : " +cover.get(i));
@@ -317,7 +320,7 @@ public class FeedController {
 		List<Integer> rnum = new ArrayList<>();
 		List<MemberDTO> friendList = new ArrayList<>();
 		List<String> cover = new ArrayList<>();
-		
+		String email = ((MemberDTO)session.getAttribute("loginInfo")).getEmail();
 		System.out.println("rnum : "+rnum.toString());
 		Gson g = new Gson();
 		
@@ -325,9 +328,9 @@ public class FeedController {
 		try {
 				if(keyword==null || keyword.startsWith("#")) {//전체피드 가져오기 또는 해시태그 검색
 					System.out.println("해시태그검색");
-					list = (List<FeedDTO>)service.wholeFeed(ipage, keyword).get("list");
-					rnum = (List<Integer>)service.wholeFeed(ipage, keyword).get("rnum");
-					cover = (List<String>)service.wholeFeed(ipage, keyword).get("cover");
+					list = (List<FeedDTO>)service.wholeFeed(ipage, keyword, email).get("list");
+					rnum = (List<Integer>)service.wholeFeed(ipage, keyword, email).get("rnum");
+					cover = (List<String>)service.wholeFeed(ipage, keyword, email).get("cover");
 					for(int i=0; i<list.size(); i++) {
 						System.out.println("list("+i+") : " +list.get(i));
 						System.out.println("rnum("+i+") : " +rnum.get(i));
@@ -394,7 +397,6 @@ public class FeedController {
 			System.out.println("memberDTO : "+mservice.getMemberDTO(dto.getEmail()));
 			obj.addProperty("writerProfile", g.toJson((mservice.getMemberDTO(dto.getEmail())).getProfile_img()));
 			obj.addProperty("likeCheck", g.toJson(likeCheck));
-			obj.addProperty("likeCheck", g.toJson(likeCheck));
 			obj.addProperty("bookmarkCheck", g.toJson(bookmarkCheck));
 			obj.addProperty("replyList",  g.toJson(replyList));
 			obj.addProperty("media", g.toJson(list));			
@@ -403,6 +405,7 @@ public class FeedController {
 		}catch(Exception e) {
 			e.printStackTrace();
 		}			
+		
 		return obj.toString();
 
 	}
@@ -447,7 +450,7 @@ public class FeedController {
 				}
 				
 				index++;
-				mediaList.add(service.getMediaList(feed_seq));
+				mediaList.add(service.getMediaListForFriendFeed(feed_seq));
 //				replyList.add(service.viewAllReply(feed_seq));
 				likeCheckList.add(service.likeCheck(feed_seq, ((MemberDTO)session.getAttribute("loginInfo")).getEmail()));
 				bookmarkCheckList.add(service.bookmarkCheck(feed_seq, ((MemberDTO)session.getAttribute("loginInfo")).getEmail()));
@@ -519,7 +522,7 @@ public class FeedController {
 					}
 				}
 				index++;
-				mediaList.add(service.getMediaList(feed_seq));
+				mediaList.add(service.getMediaListForFriendFeed(feed_seq));
 //				replyList.add(service.viewAllReply(feed_seq));
 				likeCheckList.add(service.likeCheck(feed_seq, ((MemberDTO)session.getAttribute("loginInfo")).getEmail()));
 				bookmarkCheckList.add(service.bookmarkCheck(feed_seq, ((MemberDTO)session.getAttribute("loginInfo")).getEmail()));
@@ -654,10 +657,10 @@ public class FeedController {
 		try {
 			if(dto.getDepth() == 0) {
 				System.out.println("댓글");
-				result = service.registerReply(dto);			
+				result = service.registerReply(dto);
 			}else{
 				System.out.println("답글");
-				result = service.registerReply(dto);	
+				result = service.registerReply(dto);
 			}
 		}catch(Exception e) {
 			e.printStackTrace();
