@@ -38,8 +38,8 @@ public class MessageController {
 	@ResponseBody
 	public String toFriendList(String my_id, Model model) {
 		MemberDTO sessionDTO = (MemberDTO)session.getAttribute("loginInfo");
-//		List<MessageDTO> result = service.friendList(sessionDTO.getEmail());
-		List<MessageDTO> result = service.friendList("123@123.123"); // 123@부분 session id로 바꿔야 함
+		List<MessageDTO> result = service.friendList(sessionDTO.getEmail());
+//		List<MessageDTO> result = service.friendList("123@123.123"); // 123@부분 session id로 바꿔야 함
 		
 		Gson gs = new Gson();
 		return gs.toJson(result);
@@ -50,13 +50,13 @@ public class MessageController {
 	@ResponseBody
 	public String toPreviewList(MessageDTO dto, String to_id, Model model) {
 		MemberDTO sessionDTO = (MemberDTO)session.getAttribute("loginInfo");
-//		List<MessageDTO> resultF = service.friendList(sessionDTO.getEmail());
-		List<MessageDTO> resultF = service.friendList("123@123.123"); // 123@부분 session id로 바꿔야 함
+		List<MessageDTO> resultF = service.friendList(sessionDTO.getEmail());
+//		List<MessageDTO> resultF = service.friendList("123@123.123"); // 123@부분 session id로 바꿔야 함
 		List<MessageDTO> result = new ArrayList<>();
 		
 		for(MessageDTO tmp : resultF) {
-//			MessageDTO result2 = service.previewMsg(sessionDTO.getEmail(), tmp.getFr_id());
-			MessageDTO result2 = service.previewMsg("123@123.123", tmp.getFr_id()); // 123@부분 session id로 바꿔야 함
+			MessageDTO result2 = service.previewMsg(sessionDTO.getEmail(), tmp.getFr_id());
+//			MessageDTO result2 = service.previewMsg("123@123.123", tmp.getFr_id()); // 123@부분 session id로 바꿔야 함
 			result.add(result2);
 		}
 		
@@ -69,8 +69,8 @@ public class MessageController {
 	@ResponseBody
 	public String toView(MessageDTO dto, String fr_id, String to_id, Model model) {
 		MemberDTO sessionDTO = (MemberDTO)session.getAttribute("loginInfo");
-//		List<MessageDTO> result = service.selectAll(sessionDTO.getEmail(), to_id);
-		List<MessageDTO> result = service.selectAll("123@123.123", to_id); // 123@부분 session id로 바꿔야 함
+		List<MessageDTO> result = service.selectAll(sessionDTO.getEmail(), to_id);
+//		List<MessageDTO> result = service.selectAll("123@123.123", to_id); // 123@부분 session id로 바꿔야 함
 		Gson gs = new Gson();
 		return gs.toJson(result);
 	}
@@ -80,8 +80,8 @@ public class MessageController {
 	@ResponseBody
 	public String sendMsg(MessageDTO dto, String to_id) {
 		MemberDTO sessionDTO = (MemberDTO)session.getAttribute("loginInfo");
-//		int result = service.insertMsg(dto, sessionDTO.getEmail(), to_id);
-		int result = service.insertMsg(dto, "123@123.123", to_id); // 123@부분 session id로 바꿔야 함
+		int result = service.insertMsg(dto, sessionDTO.getEmail(), to_id);
+//		int result = service.insertMsg(dto, "123@123.123", to_id); // 123@부분 session id로 바꿔야 함
 		JsonObject obj = new JsonObject();
 		obj.addProperty("contents", dto.getContents());
 		return obj.toString();
@@ -92,8 +92,8 @@ public class MessageController {
 	@ResponseBody
 	public String checkNewMsg(String from_id) {
 		MemberDTO sessionDTO = (MemberDTO)session.getAttribute("loginInfo");
-//		String result = Integer.toString(service.isNewMsg(sessionDTO.getEmail()));
-		String result = Integer.toString(service.isNewMsg("123@123.123"));
+		String result = Integer.toString(service.isNewMsg(sessionDTO.getEmail()));
+//		String result = Integer.toString(service.isNewMsg("123@123.123"));
 		// 나중엔 이메일 부분 session id로 받을 것
 		return result;
 	}

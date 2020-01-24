@@ -96,7 +96,7 @@
  						 $(".search").children().remove();
  						 for(var i=0; i < resp.length; i++){
  							 
- 							 if(resp[i].from_id=="123@123.123"){
+ 							 if(resp[i].from_id=="${loginInfo.email}"){
  								 $(".sector_in").append("<ul class='ul_right'>"
  							                +"<li class='from_id'>"+resp[i].contents+"</li><span class=time_right>"
  							                +resp[i].write_date+"</span><br></ul>");
@@ -172,7 +172,8 @@
  		 				$(".sector_in").children().remove();
  		 				if(resp.length < 1){
  		 					$(".sector_in").append("<div id='noMessageExist'>진행 중인 대화가 없습니다.</div>");
- 		 				}
+ 		 				}else{
+ 		 				
  						 for(var i=0; i < resp.length; i++){
  							 
  							 // data 없음
@@ -203,6 +204,7 @@
  							 }
  							 
  						}
+ 		 			}
  						$("#footer").children().remove();
  						$("#footer").append("<div class='toWhere ac1'><img src='/images/toFr_un.png' id='toFrIcon'></div>"
  		 			            +"<div id='toBetween'></div>"
@@ -235,7 +237,7 @@
 		 						 $(".sector_in").children().remove();
 		 						 $(".search").children().remove();
 		 						 for(var i=0; i < resp.length; i++){
-		 							 if(resp[i].from_id=='123@123.123'){
+		 							 if(resp[i].from_id=='${loginInfo.email}'){
 		 								 $(".sector_in").append("<ul class='ul_right'><li class='from_id'>"
 		 										 +resp[i].contents+"</li><span class=time_right>"
 		 										 +resp[i].write_date+"</span><br></ul>");

@@ -11,7 +11,7 @@
 		
 <!-- 		<div class="a_ac1" id="a_ac1_1"><img src="/images/letter.png" style="width:50px;"></div> -->
 
-	<div id="a_view1">
+	<div id="a_view1" style="background-color:white; z-index:9;">
 		<div class="a_ac2">
 		    <div id=a_cross>
 		    <img src="/images/cross.png" style="width:30px;">
