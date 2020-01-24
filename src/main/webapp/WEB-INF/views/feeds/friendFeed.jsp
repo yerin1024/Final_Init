@@ -55,22 +55,26 @@ html, body {
 }
 
 .carousel-inner {
-	/* width: 720px; */
-	width:1600px;
-		overflow: hidden;
-}
+	 width: 720px; 
+/* 	width:1600px; */
+	height:600px;
+	overflow: hidden;
+
+	}
 
 .carousel-item {
 	margin: auto;
-	/* width: 1600px; */
-	 width: 720px;
+/* width: 1600px; */
+	width: 720px;
 	text-align: center;
-	
+/* 	overflow: hidden; */
 }
 
 .carousel-item * {
 	width: 100%;
-	height: 100%;
+/* 	height: 100%; */
+	height:600px; 
+
 }
 
 .carousel-inner>img {
@@ -318,6 +322,8 @@ html, body {
 
 								var CEI = $("<div class='carousel slide' data-interval='false'></div>");
 								CEI.attr("id",'carouselExampleIndicators'+list[i].feed_seq);
+								
+								if(mediaList[i].length>1){
 								var olCEI = $("<ol class='carousel-indicators'></ol>");
 
 								for (var m = 0; m < mediaList[i].length; m++) {
@@ -332,7 +338,10 @@ html, body {
 									olCEI.append(liCEI);
 								}
 								CEI.append(olCEI);
-
+								}else{
+									
+								}
+								
 								var ci = $("<div class='carousel-inner'>");
 
 								for (var m = 0; m < mediaList[i].length; m++) {
@@ -467,11 +476,14 @@ html, body {
 						</c:when>
 						<c:otherwise>
 						</c:otherwise>
-						</c:choose>
-							
+						</c:choose>	
 						</div>
+					<c:choose>
+					<c:when test="${mediaList[status.index].size() != 0}">
 					<div class="row media">
 						<div id="carouselExampleIndicators${feed.feed_seq }" class="carousel slide" data-interval="false">
+						<c:choose>
+						<c:when test="${mediaList[status.index].size() > 1}">
 								<ol class="carousel-indicators">
 									<c:forEach items="${mediaList[status.index] }" var="media" varStatus="status1">
 										<c:if test="${status1.index ==0}">
@@ -484,29 +496,47 @@ html, body {
 										</c:if>
 									</c:forEach>
 								</ol>
+						</c:when>
+						<c:otherwise>
+						</c:otherwise>
+						</c:choose>
 								<div class="carousel-inner">
 								<c:forEach items="${mediaList[status.index] }" var="media" varStatus="status1">
 									<c:if test="${status1.index ==0}">
-										<div class="carousel-item active">${media }</div>
+										<div class="carousel-item active">${media}</div>
 									</c:if>
 									<c:if test="${status1.index !=0}">
 										<div class="carousel-item">${media }</div>
 									</c:if>
 								</c:forEach>
 								</div>
+							<c:choose>
+							<c:when test="${mediaList[status.index].size() > 1}">
 								<a class="carousel-control-prev"
-									href="#carouselExampleIndicators${feed.feed_seq }" role="button" data-slide="prev"> 
+									href="#carouselExampleIndicators${feed.feed_seq}" role="button" data-slide="prev"> 
 									<span class="carousel-control-prev-icon"
 									aria-hidden="true"></span> 
 									<span class="sr-only">Previous</span>
 								</a> 
 								<a class="carousel-control-next"
-									href="#carouselExampleIndicators${feed.feed_seq }" role="button"
+									href="#carouselExampleIndicators${feed.feed_seq}" role="button"
 									data-slide="next"> <span class="carousel-control-next-icon"
 									aria-hidden="true"></span> <span class="sr-only">Next</span>
 								</a>
+							</c:when>
+							<c:otherwise>
+							</c:otherwise>
+							</c:choose>
 						</div>
 					</div>
+					</c:when>
+					
+					<c:when test="${mediaList[status.index].size() == 0}">
+				
+					</c:when>
+					</c:choose>
+					
+					
 						<div class="row contents" style="height: 100px;">
 							${feed.contents }</div>
 						<div class="row replys">

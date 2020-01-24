@@ -29,7 +29,7 @@
 		select * from tb_member where black = 'N' and admin = 'N'
 		<choose>
 			<when test="search != ''">
-				and (${searchTag} like '%' ||lower(#{search})||'%' or ${searchTag} like '%' ||upper(#{search})||'%')
+				and ${searchTag} like '%' ||#{search}||'%'
 			</when>
 
 		</choose>
@@ -38,7 +38,7 @@
 		select * from tb_member where black = 'Y' and admin = 'N' 
 		<choose>
 			<when test="search != ''">
-				and (${searchTag} like '%' ||lower(#{search})||'%' or ${searchTag} like '%' ||upper(#{search})||'%')
+				and ${searchTag} like '%'||#{search}||'%'
 			</when>
 		</choose>
 	</select>
@@ -48,18 +48,15 @@
 		select count(*) as seq from tb_member where black = 'N' and admin = 'N'
 	</select>
 	<select id="selectByPage" resultType="kh.init.members.MemberDTO" parameterType="java.util.Map">
-		select * from (select tb_member.*,row_number()over(order by email desc) as
-		rown from tb_member where
-		admin = 'N' and black = 'N') where rown between ${start} and ${end}
+		select * from (select tb_member.*,row_number()over(order by email desc) as rown from tb_member where admin = 'N' and black = 'N') 
+		where rown between ${start} and ${end}
 	</select>
 	<!-- 검색했을 때 member페이징 -->
-	<select id="dbsearchForMember" resultType="Integer"
-		parameterType="java.util.Map">
-		select count(*) as seq from tb_member where admin = 'N' and black =
-		'N'
+	<select id="dbsearchForMember" resultType="Integer" parameterType="java.util.Map">
+		select count(*) as seq from tb_member where admin = 'N' and black = 'N'
 		<choose>
 			<when test="search != ''">
-				and (${searchTag} like '%' ||lower(#{search})||'%' or ${searchTag} like '%' ||upper(#{search})||'%')
+				and ${searchTag} like '%' ||#{search}||'%'
 			</when>
 		</choose>
 	</select>
@@ -69,7 +66,7 @@
 		desc) as rown from tb_member where admin = 'N' and black = 'N'
 		<choose>
 			<when test="search != ''">
-				and (${searchTag} like '%' ||lower(#{search})||'%' or ${searchTag} like '%' ||upper(#{search})||'%')
+				and ${searchTag} like '%' ||#{search}||'%'
 			</when>
 		</choose>
 		) where rown between ${start} and ${end}

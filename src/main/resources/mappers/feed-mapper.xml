@@ -64,6 +64,12 @@
 		where rnum
 		between #{startNum} and #{endNum}
 	</select>
+	
+	<select id="getMyFeedCount" resultType="Integer">
+		select count(*) from
+		tb_feed where email=#{email}
+	</select>
+	
 	<select id="getMyScrapFeed" resultType="kh.init.feeds.FeedDTO"
 		parameterType="java.util.Map">
 		select feed_seq, email, nickname, title, contents,
@@ -86,11 +92,6 @@
 		#{email})) p)
 		where rnum
 		between #{startNum} and #{endNum}
-	</select>
-
-	<select id="getMyFeedCount" resultType="Integer">
-		select count(*) from
-		tb_feed where email=#{email}
 	</select>
 
 	<select id="scrapFeed" resultType="kh.init.feeds.FeedDTO">

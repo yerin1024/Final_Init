@@ -45,7 +45,13 @@
         font-size: 30px;
         color: #fffefc;
     }
-
+    
+    .tab1_container{
+    	width: 100%;
+    }
+	.tab1_loginContainer{
+		width: 100%;
+	}
     .tab1_body {
         font-family: 'Noto Sans KR', sans-serif;
         width: 70%;
@@ -53,19 +59,21 @@
     
     .tab1_logo {
     	width: 30%;
+    	height: 100%;
     }
 
-     .tab1_body .userInput {
-         width: 300px;
-         height: 50px;
-         padding: 5px;
-         margin: 5px;
-         border-radius: 8px;
-         font-size: 15px;
-     } 
+    .tab1_body .userInput {
+        width: 300px; 
+        height: 50px;
+        padding: 5px;
+        margin: 5px; 
+        border-radius: 8px;
+        font-size: 15px;
+    } 
 
     .userInput:focus {
         outline: none;
+        background-color: transparent;
     }
 
     #tab1_loginBtn {
@@ -89,7 +97,7 @@
     }
 	
 	#logoDiv{
-		width: 100px;
+ 		width: 100%; 
 	}
 	
 	#logoDiv img{
@@ -103,6 +111,7 @@
     
     .tab1_footer {
         margin-top: 10px;
+        width: 100%;
     }
 
     .tab1_footer a {
@@ -250,7 +259,7 @@
 	  outline: none;
 	}
 	.inp input:focus + span {
-	  color: #07f;
+ 	  color: #07f; 
 	  transform: translateY(-26px) scale(0.75);
 	}
 	.inp input:focus + span + .border {
@@ -284,9 +293,9 @@
                                     <form action="${pageContext.request.contextPath}/member/loginProc.do" method="post" id="tab1_loginForm">
                                         <div class="tab1_loginContainer">
                                         	<div class="tab1_logo">
-	                                        	<p id="logoDiv">
-	                                        		<img src="resources/images/login_logo.png">
-	                                        	</p>                                        		
+	                                        	<div id="logoDiv">
+	                                        		<img src="resources/images/test03.png">
+	                                        	</div>                                        		
                                         	</div>
                                             <div class="tab1_body">                                            
                                             	<label for="tab1_email" class="inp">
