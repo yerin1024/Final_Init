@@ -980,6 +980,38 @@
 	    </div>
 	  </div>
 	  </div>
+	  
+	  <!-- 친구 수락 모달 영역 -->
+	<div id="modalBox1" class="modal fade" id="myModal"
+		role="dialog"  tabindex="-1" aria-labelledby="myModalLabel"
+		style="margin-top: 100px;">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title" id="myModalLabel">친구 관계 설정</h4>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+
+				</div>
+
+				<div class="modal-body1">
+					
+						<input type=radio name="relation" value="1"> 아는 사람<br>
+						<input type=radio name="relation" value="2"> 친구<br> 
+						<input type=radio name="relation" value="3"> 절친<br> 
+						<input type=radio name="relation" value="4"> x새끼<br>
+					
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" id="acceptModalBtn">확인</button>
+					<button type="button" class="btn btn-default" id="closeModalBtn3">취소</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	  
 	<script>	
 	    $("#registerFeed").on("click", function() {
 	    	location.href = "${pageContext.request.contextPath}/feed/writeFeed";
@@ -1073,14 +1105,16 @@
                     
 
                     //친구수락 로직~
-                    $(".acceptfr").on("click", function () {
-                        var yr_id = $(this).attr("name");
+                    $("#acceptModalBtn").on("click", function () {
+                        var yr_id = $('.acceptfr').attr("name");
+                        var relation = $('input[name=relation]').val();
                         console.log(yr_id);
                         $.ajax({
                             url: "${pageContext.request.contextPath}/friend/acceptFndRequest",
                             type: "POST",
                             data: {
-                                yr_id: yr_id
+                                yr_id: yr_id,
+                                relation : relation
                             },
                             dataType: "text",
                             success: function (
@@ -1192,8 +1226,12 @@
                                     + request.responseText);
                             }
                         });
+                        
 
                     });
+                    $('.acceptfr').on('click', function() {
+            			$('#modalBox1').modal('show');
+            		});
                 },
                 error: function (request, status, error) {
                     console.log("ajax call went wrong:"
@@ -1228,8 +1266,12 @@
 		$('#openModalBtn').on('click', function() {
 			$('#modalBox').modal('show');
 		});
+		
 		// 모달 안의 취소 버튼에 이벤트를 건다.	
 		$('#closeModalBtn').on('click', function() {
+			$('#modalBox').modal('hide');
+		});
+		$('#closeModalBtn3').on('click', function() {
 			$('#modalBox').modal('hide');
 		});
 		
