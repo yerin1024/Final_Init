@@ -172,7 +172,7 @@
  		 				$(".sector_in").children().remove();
  		 				if(resp.length < 1){
  		 					$(".sector_in").append("<div id='noMessageExist'>진행 중인 대화가 없습니다.</div>");
- 		 				}else{
+ 		 				}
  		 				
  						 for(var i=0; i < resp.length; i++){
  							 
@@ -204,7 +204,7 @@
  							 }
  							 
  						}
- 		 			}
+ 		 			
  						$("#footer").children().remove();
  						$("#footer").append("<div class='toWhere ac1'><img src='/images/toFr_un.png' id='toFrIcon'></div>"
  		 			            +"<div id='toBetween'></div>"
