@@ -397,7 +397,6 @@ public class FeedController {
 			System.out.println("memberDTO : "+mservice.getMemberDTO(dto.getEmail()));
 			obj.addProperty("writerProfile", g.toJson((mservice.getMemberDTO(dto.getEmail())).getProfile_img()));
 			obj.addProperty("likeCheck", g.toJson(likeCheck));
-			obj.addProperty("likeCheck", g.toJson(likeCheck));
 			obj.addProperty("bookmarkCheck", g.toJson(bookmarkCheck));
 			obj.addProperty("replyList",  g.toJson(replyList));
 			obj.addProperty("media", g.toJson(list));			
@@ -406,6 +405,7 @@ public class FeedController {
 		}catch(Exception e) {
 			e.printStackTrace();
 		}			
+		
 		return obj.toString();
 
 	}
@@ -657,10 +657,10 @@ public class FeedController {
 		try {
 			if(dto.getDepth() == 0) {
 				System.out.println("댓글");
-				result = service.registerReply(dto);			
+				result = service.registerReply(dto);
 			}else{
 				System.out.println("답글");
-				result = service.registerReply(dto);	
+				result = service.registerReply(dto);
 			}
 		}catch(Exception e) {
 			e.printStackTrace();
