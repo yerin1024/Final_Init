@@ -22,8 +22,7 @@
 					console.log(data);
 					var html = "";
 					html += "<div class=\"userInfo\" reply_seq="+data.reply_seq+">"
-					html += "<span class=\"userProfile\"><img class=\"userProfileImg\" src=\"${loginInfo.profile_img }\" alt=\"\"></span>";
-					html += "<div class=\"profileDiv\"><span class=\"userProfileID\">"+data.email+"</span><span class=\"userReply\"><div class=\"replyContents\">"+data.contents+"</div></span></div>"
+					html += "<div class=\"profileDiv\"><span class=\"userProfile\"><img class=\"userProfileImg\" src=\"${loginInfo.profile_img }\" alt=\"\"></span><span class=\"userProfileID\">"+data.email+"</span><span class=\"userReply\"><div class=\"replyContents\">"+data.contents+"</div></span></div>"
 					html += "<div class=\"replyBtns\">"
 					html += "<button type=\"button\" class=\"modifyReply\">수정</button>"
 					html += "<button type=\"button\" class=\"deleteReply\">삭제</button>"
@@ -268,10 +267,7 @@
 				var bookmarkCheck = data.bookmarkCheck;
 				var mediaList = JSON.parse(data.media);
 				var replyList = JSON.parse(data.replyList);
-				console.log(replyList);
 				var dto = JSON.parse(data.dto);
-				console.log(mediaList.length);
-				console.log(replyList.length + " : 리플라이리스트 사이즈입니다.")
 				//디테일뷰 미디어
 				if(mediaList.length>0){ //미디어가 존재하므로 캐러셀 만들어줌
 					console.log("캐러셀 시작");
@@ -297,11 +293,11 @@
 					var replyhtml = "";
 					for(var i=0; i<replyList.length; i++){
 						if(replyList[i].parent == 0){
-							replyhtml += "<div class='userInfo' reply_seq='"+replyList[i].reply_seq+"'>"
+							replyhtml += "<div class='userInfo' reply_seq='"+replyList[i].reply_seq+"'>"							
+							replyhtml += "<div class='profileDiv'>"
 							replyhtml += "<span class='userProfile'>"
 							replyhtml += 		"<img class='userProfileImg' src=${loginInfo.profile_img } alt=''>"
 							replyhtml +=   "</span>"
-							replyhtml +=           "<div class='profileDiv'>"
 							replyhtml +=         	"<span class='userProfileID'>${loginInfo.nickname }</span>"
 							replyhtml +=          "<span class='userReply'>"
 			             	replyhtml +=       	  "<div class='replyContents'>"+replyList[i].contents+"</div>"
@@ -438,9 +434,11 @@
 				bookmarkA.append(bookmarkS);
 				bookmarkS.append(bookmarkI); 
 				
-				$(".modal-btns").html("");
-				$(".modal-btns").append(likeA);
-				$(".modal-btns").append(bookmarkA);
+				var modalBtns = $("<div></div>");
+				modalBtns.addClass("modal-btns");
+				modalBtns.append(likeA);
+				modalBtns.append(bookmarkA);
+				$(".modal-body1").append(modalBtns);
 				$(".writerProfile").html("<img src="+writerProfile+" class='writerProfileImg'>");
 				
 			})
