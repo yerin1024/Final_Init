@@ -962,7 +962,7 @@
                		<div class="writerInfo">
                     		<span class="writerProfile"><img class="userProfileImg" src="${loginInfo.profile_img }" alt=""></span>
                      		<span class="writerProfileID">asdsadas</span>
-                    </div>     
+                    </div>                     
                 </div>
                 <div class="modal-btns"></div>
             </div>

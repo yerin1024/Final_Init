@@ -27,7 +27,24 @@ public class MemberController {
 	private MemberService service;
 	@Autowired
 	private HttpSession session;
-
+	
+	//관리자 로그인 유효성 감시
+	@RequestMapping("/adminLoginProc.do")
+	public String toadminLogin(String email, String pw) {
+		if(email != null && pw != null) {
+			System.out.println("로그인 시도 : " + email);		
+			if(service.isLoginOk(email, pw) > 0) { // 로그인 허가
+				session.setAttribute("loginInfo", service.getMemberDTO(email)); // 세션 로그인정보 담기
+				return "redirect:/admin/memberList.do";
+			}else {
+				return "redirect:/adminHome";
+			}
+		}else {
+			System.out.println("'email input' or 'pw input' is detected as null.");
+			return "adminHome";
+		}
+	}
+	
 	// 로그인	유효성 검사
 	@RequestMapping("/loginProc.do")
 	public String toLogin(String email, String pw) {
