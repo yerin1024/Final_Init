@@ -265,7 +265,7 @@
 
 	<delete id="deleteReply" parameterType="java.util.Map">
 		delete from tb_reply
-		where ${col} = #{val}
+		where ${col} = #{val} or parent = #{val}
 	</delete>
 
 	<select id="viewAllReply" resultType="kh.init.feeds.ReplyDTO">
