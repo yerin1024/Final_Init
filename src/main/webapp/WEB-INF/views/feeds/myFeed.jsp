@@ -1252,8 +1252,6 @@ button{
 	      </div>
 	      <div class="modal-main">			
 	      		<div class="modal-body1">
-	      		
-	      		   			
 	      		</div>
             <div class="title">
                 <div class="reply">
