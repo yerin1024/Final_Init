@@ -466,6 +466,7 @@ public class FeedService {
 		map.put("email", dto.getEmail());
 		map.put("contents", dto.getContents());
 		map.put("reply_seq", dto.getReply_seq());
+		map.put("parent", dto.getParent());
 		String jsonString = gson.toJson(map);
 		return jsonString;
 	}
