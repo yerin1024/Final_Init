@@ -329,7 +329,7 @@
 }
 .reply {
 		border:1px solid black;
-        height: 90%;
+        height: 100%;
         padding: 16px;
         overflow-y: scroll;
 }
@@ -397,9 +397,14 @@
     border-radius: 16px;
     transition: all 1000ms ease 0s;
 }
+.footer-btns{
+	display:flex;
+    width: 50%;
+    height:10%;
+}
 .writeReplyBox{
 	display:flex;
-    width: 100%;
+    width: 50%;
     height:10%;
 }
 .modal-title{
@@ -982,7 +987,8 @@
 	  <div class="modal-dialog" role="document">
 	    <div class="modal-content">
 	      <div class="detailView_header">
-	         <span class="writerProfile"><img class="userProfileImg" src="${loginInfo.profile_img }" alt=""></span>
+	         <span class="writerProfile"><img class="userProfileImg" src="" alt=""></span>
+	         <span class="writer"></span>
 	        <h5 class="modal-title" id="exampleModalLabel"></h5>
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 	          <span aria-hidden="true">&times;</span>
@@ -990,7 +996,6 @@
 	      </div>
 	      <div class="modal-main">			
 	      		<div class="modal-body1">
-			
 	      		</div>
             <div class="title">
                 <div class="reply">
@@ -999,15 +1004,17 @@
                      		<span class="writerProfileID">asdsadas</span>
                     </div>                     
                 </div>
-                <div class="writeReplyBox">					
-	         		<span class="myProfile"><img class="userProfileImg" src="${loginInfo.profile_img }" alt=""></span>
-	       			 <h5 class="modal-title" id="exampleModalLabel">${loginInfo.nickname }</h5>
-	       			 <div id="writeReply" contenteditable="true"></div>
-	       			 <button type="button" class="replyBtn" onclick="replyBtnOnclick('${loginInfo.email}');">등록</button>
-				</div>
-                <div class="modal-btns"></div>
             </div>
-        </div>
+        </div>        
+	      <div class="detailView_footer">
+	      	<div class="footer-btns"></div>
+	      	<div class="writeReplyBox">					
+	         	<span class="myProfile"><img class="userProfileImg" src="${loginInfo.profile_img }" alt=""></span>
+	       		<h5 class="modal-title" id="exampleModalLabel">${loginInfo.nickname }</h5>
+	       		<div id="writeReply" contenteditable="true"></div>
+	       		<button type="button" class="replyBtn" onclick="replyBtnOnclick('${loginInfo.email}');">등록</button>
+			</div>
+	      </div>
 	    </div>
 	  </div>
 	  </div>
