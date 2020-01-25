@@ -9,6 +9,8 @@
 
 <title></title>
 <link rel="stylesheet" href="/resources/css/nav.css">
+<link rel="stylesheet" href="/resources/css/msg.css"> 
+<link rel="stylesheet" href="/resources/css/alr.css"> 
 <script src="https://code.jquery.com/jquery-3.4.1.js"
 	type="text/javascript"></script>
 <link rel="stylesheet"
@@ -597,6 +599,7 @@ button{
 				url : "${pageContext.request.contextPath}/feed/myScrapFeed",
 				type : "POST",
 				data : {
+					
 					"email" : myMail
 				},
 				dataType : "json",
@@ -802,12 +805,14 @@ button{
 //	          }
 	      })
 	   }
-
+	}
 </script>
 </head>
 
 <body>
     <jsp:include page="/resources/jsp/nav.jsp" />
+    <jsp:include page="/resources/jsp/alr.jsp"/>
+	<jsp:include page="/resources/jsp/msg.jsp"/>
 	<div class="container-fluid">
 		<div class="profile">
 			<c:choose>
@@ -1384,7 +1389,7 @@ button{
                         $(".btn-lg").remove();
                         $(".btnText").remove();
                         $(".profileLayoutLeft").append("<button class=btn btn-primary btn-lg >＋</button><div class=btnText>친구요청중</div>");
-                        
+                        location.reload();
                     }else if(res == 'alreadyFriend'){
                     	alert("이미 친구입니다.");
                     }else if(res == 'alreadyApply'){
@@ -1405,7 +1410,46 @@ button{
             });
             
 
-        });
+        })
+        $('#ingReq').on('click', function () {
+			
+            
+            
+            $.ajax({
+                url: "${pageContext.request.contextPath}/friend/redoFndRequest?yr_id=${mvo.email}",
+                type: "POST",
+                dataType: "text",
+                data: {
+                   
+                },
+                success: function (res) {
+                	
+                	console.log(res);
+                    if(res == 'ok'){
+                        alert("성공적으로 친구요청이 취소 되었습니다.");
+                        $(".btn-lg").remove();
+                        $(".btnText").remove();
+                        $(".profileLayoutLeft").append("<button class=btn btn-primary btn-lg id=openModalBtn >＋</button><div class=btnText>친구요청</div>");
+                       location.reload();
+                    }else{
+                    	
+                    }
+                    
+                    
+                    
+                    //친구 검색
+                },
+                error: function (
+                    request,
+                    status,
+                    error) {
+                    console.log("ajax call went wrong:"
+                        + request.responseText);
+                }
+            });
+            
+
+        })
 		
 		</script>
    	<jsp:include page="/resources/script/myFeedScript.jsp" />

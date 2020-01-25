@@ -164,7 +164,7 @@ public class MemberController {
 			if(result> 0) {
 				session.invalidate();
 				System.out.println("회원탈퇴 성공하셨슴당.");
-				return "home";
+				return "feeds/myFeed";
 			}else {
 				System.out.println("회원탈퇴 실패하셨슴당.");
 				return "error";
@@ -201,7 +201,7 @@ public class MemberController {
 		}catch(Exception e) {
 			e.printStackTrace();
 			System.out.println("입력실패.");
-			return "redirect:home";
+			return "redirect:feeds/myFeed";
 		}
 	} 
 	
@@ -240,7 +240,7 @@ public class MemberController {
 			if(result> 0) {
 
 				System.out.println("정보변경에 성공하셨슴당.");
-				return "home";
+				return "feeds/myFeed";
 			}else {
 				System.out.println("정보변경에 실패하셨슴당.");
 				return "error";

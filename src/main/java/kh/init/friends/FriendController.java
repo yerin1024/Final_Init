@@ -77,6 +77,23 @@ public class FriendController {
 		}
 		
 	}
+	@RequestMapping("/redoFndRequest") //친구요청 거부하기~
+	@ResponseBody
+	public String redoFndRequest(String yr_id) {
+		System.out.println("친구 요청 취소 CON 도착"); 
+		System.out.println(yr_id);
+		MemberDTO mDto = (MemberDTO)session.getAttribute("loginInfo");
+		try {
+			int result = service.rejectFriendRequestService( yr_id,mDto.getEmail());
+			
+			return "ok";
+		 } catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return "error";
+		}
+		
+	}
 	@RequestMapping("/acceptFndRequest") //친구 받아주기~
 	@ResponseBody
 	public String acceptFndRequest(String yr_id,String relation) {
