@@ -181,7 +181,7 @@
 
 			replyBtns.prepend(registerChildBtn);
 			replyBtns.prepend(deleteBtn);
-			replyBtns.prepend(modifyBtn);
+			replyBtns.prepend(modifyBtn);gi
 		});
 		
 		//댓글 삭제 버튼
