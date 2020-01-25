@@ -41,7 +41,7 @@
 		full outer join tb_member mem on mem.email = msg.from_id or mem.email = msg.to_id
 		full outer join tb_block bl on (bl.from_id = msg.to_id or bl.from_id = msg.from_id) and (bl.to_id = msg.to_id or bl.to_id = msg.from_id)
 		where (msg.to_id ='123123123@naver.com' or msg.from_id='123123123@naver.com') and email!='123123123@naver.com'
-		and (bl.from_id is null and bl.to_id is null);
+		and (bl.from_id is null and bl.to_id is null)
 	</select>
 	
 	<!-- 미리 보기 -->

@@ -27,6 +27,132 @@
 #a_view1 {
 	display: none;
 	position: fixed;
+	background-color: white;
+	top: 110px;
+	right: 10px;
+	width: 450px;
+	height: 300px;
+	border: 1px solid #9f9f9f;
+	/*            border-radius: 10px;*/
+	overflow: scroll;
+	overflow-x: hidden;
+}
+
+#a_view1::-webkit-scrollbar-track {
+	-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+	border-radius: 10px;
+	background-color: #F5F5F5;
+}
+
+#a_view1::-webkit-scrollbar {
+	width: 12px;
+	background-color: #F5F5F5;
+}
+
+#a_view1::-webkit-scrollbar-thumb {
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+	background-color: #8e8e8e;
+}
+
+#a_cross {
+	/*            border: 1px solid red;*/
+	float: right;
+	width: 30px;
+	height: 30px;
+	margin: 10px;
+}
+
+.a_sector {
+	/*            border: 1px solid #e6abb5;*/
+	min-height: 60px;
+}
+
+[class^=a_pre] {
+	height: 50px;
+}
+
+.a_pre_line {
+	/*            border: 1px solid red;*/
+	
+}
+
+.a_pre_pf {
+	/*            border: 1px solid #1bd369;*/
+	width: 50px;
+	float: left;
+	margin-left: 2px;
+	padding: 2px;
+	padding-top: 2px;
+}
+
+.a_pre_pf_img {
+	width: 100%;
+	height: 45px;
+	border-radius: 30px;
+}
+
+.a_pre_pf_img_nr {
+	width: 30px;
+	height: 30px;
+	position: relative;
+	left: 5px;
+	top: 8px;
+}
+
+.a_pre_text {
+	/*            border: 1px solid #4500ff;*/
+	float: left;
+	width: 250px;
+	line-height: 40px;
+	font-size: 13px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	padding-left: 5px;
+	padding-right: 5px;
+	padding-top: 5px;
+}
+
+.a_pre_time {
+	/*            border: 1px solid #764b91;*/
+	float: left;
+	width: 95px;
+	text-align: center;
+	line-height: 40px;
+	font-size: 12px;
+	color: #535353;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.delAlarm {
+	border: none;
+	width: 25px;
+	height: 25px;
+	cursor: pointer;
+}
+
+.a_ac1 {
+	width: 50px;
+	height: 50px;
+	position: relative;
+	left: 100px;
+}
+
+.a_ac2 {
+	position: fixed;
+	top: 65px;
+	right: 10px;
+	/*            border: 1px solid black;*/
+	width: 50px;
+	height: 50px;
+}
+
+#a_view1 {
+	display: none;
+	position: fixed;
 	top: 110px;
 	right: 10px;
 	width: 450px;
@@ -125,4 +251,11 @@
 	height: 290px;
 	line-height: 300px;
 	color: gray;
+}
+
+.alarmNotExist {
+	text-align: center;
+	height: 290px;
+	line-height: 300px;
+	color: #9b9b9b;
 }

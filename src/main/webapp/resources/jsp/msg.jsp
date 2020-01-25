@@ -6,7 +6,7 @@
 		<button id=toCollection class=toColl style="display:none;">메시지 목록</button>
 	</div>
 			
-	<div id="view1">
+	<div id="view1" style="z-index:999;">
 		<div class="ac2">
 		    <div id=cross>
 		    <img src="/images/close2.png" style="width:100%;">
@@ -49,6 +49,7 @@
  				
  				$(".sector_in").children().remove();
  				// 친구 목록
+ 				
  				if(resp.length < 1){
  					$(".sector_in").append("<div id='noFriendExist'>"
  				              +"<div id='searchTitle'><b>지금 새로운 친구를 만들어 보세요!</b></div>"
@@ -65,7 +66,7 @@
  			        		+"<div class='pre_text'>"+resp[i].nickname+"</div>"
  			                +"<div class='pre_time'>"
  			                +"<img src='/images/startMsg2.png' class='pre_start' id='"+resp[i].fr_id+"' value='"+resp[i].nickname+"' name='"+resp[i].profile_img+"'>"
- 			                +"</div></div>");
+ 			                +"</div></a></div>");
 				}
  				$("#footer").children().remove();
  				$("#footer").append("<div class='toWhere ac1'><img src='/images/toFr_cl.png' id='toFrIcon'></div>"
@@ -170,6 +171,7 @@
  		 		 	            +"<div class='pre_title'>채팅</div>");
  		 				
  		 				$(".sector_in").children().remove();
+ 		 				
  		 				if(resp.length < 1){
  		 					$(".sector_in").append("<div id='noMessageExist'>진행 중인 대화가 없습니다.</div>");
  		 				}
