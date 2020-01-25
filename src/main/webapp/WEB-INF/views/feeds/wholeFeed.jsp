@@ -114,9 +114,15 @@
 	text-decoration:none;
 }
 
-.cover {
-	width: 100%;
-	height: 100%;
+div.cover {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    word-break: break-all;
+    max-width: 150px;
+    max-height: 150px;
+    overflow-y: hidden;
 }
 
 .feed{
@@ -334,10 +340,6 @@
 .btn-primary1:not(:disabled):not(.disabled).active, .btn-primary1:not(:disabled):not(.disabled):active, .show>.btn-primary1.dropdown-toggle{
 	border:none;
 	background-color:white;
-}
-.cover {
-	width: 100%;
-	height: 100%;
 }
 .btn-primary1{
 	width:100%;
@@ -795,14 +797,11 @@ function getList(page){
 							<c:forEach items="${list }" var="feed" varStatus="status">
 								<c:if test="${status.count mod 3==1}">
 									<div class="row" >
-								</c:if>
-								
+								</c:if>								
 								<div class="col-4 feed">
 									<a class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" href="#" data-id="${feed.feed_seq }" style="min-height: 150px;">${cover[status.count-1] }</a>
-								</div>
-								
+								</div>								
 								<c:if test="${status.count mod 3==0}">
-
 									</div>
 								</c:if>
 							</c:forEach>
@@ -1178,8 +1177,8 @@ function getList(page){
 				mediaRow.append(cei);				
 				
 			}else{
-				var mediaRow = $("<div class='media' style='height:100%;size:20px;text-align:center;vertical-align:center'></div>");
-				mediaRow.append(dto.contents);
+				var mediaRow = $("<div class='media' style='height:100%;size:20px;position:relative;></div>");
+				mediaRow.append(mediaList[0]);
 			}
 			$(".modal-body1").html(mediaRow);
 			

@@ -445,9 +445,7 @@
 			var parent_seq = $(this).closest(".userInfo").attr("reply_seq");
 			var parentDiv = $(".userInfo[reply_seq="+parent_seq+"]");
 			console.log(parent_seq + " ###### showReply");
-			if($(".userInfo[reply_seq="+parent_seq+"]").find(".childReply").length == 0){
-				userInfoDiv.attr("child",0);
-			}
+			console.log(parentDiv + " ###### showReply");
 			parentDiv.find(".childReply").show();
 			parentDiv.find(".replyBtns").children(".showReply").remove();
 			parentDiv.children(".replyBtns").append(hideReply);
@@ -458,10 +456,7 @@
 			var parent_seq = $(this).closest(".userInfo").attr("reply_seq");
 			var parentDiv = $(".userInfo[reply_seq="+parent_seq+"]");
 			console.log(parent_seq + " ###### hideReply");
-			if($(".userInfo[reply_seq="+parent_seq+"]").find(".childReply").length == 0){
-				userInfoDiv.attr("child",0);							
-				}
-			childReplyButton.attr("hidden", false);
+			console.log(parentDiv + " ###### showReply");
 			$("div[value=1]").remove();
 			parentDiv.find(".childReply").hide();
 			parentDiv.find(".replyBtns").children(".hideReply").remove();
