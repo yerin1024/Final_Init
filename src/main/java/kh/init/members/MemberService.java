@@ -225,17 +225,21 @@ public class MemberService {
 		return result;
 
 	}
+	
 	//내 정보 변경하기
 	@Transactional("txManager")
 	public int changeMyInfoService(String id,MemberDTO dto) throws Exception {
-
-
 		int result = dao.changeMyInfo(id,dto);
 		return result;
-
 	}
+	
+	//내 비밀번호 변경
+	public int changePw(String email, String pw) throws Exception{
+		int result = dao.changePw(email, Configuration.encrypt(pw));
+		return result;
+	}
+	
 	//내 프로필 변경하기
-
 	@Transactional("txManager")
 	public int changeMyProfileService(String id,MemberDTO dto,MultipartFile profile_img, String path) throws Exception {
 		File filePath = new File(path);

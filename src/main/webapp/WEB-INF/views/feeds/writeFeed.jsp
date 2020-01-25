@@ -27,6 +27,8 @@
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.js"></script>
 <link rel="stylesheet" href="/resources/css/nav.css"> 
+<link rel="stylesheet" href="/resources/css/alr.css">
+<link rel="stylesheet" href="/resources/css/msg.css">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
@@ -141,6 +143,8 @@
 </script>
 </head>
 <jsp:include page="/resources/jsp/nav.jsp" />
+<jsp:include page="/resources/jsp/alr.jsp"/>
+<jsp:include page="/resources/jsp/msg.jsp"/>
 <body>
 	<div id="wrapper">
 		<div id="writeForm">
@@ -252,7 +256,7 @@
 				}
 			};
 		$("#register").on("click", function(){
-			var regex = /(\w+)/;
+			var regex = /([ㄱ-ㅎㅏ-ㅣ가-히A-Za-z0-9])/;
 			var title = $("#title").val();
 			if(title.match(regex)==null){
 				alert("제목을 입력하세요");
