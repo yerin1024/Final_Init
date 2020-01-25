@@ -431,6 +431,7 @@
 				//디테일뷰 글
 				var textRow = $("<span class='text'></span>");
 				textRow.append(dto.contents);
+				$("#exampleModalLabel").html(dto.title);
 				$(".writerInfo").append(textRow);
 				//디테일뷰 좋아요, 스크랩, 수정, 삭제 버튼
 				//좋아요버튼

@@ -983,7 +983,7 @@
 	    <div class="modal-content">
 	      <div class="modal-header">
 	         <span class="writerProfile"><img class="userProfileImg" src="${loginInfo.profile_img }" alt=""></span>
-	        <h5 class="modal-title" id="exampleModalLabel">DETAIL VIEW</h5>
+	        <h5 class="modal-title" id="exampleModalLabel"></h5>
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 	          <span aria-hidden="true">&times;</span>
 	        </button>
