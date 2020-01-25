@@ -1143,7 +1143,7 @@
             setTime = 300; //카운트다운 초기화
             if(phone2.value != "" && phone3.value != ""){    		
                 timer.innerHTML = "";
-                phone.value = phone1.value + phone2.value + phone3.value;   	        
+                phone.value = phone1.value + phone2.value + phone3.value;   	
                 
                 if (phone.value != "") {
                     $.ajax({
