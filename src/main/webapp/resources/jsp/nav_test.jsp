@@ -73,14 +73,13 @@ $(function() {
 				dataType: "json"
 			}).done(function(resp){
 				console.log(resp);
+<<<<<<< HEAD
 				$("#alarm_exist").attr("data-bubble",resp);
 // 				 $("#a_ac1_1").children().remove();
 // 		         $("#a_ac1_1").append("<a class='nav-link gold' id='alarm_exist' style='padding-top: 15px;' data-bubble='"+resp+"'>"
 // 		         			+"<img id='notification' src='/resources/images/notification2.png'></a>");
 		         $("#notification").attr("src", "/resources/images/notification3.png");  
-		         
 		         $("#notification").mouseleave(function(){
-
 		        	 $("#notification").attr("src", "/resources/images/notification2.png");
 // 		             $("#notification").attr("src", $("#notification").attr("src").replace("/resources/images/notification3.png", "/resources/images/notification2.png"));
 		        });
@@ -90,10 +89,10 @@ $(function() {
      
      });
      $("#notification").mouseleave(function(){
-         $("#notification").attr("src", $("#notification").attr("src").replace("/resources/images/notification3.png", "/resources/images/notification2.png"));
+         $("#notification").attr("src","/resources/images/notification2.png");
     });
      $("#msg").mouseenter(function(){
-         $("#msg").attr("src", $("#msg").attr("src").replace("/resources/images/msg2.png", "/resources/images/msg3.png"));  
+         $("#msg").attr("src", "/resources/images/msg3.png");  
          
          $.ajax({
 				url:"${pageContext.request.contextPath}/message/isNewMsg.msg",
@@ -102,11 +101,12 @@ $(function() {
 				dataType: "json"
 			}).done(function(resp){
 				console.log(resp);
-				 $("#ac1_1").children().remove();
-		         $("#ac1_1").append("<a class='nav-link gold' id='msg_exist' style='padding-top: 15px;' data-bubble='"+resp+"'>"
-		         			+"<img id='msg' src='/resources/images/msg3.png'></a>");
+// 				 $("#ac1_1").children().remove();
+// 		         $("#ac1_1").append("<a class='nav-link gold' id='msg_exist' style='padding-top: 15px;' data-bubble='"+resp+"'>"
+// 		         			+"<img id='msg' src='/resources/images/msg3.png'></a>");
+				$("#msg_exist").attr("data-bubble", resp);
 		         $("#msg").mouseleave(function(){
-		             $("#msg").attr("src", $("#msg").attr("src").replace("/resources/images/msg3.png", "/resources/images/msg2.png"));  
+		             $("#msg").attr("src", "/resources/images/msg2.png");  
 		        });
 			}).fail(function(a,b,c){
 				console.log(a); console.log(b); console.log(c);

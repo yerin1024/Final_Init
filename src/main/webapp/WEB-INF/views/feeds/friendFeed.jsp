@@ -74,7 +74,6 @@ html, body {
 /* width: 1600px; */
 	width: 720px;
 	text-align: center;
-/* 	overflow: hidden; */
 }
 
 .carousel-item * {
