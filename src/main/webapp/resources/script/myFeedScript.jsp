@@ -41,6 +41,18 @@
 		var temporaryReply;
 		var clickCnt;
 		var childReplyButton;
+
+		//답글숨기기
+		var showReply = $("<button></button>");
+		showReply.addClass("showReply");
+		showReply.html("ㅡ답글보이기");
+		
+
+		//답글숨기기
+		var hideReply = $("<button></button>");
+		hideReply.addClass("hideReply");
+		hideReply.html("ㅡ답글숨기기");
+		
 		
 		//답글등록버튼
 		var registerReplyBtn = $("<button></button>");
@@ -176,6 +188,7 @@
 		$(document).on("click",".deleteReply", function(){
 			var reply_seq = $(this).closest(".userInfo").attr("reply_seq");
 			var deleteDiv = $(this).closest(".userInfo");
+			console.log(deleteDiv.attr("child"));
 			$.ajax({
 				type : "POST",
 				url : "${pageContext.request.contextPath }/feed/deleteReply",
@@ -228,12 +241,12 @@
 			//답글 쓰는 공간
 			var replyContents = $("<div></div>");
 			replyContents.addClass("replyContents");
-			replyContents.attr("contenteditable","true");				
+			replyContents.attr("contenteditable","true");
+			
 			
 			//답글버튼추가
 			var replyBtns = $("<div></div>");
 			replyBtns.addClass("replyBtns");			
-
 			
 			//버튼DIV 추가
 			replyBtns.append(registerReplyBtn);
@@ -268,6 +281,7 @@
 				var mediaList = JSON.parse(data.media);
 				var replyList = JSON.parse(data.replyList);
 				var dto = JSON.parse(data.dto);
+				console.log(dto.contents);
 				//디테일뷰 미디어
 				if(mediaList.length>0){ //미디어가 존재하므로 캐러셀 만들어줌
 					console.log("캐러셀 시작");
@@ -290,117 +304,88 @@
 					cei.append(ol);
 					
 					var cInner = $("<div class='carousel-inner'></div>");
-					var replyhtml = "";
-					for(var i=0; i<replyList.length; i++){
-						if(replyList[i].parent == 0){
-							replyhtml += "<div class='userInfo' reply_seq='"+replyList[i].reply_seq+"'>"							
-							replyhtml += "<div class='profileDiv'>"
-							replyhtml += "<span class='userProfile'>"
-							replyhtml += 		"<img class='userProfileImg' src=${loginInfo.profile_img } alt=''>"
-							replyhtml +=   "</span>"
-							replyhtml +=         	"<span class='userProfileID'>${loginInfo.nickname }</span>"
-							replyhtml +=          "<span class='userReply'>"
-			             	replyhtml +=       	  "<div class='replyContents'>"+replyList[i].contents+"</div>"
-			             	replyhtml +=       "</span>"
-			             	replyhtml +=        "</div>"	               
-			             	replyhtml +=        "<div class='replyBtns'>"
-			             	replyhtml +=        		"<button type='button' class='modifyReply'>수정</button><button type='button' class='deleteReply'>삭제</button>"
-			             	replyhtml +=        		"<button type='button' class='registerChildBtn'>답글</button>"
-			             	replyhtml +=       "</div>"			             	
-			             	replyhtml +=   "</div>"
+					for(var i=0; i<mediaList.length; i++){
+						if(i==0){
+							var cItem = $("<div class='carousel-item active'>"+mediaList[i]+"</div>");
+						}else{
+							var cItem = $("<div class='carousel-item'>"+mediaList[i]+"</div>");
 						}
+						cInner.append(cItem);
 					}
-	    			$(".reply").append(replyhtml);
-	    			
-	    			
-					for(var i=0; i<replyList.length; i++){
-						if(replyList[i].parent != 0){
-							var childhtml = "";
-							var currentSeq = replyList[i].parent;
-							childhtml +=       "<div class='childReply' reply_seq='"+replyList[i].reply_seq+"' parent_seq='"+replyList[i].parent+"'>"
-							childhtml +=     		"<span class='userProfile'>"
-							childhtml +=     			"<img class='userProfileImg' src=${loginInfo.profile_img } alt='사진오류'>"
-							childhtml +=      		"</span>"
-							childhtml +=      		"<span class='userProfileID'>"+replyList[i].email+"</span>"
-							childhtml +=      "<span class='userReply'>"
-							childhtml +=      		"<div class='replyContents' contenteditable='false'>"+replyList[i].contents+"</div>"
-					       	childhtml +=      "</span>"
-					        childhtml +=      "<div class='replyBtns'>"
-					        childhtml +=      		"<button class='modifyChildBtn'>수정</button>"
-			           		childhtml +=      		"<button class='deleteChildReplyBtn'>삭제</button>"
-				       		childhtml +=      "</div>"
-		             		childhtml +=      "</div>";
-		             		$(".userInfo[reply_seq="+currentSeq+"]").append(childhtml);
-						}
-					}
-					
-	    		
-	    			
 					var prevA = $("<a class='carousel-control-prev' href='#carouselExampleIndicators' role='button' data-slide='prev'></a>");
-					prevA.append("<span class='carousel-control-prev-icon' aria-hidden='ture'></span>");
+					prevA.append("<span class='carousel-control-prev-icon' aria-hidden='true'></span>");
 					prevA.append("<span class='sr-only'>Previous</span>");
 					var nextA = $("<a class='carousel-control-next' href='#carouselExampleIndicators' role='button' data-slide='next'></a>");
-					nextA.append("<span class='carousel-control-next-icon' aria-hidden='ture'></span>");
+					nextA.append("<span class='carousel-control-next-icon' aria-hidden='true'></span>");
 					nextA.append("<span class='sr-only'>Next</span>");
-					
 					cInner.append(prevA);
 					cInner.append(nextA);
-					
 					cei.append(cInner);
-					mediaRow.append(cei);
-					$(".modal-body1").html(mediaRow);
+					mediaRow.append(cei);				
+					
+				}else{
+					var mediaRow = $("<div class='media' style='height:100%;size:20px;text-align:center;vertical-align:center'></div>");
+					mediaRow.append(dto.contents);
 				}
-// 				var replyhtml = "";
-// 				var childReply = "";
+				$(".modal-body1").html(mediaRow);
 				
-// 				console.log("length : "+replyList.length);
-// 				for(var i=0; i<replyList.length; i++){
-// 					console.log("부모댓글 : "+replyList[i].parent);
-// 					console.log("시퀀스 : "+replyList[i].reply_seq);
-// 					if(replyList[i].parent == 0){
-// 						var tmp = i;
-// 						replyhtml += "<div class='userInfo' reply_seq='"+replyList[i].reply_seq+"'>"
-// 						replyhtml += "<span class='userProfile'>"
-// 						replyhtml += 		"<img class='userProfileImg' src=${loginInfo.profile_img } alt=''>"
-// 						replyhtml +=   "</span>"
-// 						replyhtml +=           "<div class='profileDiv'>"
-// 						replyhtml +=         	"<span class='userProfileID'>${loginInfo.nickname }</span>"
-// 						replyhtml +=          "<span class='userReply'>"
-// 		             	replyhtml +=       	  "<div class='replyContents'>"+replyList[i].contents+"</div>"
-// 		             	replyhtml +=       "</span>"
-// 		             	replyhtml +=        "</div>"	               
-// 		             	replyhtml +=        "<div class='replyBtns'>"
-// 		             	replyhtml +=        		"<button type='button' class='modifyReply'>수정</button><button type='button' class='deleteReply'>삭제</button>"
-// 		             	replyhtml +=        		"<button type='button' class='registerChildBtn'>답글</button>"
-// 		             	replyhtml +=       "</div>"		   
-// 			            if(replyList[i+1] != undefined){
-// 			            	console.log(replyList[i+1].parent);
-// 			            }			            
-// 		             	while(replyList[i].parent!=0){		             	
-// 						replyhtml +=       "<div class='childReply' reply_seq='"+replyList[i].reply_seq+"'>"
-// 						replyhtml +=     		"<span class='userProfile'>"
-// 							replyhtml +=     			"<img class='userProfileImg' src=${loginInfo.profile_img } alt='사진오류'>"
-// 									replyhtml +=      		"</span>"
-// 										replyhtml +=      		"<span class='userProfileID'>"+replyList[i].email+"</span>"
-// 								replyhtml +=      "<span class='userReply'>"
-// 				             		replyhtml +=      		"<div class='replyContents' contenteditable='false'>"+replyList[i].contents+"</div>"
-// 				             	replyhtml +=      "</span>"
-// 				             		replyhtml +=      "<div class='replyBtns'>"
-// 				            		replyhtml +=      		"<button class='modifyChildBtn'>수정</button>"
-// 				             		replyhtml +=      		"<button class='deleteChildReplyBtn'>삭제</button>"
-// 				             		replyhtml +=      "</div>"
-// 				             		replyhtml +=      "</div>"   
-// 				             		i++;
-// 						}
-						
-// 					}
-// 					replyhtml +=   "</div>"
-// 					if(tmp+1 == i){
-// 						i=i-1;
-// 					}
+				
+				var replyhtml = "";
+				for(var i=0; i<replyList.length; i++){
+					if(replyList[i].parent == 0){
+						replyhtml += "<div class='userInfo' reply_seq='"+replyList[i].reply_seq+"'>"							
+						replyhtml += "<div class='profileDiv'>"
+						replyhtml += "<span class='userProfile'>"
+						replyhtml += 		"<img class='userProfileImg' src=${loginInfo.profile_img } alt=''>"
+						replyhtml +=   "</span>"
+						replyhtml +=         	"<span class='userProfileID'>${loginInfo.nickname }</span>"
+						replyhtml +=          "<span class='userReply'>"
+		             	replyhtml +=       	  "<div class='replyContents'>"+replyList[i].contents+"</div>"
+		             	replyhtml +=       "</span>"
+		             	replyhtml +=        "</div>"	               
+		             	replyhtml +=        "<div class='replyBtns'>"
+		             	replyhtml +=        		"<button type='button' class='modifyReply'>수정</button><button type='button' class='deleteReply'>삭제</button>"
+		             	replyhtml +=        		"<button type='button' class='registerChildBtn'>답글</button>"
+		             	replyhtml +=       "</div>"			             	
+		             	replyhtml +=   "</div>";
+					}
+				}
 
-// 				}
-//     			$(".reply").append(replyhtml);
+				
+				if(mediaList.length>0){
+					var dtoContents = $("<div class='dtoContents' style='display:inline-block;border:2px solid red;min-height:100px;width: 100%;padding-left: 10px;padding-top: 10px;padding-right: 10px;word-break: break-all;'></div>");
+					dtoContents.append(dto.contents);
+					$(".reply").append(dtoContents);
+					$(".reply").append(replyhtml);
+				}
+
+				for(var i=0; i<replyList.length; i++){
+					if(replyList[i].parent != 0){
+						var childhtml = "";
+						var currentSeq = replyList[i].parent;
+						childhtml +=       "<div class='childReply' style='display:none' reply_seq='"+replyList[i].reply_seq+"' parent_seq='"+replyList[i].parent+"'>"
+						childhtml +=     		"<span class='userProfile'>"
+						childhtml +=     			"<img class='userProfileImg' src=${loginInfo.profile_img } alt='사진오류'>"
+						childhtml +=      		"</span>"
+						childhtml +=      		"<span class='userProfileID'>"+replyList[i].email+"</span>"
+						childhtml +=      "<span class='userReply'>"
+						childhtml +=      		"<div class='replyContents' contenteditable='false'>"+replyList[i].contents+"</div>"
+				       	childhtml +=      "</span>"
+				        childhtml +=      "<div class='replyBtns'>"
+				        childhtml +=      		"<button class='modifyChildBtn'>수정</button>"
+		           		childhtml +=      		"<button class='deleteChildReplyBtn'>삭제</button>"
+			       		childhtml +=      "</div>"
+	             		childhtml +=      "</div>";
+	             		$(".userInfo[reply_seq="+currentSeq+"]").append(childhtml);
+						if($(".userInfo[reply_seq="+currentSeq+"]").find(".childReply").length > 0){
+							$(".userInfo[reply_seq="+currentSeq+"]").attr("child",1);
+						}
+					}
+				}
+				//댓글숨기기 
+				console.log($(".userInfo").attr("child"));
+				$(".userInfo[child=1]").children(".replyBtns").append(showReply);
+				
 				
 				
 				//디테일뷰 글
@@ -446,8 +431,37 @@
 			
 		})
 		
+		//답글보이기
+			$(document).on("click",".showReply", function(){
+			var parent_seq = $(this).closest(".userInfo").attr("reply_seq");
+			var parentDiv = $(".userInfo[reply_seq="+parent_seq+"]");
+			console.log(parent_seq + " ###### showReply");
+			if($(".userInfo[reply_seq="+parent_seq+"]").find(".childReply").length == 0){
+				userInfoDiv.attr("child",0);
+			}
+			parentDiv.find(".childReply").show();
+			parentDiv.find(".replyBtns").children(".showReply").remove();
+			parentDiv.children(".replyBtns").append(hideReply);
+		});
+
+		//답글숨기기
+			$(document).on("click",".hideReply", function(){
+			var parent_seq = $(this).closest(".userInfo").attr("reply_seq");
+			var parentDiv = $(".userInfo[reply_seq="+parent_seq+"]");
+			console.log(parent_seq + " ###### hideReply");
+			if($(".userInfo[reply_seq="+parent_seq+"]").find(".childReply").length == 0){
+				userInfoDiv.attr("child",0);							
+				}
+			childReplyButton.attr("hidden", false);
+			$("div[value=1]").remove();
+			parentDiv.find(".childReply").hide();
+			parentDiv.find(".replyBtns").children(".hideReply").remove();
+			parentDiv.children(".replyBtns").append(showReply);
+		});
+		
 		//답글등록버튼
 		$(document).on("click",".registerChildReply", function(){
+			console.log(childReplyButton + "## >>>????");
 			if($(".replyContents").html.length > 0){
 				childReplyButton.attr("hidden", false);
 			}		
@@ -470,7 +484,11 @@
 				dataType:"json"		
 			}).done(function(resp) {
 				console.log('성공적으로 성공');
+				$(".userInfo[reply_seq="+resp.parent+"]").attr("child",1);
+				$(".userInfo[reply_seq="+resp.parent+"]").children(".replyBtns").append(hideReply);
+				childReply.attr("parent_seq",resp.parent);
 				$("div[value=1]").remove();
+				replyBtns.children().remove();
 				replyBtns.append(modifyChildBtn);
 				replyBtns.append(deleteChildReplyBtn);
 				replyContents.attr("contentEditable","false");
@@ -485,6 +503,7 @@
 		$(document).on("click",".deleteChildReplyBtn", function(){
 			var reply_seq = $(this).closest(".childReply").attr("reply_seq");
 			var deleteDiv = $(this).closest(".childReply");
+			var userInfoDiv = $(this).closest(".userInfo");
 			$.ajax({
 				type : "POST",
 				url : "${pageContext.request.contextPath }/feed/deleteReply",
@@ -492,6 +511,10 @@
 			}).done(function(resp) {
 				console.log(resp + "행 댓글이 지워짐!");
 				deleteDiv.remove();
+				if($(".userInfo[reply_seq="+parent_seq+"]").find(".childReply").length == 0){
+					userInfoDiv.attr("value",0);
+					userInfoDiv.find(".showReply").remove();
+				}
 			}).fail(function(){
 				alert("yes!");
 			})

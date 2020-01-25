@@ -14,6 +14,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="/resources/css/nav.css"> 
+<link rel="stylesheet" href="/resources/css/alr.css">
+<link rel="stylesheet" href="/resources/css/msg.css">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 <style>
@@ -358,7 +360,8 @@
 	height:100%;
 }
 .reply {
-        height: 90%;
+		border:1px solid black;
+        height: 100%;
         padding: 16px;
         overflow-y: scroll;
 }
@@ -369,8 +372,15 @@
 
 .writerProfile,.userProfile,.myProfile{	
     margin-right: 16px;
+    line-height: 50px;
 }
-.writerProfileImg,.userProfileImg{
+.writerProfileImg{
+	width:80px;
+	height:80px;
+	border-radius: 160px;
+    border: 1px solid black;
+}
+.userProfileImg{
 	width:40px;
 	height:40px;
 	border-radius: 160px;
@@ -383,19 +393,20 @@
     border: 1px solid black;
 }
 .modal-btns{
-	height:50px;
-	line-height:50px;
-    padding: 0px 16px;
+	position:absolute;
+    padding: 16px 16px;
+    right:0px;
 }
 .writerInfo,.userInfo{
     margin-left: -12px;
     margin-right: 0;
     padding: 12px 16px 0px 16px;
     display:flex;
+    flex-direction: column;
 }
 .childReply{
     margin-right: 0;
-    padding: 12px 16px 0px 60px;
+    padding: 0px 16px 0px 48px;
     display: flex;
     flex-wrap: wrap;
 }
@@ -403,14 +414,11 @@
 	font-weight: 600;
     padding-left: 5px;
     margin: 0px 5px 0px -5px;
+    line-height: 50px;
 }
 .userReply,.text>p{
-    border-radius: 16px;
-    border: 1px solid rgb(239, 239, 239);
-    width: 100%;
     line-height: 50px;
     width: 400px;
-    margin: 0px 20px;
     word-break: break-all;	
     display: inherit;
 }
@@ -429,38 +437,202 @@
 	line-height: 50px;
 }
 #writeReply{	
+    line-height:80px;
+    margin: 0px 20px;
+    min-height: 50px;
+    font-size: 16px;
+    width: 100%;
     border-radius: 16px;
     border: 1px solid rgb(239, 239, 239);
-    width: 100%;
-    line-height:50px;
-    margin: 0px 20px;
+    padding: 0px 10px;
+    
+}
+.replyBtns{
+	margin:20px 20px;
 }
 .replyContents{	
     background: transparent;
     border: 0px;
-    display: inline-block;
+    min-height: 50px;
+    font-size: 16px;
+    margin: 0px 12px;
+    width: 100%;
+    border-radius: 16px;
+    border: 1px solid rgb(239, 239, 239);
+    padding: 0px 10px;
+}
+.modal-body1{
+	width:55%;
+    height: 100%;
+    position: relative;
+    border:1px solid black;
+}
+.title{
+	width:45%;
+}
+
+.childContentsBox{
+    width: 350px;
+}
+.childReplyContents{
+    border-radius: 16px;
+    border: 1px solid rgb(239, 239, 239);
+	background: transparent;
     min-height: 50px;
     font-size: 16px;
     outline: 0px;
     overflow-x: hidden;
     resize: none;
+    width:100%;
+    height:100%;
     white-space: pre-wrap;
-    width: 100%;
     word-break: break-all;
-    padding: 12px;
+    padding: 10px;
+    
 }
-.modal-body1{
-	width:55%;
-    height: 100%;
+.profileDiv{	
+    display: flex;
+}
+.detailView_header{
+    display: flex;
+    padding: 16px 20px;
+}
+.detailView_footer{
+    display: flex;
+    padding: 1rem 1rem;
+	
 }
 .modal-title{
-	width:45%;
+	margin:auto;
+}
+.modal-content{	
+    border-radius: 30px;
+}
+.replyBtns>button, .replyBtn{
+	background: 0 0;
+    border: 0;
+    cursor: pointer;
+    display: inline;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 14px;
+    margin-right: 8px;
+    padding: 0;
+    color: #999;
+    min-width: 30px;
+    border: 1px solid #999;
+    padding: 5px 7px;
+    border-radius: 8px;
 }
 .media{
 	width:100%;
 	height:100%;
 	margin:0px;
 }
+/* .reply { */
+/*         height: 90%; */
+/*         padding: 16px; */
+/*         overflow-y: scroll; */
+/* } */
+
+/* .reply::-webkit-scrollbar { */
+/*         width: 0 !important */
+/* } */
+
+/* .writerProfile,.userProfile,.myProfile{	 */
+/*     margin-right: 16px; */
+/* } */
+/* .writerProfileImg,.userProfileImg{ */
+/* 	width:40px; */
+/* 	height:40px; */
+/* 	border-radius: 160px; */
+/*     border: 1px solid black; */
+/* } */
+/* .childProfileImg{ */
+/* 	width:24px; */
+/* 	height:24px; */
+/* 	border-radius: 160px; */
+/*     border: 1px solid black; */
+/* } */
+/* .modal-btns{ */
+/* 	height:50px; */
+/* 	line-height:50px; */
+/*     padding: 0px 16px; */
+/* } */
+/* .writerInfo,.userInfo{ */
+/*     margin-left: -12px; */
+/*     margin-right: 0; */
+/*     padding: 12px 16px 0px 16px; */
+/*     display:flex; */
+/* } */
+/* .childReply{ */
+/*     margin-right: 0; */
+/*     padding: 12px 16px 0px 60px; */
+/*     display: flex; */
+/*     flex-wrap: wrap; */
+/* } */
+/* .userProfileID,.writerProfileID{ */
+/* 	font-weight: 600; */
+/*     padding-left: 5px; */
+/*     margin: 0px 5px 0px -5px; */
+/* } */
+/* .userReply,.text>p{ */
+/*     border-radius: 16px; */
+/*     border: 1px solid rgb(239, 239, 239); */
+/*     width: 100%; */
+/*     line-height: 50px; */
+/*     width: 400px; */
+/*     margin: 0px 20px; */
+/*     word-break: break-all;	 */
+/*     display: inherit; */
+/* } */
+/* } */
+/* .childContentsBox{ */
+/* 	width:322px; */
+/*     border: 1px solid rgb(239, 239, 239); */
+/*     border-radius: 16px; */
+/*     transition: all 1000ms ease 0s; */
+/* } */
+/* .writeReplyBox{ */
+/* 	display:flex; */
+/*     width: 100%; */
+/* } */
+/* .modal-title{ */
+/* 	line-height: 50px; */
+/* } */
+/* #writeReply{	 */
+/*     border-radius: 16px; */
+/*     border: 1px solid rgb(239, 239, 239); */
+/*     width: 100%; */
+/*     line-height:50px; */
+/*     margin: 0px 20px; */
+/* } */
+/* .replyContents{	 */
+/*     background: transparent; */
+/*     border: 0px; */
+/*     display: inline-block; */
+/*     min-height: 50px; */
+/*     font-size: 16px; */
+/*     outline: 0px; */
+/*     overflow-x: hidden; */
+/*     resize: none; */
+/*     white-space: pre-wrap; */
+/*     width: 100%; */
+/*     word-break: break-all; */
+/*     padding: 12px; */
+/* } */
+/* .modal-body1{ */
+/* 	width:55%; */
+/*     height: 100%; */
+/* } */
+/* .modal-title{ */
+/* 	width:45%; */
+/* } */
+/* .media{ */
+/* 	width:100%; */
+/* 	height:100%; */
+/* 	margin:0px; */
+/* } */
 /* All Device */
 /* 모든 해상도를 위한 공통 코드를 작성한다. 모든 해상도에서 이 코드가 실행됨. */
 
@@ -578,6 +750,8 @@ function getList(page){
 </head>
 <body>
  <jsp:include page="/resources/jsp/nav.jsp" />
+ <jsp:include page="/resources/jsp/alr.jsp"/>
+<jsp:include page="/resources/jsp/msg.jsp"/>
 	<div id="wrapper">
 		<div id="search">
 			<br><br>
@@ -677,12 +851,274 @@ function getList(page){
 	  </div>
 	  </div>
 	<script>
+	
+	
+	function replyBtnOnclick(email) {
+		var writeReply = $("#writeReply");
+		var contents = writeReply.html();
+		if(contents == ""){ //컨텐츠가 null 값일 경우 등록 동작
+			return false;
+		}
+		var feed_seq = $("#exampleModal").attr("feed_seq");
+		console.log(feed_seq + " ## ?");
+		$.ajax({
+			type : "POST",
+			url : "${pageContext.request.contextPath }/feed/registerReply",
+			data : {
+				feed_seq : feed_seq,
+				contents : contents,
+				email : email
+			},
+			dataType : "json"
+			}).done(function(data) {
+				console.log(data);
+				var html = "";
+				html += "<div class=\"userInfo\" reply_seq="+data.reply_seq+">"
+				html += "<div class=\"profileDiv\"><span class=\"userProfile\"><img class=\"userProfileImg\" src=\"${loginInfo.profile_img }\" alt=\"\"></span><span class=\"userProfileID\">"+data.email+"</span><span class=\"userReply\"><div class=\"replyContents\">"+data.contents+"</div></span></div>"
+				html += "<div class=\"replyBtns\">"
+				html += "<button type=\"button\" class=\"modifyReply\">수정</button>"
+				html += "<button type=\"button\" class=\"deleteReply\">삭제</button>"
+				html += "<button type=\"button\" class=\"registerChildBtn\">답글</button>"
+				html += "</div>"
+      			html += "</div>"
+				$(".reply").append(html);
+				writeReply.html("");
+		}).fail(function(a, b, c) {
+			console.log(a);
+			console.log(b);
+			console.log(c);
+		})
+	}
+	
+	var temporaryReply;
+	var clickCnt;
+	var childReplyButton;
+
+	//답글숨기기
+	var showReply = $("<button></button>");
+	showReply.addClass("showReply");
+	showReply.html("ㅡ답글보이기");
+	
+
+	//답글숨기기
+	var hideReply = $("<button></button>");
+	hideReply.addClass("hideReply");
+	hideReply.html("ㅡ답글숨기기");
+	
+	
+	//답글등록버튼
+	var registerReplyBtn = $("<button></button>");
+	registerReplyBtn.html("등록")
+	registerReplyBtn.addClass("registerChildReply");
+	
+	//답글삭제버튼
+	var deleteChildReplyBtn = $("<button></button>");
+	deleteChildReplyBtn.html("삭제")
+	deleteChildReplyBtn.addClass("deleteChildReplyBtn");
+	
+	
+	//답글취소버튼
+	var childReplyCancel = $("<button></button>");
+	childReplyCancel.html("취소")
+	childReplyCancel.addClass("childReplyCancel");
+	
+	
+	//답글수정버튼
+	var modifyChildBtn = $("<button></button>");
+	modifyChildBtn.html("수정")
+	modifyChildBtn.addClass("modifyChildBtn");
+
+	//답글수정완료버튼
+	var modifyChildReplySuccess = $("<button></button>");
+	modifyChildReplySuccess.html("완료")
+	modifyChildReplySuccess.addClass("modifyChildReplySuccess");
+
+	//답글수정취소버튼
+	var modifyChildReplyCancel = $("<button></button>");
+	modifyChildReplyCancel.html("취소")
+	modifyChildReplyCancel.addClass("modifyChildReplyCancel");
+
+	//수정버튼
+	var modifyBtn = $("<button></button>");
+	modifyBtn.html("수정")
+	modifyBtn.addClass("modifyReply");
+
+	//삭제버튼
+	var deleteBtn = $("<button></button>");
+	deleteBtn.html("삭제")
+	deleteBtn.addClass("deleteReply");
+
+	//답글버튼
+	var registerChildBtn = $("<button></button>");
+	registerChildBtn.html("답글")
+	registerChildBtn.addClass("registerChildBtn");
+	
+	//수정완료버튼
+	var modifyCompleteBtn = $("<button></button>");
+	modifyCompleteBtn.html("수정완료");
+	modifyCompleteBtn.addClass("modifyReplySuccess");
+
+	//수정취소버튼
+	var modifyCancelBtn = $("<button></button>");
+	modifyCancelBtn.html("취소")
+	modifyCancelBtn.addClass("modifyReplyCancel");
+	
+	$(document).on("click",".modifyReply", function(){
+		$("div[value=1]").remove();
+		if(childReplyButton != null){
+			childReplyButton.attr("hidden", false);
+		}			
+		var oriReply = $(this).closest(".replyBtns").siblings(".profileDiv").find(".replyContents");
+		oriReply.attr("contentEditable","true");
+		temporaryReply = oriReply.html();
+		var replyBtns = $(this).closest(".replyBtns"); 
+		
+		oriReply.focus();
+		
+		$(this).closest(".replyBtns").children().remove();			
+
+		replyBtns.prepend(modifyCancelBtn);
+		replyBtns.prepend(modifyCompleteBtn);
+	});
+	
+	$(document).on("click",".modifyReplySuccess", function(){
+		
+		childReplyButton.attr("hidden", false);
+		
+		var oriReply = $(this).closest(".replyBtns").siblings(".profileDiv").find(".replyContents");
+		var replyContents = $(this).closest(".replyBtns").siblings(".profileDiv").find(".replyContents").html();
+		var currentReply = oriReply.html();
+		var replyBtns = $(this).closest(".replyBtns");
+		var reply_seq = $(this).closest(".userInfo").attr("reply_seq");
+		
+		if(temporaryReply == currentReply){
+			oriReply.html(temporaryReply);
+		}else{
+			$.ajax({
+					type : "POST",
+					url : "${pageContext.request.contextPath }/feed/modifyReply",
+					data : {reply_seq:reply_seq,contents:replyContents}	
+				}).done(function(resp){
+					if(resp == 1){
+						console.log("성공!");
+					}else{
+						console.log("오류");
+					}
+				}).fail(function(){
+					console.log("댓글 수정 오류!!!");
+				})
+		}
+		
+		oriReply.attr("contentEditable","false");
+
+		$(this).closest(".replyBtns").children().remove();			
+		replyBtns.prepend(registerChildBtn);
+		replyBtns.prepend(deleteBtn);
+		replyBtns.prepend(modifyBtn);	
+	});
+
+	$(document).on("click",".modifyReplyCancel", function(){
+		var replyBtns = $(this).closest(".replyBtns");
+		var oriReply = $(this).closest(".replyBtns").siblings(".profileDiv").find(".replyContents");	
+		console.log()
+		oriReply.html(temporaryReply);
+		oriReply.attr("contentEditable","false");
+		
+		$(this).closest(".replyBtns").children().remove();
+		
+		
+		var registerChildBtn = $("<button></button>");
+		registerChildBtn.html("답글")
+		registerChildBtn.addClass("registerChildBtn");
+
+		replyBtns.prepend(registerChildBtn);
+		replyBtns.prepend(deleteBtn);
+		replyBtns.prepend(modifyBtn);
+	});
+	
+	//댓글 삭제 버튼
+	$(document).on("click",".deleteReply", function(){
+		var reply_seq = $(this).closest(".userInfo").attr("reply_seq");
+		var deleteDiv = $(this).closest(".userInfo");
+		console.log(deleteDiv.attr("child"));
+		$.ajax({
+			type : "POST",
+			url : "${pageContext.request.contextPath }/feed/deleteReply",
+			data : {reply_seq:reply_seq}				
+		}).done(function(resp) {
+			console.log(resp + "행 댓글이 지워짐!");
+			deleteDiv.remove();
+		}).fail(function(){
+			alert("yes!");
+		})
+	});
+
+	//답글버튼 눌렀을 때 이벤트
+	$(document).on("click",".registerChildBtn", function(){
+		childReplyButton = $(this);
+		childReplyButton.attr("hidden", true);
+		console.log("답글클릭 : cnt : " + clickCnt);
+			if(clickCnt == 0){	
+					console.log("왜 출력안돼;")
+					console.log("this 출력 : " + $(this));
+					$("div[value=1]").remove();
+					childReplyButton.attr("hidden", false);
+			}
+		clickCnt = 0;
+		
+		var userNickname = '${loginInfo.nickname }';
+		var replyWriter = $(this).closest(".replyBtns").siblings(".userProfileID").html(); //부모댓글의 닉네임
+		var userInfo = $(this).closest(".userInfo");
+		var reply_seq = $(this).closest(".userInfo").attr("reply_seq");
+		//--------------------------------------------------------
+		var registerChildDiv = $("<div value='1'></div>");
+		registerChildDiv.addClass("childReply");
+		
+		var userProfile = $("<span></span>");
+		userProfile.addClass("userProfile");
+		
+		var childProfileImg = $("<img></img>");
+		childProfileImg.addClass("userProfileImg");
+		childProfileImg.attr("src","${loginInfo.profile_img}");
+		childProfileImg.attr("alt","사진오류");			
+
+		var userProfileID = $("<span></span>");
+		userProfileID.addClass("userProfileID");
+		userProfileID.html("${loginInfo.nickname}");
+		
+		//답글 쓰는 공간을 감싸는 span
+		var userReply = $("<span></span>");
+		userReply.addClass("userReply");			
+		
+		//답글 쓰는 공간
+		var replyContents = $("<div></div>");
+		replyContents.addClass("replyContents");
+		replyContents.attr("contenteditable","true");
+		
+		
+		//답글버튼추가
+		var replyBtns = $("<div></div>");
+		replyBtns.addClass("replyBtns");			
+		
+		//버튼DIV 추가
+		replyBtns.append(registerReplyBtn);
+		replyBtns.append(childReplyCancel);
+		
+		userProfile.append(childProfileImg);
+		
+		registerChildDiv.append(userProfile);			
+		registerChildDiv.append(userProfileID);
+		registerChildDiv.append(userReply);
+		registerChildDiv.append(replyBtns);
+		userReply.append(replyContents);
+		userInfo.append(registerChildDiv); //유저인포밑에 어펜드..		
+		//--------------------------------------------------------  		
+	});
+	
+	//
 	$('#exampleModal').on('shown.bs.modal', function (event) {
 		var seq= $(event.relatedTarget).data('id');
-		console.log("seq : "+seq);
-		//피드시퀀스값
-		var feedSeqDiv = $("<div class=\"feedSeqDiv\" style=\"visibility:hidden\">"+seq+"</div>");
-		$(".writeReplyBox").append(feedSeqDiv);
+		var feed_seq = $("#exampleModal").attr("feed_seq",seq);
 		$.ajax({
 			type:"post",
 			url:"/feed/detailView",
@@ -691,16 +1127,17 @@ function getList(page){
 			},
 			dataType:"json"
 		}).done(function(data){
+			$(".reply").children().remove(); // 클릭할때마다 다른 게시글에 댓글지우기 
 			console.log(data);
 			var writerProfile = data.writerProfile;
 			var likeCheck = data.likeCheck;
 			var bookmarkCheck = data.bookmarkCheck;
 			var mediaList = JSON.parse(data.media);
-			console.log(mediaList);
+			var replyList = JSON.parse(data.replyList);
 			var dto = JSON.parse(data.dto);
-			console.log(mediaList.length);
 			//디테일뷰 미디어
-			if(mediaList.length>1){ //미디어가 존재하므로 캐러셀 만들어줌
+			console.log("mediaList.length : "+mediaList.length);
+			if(mediaList.length>0){ //미디어가 존재하므로 캐러셀 만들어줌
 				console.log("캐러셀 시작");
 				var mediaRow = $("<div class='row media'></div>");
 				var cei = $("<div id='carouselExampleIndicators' class='carousel slide' data-interval='false'></div>");
@@ -738,12 +1175,70 @@ function getList(page){
 				cInner.append(prevA);
 				cInner.append(nextA);
 				cei.append(cInner);
-				mediaRow.append(cei);
+				mediaRow.append(cei);				
+				
 			}else{
 				var mediaRow = $("<div class='media' style='height:100%;size:20px;text-align:center;vertical-align:center'></div>");
-				mediaRow.append(mediaList[0]);
+				mediaRow.append(dto.contents);
 			}
 			$(".modal-body1").html(mediaRow);
+			
+			
+			var replyhtml = "";
+			for(var i=0; i<replyList.length; i++){
+				if(replyList[i].parent == 0){
+					replyhtml += "<div class='userInfo' reply_seq='"+replyList[i].reply_seq+"'>"							
+					replyhtml += "<div class='profileDiv'>"
+					replyhtml += "<span class='userProfile'>"
+					replyhtml += 		"<img class='userProfileImg' src=${loginInfo.profile_img } alt=''>"
+					replyhtml +=   "</span>"
+					replyhtml +=         	"<span class='userProfileID'>${loginInfo.nickname }</span>"
+					replyhtml +=          "<span class='userReply'>"
+	             	replyhtml +=       	  "<div class='replyContents'>"+replyList[i].contents+"</div>"
+	             	replyhtml +=       "</span>"
+	             	replyhtml +=        "</div>"	               
+	             	replyhtml +=        "<div class='replyBtns'>"
+	             	replyhtml +=        		"<button type='button' class='modifyReply'>수정</button><button type='button' class='deleteReply'>삭제</button>"
+	             	replyhtml +=        		"<button type='button' class='registerChildBtn'>답글</button>"
+	             	replyhtml +=       "</div>"			             	
+	             	replyhtml +=   "</div>";
+				}
+			}
+
+			
+			if(mediaList.length>0){
+				var dtoContents = $("<div class='dtoContents' style='display:inline-block;border:2px solid red;min-height:100px;width: 100%;padding-left: 10px;padding-top: 10px;padding-right: 10px;word-break: break-all;'></div>");
+				dtoContents.append(dto.contents);
+				$(".reply").append(dtoContents);
+				$(".reply").append(replyhtml);
+			}
+			for(var i=0; i<replyList.length; i++){
+				if(replyList[i].parent != 0){
+					var childhtml = "";
+					var currentSeq = replyList[i].parent;
+					childhtml +=       "<div class='childReply' style='display:none' reply_seq='"+replyList[i].reply_seq+"' parent_seq='"+replyList[i].parent+"'>"
+					childhtml +=     		"<span class='userProfile'>"
+					childhtml +=     			"<img class='userProfileImg' src=${loginInfo.profile_img } alt='사진오류'>"
+					childhtml +=      		"</span>"
+					childhtml +=      		"<span class='userProfileID'>"+replyList[i].email+"</span>"
+					childhtml +=      "<span class='userReply'>"
+					childhtml +=      		"<div class='replyContents' contenteditable='false'>"+replyList[i].contents+"</div>"
+			       	childhtml +=      "</span>"
+			        childhtml +=      "<div class='replyBtns'>"
+			        childhtml +=      		"<button class='modifyChildBtn'>수정</button>"
+	           		childhtml +=      		"<button class='deleteChildReplyBtn'>삭제</button>"
+		       		childhtml +=      "</div>"
+             		childhtml +=      "</div>";
+             		$(".userInfo[reply_seq="+currentSeq+"]").append(childhtml);
+					if($(".userInfo[reply_seq="+currentSeq+"]").find(".childReply").length > 0){
+						$(".userInfo[reply_seq="+currentSeq+"]").attr("child",1);
+					}
+				}
+			}
+			//댓글숨기기 
+			console.log($(".userInfo").attr("child"));
+			$(".userInfo[child=1]").children(".replyBtns").append(showReply);
+			
 			
 			//디테일뷰 글
 			var textRow = $("<span class='row text'></span>");
@@ -807,6 +1302,156 @@ function getList(page){
 		$('#myInput').trigger('focus');
 		
 	})
+	
+		//답글보이기
+			$(document).on("click",".showReply", function(){
+			var parent_seq = $(this).closest(".userInfo").attr("reply_seq");
+			var parentDiv = $(".userInfo[reply_seq="+parent_seq+"]");
+			console.log(parent_seq + " ###### showReply");
+			if($(".userInfo[reply_seq="+parent_seq+"]").find(".childReply").length == 0){
+				userInfoDiv.attr("child",0);
+			}
+			parentDiv.find(".childReply").show();
+			parentDiv.find(".replyBtns").children(".showReply").remove();
+			parentDiv.children(".replyBtns").append(hideReply);
+		});
+
+		//답글숨기기
+			$(document).on("click",".hideReply", function(){
+			var parent_seq = $(this).closest(".userInfo").attr("reply_seq");
+			var parentDiv = $(".userInfo[reply_seq="+parent_seq+"]");
+			console.log(parent_seq + " ###### hideReply");
+			if($(".userInfo[reply_seq="+parent_seq+"]").find(".childReply").length == 0){
+				userInfoDiv.attr("child",0);							
+				}
+			childReplyButton.attr("hidden", false);
+			$("div[value=1]").remove();
+			parentDiv.find(".childReply").hide();
+			parentDiv.find(".replyBtns").children(".hideReply").remove();
+			parentDiv.children(".replyBtns").append(showReply);
+		});
+		
+		//답글등록버튼
+		$(document).on("click",".registerChildReply", function(){
+			console.log(childReplyButton + "## >>>????");
+			if($(".replyContents").html.length > 0){
+				childReplyButton.attr("hidden", false);
+			}		
+			clickCnt = 1;
+			var feed_seq = $("#exampleModal").attr("feed_seq");
+			var reply_seq = $(this).closest(".userInfo").attr("reply_seq");
+			var childReply = $(this).closest(".childReply");
+			
+			childReply.attr("value", 0);
+			
+			var replyWriter = $(this).closest(".childReply").siblings(".profileDiv").find(".userProfileID").html(); //부모댓글의 닉네임
+			var childReplyContents = $(this).closest(".replyBtns").siblings(".userReply").find(".replyContents").html();
+			var replyContents = $(this).closest(".replyBtns").siblings(".userReply").find(".replyContents");
+			var replyBtns = $(this).closest(".replyBtns");
+			replyBtns.attr("value", 1);
+			$.ajax({
+				type : "POST",
+				url : "${pageContext.request.contextPath }/feed/registerReply",
+				data : {feed_seq:feed_seq,email:'${loginInfo.email}',contents:childReplyContents,depth:1,parent:reply_seq},
+				dataType:"json"		
+			}).done(function(resp) {
+				console.log('성공적으로 성공');
+				$(".userInfo[reply_seq="+resp.parent+"]").attr("child",1);
+				$(".userInfo[reply_seq="+resp.parent+"]").children(".replyBtns").append(hideReply);
+				childReply.attr("parent_seq",resp.parent);
+				$("div[value=1]").remove();
+				replyBtns.children().remove();
+				replyBtns.append(modifyChildBtn);
+				replyBtns.append(deleteChildReplyBtn);
+				replyContents.attr("contentEditable","false");
+				childReply.attr("reply_seq",resp.reply_seq);
+				clickCnt = 2;
+				console.log("등록완료 : cnt : " + clickCnt);
+			}).fail(function(){
+				console.log("실패!");
+			});
+		});
+		//답글삭제버튼
+		$(document).on("click",".deleteChildReplyBtn", function(){
+			var reply_seq = $(this).closest(".childReply").attr("reply_seq");
+			var deleteDiv = $(this).closest(".childReply");
+			var userInfoDiv = $(this).closest(".userInfo");
+			$.ajax({
+				type : "POST",
+				url : "${pageContext.request.contextPath }/feed/deleteReply",
+				data : {reply_seq:reply_seq}				
+			}).done(function(resp) {
+				console.log(resp + "행 댓글이 지워짐!");
+				deleteDiv.remove();
+				if($(".userInfo[reply_seq="+parent_seq+"]").find(".childReply").length == 0){
+					userInfoDiv.attr("value",0);
+					userInfoDiv.find(".showReply").remove();
+				}
+			}).fail(function(){
+				alert("yes!");
+			})
+		});
+		//답글을 취소했을 때
+		$(document).on("click",".childReplyCancel", function() {
+			childReplyButton.attr("hidden", false);
+			$(this).closest(".childReply").remove();			
+		})
+		//답글버튼 눌렀을 떄
+		$(document).on("click",".modifyChildBtn", function() {
+			$("div[value=1]").remove(); // 빈답글 지우기
+			childReplyButton.attr("hidden", false); // 답글버튼 보이기
+			var oriReply = $(this).closest(".replyBtns").siblings(".userReply").find(".replyContents");
+			var replyBtns = $(this).closest(".replyBtns");
+			temporaryReply = oriReply.html();
+			oriReply.attr("contentEditable","true");
+			replyBtns.children().remove(); //버튼들 지우기~		
+			replyBtns.append(modifyChildReplySuccess);
+			replyBtns.append(modifyChildReplyCancel);
+		})
+		//답글수정취소버튼을 눌렀을 때
+		$(document).on("click",".modifyChildReplyCancel", function(){
+			var replyBtns = $(this).closest(".replyBtns");
+			var oriReply = $(this).closest(".replyBtns").siblings(".userReply").find(".replyContents");
+			console.log(temporaryReply + "##답글수정취소버튼!");
+			oriReply.html(temporaryReply);
+			oriReply.attr("contentEditable","false");			
+			replyBtns.children().remove(); //버튼들 지우기~
+			replyBtns.append(modifyChildBtn);
+			replyBtns.append(deleteChildReplyBtn);
+		});
+		//답글수정완료버튼을 눌렀을 때
+		$(document).on("click",".modifyChildReplySuccess", function(){
+			var reply_seq = $(this).closest(".childReply").attr("reply_seq");
+			var oriReply = $(this).closest(".replyBtns").siblings(".userReply").find(".replyContents");
+			var replyContents = $(this).closest(".replyBtns").siblings(".userReply").find(".replyContents").html();
+			var currentReply = oriReply.html();
+			var replyBtns = $(this).closest(".replyBtns");
+			
+			if(temporaryReply == currentReply){
+				oriReply.html(temporaryReply);
+			}else{
+				$.ajax({
+ 					type : "POST",
+ 					url : "${pageContext.request.contextPath }/feed/modifyReply",
+ 					data : {reply_seq:reply_seq,contents:replyContents}	
+ 				}).done(function(resp){
+ 					if(resp == 1){
+ 						console.log("성공!");
+ 					}else{
+ 						console.log("오류");
+ 					}
+ 				}).fail(function(){
+ 					console.log("댓글 수정 오류!!!");
+ 				})
+			}			
+			oriReply.attr("contentEditable","false");
+			$(this).closest(".replyBtns").children().remove();			
+			var reply_seq = $(this).closest(".userInfo").attr("reply_seq");
+			replyBtns.append(modifyChildBtn);
+			replyBtns.append(deleteChildReplyBtn);
+		});
+	
+	
 			$(document).on("click", "#like", function(){
 			var seq = $(this).attr("class");
 			var likeCheck = $("#likeBtn").attr("class");
@@ -827,7 +1472,7 @@ function getList(page){
 					$("#likeImg").html("<img class=\"likeBefore\" id=\"likeBtn\" src=\"${pageContext.request.contextPath }/resources/images/likeBefore.png\">");
 				})
 			}
-		})
+		});
 		
 		$(document).on("click","#bookmark", function(){
 			var seq = $(this).attr("class");
@@ -850,7 +1495,7 @@ function getList(page){
 				})
 			}
 				
-		})
+		});
 	</script>
 </body>
 </html>

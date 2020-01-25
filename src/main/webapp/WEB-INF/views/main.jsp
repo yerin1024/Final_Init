@@ -21,7 +21,15 @@
     * {
         box-sizing: border-box;
     }
-
+    
+    @media screen and (min-width: 768px) { 
+	    .modal .modal-lg:before {
+		    display: inline-block; 
+		    vertical-align: middle; 
+		    height: 100%; 
+	    } 
+    }
+    
     .modal-content {
         background-color: #fffefc;
     }
@@ -32,7 +40,8 @@
     }
 
     .modal-body {
-        padding: 100px;
+        /* padding: 100px; */
+        padding: 30px;
     }
     
     #indexModalTitle {
@@ -48,18 +57,25 @@
     
     .tab1_container{
     	width: 100%;
+
     }
 	.tab1_loginContainer{
+        display: flex;
 		width: 100%;
+        margin: 0px;
+ 
 	}
     .tab1_body {
         font-family: 'Noto Sans KR', sans-serif;
-        width: 70%;
+        width: 50%;
+
     }
     
     .tab1_logo {
-    	width: 30%;
+    	width: 50%;
     	height: 100%;
+        margin: 0px;
+        padding: 0px;
     }
 
     .tab1_body .userInput {
@@ -95,10 +111,6 @@
         border: none;
         border-radius: 8px;
     }
-	
-	#logoDiv{
- 		width: 100%; 
-	}
 	
 	#logoDiv img{
 		width: 100%;
@@ -186,10 +198,6 @@
         background-color: #0f4c81;
         color: #fffefc;
     }
-    
-    .tab4_body img{
-    	width: 100px;
-    }
 
     .tab5-1_container {
         text-align: left;
@@ -272,7 +280,52 @@
 	.inputLogin:focus {
 		background-color: transparent;
 	}  	
- 
+
+    /* All Device */
+/* 모든 해상도를 위한 공통 코드를 작성한다. 모든 해상도에서 이 코드가 실행됨. */
+
+/* Mobile Device */
+/* 768px 미만 해상도의 모바일 기기를 위한 코드를 작성한다. 모든 해상도에서 이 코드가 실행됨. 미디어 쿼리를 지원하지 않는 모바일 기기를 위해 미디어 쿼리 구문을 사용하지 않는다. */
+
+/* Tablet &amp; Desktop Device */
+@media all and (min-width:768px) {
+	/*     사용자 해상도가 768px 이상일 때 이 코드가 실행됨. 테블릿과 데스크톱의 공통 코드를 작성한다. */
+	body {
+		background-color: purple;
+	}
+}
+
+@media all and (max-width:768px) {
+	/*     사용자 해상도가 768px 이하일 때 이 코드가 실행됨. 테블릿과 데스크톱의 공통 코드를 작성한다. */
+	.section {
+		height: 150px;
+		margin: 0px;
+		padding: 0px;
+	}
+}
+/* Tablet Device */
+@media all and (max-width:1024px) {
+	/*     사용자 해상도가 768px 이상이고 1024px 이하일 때 이 코드가 실행됨. 아이패드 또는 비교적 작은 해상도의 랩탑이나 데스크톱에 대응하는 코드를 작성한다. */
+	.section {
+		height: 250px;
+		padding: 0px;
+	}
+	.profileImageBox {
+		height: 200px;
+		width: 200px;
+	}
+	.friendRequest {
+		width: 80px;
+		height: 80px;
+	}
+}
+/* Desktop Device */
+@media all and (min-width:1025px) {
+	/*     사용자 해상도가 1025px 이상일 때 이 코드가 실행됨. 1025px 이상의 랩탑 또는 데스크톱에 대응하는 코드를 작성한다. */
+	body {
+		background-color: pink;
+	}
+}
 </style>
 <body>
  <jsp:include page="/resources/script/index.jsp" flush="true"/>
@@ -296,11 +349,11 @@
                                 <div class="tab1_container">
                                     <form action="${pageContext.request.contextPath}/member/loginProc.do" method="post" id="tab1_loginForm">
                                         <div class="tab1_loginContainer">
-                                        	<div class="tab1_logo">
+                                        <div class="tab1_logo hidden-sm">
 	                                        	<div id="logoDiv">
-	                                        		<img src="${pageContext.request.contextPath}/resources/images/test03.png">
-	                                        	</div>                                        		
-                                        	</div>
+	                                        		<img src="${pageContext.request.contextPath}/resources/images/mainLogo.jpg">
+	                                        	</div>   
+                                        	 </div>
                                             <div class="tab1_body">                                            
                                             	<label for="tab1_email" class="inp">
 												  <input type="text" class="inputLogin" id="tab1_email" name="email" placeholder="&nbsp;">
@@ -320,9 +373,7 @@
 	                                            	<input type="checkbox" id="tab1_saveIdCheck" onChange="toCheckCbox();">
 	                                                <span>아이디 저장</span>
 	                                            </div>
-                                            </div>
-                                            <div class="tab1_footer">
-                                                <a href="#findPw" id="goFindPW">비밀번호 찾기 </a>
+	                                            <a href="#findPw" id="goFindPW">비밀번호 찾기 </a>
                                                 <span> | </span>
                                                 <a href="#signUp" id="goSignUp">회원가입 </a>
                                             </div>
@@ -663,6 +714,10 @@
                     doc.getElementById("tab3_userEmail").innerHTML = resp.email;
                 }else if(resp.result == "invalid"){
                 	alert("등록된 계정이 아닙니다.");
+                	email.click();
+                }else if(resp.result == "error"){
+                	alert("일시적인 오류가 발생하였습니다. 다시 시도해 주세요.");
+                	email.click();
                 }
             }).fail(function (a, b, c) {
                 console.log(a);
