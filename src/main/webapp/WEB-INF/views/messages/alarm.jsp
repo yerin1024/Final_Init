@@ -97,6 +97,18 @@
 	background-color: white;
     float: right
 }
+#noAlarmExist{
+	text-align: center;
+	height: 290px;
+	line-height: 300px;
+}
+.alarmNotExist{
+            border: 1px solid red;
+            text-align: center;
+            height: 290px;
+            line-height: 300px;
+            color: #9b9b9b;
+        }
 </style>
 </head>
 <body>
@@ -119,6 +131,7 @@
           
 		<div class="a_sector">
 <!--           ------------------------------------------------->
+
 <!--           ------------------------------------------------->
 		</div>
     </div>
@@ -140,6 +153,10 @@
 				dataType: "json"
 			}).done(function(resp){
 	        	 $(".a_sector").children().remove();
+	        	
+	        	 if(resp.length <1){
+	        		 $(".a_sector").append("<div id='noAlarmExist'>새로운 알림이 없습니다.</div>");
+	        	 }
 	        	 
 	        	 for(var i=0; i<resp.length; i++){
 	        		 
@@ -167,14 +184,14 @@
 		        		 if(resp[i].alarm_check == 'N'){
 		        			 $(".a_sector").append("<div class='a_pre_line "+seqId+"' style='background-color:#e9f1f5; color:black;'>"
 			        			 		+ "<div class='a_pre_pf'><img src='/images/reply.png' class='a_pre_pf_img_nr'></div>"
-			        			 		+ "<div class='a_pre_text'><b>" + resp[i].email_r +" </b>"+resp[i].contents+"</div>"
+			        			 		+ "<div class='a_pre_text'><b>" + resp[i].nickname_m +" </b>"+resp[i].contents+"</div>"
 			        			 		+ "<div class='a_pre_time'>"+ resp[i].reg_date +"</div>"
 			        			 		+"<button class=delAlarm value="+seq+" style='background-color:#e9f1f5; color:black;'>X</button></div>");
 		        			 
 		        		 }else if(resp[i].alarm_check == 'Y'){
 		        			 $(".a_sector").append("<div class='a_pre_line "+seqId+"'>"
 			        			 		+ "<div class='a_pre_pf'><img src='/images/reply.png' class='a_pre_pf_img_nr'></div>"
-			        			 		+ "<div class='a_pre_text'><b>" + resp[i].email_r +" </b>"+resp[i].contents+"</div>"
+			        			 		+ "<div class='a_pre_text'><b>" + resp[i].nickname_m +" </b>"+resp[i].contents+"</div>"
 			        			 		+ "<div class='a_pre_time'>"+ resp[i].reg_date +"</div>"
 			        			 		+"<button class=delAlarm value="+seq+">X</button></div>");
 		        		 }
@@ -188,7 +205,6 @@
 			        			 		+ "<div class='a_pre_text'>" + resp[i].nickname_m +"님의 친구 요청이 있습니다. </div>"
 			        			 		+ "<div class='a_pre_time'>"+ resp[i].reg_date +"</div>"
 			        			 		+"<button class=delAlarm value="+seq+" style='background-color:#e9f1f5; color:black;'>X</button></div>");
-		        			 
 		        		 }else if(resp[i].alarm_check == 'Y'){
 		        			 $(".a_sector").append("<div class='a_pre_line "+seqId+"'>"
 			        			 		+ "<div class='a_pre_pf'><img src='/images/friendAlarm.png' class='a_pre_pf_img_nr'></div>"

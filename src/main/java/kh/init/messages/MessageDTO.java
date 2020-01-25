@@ -2,6 +2,7 @@ package kh.init.messages;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class MessageDTO {
 	private int msg_seq;
@@ -18,11 +19,12 @@ public class MessageDTO {
 	private String nickname;
 	private String profile_img;
 	private String email;
+	private String format_date;
 	
 	public MessageDTO() {}
 	public MessageDTO(int msg_seq, String from_id, String to_id, String contents, Timestamp write_date,
 			String receive_read, int unread_count, String my_id, String fr_id, String nickname, String profile_img,
-			String email) {
+			String email, String format_date) {
 		super();
 		this.msg_seq = msg_seq;
 		this.from_id = from_id;
@@ -36,6 +38,7 @@ public class MessageDTO {
 		this.nickname = nickname;
 		this.profile_img = profile_img;
 		this.email = email;
+		this.format_date = format_date;
 	}
 
 	public int getMsg_seq() {
@@ -110,6 +113,18 @@ public class MessageDTO {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	
+	public void setFormat_date(Timestamp write_date) {
+		Timestamp ts = write_date;
+		Date date = new Date();
+		date.setTime(ts.getTime());
+		String format_date = new SimpleDateFormat("yyyyMMdd").format(date);
+		this.format_date = format_date;
+	}
+	public String getFormat_date() {
+		return format_date;
+	}
+	
 	public String getFormedDate() {
 		SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss");
 		return sdf.format(this.write_date.getTime());

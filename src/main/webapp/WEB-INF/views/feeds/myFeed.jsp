@@ -9,6 +9,8 @@
 
 <title></title>
 <link rel="stylesheet" href="/resources/css/nav.css">
+<link rel="stylesheet" href="/resources/css/msg.css"> 
+<link rel="stylesheet" href="/resources/css/alr.css"> 
 <script src="https://code.jquery.com/jquery-3.4.1.js"
 	type="text/javascript"></script>
 <link rel="stylesheet"
@@ -808,6 +810,8 @@ button{
 
 <body>
     <jsp:include page="/resources/jsp/nav.jsp" />
+    <jsp:include page="/resources/jsp/alr.jsp"/>
+	<jsp:include page="/resources/jsp/msg.jsp"/>
 	<div class="container-fluid">
 		<div class="profile">
 			<c:choose>
