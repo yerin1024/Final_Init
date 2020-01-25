@@ -69,6 +69,7 @@ public class FriendService {
 	    return result;
 	}
 	
+	
 	@Transactional("txManager")
 	public int cutFriendship(String my_id, String fr_id) throws Exception{
 		System.out.println("친구 끊기 svc 도착");
