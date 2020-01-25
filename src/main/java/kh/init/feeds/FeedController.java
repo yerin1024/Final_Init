@@ -123,11 +123,11 @@ public class FeedController {
 	
 	@RequestMapping(value = "/myScrapFeed", produces = "application/json; charset=UTF-8")
 	@ResponseBody
-	public String myScrapFeed(String page) {
+	public String myScrapFeed(String email) {
 		System.out.println("myScrapFeed 도착");
-		int ipage = Integer.parseInt(page);
+		int ipage = 1;
 		System.out.println("ipage :  "+ipage);
-		String email = ((MemberDTO)session.getAttribute("loginInfo")).getEmail();
+		
 		System.out.println("로그인 세션 값 확인 : " + email);
 		//로그인 세션 테스트 코드 끝
 
