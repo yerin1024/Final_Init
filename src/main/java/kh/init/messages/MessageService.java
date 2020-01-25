@@ -42,9 +42,15 @@ public class MessageService {
 	}
 	
 	// 미리 보기 목록
-	@Transactional("txManager")
+	@Transactional("txManager")		// from_id: 나		to_id: 상대
 	public MessageDTO previewMsg(String from_id, String to_id) {
 		return dao.previewMsg(from_id, to_id);
+	}
+	
+	// 미리 보기에 넣을 상대방
+	@Transactional("txManager")
+	public List<MessageDTO> selectMsgUser(String email) {
+		return dao.selectMsgUser(email);
 	}
 	
 	// 읽지 않은 메시지 수

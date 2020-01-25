@@ -114,6 +114,13 @@
 	padding-right: 5px;
 	padding-top: 5px;
 }
+.a_pre_text:hover{
+	cursor: pointer;
+}
+.a_pre_line:hover{
+	background-color: #ebebeb;
+	transition-duration: 0.2s;
+}
 
 .a_pre_time {
 	/*            border: 1px solid #764b91;*/
@@ -126,20 +133,6 @@
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
-}
-
-.a_pre_text {
-	/*            border: 1px solid #4500ff;*/
-	float: left;
-	width: 250px;
-	line-height: 40px;
-	font-size: 13px;
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	padding-left: 5px;
-	padding-right: 5px;
-	padding-top: 5px;
 }
 
 .delAlarm {
