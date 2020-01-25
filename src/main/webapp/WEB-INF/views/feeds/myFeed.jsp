@@ -329,7 +329,7 @@
 }
 .reply {
 		border:1px solid black;
-        height: 100%;
+        height: 90%;
         padding: 16px;
         overflow-y: scroll;
 }
@@ -400,6 +400,7 @@
 .writeReplyBox{
 	display:flex;
     width: 100%;
+    height:10%;
 }
 .modal-title{
 	line-height: 50px;
@@ -409,7 +410,7 @@
     margin: 0px 20px;
     min-height: 50px;
     font-size: 16px;
-    width: 100%;
+    width: 400px;
     border-radius: 16px;
     border: 1px solid rgb(239, 239, 239);
     padding: 0px 10px;
@@ -469,14 +470,10 @@
 }
 .detailView_footer{
     display: flex;
-    padding: 1rem 1rem;
-	
+    padding: 1rem 1rem;	
 }
 .modal-title{
 	margin:auto;
-}
-.modal-content{	
-    border-radius: 30px;
 }
 .replyBtns>button, .replyBtn{
 	background: 0 0;
@@ -493,6 +490,9 @@
     border: 1px solid #999;
     padding: 5px 7px;
     border-radius: 8px;
+}
+.myProfile{	
+    margin: 5px 10px;
 }
 /* All Device */
 /* 모든 해상도를 위한 공통 코드를 작성한다. 모든 해상도에서 이 코드가 실행됨. */
@@ -981,7 +981,7 @@
 	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="margin-top: 60px;">
 	  <div class="modal-dialog" role="document">
 	    <div class="modal-content">
-	      <div class="modal-header">
+	      <div class="detailView_header">
 	         <span class="writerProfile"><img class="userProfileImg" src="${loginInfo.profile_img }" alt=""></span>
 	        <h5 class="modal-title" id="exampleModalLabel">DETAIL VIEW</h5>
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -999,17 +999,15 @@
                      		<span class="writerProfileID">asdsadas</span>
                     </div>                     
                 </div>
-                <div class="modal-btns"></div>
-            </div>
-        </div>
-	      <div class="modal-header">
-				<div class="writeReplyBox">					
+                <div class="writeReplyBox">					
 	         		<span class="myProfile"><img class="userProfileImg" src="${loginInfo.profile_img }" alt=""></span>
 	       			 <h5 class="modal-title" id="exampleModalLabel">${loginInfo.nickname }</h5>
 	       			 <div id="writeReply" contenteditable="true"></div>
 	       			 <button type="button" class="replyBtn" onclick="replyBtnOnclick('${loginInfo.email}');">등록</button>
 				</div>
-	      </div>
+                <div class="modal-btns"></div>
+            </div>
+        </div>
 	    </div>
 	  </div>
 	  </div>
