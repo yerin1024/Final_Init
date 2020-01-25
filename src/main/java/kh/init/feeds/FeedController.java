@@ -395,7 +395,8 @@ public class FeedController {
 			replyList = service.viewAllReply(feed_seq);
 			System.out.println("Email : "+dto.getEmail());
 			System.out.println("memberDTO : "+mservice.getMemberDTO(dto.getEmail()));
-//			obj.addProperty("writerProfile", g.toJson((mservice.getMemberDTO(dto.getEmail())).getProfile_img()));
+			obj.addProperty("writerProfile", g.toJson((mservice.getMemberDTO(dto.getEmail())).getProfile_img()));
+			obj.addProperty("writer", g.toJson((mservice.getMemberDTO(dto.getEmail())).getNickname()));
 			obj.addProperty("likeCheck", g.toJson(likeCheck));
 			obj.addProperty("bookmarkCheck", g.toJson(bookmarkCheck));
 			obj.addProperty("replyList",  g.toJson(replyList));

@@ -275,13 +275,20 @@
 			}).done(function(data){
 				$(".reply").children().remove(); // 클릭할때마다 다른 게시글에 댓글지우기 
 				console.log(data);
-				var writerProfile = data.writerProfile;
+				var writerProfile = JSON.parse(data.writerProfile);
+				var writer = JSON.parse(data.writer);
 				var likeCheck = data.likeCheck;
 				var bookmarkCheck = data.bookmarkCheck;
 				var mediaList = JSON.parse(data.media);
 				var replyList = JSON.parse(data.replyList);
 				var dto = JSON.parse(data.dto);
 				console.log(dto.contents);
+				
+				console.log("writer : "  + writer);
+				console.log("writerImg : " + writerProfile);
+				
+				$(".writer").html(writer);
+				$(".userProfileImg").attr("src", writerProfile);
 				//디테일뷰 미디어
 				if(mediaList.length>0){ //미디어가 존재하므로 캐러셀 만들어줌
 					console.log("캐러셀 시작");
@@ -391,6 +398,7 @@
 				//디테일뷰 글
 				var textRow = $("<span class='text'></span>");
 				textRow.append(dto.contents);
+				$("#exampleModalLabel").html(dto.title);
 				$(".writerInfo").append(textRow);
 				//디테일뷰 좋아요, 스크랩, 수정, 삭제 버튼
 				//좋아요버튼
@@ -423,7 +431,7 @@
 				modalBtns.addClass("modal-btns");
 				modalBtns.append(likeA);
 				modalBtns.append(bookmarkA);
-				$(".modal-body1").append(modalBtns);
+				$(".footer-btns").append(modalBtns);
 				$(".writerProfile").html("<img src="+writerProfile+" class='writerProfileImg'>");
 				
 			})
