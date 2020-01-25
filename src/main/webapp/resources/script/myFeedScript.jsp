@@ -363,8 +363,9 @@
 					var dtoContents = $("<div class='dtoContents' style='display:inline-block;border:2px solid red;min-height:100px;width: 100%;padding-left: 10px;padding-top: 10px;padding-right: 10px;word-break: break-all;'></div>");
 					dtoContents.append(dto.contents);
 					$(".reply").append(dtoContents);
-					$(".reply").append(replyhtml);
+					
 				}
+				$(".reply").append(replyhtml);
 
 				for(var i=0; i<replyList.length; i++){
 					if(replyList[i].parent != 0){
