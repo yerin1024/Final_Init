@@ -252,7 +252,7 @@
 				}
 			};
 		$("#register").on("click", function(){
-			var regex = /(\w+)/;
+			var regex = /([ㄱ-ㅎㅏ-ㅣ가-히A-Za-z0-9])/;
 			var title = $("#title").val();
 			if(title.match(regex)==null){
 				alert("제목을 입력하세요");
