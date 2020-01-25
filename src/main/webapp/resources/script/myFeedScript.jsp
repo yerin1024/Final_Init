@@ -233,7 +233,6 @@
 			//답글버튼추가
 			var replyBtns = $("<div></div>");
 			replyBtns.addClass("replyBtns");			
-
 			
 			//버튼DIV 추가
 			replyBtns.append(registerReplyBtn);

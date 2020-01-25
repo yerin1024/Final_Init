@@ -165,8 +165,7 @@ img {
 			   	html += "</div>"
 				$("."+reply_seq+"").after(html);
 			})
-		})
-		
+		})		
 		
 		$(document).on("click",".replyDeleteBtn" ,function() {
 			var reply_seq = $(this).val();    
@@ -303,11 +302,7 @@ img {
 					<div class="row media">
 					${media }
 					</div>
-				</c:otherwise>
-				
-				
-				
-				
+				</c:otherwise>				
 			</c:choose>
 			<div class="row">
 				<div class="col-4 reply">${dto.contents }</div>
