@@ -20,80 +20,116 @@
 <script
 	src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 <style>
-
-	body{
-		background-color:white;
-	}
-	.feed {
-		width: 20vw;
-		height: 20vw;
-		min-height: 150px;
-		min-width: 150px;
-		border: 1px solid red;
-	}
-	
-	.cover {
-		width: 100%;
-		height: 100%;
-	}
-	#contents {
-	border: 2px solid black;
-	width: 60vw;
-	min-width: 470px;
+#wrapper {
 	margin: auto;
-	text-align: center;
-	}
+	padding: 60px 20px 0;
+}
+
+#search {
+   margin: auto;
+   text-align: center;
+}
+
+#contents {
+/* 	width:60vw; */
+	margin:0px;
+/*     margin: auto; */
+    text-align: center;
+
+}
+.row{
+	min-width:460px;
+	margin-bottom:15px;
+}
+/* .title{ */
+/*    display:inline-block; */
+/*    position:absolute; */
+/*    top:50%; */
+/*    left:50%; */
+/*    transform: translate(-50%, -50%); */
+/* } */
+/* .title{ */
+/* 	display:inline-block; */
+/* 	position:absolute;top:50%;left:50%;transform: translate(-50%, -50%); */
+/* 	 word-break: break-all; */
+/*     white-space: normal; */
+/* } */
+.parent([.title]){
+	border:1px solid red;
+}
+.btn-primary{
+   width:100%;
+   height:100%;
+   min-width:150px;
+	min-height:150px;
+   border-color:white;
+   background-color:white;
+   padding:0px;
+   color:black;
+}
+#likeBtn, #bookmarkBtn{
+   width:20px;
+   height:20px;
+}
 #carouselExampleIndicators{
-	width:100%;
+   width:100%;
 }
 .carousel-item {
-	margin: auto;
-	text-align: center;
+   margin: auto;
+   width:10px;
+   text-align: center;
 }
 
 .carousel-inner {
-	width: 100%;
+   width: 400px;
 }
 
 .carousel-item * {
-	width: 200px;
-	height: 200px;
+   width: 100%;
+   height: 200px;
+}
+#writerProfile{
+   width:50px;
+   height:50px;
 }
 
-	#feedList{
-		border:2px solid red;
-	}
-	#feedList {
-	border: 2px solid red;
+#keyword{
+	width:300px;
 }
-	html, body {
-	background-color: #1D4E89;
-
-	margin: 0px;
-	padding: 0px;
-	height: 2000px;
+.nickname{
+	vertical-align:middle;
+	line-height:60px;
+	font-size:30px;
+	font-weight:600;
+	text-align:left;
 }
 
-* {
-	box-sizing: border-box;
+
+.fRow:hover{
+	background-color:#fafafa;
+}
+.nicknameA{
+	color:#48689a;
+}
+.nicknameA:hover{
+	text-decoration:none;
 }
 
 .cover {
-	border: 1px solid black;
 	width: 100%;
 	height: 100%;
 }
 
-.feed {
-	width: 20vw;
-      height: 20vw;
-      min-height: 150px;
-      min-width: 150px;
-	
+.feed{
+	min-width:150px;
+	min-height: 150px;
+	max-height:200px;
+	height:26vw;
+	width:25vw;
 }
 #likeBtn, #bookmarkBtn{
-   width:50px;
-   height:50px;
+   width:20px;
+   height:20px;
 }
 
 .container-fluid {
@@ -104,19 +140,19 @@
 }
 #carouselExampleIndicators{
    width:100%;
-}
-.carousel-item {
-   margin: auto;
-   text-align: center;
+   height:100%;
 }
 
-.carousel-inner {
-   width: 100%;
+.carousel-item{
+	margin:auto;	
+	width:100%;
+	height:100%;
+	text-align:center;
 }
-
-.carousel-item * {
-   width: 200px;
-   height: 200px;
+.carousel-inner{
+	width:100%;
+	height:100%;
+	margin:auto;
 }
 
 .wrapper {
@@ -316,16 +352,13 @@
     max-width: 1200px;
     margin: 1.75rem auto;
 }
-.row{
-	margin:0px;
-}
 .modal-main{
     display: flex;
     height: 650px;
 }
 .carousel-item>img{
-	width:500px;
-	height:500px;
+	width:100%;
+	height:100%;
 }
 .reply {
 		border:1px solid black;
@@ -444,9 +477,7 @@
 .title{
 	width:45%;
 }
-.media{
-	width:100%;
-}
+
 .childContentsBox{
     width: 350px;
 }
@@ -496,6 +527,7 @@
     padding: 5px 7px;
     border-radius: 8px;
 }
+
 .myProfile{	
     margin: 5px 10px;
 }
@@ -741,21 +773,6 @@
 	            }
 	            $("#feeds").append(data); 
 	            index++;
-//	          for(i; i<end; i++){
-//	             console.log(i);
-//	              var data = $("<div class='col-4 feed'></div>");
-//	              var a = $("<a href='/feed/detailView?feed_seqS="+list[index].feed_seq+"'>");
-//	              a.append(cover[index]);
-//	              data.append(a);
-//	              if(i%3==1){
-//	                 data.before("<div class='row' style='margin:0px'>")
-//	                 console.log(data);
-//	              }else if(i%3==0){
-//	                 data.after("</div>");
-//	              }
-//	              $("#feeds").append(data);
-//	              index++;
-//	          }
 	      })
 	   }
 	 function getScrapList(page){
@@ -904,26 +921,29 @@
 		<div class="wrapper">
 			
 			<div id="myFeed">
-         <c:choose>
-            <c:when test="${fn:length(list) ==0}">
-            	게시물이 없습니다.
-            </c:when>
-            <c:otherwise>
-            <div id="feeds">
-                  <c:forEach items="${list }" var="feed" varStatus="status">
-                     <c:if test="${status.count mod 3==1}">
-                        <div class="row" style="margin: 0px">
-                     </c:if>
-                     <div class="col-4 feed">
-                        <a class="btn btn-primary1" data-toggle="modal" data-target="#exampleModal" href="#" data-id="${feed.feed_seq }">${cover[status.count-1] }</a>
-                     </div>
-                     <c:if test="${status.count mod 3==0}">
-                        </div>
-                     </c:if>
-                  </c:forEach>
-                  </div>
-            </c:otherwise>
-         </c:choose>
+				<c:choose>
+					<c:when test="${fn:length(list) <1}">
+					게시물이 없습니다.
+					</c:when>
+					<c:otherwise>
+						<div id="feeds">
+							<c:forEach items="${list }" var="feed" varStatus="status">
+								<c:if test="${status.count mod 3==1}">
+									<div class="row" >
+								</c:if>
+								
+								<div class="col-4 feed">
+									<a class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" href="#" data-id="${feed.feed_seq }" style="min-height: 150px;">${cover[status.count-1] }</a>
+								</div>
+								
+								<c:if test="${status.count mod 3==0}">
+
+									</div>
+								</c:if>
+							</c:forEach>
+						</div>
+					</c:otherwise>
+				</c:choose>
           </div>
          </div>
 	<!-- 친구요청 모달 영역 -->
@@ -1421,8 +1441,7 @@
                     console.log("ajax call went wrong:"
                         + request.responseText);
                 }
-            });
-            
+            })
 
         })
         $('#ingReq').on('click', function () {
