@@ -329,7 +329,7 @@
 }
 .reply {
 		border:1px solid black;
-        height: 100%;
+        height: 90%;
         padding: 16px;
         overflow-y: scroll;
 }
@@ -400,17 +400,24 @@
 .writeReplyBox{
 	display:flex;
     width: 100%;
+    height:10%;
 }
 .modal-title{
 	line-height: 50px;
 }
 #writeReply{	
-    width: 100%;
-    line-height:50px;
+    line-height:80px;
     margin: 0px 20px;
+    min-height: 50px;
+    font-size: 16px;
+    width: 400px;
+    border-radius: 16px;
+    border: 1px solid rgb(239, 239, 239);
+    padding: 0px 10px;
+    
 }
 .replyBtns{
-	margin:20px 0px;
+	margin:20px 20px;
 }
 .replyContents{	
     background: transparent;
@@ -463,16 +470,12 @@
 }
 .detailView_footer{
     display: flex;
-    padding: 1rem 1rem;
-	
+    padding: 1rem 1rem;	
 }
 .modal-title{
 	margin:auto;
 }
-.modal-content{	
-    border-radius: 30px;
-}
-button{
+.replyBtns>button, .replyBtn{
 	background: 0 0;
     border: 0;
     cursor: pointer;
@@ -480,10 +483,16 @@ button{
     font-size: 12px;
     font-weight: 600;
     line-height: 14px;
-    margin-right: 16px;
+    margin-right: 8px;
     padding: 0;
     color: #999;
     min-width: 30px;
+    border: 1px solid #999;
+    padding: 5px 7px;
+    border-radius: 8px;
+}
+.myProfile{	
+    margin: 5px 10px;
 }
 /* All Device */
 /* 모든 해상도를 위한 공통 코드를 작성한다. 모든 해상도에서 이 코드가 실행됨. */
@@ -599,6 +608,7 @@ button{
 				url : "${pageContext.request.contextPath}/feed/myScrapFeed",
 				type : "POST",
 				data : {
+					
 					"email" : myMail
 				},
 				dataType : "json",
@@ -804,7 +814,7 @@ button{
 //	          }
 	      })
 	   }
-
+	}
 </script>
 </head>
 
@@ -971,7 +981,7 @@ button{
 	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="margin-top: 60px;">
 	  <div class="modal-dialog" role="document">
 	    <div class="modal-content">
-	      <div class="modal-header">
+	      <div class="detailView_header">
 	         <span class="writerProfile"><img class="userProfileImg" src="${loginInfo.profile_img }" alt=""></span>
 	        <h5 class="modal-title" id="exampleModalLabel">DETAIL VIEW</h5>
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -989,17 +999,15 @@ button{
                      		<span class="writerProfileID">asdsadas</span>
                     </div>                     
                 </div>
-                <div class="modal-btns"></div>
-            </div>
-        </div>
-	      <div class="modal-header">
-				<div class="writeReplyBox">					
+                <div class="writeReplyBox">					
 	         		<span class="myProfile"><img class="userProfileImg" src="${loginInfo.profile_img }" alt=""></span>
 	       			 <h5 class="modal-title" id="exampleModalLabel">${loginInfo.nickname }</h5>
 	       			 <div id="writeReply" contenteditable="true"></div>
 	       			 <button type="button" class="replyBtn" onclick="replyBtnOnclick('${loginInfo.email}');">등록</button>
 				</div>
-	      </div>
+                <div class="modal-btns"></div>
+            </div>
+        </div>
 	    </div>
 	  </div>
 	  </div>
@@ -1016,7 +1024,6 @@ button{
 						aria-label="Close">
 						<span aria-hidden="true">×</span>
 					</button>
-
 				</div>
 
 				<div class="modal-body1">
@@ -1389,7 +1396,7 @@ button{
                         $(".btn-lg").remove();
                         $(".btnText").remove();
                         $(".profileLayoutLeft").append("<button class=btn btn-primary btn-lg >＋</button><div class=btnText>친구요청중</div>");
-                        
+                        location.reload();
                     }else if(res == 'alreadyFriend'){
                     	alert("이미 친구입니다.");
                     }else if(res == 'alreadyApply'){
@@ -1410,7 +1417,46 @@ button{
             });
             
 
-        });
+        })
+        $('#ingReq').on('click', function () {
+			
+            
+            
+            $.ajax({
+                url: "${pageContext.request.contextPath}/friend/redoFndRequest?yr_id=${mvo.email}",
+                type: "POST",
+                dataType: "text",
+                data: {
+                   
+                },
+                success: function (res) {
+                	
+                	console.log(res);
+                    if(res == 'ok'){
+                        alert("성공적으로 친구요청이 취소 되었습니다.");
+                        $(".btn-lg").remove();
+                        $(".btnText").remove();
+                        $(".profileLayoutLeft").append("<button class=btn btn-primary btn-lg id=openModalBtn >＋</button><div class=btnText>친구요청</div>");
+                       location.reload();
+                    }else{
+                    	
+                    }
+                    
+                    
+                    
+                    //친구 검색
+                },
+                error: function (
+                    request,
+                    status,
+                    error) {
+                    console.log("ajax call went wrong:"
+                        + request.responseText);
+                }
+            });
+            
+
+        })
 		
 		</script>
    	<jsp:include page="/resources/script/myFeedScript.jsp" />

@@ -95,8 +95,11 @@ public class MemberController {
 		System.out.println("사용자 이메일  : " + email);
 		JsonObject obj = new JsonObject();
 		
-		if(service.findPw(email) == "invalid") {
+		String result = service.findPw(email);
+		if(result == "invalid") {
 			obj.addProperty("result", "invalid");
+		}else if(result == "error occured"){
+			obj.addProperty("result", "error");
 		}else {
 			obj.addProperty("result", "success");
 			obj.addProperty("email", email);
@@ -161,7 +164,7 @@ public class MemberController {
 			if(result> 0) {
 				session.invalidate();
 				System.out.println("회원탈퇴 성공하셨슴당.");
-				return "home";
+				return "feeds/myFeed";
 			}else {
 				System.out.println("회원탈퇴 실패하셨슴당.");
 				return "error";
@@ -198,7 +201,7 @@ public class MemberController {
 		}catch(Exception e) {
 			e.printStackTrace();
 			System.out.println("입력실패.");
-			return "redirect:home";
+			return "redirect:feeds/myFeed";
 		}
 	} 
 	
@@ -237,7 +240,7 @@ public class MemberController {
 			if(result> 0) {
 
 				System.out.println("정보변경에 성공하셨슴당.");
-				return "home";
+				return "feeds/myFeed";
 			}else {
 				System.out.println("정보변경에 실패하셨슴당.");
 				return "error";
