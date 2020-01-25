@@ -161,7 +161,7 @@ public class MemberController {
 			if(result> 0) {
 				session.invalidate();
 				System.out.println("회원탈퇴 성공하셨슴당.");
-				return "feeds/myFeed";
+				return "main";
 			}else {
 				System.out.println("회원탈퇴 실패하셨슴당.");
 				return "error";
@@ -171,16 +171,17 @@ public class MemberController {
 		}catch(Exception e) {
 			e.printStackTrace();
 			System.out.println("입력실패.");
-			return "home";
+			return "error";
 		}
 	}
 
 	@RequestMapping("/changeMyInfo") //회원 정보 수정하기
-	public String changeInfo(MemberDTO dto) {
+	public String changeInfo(MemberDTO dto, Model model) {
 		System.out.println("회원 정보 수정 CON 도착.");
+		MemberDTO mDto = (MemberDTO)session.getAttribute("loginInfo");
 		try {
 			int result = 0;
-			MemberDTO mDto = (MemberDTO)session.getAttribute("loginInfo");
+			model.addAttribute("email", mDto.getEmail());
 			if(mDto.getEmail() != null) {
 				result = service.changeMyInfoService(mDto.getEmail(), dto);
 			}else {
@@ -190,7 +191,7 @@ public class MemberController {
 			if(result > 0) {
 
 				System.out.println("정보변경에 성공하셨슴당.");
-				return "home";
+				return "redirect:feeds/myFeed";
 			}else {
 				System.out.println("정보변경에 실패하셨슴당.");
 				return "error";
@@ -221,10 +222,13 @@ public class MemberController {
 	}
 
 	@RequestMapping("/changeProfile") //프로필 바꿔버리기
-	public String changeMyProfile(MemberDTO dto, MultipartFile profileImg) {
+	public String changeMyProfile(MemberDTO dto, MultipartFile profileImg,Model model) {
 		System.out.println("회원 정보 수정 CON 도착.");
 		String path = session.getServletContext().getRealPath("files");
 		MemberDTO mDto = (MemberDTO)session.getAttribute("loginInfo");
+		System.out.println("이메일는 "+mDto.getEmail());
+		String emailResult = mDto.getEmail().replace("@", "%40");
+		model.addAttribute("email", emailResult);
 		int result = 0;
 		try {
 			if(profileImg.getOriginalFilename() == "") {
@@ -237,7 +241,7 @@ public class MemberController {
 			if(result> 0) {
 
 				System.out.println("정보변경에 성공하셨슴당.");
-				return "feeds/myFeed";
+				return "redirect:feeds/myFeed";
 			}else {
 				System.out.println("정보변경에 실패하셨슴당.");
 				return "error";
@@ -247,7 +251,7 @@ public class MemberController {
 		}catch(Exception e) {
 			e.printStackTrace();
 			System.out.println("입력실패.");
-			return "redirect:home";
+			return "redirect:feeds/myFeed";
 		}
 	}
 
