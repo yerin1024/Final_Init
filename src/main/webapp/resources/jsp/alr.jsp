@@ -52,6 +52,14 @@
 		        	 if(resp[i].type == 'L'){
 		        		 var seq = resp[i].alarm_seq;
 		        		 var seqId = "alarmCont"+resp[i].alarm_seq;
+		        		 
+		        		 if(resp[i].liker=="${loginInfo.email}"){
+		        			 $(".a_sector").append("<div class='a_pre_line_none' style='display:none;'>"
+			        			 		+ "<div class='a_pre_pf'><img src='/images/reply.png' class='a_pre_pf_img_nr'></div>"
+			        			 		+ "<div class='a_pre_text'><b></b></div>"
+			        			 		+ "<div class='a_pre_time'></div>"
+			        			 		+"<button class=delAlarm>X</button></div>");
+		        		 }
 		             
 		        		 if(resp[i].alarm_check == 'N'){
 		        			 $(".a_sector").append("<div class='a_pre_line "+seqId+"' style='background-color:#e9f1f5; color:black;'>"
@@ -81,14 +89,16 @@
 		        		 if(resp[i].alarm_check == 'N'){
 		        			 $(".a_sector").append("<div class='a_pre_line "+seqId+"' style='background-color:#e9f1f5; color:black;'>"
 			        			 		+ "<div class='a_pre_pf'><img src='/images/reply.png' class='a_pre_pf_img_nr'></div>"
-			        			 		+ "<div class='a_pre_text'><b>" + resp[i].nickname +" </b>"+resp[i].contents+"</div>"
+			        			 		+ "<div class='a_pre_text'><div class='inner_profile'><img src='"+resp[i].profile_img+"' class='innerImg'></div>"
+			        			 		+"<b>" + resp[i].nickname +" </b>"+resp[i].contents+"</div>"
 			        			 		+ "<div class='a_pre_time'>"+ resp[i].reg_date +"</div>"
 			        			 		+"<button class=delAlarm value="+seq+" style='background-color:#e9f1f5; color:black;'>X</button></div>");
 		        			 
 		        		 }else if(resp[i].alarm_check == 'Y'){
 		        			 $(".a_sector").append("<div class='a_pre_line "+seqId+"'>"
 			        			 		+ "<div class='a_pre_pf'><img src='/images/reply.png' class='a_pre_pf_img_nr'></div>"
-			        			 		+ "<div class='a_pre_text'><b>" + resp[i].nickname +" </b>"+resp[i].contents+"</div>"
+			        			 		+ "<div class='a_pre_text'><div class='inner_profile'><img src='"+resp[i].profile_img+"' class='innerImg'></div>"
+			        			 		+"<b>" + resp[i].nickname +" </b>"+resp[i].contents+"</div>"
 			        			 		+ "<div class='a_pre_time'>"+ resp[i].reg_date +"</div>"
 			        			 		+"<button class=delAlarm value="+seq+">X</button></div>");
 		        		 }

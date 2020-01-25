@@ -443,16 +443,6 @@ ul {
 	margin-left: 10px;
 }
 
-#noFriendExist {
-	/*        border: 1px solid red;*/
-	position: absolute;
-	left: 50px;
-	top: 150px;
-	color: #656565;
-	height: 100px;
-	text-align: center;
-}
-
 #searchTitle {
 	/*            border: 1px solid blue;*/
 	height: 30px;
@@ -935,13 +925,13 @@ ul {
 	}
 
 	/* 친구를 만들어 보세요 ------------------------------------------------------- */
-	#noFriendExist {
-		/*            border: 1px solid green;*/
-		position: static;
-		height: 100px;
-		text-align: center;
-		margin-top: 170px;
-	}
+/* 	#noFriendExist { */
+/* 		           border: 1px solid green; */
+
+/* 		height: 100px; */
+/* 		text-align: center; */
+/* 		margin-top: 170px; */
+/* 	} */
 	#noMessageExist {
 		/*            border: 1px solid green;*/
 		height: 400px;
@@ -950,12 +940,6 @@ ul {
 }
 
 /* no exist new ---------------------------- */
-.alarmNotExist {
-	text-align: center;
-	height: 290px;
-	line-height: 300px;
-	color: #9b9b9b;
-}
 
 #noFriendExistContainer {
 	
