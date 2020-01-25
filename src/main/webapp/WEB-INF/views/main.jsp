@@ -186,6 +186,10 @@
         background-color: #0f4c81;
         color: #fffefc;
     }
+    
+    .tab4_body img{
+    	width: 100px;
+    }
 
     .tab5-1_container {
         text-align: left;
@@ -294,7 +298,7 @@
                                         <div class="tab1_loginContainer">
                                         	<div class="tab1_logo">
 	                                        	<div id="logoDiv">
-	                                        		<img src="resources/images/test03.png">
+	                                        		<img src="${pageContext.request.contextPath}/resources/images/test03.png">
 	                                        	</div>                                        		
                                         	</div>
                                             <div class="tab1_body">                                            
@@ -311,7 +315,7 @@
 												</label>
 												<br>
                                                 <button type="button" id="tab1_loginBtn" onclick="toLogin();">로그인</button><br>
-                                                <img src="resources/images/kakao_login_large.png" id="tab1_kakaoLoginBtn"><br>
+                                                <img src="${pageContext.request.contextPath}/resources/images/kakao_login_large.png" id="tab1_kakaoLoginBtn"><br>
 	                                            <div class="saveId">
 	                                            	<input type="checkbox" id="tab1_saveIdCheck" onChange="toCheckCbox();">
 	                                                <span>아이디 저장</span>
@@ -361,7 +365,7 @@
                                     <div class="tab4_body">
                                     	<div class="tab4_signupBtnBox">
 											<button type="button" id="tab5-1_generalSignup">일반 회원가입</button>
-											<img src="resources/images/kakaoSignup_btn.png" id="tab5-2_kakaoLoginBtn"><br>
+											<img src="${pageContext.request.contextPath}/resources/images/kakaoSignup_btn.png" id="tab5-2_kakaoLoginBtn" style=""><br>
                                     	</div>
                                         <div class="tab4_btnBox">
                                             <button type="button" id="tab4_goMain">이전</button>
@@ -454,7 +458,7 @@
                                             <!-- 프로필 사진 -->
                                             <label>프로필 사진</label><br>
                                             <p class="advise" id="adviseProfile" readonly>*프로필 사진 미등록시 기본이미지로 등록됩니다.</p>
-                                            <img src="resources/images/default_profile_img.png" id="tab5-1_setProfile" style="width: 50px;">
+                                            <img src="${pageContext.request.contextPath}/resources/images/default_profile_img.png" id="tab5-1_setProfile" style="width: 50px;">
                                             <button type="button" id="tab5-1_deleteProfile">X</button>
                                             <input type="file" id="tab5-1_profileImg" name="profileImg"><br>
                                         </div>
@@ -492,7 +496,7 @@
 											<!-- 프로필 사진 -->
 											<label>프로필 사진</label><br>
 											<p class="advise" id="tab5-2_adviseProfile" readonly>*프로필 사진 미등록시 기본이미지로 등록됩니다.</p>
-											<img src="resources/images/default_profile_img.png" name="profile_img" id="tab5-2_setProfile" style="width: 50px;">	
+											<img src="${pageContext.request.contextPath}/resources/images/default_profile_img.png" name="profile_img" id="tab5-2_setProfile" style="width: 50px;">	
 											<button type="button" id="tab5-2_deleteProfile">X</button>
 											<input type="text" id="tab5-2_hiddenProfileImg" name="profile_img" style="display:none;"><br>
 											<input type="file" id="tab5-2_profileImg" name="profileImg"><br>
@@ -714,7 +718,7 @@
 							email.value = data.user_id;
 							emailOverlapCheck();
 							if(data.kakaoProfile == "none"){
-								setProfile.src = "resources/images/default_profile_img.png";
+								setProfile.src = "${pageContext.request.contextPath}/resources/images/default_profile_img.png";
 								hiddenProfileImg.value = "resources/images/default_profile_img.png";
 							}else{
 								console.log("카톡 프로필 exist");
@@ -751,8 +755,8 @@
                 });
         		
         		doc.getElementById("tab5-2_deleteProfile").addEventListener("click", function(){
-        			setProfile.src = "resources/images/default_profile_img.png";
-        			hiddenProfileImg.value = "resources/images/default_profile_img.png";
+        			setProfile.src = "${pageContext.request.contextPath}/resources/images/default_profile_img.png";
+        			hiddenProfileImg.value = "${pageContext.request.contextPath}/resources/images/default_profile_img.png";
         		});
         		//프로필 사진 uploda 이벤트 end
         		
@@ -1297,7 +1301,7 @@
             });
 
             deleteProfile.addEventListener("click", function () {
-                setProfile.src = "resources/default_profile_img.png";
+                setProfile.src = "${pageContext.request.contextPath}/resources/default_profile_img.png";
             });
             //프로필 사진 이벤트 end
 

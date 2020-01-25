@@ -224,8 +224,9 @@
 	    	    	cancelChangePw.style.display = "none";
 	    	    	changePw.style.display = "initial";
 	    	    	changePwDiv.style.display = "none";
+	    	    	alert("비밀번호가 정상적으로 변경되었습니다.");
 	    		}else{
-	    			alert("비밀번호 변경에 실패했습니다.")
+	    			alert("비밀번호 변경에 실패했습니다.");
 	    		}
 	    	}).fail(function(a,b,c){
 	    		console.log(a);
@@ -657,6 +658,7 @@
                     console.log(day);
                 }
                 birth.value = birthYear.value + month + day;
+                phone.value = phone1.value + phone2.value + phone3.value;
                 //전화번호, 이메일 한 줄로 조합 end
 
                 console.log("최종 휴대폰 : " + phone.value);
