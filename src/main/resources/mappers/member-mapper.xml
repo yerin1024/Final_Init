@@ -28,12 +28,13 @@
 	   delete from tb_member where email = #{email}
 	  </delete>
 	  
+	  <update id="changePw" parameterType="java.util.Map">
+	   update tb_member set pw = #{pw} where email = #{email}
+	  </update>
+	  
 	  <update id="update" parameterType="java.util.Map">
 	  update tb_member
 	  <trim prefix="set" prefixOverrides=",">
-	    <if test=" pw!= null">
-	       pw = #{pw}
-	    </if>
 	    <if test="name != null">
 	       ,name = #{name}
 	    </if>

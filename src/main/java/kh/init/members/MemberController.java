@@ -17,6 +17,8 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 
 import com.google.gson.JsonObject;
 
+import kh.init.configuration.Configuration;
+
 @RequestMapping("/member")
 @Controller
 public class MemberController {
@@ -25,7 +27,24 @@ public class MemberController {
 	private MemberService service;
 	@Autowired
 	private HttpSession session;
-
+	
+	//관리자 로그인 유효성 감시
+	@RequestMapping("/adminLoginProc.do")
+	public String toadminLogin(String email, String pw) {
+		if(email != null && pw != null) {
+			System.out.println("로그인 시도 : " + email);		
+			if(service.isLoginOk(email, pw) > 0) { // 로그인 허가
+				session.setAttribute("loginInfo", service.getMemberDTO(email)); // 세션 로그인정보 담기
+				return "redirect:/admin/memberList.do";
+			}else {
+				return "redirect:/adminHome";
+			}
+		}else {
+			System.out.println("'email input' or 'pw input' is detected as null.");
+			return "adminHome";
+		}
+	}
+	
 	// 로그인	유효성 검사
 	@RequestMapping("/loginProc.do")
 	public String toLogin(String email, String pw) {
@@ -182,6 +201,24 @@ public class MemberController {
 			return "redirect:home";
 		}
 	} 
+	
+	@RequestMapping("/changePw") // 비밀번호 변경
+	@ResponseBody
+	public String changePw(String pw) {
+		String email = ((MemberDTO)session.getAttribute("loginInfo")).getEmail();
+		JsonObject obj = new JsonObject();
+		try {
+			if(service.changePw(email, pw) > 0) {
+				obj.addProperty("result", "complete");
+			}else {
+				return "error";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "error";
+		}
+		return obj.toString();
+	}
 
 	@RequestMapping("/changeProfile") //프로필 바꿔버리기
 	public String changeMyProfile(MemberDTO dto, MultipartFile profileImg) {
@@ -219,16 +256,17 @@ public class MemberController {
 	public String identifyMemPw(String pw) {
 		System.out.println("현재 비밀번호 확인 CON 도착"); 
 		System.out.println("현재 적은 비번은 "+pw);
+		JsonObject obj = new JsonObject();
 		try {
 			MemberDTO mDto = (MemberDTO)session.getAttribute("loginInfo");
 			MemberDTO dto = service.identifyMemPwService(mDto.getEmail());
 			System.out.println("비번은 "+dto.getPw());
-			if(pw.equalsIgnoreCase(dto.getPw())) {
-				return "yes";
+			if(Configuration.encrypt(pw).equalsIgnoreCase(dto.getPw())) {
+				obj.addProperty("result", "validate");
 			}else {
-				return "no";
+				obj.addProperty("result", "invalidate");
 			}
-
+			return obj.toString();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
