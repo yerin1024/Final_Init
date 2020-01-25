@@ -114,7 +114,6 @@
 	text-decoration:none;
 }
 
-<<<<<<< HEAD
 div.cover {
     position: absolute;
     top: 50%;
@@ -124,11 +123,6 @@ div.cover {
     max-width: 150px;
     max-height: 150px;
     overflow-y: hidden;
-=======
-.cover {
-	width: 100%;
-	height: 100%;
->>>>>>> 0a9ba8386d1eb09a3d4febad7f5c2bd3491fd626
 }
 
 .feed{

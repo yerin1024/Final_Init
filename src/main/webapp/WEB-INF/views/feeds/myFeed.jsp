@@ -34,6 +34,14 @@
     max-height: 150px;
     overflow-y: hidden;
 	}
+	img.cover{	
+    width: 100%;
+    height: 100%;
+	}
+	video.cover{	
+    width: 100%;
+    height: 100%;
+	}
 	#contents {
 	border: 2px solid black;
 	width: 60vw;
@@ -138,7 +146,7 @@
     max-height: 200px;
     height: 26vw;
     width: 25vw;
-	
+}
 #likeBtn, #bookmarkBtn{
    width:20px;
    height:20px;
@@ -172,6 +180,7 @@
 	margin: auto;
 	height: 1200px;
 }
+
 .btn-primary:hover, .btn-primary:hover{
    background-color:white;
 }
