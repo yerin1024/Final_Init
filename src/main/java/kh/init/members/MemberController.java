@@ -95,8 +95,11 @@ public class MemberController {
 		System.out.println("사용자 이메일  : " + email);
 		JsonObject obj = new JsonObject();
 		
-		if(service.findPw(email) == "invalid") {
+		String result = service.findPw(email);
+		if(result == "invalid") {
 			obj.addProperty("result", "invalid");
+		}else if(result == "error occured"){
+			obj.addProperty("result", "error");
 		}else {
 			obj.addProperty("result", "success");
 			obj.addProperty("email", email);

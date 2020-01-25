@@ -122,13 +122,13 @@ public class FeedService {
 			int feed_seq = tmp.getFeed_seq();
 			List<String> media = dao.getMediaList(feed_seq);
 			if(media.size()==0) { //이미지나 비디오가 없기 때문에 제목으로 커버를 만들어야되는 경우
-				cover.add("<span class='cover' style='width:100%;height:100%'>"+tmp.getTitle()+"</span>");
+				cover.add("<span class='cover'>"+tmp.getTitle()+"</span>");
 			}else {
 				if(media.get(0).endsWith("mp4")) { //파일이 동영상일 경우
-					String video = "<video class='cover' style='width:100%;height:100%' src=\""+media.get(0)+"\">";
+					String video = "<video class='cover' src=\""+media.get(0)+"\">";
 					cover.add(video);
 				}else {//파일이 이미지
-					String img = "<img class='cover' style='width:100%;height:100%' src=\""+media.get(0)+"\">";
+					String img = "<img class='cover' src=\""+media.get(0)+"\">";
 					cover.add(img);
 				}
 			}
@@ -267,7 +267,7 @@ public class FeedService {
 			int feed_seq = tmp.getFeed_seq();
 			List<String> media = dao.getMediaList(feed_seq);
 			if(media.size()==0) { //이미지나 비디오가 없기 때문에 제목으로 커버를 만들어야되는 경우
-				cover.add("<div class='cover' style='display:inline-block;'>"+tmp.getTitle()+"</div>");
+				cover.add("<div class='cover' >"+tmp.getTitle()+"</div>");
 			}else {
 				if(media.get(0).endsWith("mp4")) { //파일이 동영상일 경우
 					String video = "<video class='cover' src=\""+media.get(0)+"\">";
@@ -404,18 +404,18 @@ public class FeedService {
 
 		if(list.size()==0) {
 			System.out.println("title입력");
-			String title = dao.getTitle(feed_seq);
-			list.add("<div class='cover' style='display:inline-block;'>"+title+"</div>");
+//			String title = dao.getTitle(feed_seq);
+//			list.add("<div class='cover' style=\"display:inline-block;text-align:center;font-size:70px;padding-top:200px;word-break:break-all\">"+title+"</div>");
 		}else {
 			System.out.println("list size = "+list.size());
 			for(int i=0; i<list.size(); i++) {
 				if(list.get(i).endsWith("mp4")) { //파일이 동영상일 경우
 					System.out.println("파일이 동영상입니다.");
-					String video = "<video class='cover' src=\""+list.get(i)+"\">";
+					String video = "<video class='cover' style=\"height:100%;size:20px;text-align:center;vertical-align:center\" src=\""+list.get(i)+"\">";
 					list.set(i, video);
 				}else {//파일이 이미지
 					System.out.println("파일이 이미지입니다.");
-					String img = "<img class='cover' src=\""+list.get(i)+"\">";
+					String img = "<img class='cover' style=\"height:100%;size:20px;text-align:center;vertical-align:center\" src=\""+list.get(i)+"\">";
 					list.set(i, img);
 				}
 			}
@@ -513,6 +513,7 @@ public class FeedService {
 		map.put("email", dto.getEmail());
 		map.put("contents", dto.getContents());
 		map.put("reply_seq", dto.getReply_seq());
+		map.put("parent", dto.getParent());
 		String jsonString = gson.toJson(map);
 		return jsonString;
 	}
