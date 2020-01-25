@@ -403,12 +403,18 @@
 	line-height: 50px;
 }
 #writeReply{	
-    width: 100%;
-    line-height:50px;
+    line-height:80px;
     margin: 0px 20px;
+    min-height: 50px;
+    font-size: 16px;
+    width: 100%;
+    border-radius: 16px;
+    border: 1px solid rgb(239, 239, 239);
+    padding: 0px 10px;
+    
 }
 .replyBtns{
-	margin:20px 0px;
+	margin:20px 20px;
 }
 .replyContents{	
     background: transparent;
@@ -470,7 +476,7 @@
 .modal-content{	
     border-radius: 30px;
 }
-button{
+.replyBtns>button, .replyBtn{
 	background: 0 0;
     border: 0;
     cursor: pointer;
@@ -478,10 +484,13 @@ button{
     font-size: 12px;
     font-weight: 600;
     line-height: 14px;
-    margin-right: 16px;
+    margin-right: 8px;
     padding: 0;
     color: #999;
     min-width: 30px;
+    border: 1px solid #999;
+    padding: 5px 7px;
+    border-radius: 8px;
 }
 /* All Device */
 /* 모든 해상도를 위한 공통 코드를 작성한다. 모든 해상도에서 이 코드가 실행됨. */
