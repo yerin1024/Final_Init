@@ -80,7 +80,7 @@
 		insert into tb_friend values(#{my_id},#{yr_id},#{relation}) 
 	</insert>
 	 <delete id="deleteRequest" >
-   delete from tb_friend_Request where from_id = #{from_id}
+   delete from tb_friend_Request where from_id = #{from_id} and to_id = #{to_id}
   </delete>
 </mapper>
 
