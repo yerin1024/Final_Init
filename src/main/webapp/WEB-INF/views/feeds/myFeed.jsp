@@ -1403,9 +1403,8 @@ button{
                     console.log("ajax call went wrong:"
                         + request.responseText);
                 }
-            });
+            })
             
-
         });
 		
 		</script>

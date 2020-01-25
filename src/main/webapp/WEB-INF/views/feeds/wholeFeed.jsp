@@ -38,21 +38,21 @@
 	min-width:460px;
 	margin-bottom:15px;
 }
-.title{
-   display:inline-block;
-   position:absolute;
-   top:50%;
-   left:50%;
-   transform: translate(-50%, -50%);
-}
+/* .title{ */
+/*    display:inline-block; */
+/*    position:absolute; */
+/*    top:50%; */
+/*    left:50%; */
+/*    transform: translate(-50%, -50%); */
+/* } */
+/* .title{ */
+/* 	display:inline-block; */
+/* 	position:absolute;top:50%;left:50%;transform: translate(-50%, -50%); */
+/* 	 word-break: break-all; */
+/*     white-space: normal; */
+/* } */
 .parent([.title]){
 	border:1px solid red;
-}
-.title{
-	display:inline-block;
-	position:absolute;top:50%;left:50%;transform: translate(-50%, -50%);
-	 word-break: break-all;
-    white-space: normal;
 }
 .btn-primary{
    width:100%;
@@ -113,7 +113,6 @@
 }
 
 .cover {
-	border: 1px solid black;
 	width: 100%;
 	height: 100%;
 }
@@ -138,20 +137,19 @@
 }
 #carouselExampleIndicators{
    width:100%;
+   height:100%;
 }
 
 .carousel-item{
-	margin:auto;
-	width:200px;
+	margin:auto;	
+	width:100%;
+	height:100%;
 	text-align:center;
 }
 .carousel-inner{
-	width:500px;
+	width:100%;
+	height:100%;
 	margin:auto;
-}
-.carousel-item{
-	width:200px;
-	heigth:200px;
 }
 
 .wrapper {
@@ -356,8 +354,8 @@
     height: 650px;
 }
 .carousel-item>img{
-	width:500px;
-	height:500px;
+	width:100%;
+	height:100%;
 }
 .reply {
         height: 90%;
@@ -460,6 +458,8 @@
 }
 .media{
 	width:100%;
+	height:100%;
+	margin:0px;
 }
 /* All Device */
 /* 모든 해상도를 위한 공통 코드를 작성한다. 모든 해상도에서 이 코드가 실행됨. */
@@ -655,24 +655,14 @@ function getList(page){
 	      		<div class="modal-body1">
 			
 	      		</div>
-            <div class="modal-title">
+		<div class="title">
                 <div class="reply">
                		<div class="writerInfo">
-                    		<span class="writerProfile"></span>
+                    		<span class="writerProfile"><img class="userProfileImg" src="${loginInfo.profile_img }" alt=""></span>
                      		<span class="writerProfileID">asdsadas</span>
-                    </div>
-                    <div class="userInfo">
-                    		<span class="userProfile"><img class="userProfileImg" src="${pageContext.request.contextPath }/resources/images/dog.jpg" alt=""></span>
-                     		<span class="userProfileID">asdsadas</span>
-                    		<span class="userReply"></span>
-                    </div>   
-                     <div class="userInfo">
-                    		<span class="userProfile"><img class="userProfileImg" src="${pageContext.request.contextPath }/resources/images/dog.jpg" alt=""></span>
-                     		<span class="userProfileID">asdsadas</span>
-                    		<span class="userReply"></span>
-                    </div>          
+                    </div>                     
                 </div>
-                <div class="modal-btns" style="border:solid 1px red;"></div>
+                <div class="modal-btns"></div>
             </div>
         </div>
 	      <div class="modal-header">
@@ -680,7 +670,7 @@ function getList(page){
 	         		<span class="myProfile"><img class="userProfileImg" src="${loginInfo.profile_img }" alt=""></span>
 	       			 <h5 class="modal-title" id="exampleModalLabel">${loginInfo.nickname }</h5>
 	       			 <div id="writeReply" contenteditable="true"></div>
-	       			 <button type="button" id="replyBtn" onclick="replyBtnOnclick('${loginInfo.email }')">등록</button>
+	       			 <button type="button" class="replyBtn" onclick="replyBtnOnclick('${loginInfo.email}');">등록</button>
 				</div>
 	      </div>
 	    </div>
@@ -706,6 +696,7 @@ function getList(page){
 			var likeCheck = data.likeCheck;
 			var bookmarkCheck = data.bookmarkCheck;
 			var mediaList = JSON.parse(data.media);
+			console.log(mediaList);
 			var dto = JSON.parse(data.dto);
 			console.log(mediaList.length);
 			//디테일뷰 미디어
