@@ -63,8 +63,8 @@
 
 }
 .row{
-	min-width:460px;
-	margin-bottom:15px;
+	width:100%;
+	height:100%;
 }
 /* .title{ */
 /*    display:inline-block; */
@@ -93,8 +93,8 @@
    color:black;
 }
 #likeBtn, #bookmarkBtn{
-   width:20px;
-   height:20px;
+   width:50px;
+   height:50px;
 }
 #carouselExampleIndicators{
    width:100%;
@@ -411,7 +411,6 @@
 .modal-btns{
 	position:absolute;
     padding: 16px 16px;
-    right:0px;
 }
 .writerInfo,.userInfo{
     margin-left: -12px;

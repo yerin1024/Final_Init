@@ -164,7 +164,7 @@
 			<div class="row" id="mediaRow">
 			<div class="col-3">
 				<c:choose>             
-					<c:when test="${fn:length(media) >1 }">
+					<c:when test="${fn:length(media) >=1 }">
 						<div id="carouselExampleIndicators" class="carousel slide" data-interval="false">
 							<ol class="carousel-indicators">
 									<c:forEach items="${media }" var="media" varStatus="status">
