@@ -22,13 +22,22 @@
         box-sizing: border-box;
     }
     
-    @media screen and (min-width: 768px) { 
-	    .modal .modal-lg:before {
-		    display: inline-block; 
-		    vertical-align: middle; 
-		    height: 100%; 
-	    } 
-    }
+ 		.modal {
+          text-align: center;
+        }
+        @@media screen and (min-width: 768px) {
+          .modal:before {
+            display: inline-block;
+            vertical-align: middle;
+            content: " ";
+            height: 100%;
+          }
+        }
+        .modal-dialog {
+          display: inline-block;
+          text-align: left;
+          vertical-align: middle;
+        }
     
     .modal-content {
         background-color: #fffefc;
@@ -349,7 +358,7 @@
                                 <div class="tab1_container">
                                     <form action="${pageContext.request.contextPath}/member/loginProc.do" method="post" id="tab1_loginForm">
                                         <div class="tab1_loginContainer">
-                                        <div class="tab1_logo hidden-sm">
+                                        <div class="tab1_logo d-sm-none d-md-block">
 	                                        	<div id="logoDiv">
 	                                        		<img src="${pageContext.request.contextPath}/resources/images/mainLogo.jpg">
 	                                        	</div>   

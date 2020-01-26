@@ -20,80 +20,136 @@
 <script
 	src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 <style>
-
 	body{
 		background-color:white;
 	}
-	.feed {
-		width: 20vw;
-		height: 20vw;
-		min-height: 150px;
-		min-width: 150px;
-		border: 1px solid red;
-	}
 	
-	.cover {
-		width: 100%;
-		height: 100%;
+	span.cover { 
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    word-break: break-all;
+    max-width: 150px;
+    max-height: 150px;
+    overflow-y: hidden;
+	}
+	img.cover{	
+    width: 100%;
+    height: 100%;
+	}
+	video.cover{	
+    width: 100%;
+    height: 100%;
 	}
 	#contents {
 	border: 2px solid black;
 	width: 60vw;
 	min-width: 470px;
 	margin: auto;
-	text-align: center;
-	}
-#carouselExampleIndicators{
+	padding: 60px 20px 0;
+}
+
+#search {
+   margin: auto;
+   text-align: center;
+}
+
+#contents {
+/* 	width:60vw; */
+	margin:0px;
+/*     margin: auto; */
+    text-align: center;
+
+}
+.row{
 	width:100%;
+	height:100%;
 }
-.carousel-item {
-	margin: auto;
-	text-align: center;
+/* .title{ */
+/*    display:inline-block; */
+/*    position:absolute; */
+/*    top:50%; */
+/*    left:50%; */
+/*    transform: translate(-50%, -50%); */
+/* } */
+/* .title{ */
+/* 	display:inline-block; */
+/* 	position:absolute;top:50%;left:50%;transform: translate(-50%, -50%); */
+/* 	 word-break: break-all; */
+/*     white-space: normal; */
+/* } */
+.parent([.title]){
+	border:1px solid red;
 }
-
-.carousel-inner {
-	width: 100%;
-}
-
-.carousel-item * {
-	width: 200px;
-	height: 200px;
-}
-
-	#feedList{
-		border:2px solid red;
-	}
-	#feedList {
-	border: 2px solid red;
-}
-	html, body {
-	background-color: #1D4E89;
-
-	margin: 0px;
-	padding: 0px;
-	height: 2000px;
-}
-
-* {
-	box-sizing: border-box;
-}
-
-.cover {
-	border: 1px solid black;
-	width: 100%;
-	height: 100%;
-}
-
-.feed {
-	width: 20vw;
-      height: 20vw;
-      min-height: 150px;
-      min-width: 150px;
-	
+.btn-primary{
+   width:100%;
+   height:100%;
+   min-width:150px;
+	min-height:150px;
+   border-color:white;
+   background-color:white;
+   padding:0px;
+   color:black;
 }
 #likeBtn, #bookmarkBtn{
    width:50px;
    height:50px;
+}
+#carouselExampleIndicators{
+   width:100%;
+}
+.carousel-item {
+   margin: auto;
+   width:10px;
+   text-align: center;
+}
+
+.carousel-inner {
+   width: 400px;
+}
+
+.carousel-item * {
+   width: 100%;
+   height: 200px;
+}
+#writerProfile{
+   width:50px;
+   height:50px;
+}
+
+#keyword{
+	width:300px;
+}
+.nickname{
+	vertical-align:middle;
+	line-height:60px;
+	font-size:30px;
+	font-weight:600;
+	text-align:left;
+}
+
+
+.fRow:hover{
+	background-color:#fafafa;
+}
+.nicknameA{
+	color:#48689a;
+}
+.nicknameA:hover{
+	text-decoration:none;
+}
+
+.feed {
+    min-width: 150px;
+    min-height: 150px;
+    max-height: 200px;
+    height: 26vw;
+    width: 25vw;
+}
+#likeBtn, #bookmarkBtn{
+   width:20px;
+   height:20px;
 }
 
 .container-fluid {
@@ -104,41 +160,33 @@
 }
 #carouselExampleIndicators{
    width:100%;
-}
-.carousel-item {
-   margin: auto;
-   text-align: center;
+   height:100%;
 }
 
-.carousel-inner {
-   width: 100%;
+.carousel-item{
+	margin:auto;	
+	width:100%;
+	height:100%;
+	text-align:center;
 }
-
-.carousel-item * {
-   width: 200px;
-   height: 200px;
+.carousel-inner{
+	width:100%;
+	height:100%;
+	margin:auto;
 }
 
 .wrapper {
-	max-width: 1200px;
+	max-width: 700px;
 	margin: auto;
 	height: 1200px;
 }
-.btn-primary1:hover, .btn-primary1:hover{
+
+.btn-primary:hover, .btn-primary:hover{
    background-color:white;
 }
-.btn-primary1:not(:disabled):not(.disabled).active, .btn-primary1:not(:disabled):not(.disabled):active, .show>.btn-primary1.dropdown-toggle{
+.btn-primary:not(:disabled):not(.disabled).active, .btn-primary:not(:disabled):not(.disabled):active, .show>.btn-primary.dropdown-toggle{
    border:none;
    background-color:white;
-}
-
-.btn-primary1{
-   width:100%;
-   height:100%;
-   border-color:white;
-   background-color:white;
-   padding:0px;
-   color:black;
 }
 
 /* 프로필 */
@@ -151,8 +199,8 @@
 }
 
 .report {
-	position: relative;
-	text-align: right;
+	position: absolute;
+	right:0px;
 	border: none;
 	background-color: none;
 }
@@ -300,36 +348,36 @@
 	border:none;
 	background-color:white;
 }
-.cover {
-	width: 100%;
-	height: 100%;
-}
-.btn-primary1{
-	width:100%;
-	height:100%;
-	border-color:white;
-	background-color:white;
-	padding:0px;
-	color:black;
+.btn-primary{
+    width: 100%;
+    height: 100%;
+    min-width: 150px;
+    min-height: 150px;
+    border-color: white;
+    background-color: white;
+    padding: 0px;
+    color: black;
 }
 .modal-dialog {
     max-width: 1200px;
     margin: 1.75rem auto;
 }
+
 .row{
-	margin:0px;
+    min-width: 460px;
+    margin-bottom: 15px;
 }
 .modal-main{
     display: flex;
     height: 650px;
 }
 .carousel-item>img{
-	width:500px;
-	height:500px;
+	width:100%;
+	height:100%;
 }
 .reply {
 		border:1px solid black;
-        height: 90%;
+        height: 100%;
         padding: 16px;
         overflow-y: scroll;
 }
@@ -363,7 +411,6 @@
 .modal-btns{
 	position:absolute;
     padding: 16px 16px;
-    right:0px;
 }
 .writerInfo,.userInfo{
     margin-left: -12px;
@@ -399,7 +446,7 @@
 }
 .writeReplyBox{
 	display:flex;
-    width: 100%;
+    width: 50%;
     height:10%;
 }
 .modal-title{
@@ -439,9 +486,7 @@
 .title{
 	width:45%;
 }
-.media{
-	width:100%;
-}
+
 .childContentsBox{
     width: 350px;
 }
@@ -491,6 +536,7 @@
     padding: 5px 7px;
     border-radius: 8px;
 }
+
 .myProfile{	
     margin: 5px 10px;
 }
@@ -736,21 +782,6 @@
 	            }
 	            $("#feeds").append(data); 
 	            index++;
-//	          for(i; i<end; i++){
-//	             console.log(i);
-//	              var data = $("<div class='col-4 feed'></div>");
-//	              var a = $("<a href='/feed/detailView?feed_seqS="+list[index].feed_seq+"'>");
-//	              a.append(cover[index]);
-//	              data.append(a);
-//	              if(i%3==1){
-//	                 data.before("<div class='row' style='margin:0px'>")
-//	                 console.log(data);
-//	              }else if(i%3==0){
-//	                 data.after("</div>");
-//	              }
-//	              $("#feeds").append(data);
-//	              index++;
-//	          }
 	      })
 	   }
 	 function getScrapList(page){
@@ -857,10 +888,17 @@
 					</div>
 				</c:when>
 				<c:otherwise>
-
+				<c:choose>
+					<c:when test="${loginInfo ne null}">
+							<!-- 신고버튼 사라지기  -->
+					</c:when>
+					<c:otherwise>
 					<div class="report">
 						<button type="button" id="reportBtn">ㆍㆍㆍ</button>
 					</div>
+					</c:otherwise>
+				</c:choose>
+					
 					<div class="profileLayout">
 						<div class="profileLayoutLeft">
 							<button class="profileButton" id="friendsList">＋</button>
@@ -895,9 +933,9 @@
 		
 		<button type="button" id="registerFeed">게시물 등록</button>
 	
-		</div>
-		<div class="wrapper">
-			
+		</div>		
+         </div>
+         <div class="wrapper">			
 			<div id="myFeed">
          <c:choose>
             <c:when test="${fn:length(list) ==0}">
@@ -907,10 +945,10 @@
             <div id="feeds">
                   <c:forEach items="${list }" var="feed" varStatus="status">
                      <c:if test="${status.count mod 3==1}">
-                        <div class="row" style="margin: 0px">
+                        <div class="row">
                      </c:if>
                      <div class="col-4 feed">
-                        <a class="btn btn-primary1" data-toggle="modal" data-target="#exampleModal" href="#" data-id="${feed.feed_seq }">${cover[status.count-1] }</a>
+                        <a class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" href="#" data-id="${feed.feed_seq }" style="min-height: 150px;">${cover[status.count-1] }</a>
                      </div>
                      <c:if test="${status.count mod 3==0}">
                         </div>
@@ -920,7 +958,6 @@
             </c:otherwise>
          </c:choose>
           </div>
-         </div>
 	<!-- 친구요청 모달 영역 -->
 	<div id="modalBox" class="modal fade" id="myModal"
 		role="dialog"  tabindex="-1" aria-labelledby="myModalLabel"
@@ -982,15 +1019,15 @@
 	  <div class="modal-dialog" role="document">
 	    <div class="modal-content">
 	      <div class="detailView_header">
-	         <span class="writerProfile"><img class="userProfileImg" src="${loginInfo.profile_img }" alt=""></span>
-	        <h5 class="modal-title" id="exampleModalLabel">DETAIL VIEW</h5>
+	         <span class="writerProfile"><img class="userProfileImg" src="" alt=""></span>
+	         <span class="writer"></span>
+	        <h5 class="modal-title" id="exampleModalLabel"></h5>
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 	          <span aria-hidden="true">&times;</span>
 	        </button>
 	      </div>
 	      <div class="modal-main">			
 	      		<div class="modal-body1">
-			
 	      		</div>
             <div class="title">
                 <div class="reply">
@@ -999,15 +1036,17 @@
                      		<span class="writerProfileID">asdsadas</span>
                     </div>                     
                 </div>
-                <div class="writeReplyBox">					
-	         		<span class="myProfile"><img class="userProfileImg" src="${loginInfo.profile_img }" alt=""></span>
-	       			 <h5 class="modal-title" id="exampleModalLabel">${loginInfo.nickname }</h5>
-	       			 <div id="writeReply" contenteditable="true"></div>
-	       			 <button type="button" class="replyBtn" onclick="replyBtnOnclick('${loginInfo.email}');">등록</button>
-				</div>
-                <div class="modal-btns"></div>
             </div>
-        </div>
+        </div>        
+	      <div class="detailView_footer">
+	      	<div class="footer-btns" style="display:flex;width:50%;height:10%;"></div>
+	      	<div class="writeReplyBox">					
+	         	<span class="myProfile"><img class="userProfileImg" src="${loginInfo.profile_img }" alt=""></span>
+	       		<h5 class="modal-title" id="exampleModalLabel">${loginInfo.nickname }</h5>
+	       		<div id="writeReply" contenteditable="true"></div>
+	       		<button type="button" class="replyBtn" onclick="replyBtnOnclick('${loginInfo.email}');">등록</button>
+			</div>
+	      </div>
 	    </div>
 	  </div>
 	  </div>
@@ -1020,19 +1059,15 @@
 			<div class="modal-content">
 				<div class="modal-header">
 					<h4 class="modal-title" id="myModalLabel">친구 관계 설정</h4>
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
-						<span aria-hidden="true">×</span>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">×</span>
 					</button>
 				</div>
 
 				<div class="modal-body1">
-					
-						<input type=radio name="relation" value="1"> 아는 사람<br>
-						<input type=radio name="relation" value="2"> 친구<br> 
-						<input type=radio name="relation" value="3"> 절친<br> 
-						
-					
+					<input type=radio name="relation" value="1"> 아는 사람<br>
+					<input type=radio name="relation" value="2"> 친구<br> 
+					<input type=radio name="relation" value="3"> 절친<br> 
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-primary" id="acceptModalBtn">확인</button>
@@ -1503,8 +1538,7 @@
                     console.log("ajax call went wrong:"
                         + request.responseText);
                 }
-            });
-            
+            })
 
         })
         $('#ingReq').on('click', function () {
