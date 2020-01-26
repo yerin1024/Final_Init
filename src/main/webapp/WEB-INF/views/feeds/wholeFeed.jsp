@@ -37,9 +37,10 @@
 
 }
 .row{
-	min-width:460px;
-	margin-bottom:15px;
+	width:100%;
+	height:100%;
 }
+
 /* .title{ */
 /*    display:inline-block; */
 /*    position:absolute; */
@@ -67,8 +68,8 @@
    color:black;
 }
 #likeBtn, #bookmarkBtn{
-   width:20px;
-   height:20px;
+   width:50px;
+   height:50px;
 }
 #carouselExampleIndicators{
    width:100%;
@@ -114,6 +115,10 @@
 	text-decoration:none;
 }
 
+.cover{
+	width:100%;
+	height:100%;
+}
 div.cover {
     position: absolute;
     top: 50%;
@@ -123,6 +128,8 @@ div.cover {
     max-width: 150px;
     max-height: 150px;
     overflow-y: hidden;
+    width:100%;
+    height:100%;
 }
 
 .feed{
@@ -133,8 +140,8 @@ div.cover {
 	width:25vw;
 }
 #likeBtn, #bookmarkBtn{
-   width:20px;
-   height:20px;
+   width:50px;
+   height:50px;
 }
 
 .container-fluid {
@@ -433,7 +440,8 @@ div.cover {
 }
 .writeReplyBox{
 	display:flex;
-    width: 100%;
+    width: 50%;
+    height:50%;
 }
 .modal-title{
 	line-height: 50px;
@@ -824,27 +832,26 @@ function getList(page){
 	          <span aria-hidden="true">&times;</span>
 	        </button>
 	      </div>
-	      <div class="modal-main">			
+		<div class="modal-main">			
 	      		<div class="modal-body1">
-			
 	      		</div>
-		<div class="title">
+            <div class="title">
                 <div class="reply">
                		<div class="writerInfo">
                     		<span class="writerProfile"><img class="userProfileImg" src="${loginInfo.profile_img }" alt=""></span>
                      		<span class="writerProfileID">asdsadas</span>
                     </div>                     
                 </div>
-                <div class="modal-btns"></div>
             </div>
-        </div>
-	      <div class="modal-header">
-				<div class="writeReplyBox">					
-	         		<span class="myProfile"><img class="userProfileImg" src="${loginInfo.profile_img }" alt=""></span>
-	       			 <h5 class="modal-title" id="exampleModalLabel">${loginInfo.nickname }</h5>
-	       			 <div id="writeReply" contenteditable="true"></div>
-	       			 <button type="button" class="replyBtn" onclick="replyBtnOnclick('${loginInfo.email}');">등록</button>
-				</div>
+        </div>        
+	      <div class="detailView_footer">
+	      	<div class="footer-btns" style="display:flex;width:50%;height:10%;"></div>
+	      	<div class="writeReplyBox">					
+	         	<span class="myProfile"><img class="userProfileImg" src="${loginInfo.profile_img }" alt=""></span>
+	       		<h5 class="modal-title" id="exampleModalLabel">${loginInfo.nickname }</h5>
+	       		<div id="writeReply" contenteditable="true"></div>
+	       		<button type="button" class="replyBtn" onclick="replyBtnOnclick('${loginInfo.email}');">등록</button>
+			</div>
 	      </div>
 	    </div>
 	  </div>
@@ -1283,14 +1290,14 @@ function getList(page){
 			
 			if(sessionEmail==writer){ //좋아요스크랩은 없애고 수정삭제만 있음
 				console.log("작성자 본인입니다.");
-				$(".modal-btns").html("");
-				$(".modal-btns").append(modifyA);
-				$(".modal-btns").append(deleteA);
+				$(".footer-btns").html("");
+				$(".footer-btns").append(modifyA);
+				$(".footer-btns").append(deleteA);
 			}else{
 				console.log("작성자가 아닙니다.")
-				$(".modal-btns").html("");
-				$(".modal-btns").append(likeA);
-				$(".modal-btns").append(bookmarkA);
+				$(".footer-btns").html("");
+				$(".footer-btns").append(likeA);
+				$(".footer-btns").append(bookmarkA);
 			}
 		
 			
