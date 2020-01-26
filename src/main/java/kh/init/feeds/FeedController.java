@@ -123,11 +123,11 @@ public class FeedController {
 	
 	@RequestMapping(value = "/myScrapFeed", produces = "application/json; charset=UTF-8")
 	@ResponseBody
-	public String myScrapFeed(String page) {
+	public String myScrapFeed(String email) {
 		System.out.println("myScrapFeed 도착");
-		int ipage = Integer.parseInt(page);
+		int ipage = 1;
 		System.out.println("ipage :  "+ipage);
-		String email = ((MemberDTO)session.getAttribute("loginInfo")).getEmail();
+		
 		System.out.println("로그인 세션 값 확인 : " + email);
 		//로그인 세션 테스트 코드 끝
 
@@ -397,7 +397,6 @@ public class FeedController {
 			System.out.println("memberDTO : "+mservice.getMemberDTO(dto.getEmail()));
 			obj.addProperty("writerProfile", g.toJson((mservice.getMemberDTO(dto.getEmail())).getProfile_img()));
 			obj.addProperty("likeCheck", g.toJson(likeCheck));
-			obj.addProperty("likeCheck", g.toJson(likeCheck));
 			obj.addProperty("bookmarkCheck", g.toJson(bookmarkCheck));
 			obj.addProperty("replyList",  g.toJson(replyList));
 			obj.addProperty("media", g.toJson(list));			
@@ -406,6 +405,7 @@ public class FeedController {
 		}catch(Exception e) {
 			e.printStackTrace();
 		}			
+		
 		return obj.toString();
 
 	}
@@ -450,7 +450,7 @@ public class FeedController {
 				}
 				
 				index++;
-				mediaList.add(service.getMediaList(feed_seq));
+				mediaList.add(service.getMediaListForFriendFeed(feed_seq));
 //				replyList.add(service.viewAllReply(feed_seq));
 				likeCheckList.add(service.likeCheck(feed_seq, ((MemberDTO)session.getAttribute("loginInfo")).getEmail()));
 				bookmarkCheckList.add(service.bookmarkCheck(feed_seq, ((MemberDTO)session.getAttribute("loginInfo")).getEmail()));
@@ -522,7 +522,7 @@ public class FeedController {
 					}
 				}
 				index++;
-				mediaList.add(service.getMediaList(feed_seq));
+				mediaList.add(service.getMediaListForFriendFeed(feed_seq));
 //				replyList.add(service.viewAllReply(feed_seq));
 				likeCheckList.add(service.likeCheck(feed_seq, ((MemberDTO)session.getAttribute("loginInfo")).getEmail()));
 				bookmarkCheckList.add(service.bookmarkCheck(feed_seq, ((MemberDTO)session.getAttribute("loginInfo")).getEmail()));
@@ -657,10 +657,10 @@ public class FeedController {
 		try {
 			if(dto.getDepth() == 0) {
 				System.out.println("댓글");
-				result = service.registerReply(dto);			
+				result = service.registerReply(dto);
 			}else{
 				System.out.println("답글");
-				result = service.registerReply(dto);	
+				result = service.registerReply(dto);
 			}
 		}catch(Exception e) {
 			e.printStackTrace();

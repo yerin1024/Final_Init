@@ -121,7 +121,6 @@ public class MemberService {
 		}		
 	}
 
-
 	public MemberDTO getMemberDTO(String email) {
 		MemberDTO dto;
 		try {
@@ -141,7 +140,7 @@ public class MemberService {
 		}
 		// 자바 메일 
 		String host = "smtp.naver.com";
-		String manager = "init_manager"; // 관리자 이메일 아이디
+		String manager = "init_manager@naver.com"; // 관리자 이메일 아이디
 		String password = "initmanager6"; // 관리자 이메일 pw
 		String to = email; // 사용자 이메일
 		String ranChar = Utils.generateCertChar(); // 임시 비밀번호 생성
@@ -156,14 +155,17 @@ public class MemberService {
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
+		
 		Properties props = new Properties();
 		props.put("mail.smtp.host", host);
 		props.put("mail.smtp.auth", "true");
+				
 		Session session = Session.getInstance(props, new javax.mail.Authenticator() {
 			protected PasswordAuthentication getPasswordAuthentication() {
 				return new PasswordAuthentication(manager, password);
 			}
-		});
+		});		
+		
 		String contents= "<div style='width:100%'>\r\n" + 
 				"        <div style='max-width:600px;margin:0 auto;font-family:Roboto,Arial,Helvetica,sans-serif;font-size:16px;line-height:1.5;border:1px solid #e2e2e2'>\r\n" + 
 				"          <div align='center' style='padding:30px;background-color:#34558b;' class='logo-area'>\r\n" + 
@@ -195,19 +197,24 @@ public class MemberService {
 				"          </div>      \r\n" + 
 				"        </div>\r\n" + 
 				"      </div>";
-		try {
+		try {			
 			MimeMessage msg = new MimeMessage(session);
 			msg.setFrom(new InternetAddress(manager));
 			msg.setRecipients(Message.RecipientType.TO, to);
 			msg.setSubject("[Init] 임시 비밀번호 발급 안내"); // 메일 타이틀
 			msg.setContent(contents, "text/html;charset=UTF-8");
-			Transport.send(msg); // 메일 전송
+			try {
+				Transport.send(msg); // 메일 전송
+			}catch(Exception e) {				
+				e.printStackTrace();
+				return "error occured";
+			}									
 		} catch (MessagingException mex) {
 			System.out.println("send failed, exception: " + mex);
+			return "invalid";
 		}
 		return ranChar;
 	}
-
 
 	@Transactional("txManager")
 	public MemberDTO getMyPageService(String email) throws Exception{
@@ -225,17 +232,21 @@ public class MemberService {
 		return result;
 
 	}
+	
 	//내 정보 변경하기
 	@Transactional("txManager")
 	public int changeMyInfoService(String id,MemberDTO dto) throws Exception {
-
-
 		int result = dao.changeMyInfo(id,dto);
 		return result;
-
 	}
+	
+	//내 비밀번호 변경
+	public int changePw(String email, String pw) throws Exception{
+		int result = dao.changePw(email, Configuration.encrypt(pw));
+		return result;
+	}
+	
 	//내 프로필 변경하기
-
 	@Transactional("txManager")
 	public int changeMyProfileService(String id,MemberDTO dto,MultipartFile profile_img, String path) throws Exception {
 		File filePath = new File(path);

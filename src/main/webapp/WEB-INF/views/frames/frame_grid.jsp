@@ -15,8 +15,8 @@
 <script
 	src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="/resources/css/nav.css">
-<link rel="stylesheet" href="/resources/css/msg.css"> 
-<link rel="stylesheet" href="/resources/css/alr.css"> 
+<link rel="stylesheet" href="/resources/css/alr.css">
+<link rel="stylesheet" href="/resources/css/msg.css">
 
 <style>
 
@@ -266,8 +266,8 @@ animation:rainbow 1s infinite;
 </head>
 <body>
 	<jsp:include page="/resources/jsp/nav.jsp" />
-	<jsp:include page="/resources/jsp/msg.jsp" />
-<jsp:include page="/resources/jsp/alr.jsp" />
+	<jsp:include page="/resources/jsp/alr.jsp"/>
+	<jsp:include page="/resources/jsp/msg.jsp"/>
 	<div class="container-fluid">
 		<div class="profile">
 			<div class="report">

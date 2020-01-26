@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-	<script>
+<script>
 		function replyBtnOnclick(email) {
 			var writeReply = $("#writeReply");
 			var contents = writeReply.html();
@@ -19,10 +19,10 @@
 				},
 				dataType : "json"
 				}).done(function(data) {
+					console.log(data);
 					var html = "";
 					html += "<div class=\"userInfo\" reply_seq="+data.reply_seq+">"
-					html += "<span class=\"userProfile\"><img class=\"userProfileImg\" src=\"${pageContext.request.contextPath }/resources/images/dog.jpg\" alt=\"\"></span>";
-					html += "<div class=\"profileDiv\"><span class=\"userProfileID\">"+data.email+"</span><span class=\"userReply\"><div class=\"replyContents\">"+data.contents+"</div></span></div>"
+					html += "<div class=\"profileDiv\"><span class=\"userProfile\"><img class=\"userProfileImg\" src=\"${loginInfo.profile_img }\" alt=\"\"></span><span class=\"userProfileID\">"+data.email+"</span><span class=\"userReply\"><div class=\"replyContents\">"+data.contents+"</div></span></div>"
 					html += "<div class=\"replyBtns\">"
 					html += "<button type=\"button\" class=\"modifyReply\">수정</button>"
 					html += "<button type=\"button\" class=\"deleteReply\">삭제</button>"
@@ -41,6 +41,18 @@
 		var temporaryReply;
 		var clickCnt;
 		var childReplyButton;
+
+		//답글숨기기
+		var showReply = $("<button></button>");
+		showReply.addClass("showReply");
+		showReply.html("ㅡ답글보이기");
+		
+
+		//답글숨기기
+		var hideReply = $("<button></button>");
+		hideReply.addClass("hideReply");
+		hideReply.html("ㅡ답글숨기기");
+		
 		
 		//답글등록버튼
 		var registerReplyBtn = $("<button></button>");
@@ -169,13 +181,14 @@
 
 			replyBtns.prepend(registerChildBtn);
 			replyBtns.prepend(deleteBtn);
-			replyBtns.prepend(modifyBtn);
+			replyBtns.prepend(modifyBtn);gi
 		});
 		
 		//댓글 삭제 버튼
 		$(document).on("click",".deleteReply", function(){
 			var reply_seq = $(this).closest(".userInfo").attr("reply_seq");
 			var deleteDiv = $(this).closest(".userInfo");
+			console.log(deleteDiv.attr("child"));
 			$.ajax({
 				type : "POST",
 				url : "${pageContext.request.contextPath }/feed/deleteReply",
@@ -193,7 +206,6 @@
 			childReplyButton = $(this);
 			childReplyButton.attr("hidden", true);
 			console.log("답글클릭 : cnt : " + clickCnt);
-			
 				if(clickCnt == 0){	
 						console.log("왜 출력안돼;")
 						console.log("this 출력 : " + $(this));
@@ -229,12 +241,12 @@
 			//답글 쓰는 공간
 			var replyContents = $("<div></div>");
 			replyContents.addClass("replyContents");
-			replyContents.attr("contenteditable","true");				
+			replyContents.attr("contenteditable","true");
+			
 			
 			//답글버튼추가
 			var replyBtns = $("<div></div>");
 			replyBtns.addClass("replyBtns");			
-
 			
 			//버튼DIV 추가
 			replyBtns.append(registerReplyBtn);
@@ -247,17 +259,12 @@
 			registerChildDiv.append(userReply);
 			registerChildDiv.append(replyBtns);
 			userReply.append(replyContents);
-			userInfo.append(registerChildDiv); // 유저인포밑에 어펜드..		
-			
-			var childReply = $(this).closest(".replyBtns").siblings(".childReply").eq(0);
-			console.log(childReply);
+			userInfo.append(registerChildDiv); //유저인포밑에 어펜드..		
 			//--------------------------------------------------------  		
 		});
 		$('#exampleModal').on('shown.bs.modal', function (event) {
 			var seq = $(event.relatedTarget).data('id');
-			console.log("seq : "+seq);
 			var feed_seq = $("#exampleModal").attr("feed_seq",seq);
-			console.log("##" + feed_seq)
 			$.ajax({
 				type:"post",
 				url:"/feed/detailView",
@@ -266,6 +273,7 @@
 				},
 				dataType:"json"
 			}).done(function(data){
+				$(".reply").children().remove(); // 클릭할때마다 다른 게시글에 댓글지우기 
 				console.log(data);
 				var writerProfile = data.writerProfile;
 				var likeCheck = data.likeCheck;
@@ -273,8 +281,6 @@
 				var mediaList = JSON.parse(data.media);
 				var replyList = JSON.parse(data.replyList);
 				var dto = JSON.parse(data.dto);
-				console.log(mediaList.length);
-				console.log(replyList.length + " : 리플라이리스트 사이즈입니다.")
 				//디테일뷰 미디어
 				if(mediaList.length>0){ //미디어가 존재하므로 캐러셀 만들어줌
 					console.log("캐러셀 시작");
@@ -297,47 +303,64 @@
 					cei.append(ol);
 					
 					var cInner = $("<div class='carousel-inner'></div>");
-// 					var replyList = "";
-// 					for(var i=0; i<replyList.length; i++){
-// 						if(replyList.parent = 0){
-							
-// 					replyList += "<div class='reply'>"
-// 					replyList += 	"<div class='writerInfo'>"
-// 					replyList +=    		"<span class='writerProfile'><img src='"+writerProfile.profile_img+"' class='writerProfileImg'></span>"
-// 					replyList += 		"<span class="writerProfileID">asdsadas</span>"
-// 					replyList += 		<span class="text"><p>asdasd</p></span>
-// 					replyList +=    </div>     
-// 					replyList += "<div class='userInfo' reply_seq='"+replyList.reply_seq+"'>"
-// 					replyList += <span class="userProfile">
-// 					replyList += 		<img class="userProfileImg" src="/resources/images/dog.jpg" alt="">
-// 					replyList +=   </span>
-// 					replyList +=           <div class="profileDiv">
-// 					replyList +=         	  <span class="userProfileID">qqqqq@naver.com</span>
-// 	             	replyList +=          <span class="userReply">
-// 	             	replyList +=       	  <div class="replyContents">sadasd</div>
-// 	             	replyList +=        </span>
-// 	             	replyList +=        </div>	               
-// 	             	replyList +=        <div class="replyBtns">
-// 	             	replyList +=        		<button type="button" class="modifyReply">수정</button><button type="button" class="deleteReply">삭제</button>
-// 	             	replyList +=        		<button type="button" class="registerChildBtn">답글</button>
-// 	             	replyList +=       </div>
-// 	             	replyList +=       <div class="childReply" reply_seq="968">
-// 	             	replyList +=     		<span class="userProfile">
-// 	               	replyList +=     			<img class="userProfileImg" src="/files/null_profile_img.jpg" alt="사진오류">
-// 	               	replyList +=      		</span>
-// 	             	replyList +=      		<span class="userProfileID">kimsewon</span>
-// 	               	replyList +=      <span class="userReply">
-// 	              	replyList +=      		<div class="replyContents" contenteditable="false">sadasd</div>
-// 	               	replyList +=      </span>
-// 	                replyList +=       <div class="replyBtns">
-// 	                replyList +=      		<button class="modifyChildBtn">수정</button>
-// 	               	replyList +=      		<button class="deleteChildReplyBtn">삭제</button>
-// 	               	replyList +=      </div>
-// 	               	replyList +=      </div>
-// 	               	replyList +=      </div>
-// 	                replyList +=      "</div>"
-// 						}
-// 					}
+					
+
+	    			
+					
+					var replyhtml = "";
+					for(var i=0; i<replyList.length; i++){
+						if(replyList[i].parent == 0){
+							replyhtml += "<div class='userInfo' reply_seq='"+replyList[i].reply_seq+"'>"							
+							replyhtml += "<div class='profileDiv'>"
+							replyhtml += "<span class='userProfile'>"
+							replyhtml += 		"<img class='userProfileImg' src=${loginInfo.profile_img } alt=''>"
+							replyhtml +=   "</span>"
+							replyhtml +=         	"<span class='userProfileID'>${loginInfo.nickname }</span>"
+							replyhtml +=          "<span class='userReply'>"
+			             	replyhtml +=       	  "<div class='replyContents'>"+replyList[i].contents+"</div>"
+			             	replyhtml +=       "</span>"
+			             	replyhtml +=        "</div>"	               
+			             	replyhtml +=        "<div class='replyBtns'>"
+			             	replyhtml +=        		"<button type='button' class='modifyReply'>수정</button><button type='button' class='deleteReply'>삭제</button>"
+			             	replyhtml +=        		"<button type='button' class='registerChildBtn'>답글</button>"
+			             	replyhtml +=       "</div>"			             	
+			             	replyhtml +=   "</div>";
+						}
+					}
+
+					
+					
+	    			$(".reply").append(replyhtml);
+					
+					for(var i=0; i<replyList.length; i++){
+						if(replyList[i].parent != 0){
+							var childhtml = "";
+							var currentSeq = replyList[i].parent;
+							childhtml +=       "<div class='childReply' style='display:none' reply_seq='"+replyList[i].reply_seq+"' parent_seq='"+replyList[i].parent+"'>"
+							childhtml +=     		"<span class='userProfile'>"
+							childhtml +=     			"<img class='userProfileImg' src=${loginInfo.profile_img } alt='사진오류'>"
+							childhtml +=      		"</span>"
+							childhtml +=      		"<span class='userProfileID'>"+replyList[i].email+"</span>"
+							childhtml +=      "<span class='userReply'>"
+							childhtml +=      		"<div class='replyContents' contenteditable='false'>"+replyList[i].contents+"</div>"
+					       	childhtml +=      "</span>"
+					        childhtml +=      "<div class='replyBtns'>"
+					        childhtml +=      		"<button class='modifyChildBtn'>수정</button>"
+			           		childhtml +=      		"<button class='deleteChildReplyBtn'>삭제</button>"
+				       		childhtml +=      "</div>"
+		             		childhtml +=      "</div>";
+		             		$(".userInfo[reply_seq="+currentSeq+"]").append(childhtml);
+							if($(".userInfo[reply_seq="+currentSeq+"]").find(".childReply").length > 0){
+								$(".userInfo[reply_seq="+currentSeq+"]").attr("child",1);
+							}
+						}
+					}
+					//댓글숨기기 
+					console.log($(".userInfo").attr("child"));
+					$(".userInfo[child=1]").children(".replyBtns").append(showReply);
+					
+	    		
+	    			
 					var prevA = $("<a class='carousel-control-prev' href='#carouselExampleIndicators' role='button' data-slide='prev'></a>");
 					prevA.append("<span class='carousel-control-prev-icon' aria-hidden='ture'></span>");
 					prevA.append("<span class='sr-only'>Previous</span>");
@@ -352,6 +375,59 @@
 					mediaRow.append(cei);
 					$(".modal-body1").html(mediaRow);
 				}
+// 				var replyhtml = "";
+// 				var childReply = "";
+				
+// 				console.log("length : "+replyList.length);
+// 				for(var i=0; i<replyList.length; i++){
+// 					console.log("부모댓글 : "+replyList[i].parent);
+// 					console.log("시퀀스 : "+replyList[i].reply_seq);
+// 					if(replyList[i].parent == 0){
+// 						var tmp = i;
+// 						replyhtml += "<div class='userInfo' reply_seq='"+replyList[i].reply_seq+"'>"
+// 						replyhtml += "<span class='userProfile'>"
+// 						replyhtml += 		"<img class='userProfileImg' src=${loginInfo.profile_img } alt=''>"
+// 						replyhtml +=   "</span>"
+// 						replyhtml +=           "<div class='profileDiv'>"
+// 						replyhtml +=         	"<span class='userProfileID'>${loginInfo.nickname }</span>"
+// 						replyhtml +=          "<span class='userReply'>"
+// 		             	replyhtml +=       	  "<div class='replyContents'>"+replyList[i].contents+"</div>"
+// 		             	replyhtml +=       "</span>"
+// 		             	replyhtml +=        "</div>"	               
+// 		             	replyhtml +=        "<div class='replyBtns'>"
+// 		             	replyhtml +=        		"<button type='button' class='modifyReply'>수정</button><button type='button' class='deleteReply'>삭제</button>"
+// 		             	replyhtml +=        		"<button type='button' class='registerChildBtn'>답글</button>"
+// 		             	replyhtml +=       "</div>"		   
+// 			            if(replyList[i+1] != undefined){
+// 			            	console.log(replyList[i+1].parent);
+// 			            }			            
+// 		             	while(replyList[i].parent!=0){		             	
+// 						replyhtml +=       "<div class='childReply' reply_seq='"+replyList[i].reply_seq+"'>"
+// 						replyhtml +=     		"<span class='userProfile'>"
+// 							replyhtml +=     			"<img class='userProfileImg' src=${loginInfo.profile_img } alt='사진오류'>"
+// 									replyhtml +=      		"</span>"
+// 										replyhtml +=      		"<span class='userProfileID'>"+replyList[i].email+"</span>"
+// 								replyhtml +=      "<span class='userReply'>"
+// 				             		replyhtml +=      		"<div class='replyContents' contenteditable='false'>"+replyList[i].contents+"</div>"
+// 				             	replyhtml +=      "</span>"
+// 				             		replyhtml +=      "<div class='replyBtns'>"
+// 				            		replyhtml +=      		"<button class='modifyChildBtn'>수정</button>"
+// 				             		replyhtml +=      		"<button class='deleteChildReplyBtn'>삭제</button>"
+// 				             		replyhtml +=      "</div>"
+// 				             		replyhtml +=      "</div>"   
+// 				             		i++;
+// 						}
+						
+// 					}
+// 					replyhtml +=   "</div>"
+// 					if(tmp+1 == i){
+// 						i=i-1;
+// 					}
+
+// 				}
+//     			$(".reply").append(replyhtml);
+				
+				
 				//디테일뷰 글
 				var textRow = $("<span class='text'></span>");
 				textRow.append(dto.contents);
@@ -383,10 +459,11 @@
 				bookmarkA.append(bookmarkS);
 				bookmarkS.append(bookmarkI); 
 				
-				$(".modal-btns").html("");
-				$(".modal-btns").append(likeA);
-				$(".modal-btns").append(bookmarkA);
-
+				var modalBtns = $("<div></div>");
+				modalBtns.addClass("modal-btns");
+				modalBtns.append(likeA);
+				modalBtns.append(bookmarkA);
+				$(".modal-body1").append(modalBtns);
 				$(".writerProfile").html("<img src="+writerProfile+" class='writerProfileImg'>");
 				
 			})
@@ -394,23 +471,52 @@
 			
 		})
 		
+		//답글보이기
+			$(document).on("click",".showReply", function(){
+			var parent_seq = $(this).closest(".userInfo").attr("reply_seq");
+			var parentDiv = $(".userInfo[reply_seq="+parent_seq+"]");
+			console.log(parent_seq + " ###### showReply");
+			if($(".userInfo[reply_seq="+parent_seq+"]").find(".childReply").length == 0){
+				userInfoDiv.attr("child",0);
+			}
+			parentDiv.find(".childReply").show();
+			parentDiv.find(".replyBtns").children(".showReply").remove();
+			parentDiv.children(".replyBtns").append(hideReply);
+		});
+
+		//답글숨기기
+			$(document).on("click",".hideReply", function(){
+			var parent_seq = $(this).closest(".userInfo").attr("reply_seq");
+			var parentDiv = $(".userInfo[reply_seq="+parent_seq+"]");
+			console.log(parent_seq + " ###### hideReply");
+			if($(".userInfo[reply_seq="+parent_seq+"]").find(".childReply").length == 0){
+				userInfoDiv.attr("child",0);							
+				}
+			childReplyButton.attr("hidden", false);
+			$("div[value=1]").remove();
+			parentDiv.find(".childReply").hide();
+			parentDiv.find(".replyBtns").children(".hideReply").remove();
+			parentDiv.children(".replyBtns").append(showReply);
+		});
+		
 		//답글등록버튼
 		$(document).on("click",".registerChildReply", function(){
+			console.log(childReplyButton + "## >>>????");
 			if($(".replyContents").html.length > 0){
 				childReplyButton.attr("hidden", false);
 			}		
 			clickCnt = 1;
 			var feed_seq = $("#exampleModal").attr("feed_seq");
 			var reply_seq = $(this).closest(".userInfo").attr("reply_seq");
-			var child_replySeq = $(this).closest(".childReply");
+			var childReply = $(this).closest(".childReply");
 			
-			child_replySeq.attr("value", 0);
+			childReply.attr("value", 0);
 			
 			var replyWriter = $(this).closest(".childReply").siblings(".profileDiv").find(".userProfileID").html(); //부모댓글의 닉네임
 			var childReplyContents = $(this).closest(".replyBtns").siblings(".userReply").find(".replyContents").html();
 			var replyContents = $(this).closest(".replyBtns").siblings(".userReply").find(".replyContents");
-			var btns = $(this).closest(".replyBtns").children();
-			var btnsDiv = $(this).closest(".replyBtns");
+			var replyBtns = $(this).closest(".replyBtns");
+			replyBtns.attr("value", 1);
 			$.ajax({
 				type : "POST",
 				url : "${pageContext.request.contextPath }/feed/registerReply",
@@ -418,11 +524,15 @@
 				dataType:"json"		
 			}).done(function(resp) {
 				console.log('성공적으로 성공');
-				btns.remove();
-				btnsDiv.append(modifyChildBtn);
-				btnsDiv.append(deleteChildReplyBtn);
+				$(".userInfo[reply_seq="+resp.parent+"]").attr("child",1);
+				$(".userInfo[reply_seq="+resp.parent+"]").children(".replyBtns").append(hideReply);
+				childReply.attr("parent_seq",resp.parent);
+				$("div[value=1]").remove();
+				replyBtns.children().remove();
+				replyBtns.append(modifyChildBtn);
+				replyBtns.append(deleteChildReplyBtn);
 				replyContents.attr("contentEditable","false");
-				child_replySeq.attr("reply_seq",resp.reply_seq);
+				childReply.attr("reply_seq",resp.reply_seq);
 				clickCnt = 2;
 				console.log("등록완료 : cnt : " + clickCnt);
 			}).fail(function(){
@@ -433,6 +543,7 @@
 		$(document).on("click",".deleteChildReplyBtn", function(){
 			var reply_seq = $(this).closest(".childReply").attr("reply_seq");
 			var deleteDiv = $(this).closest(".childReply");
+			var userInfoDiv = $(this).closest(".userInfo");
 			$.ajax({
 				type : "POST",
 				url : "${pageContext.request.contextPath }/feed/deleteReply",
@@ -440,6 +551,10 @@
 			}).done(function(resp) {
 				console.log(resp + "행 댓글이 지워짐!");
 				deleteDiv.remove();
+				if($(".userInfo[reply_seq="+parent_seq+"]").find(".childReply").length == 0){
+					userInfoDiv.attr("value",0);
+					userInfoDiv.find(".showReply").remove();
+				}
 			}).fail(function(){
 				alert("yes!");
 			})
@@ -457,7 +572,7 @@
 			var replyBtns = $(this).closest(".replyBtns");
 			temporaryReply = oriReply.html();
 			oriReply.attr("contentEditable","true");
-			$(this).closest(".replyBtns").children().remove();			
+			replyBtns.children().remove(); //버튼들 지우기~		
 			replyBtns.append(modifyChildReplySuccess);
 			replyBtns.append(modifyChildReplyCancel);
 		})
@@ -468,8 +583,7 @@
 			console.log(temporaryReply + "##답글수정취소버튼!");
 			oriReply.html(temporaryReply);
 			oriReply.attr("contentEditable","false");			
-			$(this).closest(".replyBtns").children().remove();
-
+			replyBtns.children().remove(); //버튼들 지우기~
 			replyBtns.append(modifyChildBtn);
 			replyBtns.append(deleteChildReplyBtn);
 		});

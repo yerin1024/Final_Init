@@ -71,9 +71,8 @@
 	width: 35px; height: 35px;
 	margin: 0px;
 }
-
+/* 	border: 1px solid red; */
 .sector {
-	/*            border: 1px solid #e6abb5;*/
 	min-height: 60px;
 }
 
@@ -440,6 +439,71 @@ margin-bottom: 1px;
 	margin-left: 10px;
 }
 
+#searchTitle {
+	/*            border: 1px solid blue;*/
+	height: 30px;
+	margin-bottom: 20px;
+}
+
+#searchFriend1 {
+	/*            border: 1px solid #d96d00;*/
+	float: left;
+	width: 20px;
+	height: 20px;
+	margin-left: 16px;
+	margin-right: 3px;
+	margin-top: 2px;
+}
+
+#searchFriendImg {
+	width: 100%;
+}
+
+#searchFriend2 {
+	/*            border: 1px solid black; */
+	float: left;
+	width: 120px;
+	height: 30px;
+	line-height: 30px;
+	color: white;
+	font-size: 14px;
+}
+
+#noFriendInside {
+	/*            border: 1px solid green;*/
+	height: 50px;
+	width: 170px;
+	margin: auto;
+	padding-top: 10px;
+	background-color: #3f62a0;
+	border-radius: 10px;
+}
+
+#noMessageExist {
+	/*        border: 1px solid red;*/
+	color: #717171;
+	height: 400px;
+	line-height: 400px;
+	text-align: center;
+}
+
+#noAlarmExist {
+	text-align: center;
+	height: 290px;
+	line-height: 300px;
+	color: gray;
+}
+
+/* ---------------------------------------------------------------------------------------- */
+/* ---------------------------------------------------------------------------------------- */
+/* ---------------------------------------------------------------------------------------- */
+/* ---------------------------------------------------------------------------------------- */
+/* ---------------------------------------------------------------------------------------- */
+/* ---------------------------------------------------------------------------------------- */
+/* ---------------------------------------------------------------------------------------- */
+/* ---------------------------------------------------------------------------------------- */
+/* ---------------------------------------------------------------------------------------- */
+/* ---------------------------------------------------------------------------------------- */
 /* ---------------------------------------------------------------------------------------- */
 /* ---------------------------------------------------------------------------------------- */
 /* ---------------------------------------------------------------------------------------- */
@@ -452,6 +516,7 @@ margin-bottom: 1px;
 /* ---------------------------------------------------------------------------------------- */
 
 @media ( max-width : 700px ) {
+	
 	.ac2 {
 		position: fixed;
 		bottom: 580px;
@@ -487,6 +552,7 @@ margin-bottom: 1px;
 		/*            border-radius: 10px;*/
 		overflow: scroll;
 		overflow-x: hidden;
+		z-index: 999;
 	}
 	#view1::-webkit-scrollbar-track {
 		-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
@@ -637,6 +703,7 @@ margin-bottom: 1px;
 	.pre_time {
 		/*            border: 1px solid blue;*/
 		width: 60px;
+		height: 70px;
 		text-align: center;
 		line-height: 60px;
 		float: right;
@@ -727,6 +794,10 @@ margin-bottom: 1px;
 	}
 
 	/*    [class^=pre] { height: 60px; }*/
+	.ppre_line {
+		padding-top: 8px;
+		height: 80px;
+	}
 	.pre_line {
 		/*	 border: 1px solid black;   */
 		padding-top: 8px;
@@ -845,4 +916,74 @@ margin-bottom: 1px;
 		color: white;
 		border-radius: 10px;
 	}
+
+	/* 친구를 만들어 보세요 ------------------------------------------------------- */
+/* 	#noFriendExist { */
+/* 		           border: 1px solid green; */
+
+/* 		height: 100px; */
+/* 		text-align: center; */
+/* 		margin-top: 170px; */
+/* 	} */
+	#noMessageExist {
+		/*            border: 1px solid green;*/
+		height: 400px;
+		text-align: center;
+	}
 }
+
+/* no exist new ---------------------------- */
+
+#noFriendExistContainer {
+	
+}
+
+#noFriendExist {
+	/*            border: 1px solid red;*/
+	text-align: center;
+	margin-top: 160px;
+	width: 100%;
+	height: 80px;
+	color: gray;
+}
+
+#toSearchUser {
+	width: 150px;
+	height: 40px;
+	margin: auto;
+	margin-top: 10px;
+	border-radius: 10px;
+	background-color: #3f52a0;
+}
+
+#toSearchUser1 {
+	float: left;
+	margin-left: 15px;
+	margin-top: 5px;
+	width: 20px;
+	height: 25px;
+}
+
+#toSearchUserIcon {
+	width: 100%;
+	height: 100%;
+}
+
+#toSearchUser2 {
+	float: left;
+	width: 90px;
+	height: 25px;
+	margin-top: 9px;
+	margin-left: 8px;
+	color: white;
+	font-size: 14px;
+}
+
+#noMsgExist {
+	text-align: center;
+	margin-top: 180px;
+	width: 100%;
+	height: 30px;
+	color: #444444;
+}
+>>>>>>> 2d6420fce94631092cc6143363ec7b9f0c4bec8c

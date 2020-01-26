@@ -13,7 +13,7 @@
 				</div>
 			</div>
 
-            <div class="nav-center"></div>
+            <div class="nav-center"></div> 
         <div class="nav-right">
         <ul class="nav justify-content-end">
             <li class="nav-item">

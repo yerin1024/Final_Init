@@ -49,19 +49,32 @@
 	<!-- 알림 목록 -->
 	<select id="alarmList" resultType="kh.init.alarm.AlarmVO"> 
 		select
-		    alarm_seq, type, applied_seq, reg_date, alarm_check, al.email email, 
-		    re.feed_seq feed_seq_r, reply_seq, re.email email_r, contents, 
-		    friend_seq, from_id, to_id, 
-		    like_seq, lk.feed_seq feed_seq_l, lk.email email_l, 
-		    mem.nickname nickname_m
-		from tb_alarm al
-		full outer join tb_reply re on al.applied_seq = re.reply_seq
-		full outer join tb_friend_request fr on al.applied_seq = fr.friend_seq
-		full outer join tb_like lk on al.applied_seq = lk.like_seq
-		full outer join tb_member mem on lk.email = mem.email
-		where al.email= #{email}
-		order by alarm_seq desc
+		    alarm_seq, type, reg_date, alarm_check, al.email email, 
+		    re.feed_seq replyfeed, re.reply_seq, re.email replyer, contents, 
+		    like_seq, lk.feed_seq likefeed, lk.email liker, 
+		    fr.from_id fr_requester, 
+		    mem.email member_email, nickname, profile_img  
+		from tb_alarm al 
+		full outer join tb_reply re on re.reply_seq = al.applied_seq 
+		full outer join tb_like lk on lk.like_seq = al.applied_seq 
+		full outer join tb_friend_request fr on fr.friend_seq = al.applied_seq 
+		full outer join tb_member mem on re.email= mem.email or lk.email = mem.email or fr.from_id = mem.email 
+		where al.email=#{email} and ( mem.email !=#{email})
+		order by 1 desc
 	</select>
+	<!-- 		select -->
+	<!-- 		    alarm_seq, type, applied_seq, reg_date, alarm_check, al.email email,  -->
+	<!-- 		    re.feed_seq feed_seq_r, reply_seq, re.email email_r, contents,  -->
+	<!-- 		    friend_seq, from_id, to_id,  -->
+	<!-- 		    like_seq, lk.feed_seq feed_seq_l, lk.email email_l,  -->
+	<!-- 		    mem.nickname nickname_m -->
+	<!-- 		from tb_alarm al -->
+	<!-- 		full outer join tb_reply re on al.applied_seq = re.reply_seq -->
+	<!-- 		full outer join tb_friend_request fr on al.applied_seq = fr.friend_seq -->
+	<!-- 		full outer join tb_like lk on al.applied_seq = lk.like_seq -->
+	<!-- 		full outer join tb_member mem on lk.email = mem.email -->
+	<!-- 		where al.email= #{email} -->
+	<!-- 		order by alarm_seq desc -->
 	
 	<!-- 읽음 완료로 변경 -->
 	<update id="alarmCheck"> 

@@ -375,6 +375,30 @@ public class FeedService {
 		}
 		return list;
 	}
+	
+	//controller-detailView에서 media 목록을 얻기 위한 service(친구를 위한)
+	public List<String> getMediaListForFriendFeed(int feed_seq) throws Exception{
+	List<String> list = dao.getMediaList(feed_seq);
+	System.out.println("service list : "+list.toString());
+
+	if(list.size()==0) {
+		
+	}else {
+		System.out.println("list size = "+list.size());
+		for(int i=0; i<list.size(); i++) {
+			if(list.get(i).endsWith("mp4")) { //파일이 동영상일 경우
+				System.out.println("파일이 동영상입니다.");
+				String video = "<video class='cover' src=\""+list.get(i)+"\">";
+				list.set(i, video);
+			}else {//파일이 이미지
+				System.out.println("파일이 이미지입니다.");
+				String img = "<img class='cover' src=\""+list.get(i)+"\">";
+				list.set(i, img);
+			}
+		}
+	}
+	return list;
+}
 
 	//controller-detailView에서 profile_img 목록을 얻기 위한 service
 	public String getProfile_img(String email) throws Exception{
@@ -442,6 +466,7 @@ public class FeedService {
 		map.put("email", dto.getEmail());
 		map.put("contents", dto.getContents());
 		map.put("reply_seq", dto.getReply_seq());
+		map.put("parent", dto.getParent());
 		String jsonString = gson.toJson(map);
 		return jsonString;
 	}
