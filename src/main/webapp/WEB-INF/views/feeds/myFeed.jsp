@@ -6,9 +6,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title></title>
-<link rel="stylesheet" href="/resources/css/nav.css">
+<link rel="stylesheet" href="/resources/css/nav.css?new"> 
 <link rel="stylesheet" href="/resources/css/msg.css"> 
 <link rel="stylesheet" href="/resources/css/alr.css"> 
 <link rel="stylesheet" href="/resources/css/test.css">

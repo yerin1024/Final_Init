@@ -23,7 +23,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.js"></script>
 
-<link rel="stylesheet" href="/resources/css/nav.css">
+<link rel="stylesheet" href="/resources/css/nav.css?new"> 
 <link rel="stylesheet" href="/resources/css/alr.css">
 <link rel="stylesheet" href="/resources/css/msg.css">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">

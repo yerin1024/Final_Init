@@ -17,9 +17,13 @@
 				</div>
             </div>
             
+            <button class="navbar-hbg" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+			    <span class="navbar-hbg-icon"><img src='/images/hbg.png'></span>
+			  </button>
+            
             <div class="nav-center"></div>
-        <div class="nav-right">
-        <ul class="nav justify-content-end bubblemenu">
+        <div class="nav-right navbar-collapse" id="navbarSupportedContent">
+        <ul class="nav justify-content-end bubblemenu navbar-nav mr-auto">
             <li class="nav-item">
               <a class="nav-link active" href="${pageContext.request.contextPath}/feed/wholeFeed" style="padding-top: 12px;"><img id="total_feed" src="/resources/images/friends.png"></a>
             </li>

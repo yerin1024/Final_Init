@@ -26,7 +26,7 @@
 	rel="stylesheet">
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.js"></script>
-<link rel="stylesheet" href="/resources/css/nav.css"> 
+<link rel="stylesheet" href="/resources/css/nav.css?new"> 
 <link rel="stylesheet" href="/resources/css/msg.css"> 
 <link rel="stylesheet" href="/resources/css/alr.css">
 <link rel="stylesheet" href="/resources/css/test.css">
