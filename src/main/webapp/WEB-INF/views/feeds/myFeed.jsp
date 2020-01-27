@@ -1300,11 +1300,9 @@
 						<button type="button" id="sendCode">인증번호
 							전송</button>
 						<span id="timer" readonly></span>
-						<button type="button" id="resendCode" onclick="checkOverlap();"
-							hidden>인증번호 재전송</button>
+						<button type="button" id="resendCode" hidden>인증번호 재전송</button>
 						<br>
-						<button type="button" id="confirmVerifyCode"
-							onclick="confirmVerifCode();" hidden>인증번호 확인</button>
+						<button type="button" id="confirmVerifyCode" hidden>인증번호 확인</button>
 						<br>
 						<p class="advise" id="adviseVerifCode" readonly></p>
 						<p class="hiddenResp" id="hiddenRespVerifCode" hidden></p>
@@ -1312,7 +1310,6 @@
 					<div class="footer" style="text-align: center;">
 						<button type=button id="withdrawMem">회원탈퇴</button>
 						<button type=button id="changeMyInfo">수정완료</button>
-<!-- 						<button type=button id="changeMyInfo" onclick="formValidation();">수정완료</button> -->
 						<button type=button id="backToFeed">뒤로가기</button>
 					</div>
 				</form>
@@ -1321,7 +1318,46 @@
 	</div>
 </div>	
 <!-- 	내 정보 수정 끝 -->
-	
+
+<!-- 내 프로필 수정 시작 -->
+<form action="${pageContext.request.contextPath}/member/changeProfile" method="post" enctype="multipart/form-data" id="profileFrm">
+        <div class="container">
+            <div class="profileContainer">
+                <div class="modal fade" id="modalProfile" tabindex="-1" role="dialog" aria-labelledby="modalProfileTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header header" style="color:white;">
+                                <h5 class="modal-title" id="title">프로필 편집</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body" style="text-align:center; color:#0D4373;">
+                                <label style="margin:auto;">프로필 사진</label><br>
+                                <img src="/resources/images/default_profile_img.png" id="setProfile" style="margin:auto; width:30%; border-radius:50%"><br><br>
+                                <button type="button" id="deletePic">X</button>
+                                <input type="file" id="profileImg" name="profileImg" ><br> 
+                                <p class="adviseOut" id="adviseProfile" readonly>*프로필 사진 미등록시 기본이미지로 등록됩니다.</p>
+                                <label>닉네임 : </label>
+                                <input type="text" id="inputNick" name="nickname" maxlength="20">
+                                <label class="adviseIn" id="adviseInNickname" hidden></label><br>
+                                <p class="adviseOut" id="adviseNickname" readonly>*4~20자 영문 대 소문자, 숫자, 특수문자(_)만 사용 가능합니다.</p>
+                                <label>상태 매세지 : </label>
+                                <input type="text" id="inputProfile_msg" name="profile_msg" maxlength="200">
+                                <label class="adviseIn" id="adviseInProfile-msg" hidden></label><br>
+                                <p class="adviseOut" id="adviseProfile-msg" readonly>*200자 이내로 입력 가능합니다.</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" id="changeProfileBtn" onclick="formValidation();" style="color:#0D4373; width:200px; margin-right:5%;">편집 완료</button>
+                                <button type="button" id="cancelBtn"  style="color:#0D4373; width:200px; margin-right:5%;">취소</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+<!-- 내 프로필 수정 끝	 -->
 
 	
 	<script>	
@@ -1711,12 +1747,120 @@
 
 			
 	
-		$("#changeProfile")
-				.on(
-						"click",
-						function() {
-							location.href = "${pageContext.request.contextPath}/member/goMyProfile";
-						})
+		$("#changeProfile").on("click", function() {
+			var doc = document;
+	        var changeProfile = doc.getElementById("changeProfile");
+	        var nickname = doc.getElementById("inputNick");
+	        var profile_msg = doc.getElementById("profile_msg");
+	        
+	        var adviseNickname = doc.getElementById("adviseNickname");
+	        var adviseInNickname = doc.getElementById("adviseInNickname");
+	        var adviseIn = doc.getElementsByClassName("adviseIn");
+
+	        var deletePic = doc.getElementById("deletePic");
+	        var setProfile = doc.getElementById("setProfile");
+	        var profile_img = doc.getElementById("profileImg");
+			
+			$.ajax({
+				url: "${pageContext.request.contextPath}/member/goMyProfile",
+				type: "post",
+				dataType: "json",
+				data: {email : "${loginInfo.email}"}
+			}).done(function(data){
+				var dto = JSON.parse(data.dto)
+				$('#modalProfile').modal('show');
+				nickname.value = dto.nickname;
+				console.log("profile_msg : " + dto.profile_msg);
+				if(typeof dto.profile_msg != "undefined"){
+					profile_msg.value = dto.profile_msg;
+				}
+				setProfile.src = dto.profile_img;
+								
+				 function readURL(input) {
+			            if (input.files && input.files[0]) {
+			                	var reader = new FileReader();                
+			                	reader.onload = function (e) {
+				                    console.log(profile_img.value);  // 파일명                
+				                    setProfile.src = e.target.result; 
+			               		}                
+			                reader.readAsDataURL(input.files[0]);
+			            }
+			        }
+
+			        profile_img.addEventListener("change", function(){
+			            readURL(this);
+			        });
+
+			        deletePic.addEventListener("click", function(){
+			            setProfile.src = "resources/default_profile_img.png";
+			        });     
+
+			        nickname.addEventListener("keyup", function(){
+			            rawStr = nickname.value;
+			            console.log(rawStr);
+			            var regExp = /^[A-Za-z]{1}[A-Za-z0-9\_]{2,18}[A-Za-z0-9]{1}$/;
+			            if(regExp.test(rawStr)){
+			                console.log("validate");
+			                adviseNickname.innerHTML = "";
+			                $.ajax({
+			                url : "${pageContext.request.contextPath}/guest/checkNickname.do",
+			                data : {nickname : rawStr},
+			                dataType : "json",
+			                type : "post"
+			                }).done(function(resp){
+			                    console.log(resp);
+			                    console.log(resp.result);
+			                    if(resp.result == "available"){
+			                    	adviseNickname.innerHTML = "사용가능";
+			                    	adviseNickname.style.color = "green";
+			                        adviseInNickname.innerHTML = "사용가능";
+			                    }else{
+			                    	adviseNickname.innerHTML = "중복된 닉네임입니다.";
+			                    	adviseNickname.style.color = "red";
+			                        adviseInNickname.innerHTML = "사용불가";
+			                        return false;
+			                    }
+			                }).fail(function(a,b,c){                	
+			                    console.log(a);
+			                    console.log(b);
+			                    console.log(c);
+			                    return false;
+			                });
+			            }else{
+			                adviseNickname.innerHTML = "올바른 닉네임이 아닙니다."
+			                adviseNickname.style.color = "red";
+			                adviseInNickname.innerHTML = "사용불가";
+			                console.log("invalidate");
+			            }
+			        });
+			        
+					$("#changeProfileBtn").on("click", function(){
+						for(var i = 0; i < adviseIn.length; i++){
+			                if(adviseIn[i].innerHTML === "사용불가"){
+			                    console.log("유효성 통과 탈락");
+			                    return false;
+			                }
+			            }
+			        	if(nickname.value === ""){
+			            	adviseNickname.innerHTML = "필수 입력사항입니다."
+			                adviseNickname.style.color = "red";
+			                return false;
+			            }
+			            console.log("완성 닉네임 : " + nickname.value);
+			            doc.getElementById("profileFrm").submit();
+					}); 
+			        //submit 직전 유효성 검사
+
+			        $("#cancelBtn").on("click", function() {
+							location.href = "${pageContext.request.contextPath}/feed/myFeed?email=${dto.email}";
+						});
+				
+			}).fail(function(a,b,c){
+				console.log(a);
+				console.log(b);
+				console.log(c);
+			});
+		})
 		
 		
 		$('#closeModalBtn2').on('click', function() {
@@ -2351,7 +2495,7 @@
         console.log(tid);
         clearInterval(tid); //기존 카운트다운 삭제
         setTime = 300; //카운트다운 초기화                        
-
+        phone.value = phone1.value + phone2.value + phone3.value;
         if (phone.value != "") {
             $.ajax({
                 url: "${pageContext.request.contextPath}/guest/checkOverlap.do",
@@ -2462,9 +2606,9 @@
     }
     //인증번호 제한시간 이벤트 end  
 
-    //사용자 입력 인증번호 일치여부 검사 start
-    function confirmVerifCode() {
-        $.ajax({
+    //사용자 입력 인증번호 일치여부 검사 start    
+    $("#confirmVerifyCode").on("click", function(){
+    	$.ajax({
             url: "${pageContext.request.contextPath}/guest/verifyUser.do",
             data: {
                 verifyCode: verifyCode.value
@@ -2498,7 +2642,7 @@
             console.log(c);
             return false;
         });
-    }
+    });
     //사용자 입력 인증번호 일치여부 검사 end  
 
     //생년월일 select option 생성 start

@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -122,13 +123,6 @@ public class MemberController {
 			String boption1 = dto.getBirth().substring(0, 4);
 			String boption2 = dto.getBirth().substring(5, 6);
 			String boption3 = dto.getBirth().substring(6, 8);
-//			model.addAttribute("dto", dto);
-//			model.addAttribute("poption1", poption1);
-//			model.addAttribute("poption2", poption2);
-//			model.addAttribute("poption3", poption3);
-//			model.addAttribute("boption1", boption1);
-//			model.addAttribute("boption2", boption2);
-//			model.addAttribute("boption3", boption3);
 			JsonObject obj = new JsonObject();
 			Gson g = new Gson();
 			obj.addProperty("dto", g.toJson(dto));
@@ -147,8 +141,9 @@ public class MemberController {
 		}
 	}
 
-	@RequestMapping("/goMyProfile") //내 프로필(편집) 가기
-	public String goMyProfile(String email, Model model) {
+	@RequestMapping(value="/goMyProfile", produces="text/html;charset=UTF-8") //내 프로필(편집) 가기
+	@ResponseBody
+	public String goMyProfile(String email) {
 		System.out.println("개인 프로필 수정 CON 도착.");
 		try {
 			MemberDTO mDto = (MemberDTO)session.getAttribute("loginInfo");
@@ -156,10 +151,12 @@ public class MemberController {
 			System.out.println(dto.getProfile_img());
 			System.out.println(dto.getNickname());
 			System.out.println(dto.getProfile_msg());
-
-			model.addAttribute("dto", dto);
-
-			return "members/myProfile";
+			
+			Gson g = new Gson();
+			JsonObject obj = new JsonObject();
+			obj.addProperty("dto", g.toJson(dto));
+			System.out.println(obj.toString());
+			return obj.toString();
 		}catch(Exception e) {
 			e.printStackTrace();
 			return "error";
