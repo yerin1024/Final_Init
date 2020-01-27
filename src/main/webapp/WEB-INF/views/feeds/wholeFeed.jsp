@@ -40,6 +40,8 @@ body{
 	margin:0px;
 /*     margin: auto; */
     text-align: center;
+    color:white;
+    font-size:20px;
 
 }
 .row{
