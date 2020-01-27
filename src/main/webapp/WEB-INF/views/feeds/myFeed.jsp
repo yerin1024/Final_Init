@@ -76,7 +76,6 @@
 
 }
 .row{
-<<<<<<< HEAD
 	min-width:460px;
     margin-bottom: 30px;
 }

@@ -32,7 +32,7 @@ $('#exampleModal').on('shown.bs.modal', function (event) {
 		$(".writer").html(writer);
 		$(".userProfileImg").attr("src", writerProfile);
 		//디테일뷰 미디어
-		if(mediaList.length>0){ //미디어가 존재하므로 캐러셀 만들어줌
+		if(mediaList.length>1){ //미디어가 존재하므로 캐러셀 만들어줌
 			console.log("캐러셀 시작");
 			var mediaRow = $("<div class='row media'></div>");
 			var cei = $("<div id='carouselExampleIndicators' class='carousel slide' data-interval='false'></div>");
@@ -41,7 +41,7 @@ $('#exampleModal').on('shown.bs.modal', function (event) {
 				if(i==0){
 					ol.append("<li data-target='#carouselExampleIndicators' data-slide-to='0' class='active'></li>");
 				}else{
-					ol.append("<li data-targer='#carouselExampleIndicators' data-slide-to='"+i+"'></li>");
+					ol.append("<li data-target='#carouselExampleIndicators' data-slide-to='"+i+"'></li>");
 				}
 			}
 			cei.append(ol);
@@ -66,6 +66,8 @@ $('#exampleModal').on('shown.bs.modal', function (event) {
 			cei.append(cInner);
 			mediaRow.append(cei);				
 			
+		}else if(mediaList.length==1){
+			var mediaRow = $("<div class='row media'>"+mediaList[0]+"</div>");
 		}else{
 			var mediaRow = $("<div class='media' style='height:100%;width:100%;size:20px;text-align:center;vertical-align:center'></div>");
 			mediaRow.append(dto.contents);
