@@ -22,9 +22,28 @@
         box-sizing: border-box;
     }
     
+<<<<<<< HEAD
  		.modal {
           text-align: center;
         }
+=======
+ 	.modal {
+         text-align: center;
+    }
+    @@media screen and (min-width: 768px) {
+         .modal:before {
+         	display: inline-block;
+         	vertical-align: middle;
+            content: " ";
+            height: 100%;
+         }
+    }
+    .modal-dialog {
+         display: inline-block;
+         text-align: left;
+         vertical-align: middle;
+    }
+>>>>>>> 0270c0403d6b6047c840a780fd35ecb6dca6fa9f
     
     .modal-content {
         background-color: #fffefc;
@@ -36,7 +55,6 @@
     }
 
     .modal-body {
-        /* padding: 100px; */
         padding: 30px;
     }
     
@@ -58,13 +76,11 @@
 	.tab1_loginContainer{
         display: flex;
 		width: 100%;
-        margin: 0px;
- 
+        margin: 0px; 
 	}
     .tab1_body {
         font-family: 'Noto Sans KR', sans-serif;
         width: 50%;
-
     }
     
     .tab1_logo {
@@ -350,7 +366,7 @@
                                 <div class="tab1_container">
                                     <form action="${pageContext.request.contextPath}/member/loginProc.do" method="post" id="tab1_loginForm">
                                         <div class="tab1_loginContainer">
-                                        <div class="tab1_logo d-sm-none d-md-block">
+                                        	<div class="tab1_logo">
 	                                        	<div id="logoDiv">
 	                                        		<img src="${pageContext.request.contextPath}/resources/images/mainLogo.jpg">
 	                                        	</div>   

@@ -44,8 +44,8 @@
 	overflow: scroll;
 	overflow-x: hidden;
 	padding-top: 10px;
-	padding-bottom: 10px;
-	z-index: 999;
+    padding-bottom: 10px;
+    z-index:999;
 }
 
 #view1::-webkit-scrollbar-track {
@@ -66,9 +66,9 @@
 }
 
 #cross {
+/* 	border: 1px solid red; */
 	float: right;
-	width: 35px;
-	height: 35px;
+	width: 35px; height: 35px;
 	margin: 0px;
 }
 /* 	border: 1px solid red; */
@@ -81,7 +81,6 @@
 	padding-left: 5px;
 	height: 60px;
 }
-
 .pre_line {
 	padding-left: 5px;
 	height: 60px;
@@ -135,8 +134,7 @@
 	/*        border: 1px solid red;*/
 	float: left;
 	width: 210px;
-	min-width: 150px;
-	min-height: 60px;
+	min-width: 150px; min-height: 60px;
 	line-height: 25px;
 	font-size: 14px;
 	white-space: nowrap;
@@ -283,8 +281,7 @@ ul {
 	/*            border: 1px solid red;*/
 	/*            box-shadow: 0px 0px 2px 1px #c3c3c3;*/
 }
-
-.toWhere {
+.toWhere{
 	cursor: pointer;
 }
 
@@ -335,8 +332,7 @@ ul {
 .pre_time {
 	/*            border: 1px solid blue;*/
 	width: 60px;
-	height: 60px;
-	text-align: center;
+	height: 60px; text-align : center;
 	line-height: 60px;
 	float: right;
 	margin-right: 10px;
@@ -406,18 +402,18 @@ ul {
 	min-width: 350px;
 	/*    border: 1px solid black;*/
 	float: right;
-	/* 	margin-bottom: -13px; */
-	margin-top: 1px;
-	margin-bottom: 1px;
+/* 	margin-bottom: -13px; */
+margin-top: 1px;
+margin-bottom: 1px;
 }
 
 .ul_left {
 	min-width: 350px;
 	/*    border: 1px solid red;*/
 	float: left;
-	/* 	margin-bottom: -13px; */
-	margin-top: 1px;
-	margin-bottom: 1px;
+/* 	margin-bottom: -13px; */
+margin-top: 1px;
+margin-bottom: 1px;
 }
 
 .toWhere {
@@ -441,16 +437,6 @@ ul {
 	border: 1px solid #e8e8e8;
 	height: 100%;
 	margin-left: 10px;
-}
-
-#noFriendExist {
-	/*        border: 1px solid red;*/
-	position: absolute;
-	left: 50px;
-	top: 150px;
-	color: #656565;
-	height: 100px;
-	text-align: center;
 }
 
 #searchTitle {
@@ -528,6 +514,7 @@ ul {
 /* ---------------------------------------------------------------------------------------- */
 /* ---------------------------------------------------------------------------------------- */
 /* ---------------------------------------------------------------------------------------- */
+
 @media ( max-width : 700px ) {
 	
 	.ac2 {
@@ -555,7 +542,7 @@ ul {
 	#view1 {
 		background-color: #ffffff;
 		box-shadow: 0px 0px 4px 0px #c3c3c3;
-		display: none;
+		display:none;
 		position: fixed;
 		bottom: 80px;
 		right: 0px;
@@ -741,25 +728,21 @@ ul {
 	.pre_time_p {
 		/*    border: 1px solid pink;*/
 		height: 30px;
-		float: left;
-		width: 75px;
-		text-align: right;
-		line-height: 25px;
-		font-size: 12px;
-		white-space: nowrap;
-		overflow: hidden;
-		text-overflow: ellipsis;
+	    float: left;
+	    width: 75px;
+	    text-align: right;
+	    line-height: 25px;
+	    font-size: 12px;
+	    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 	}
-	.pre_new_inside {
-		/*    border: 1px solid black;*/
-		background-color: red;
-		padding: 2px;
-		padding-left: 6px;
-		padding-right: 6px;
-		margin-right: 10px;
-		color: white;
-		border-radius: 10px;
-	}
+	.pre_new_inside{
+/*    border: 1px solid black;*/
+    background-color: red;
+    padding: 2px; padding-left: 6px; padding-right: 6px;
+    margin-right: 10px;
+    color: white;
+    border-radius: 10px;
+}
 	.pre_back {
 		/*                border: 1px solid red;*/
 		float: left;
@@ -846,7 +829,7 @@ ul {
 		/*        border: 1px solid red;*/
 		float: left;
 		width: 60vw;
-		/* 		min-width: 100px; */
+/* 		min-width: 100px; */
 		line-height: 25px;
 		font-size: 15px;
 		white-space: nowrap;
@@ -935,13 +918,13 @@ ul {
 	}
 
 	/* 친구를 만들어 보세요 ------------------------------------------------------- */
-	#noFriendExist {
-		/*            border: 1px solid green;*/
-		position: static;
-		height: 100px;
-		text-align: center;
-		margin-top: 170px;
-	}
+/* 	#noFriendExist { */
+/* 		           border: 1px solid green; */
+
+/* 		height: 100px; */
+/* 		text-align: center; */
+/* 		margin-top: 170px; */
+/* 	} */
 	#noMessageExist {
 		/*            border: 1px solid green;*/
 		height: 400px;
@@ -950,12 +933,6 @@ ul {
 }
 
 /* no exist new ---------------------------- */
-.alarmNotExist {
-	text-align: center;
-	height: 290px;
-	line-height: 300px;
-	color: #9b9b9b;
-}
 
 #noFriendExistContainer {
 	
@@ -1009,3 +986,4 @@ ul {
 	height: 30px;
 	color: #444444;
 }
+>>>>>>> 2d6420fce94631092cc6143363ec7b9f0c4bec8c
