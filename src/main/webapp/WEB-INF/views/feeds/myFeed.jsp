@@ -2124,138 +2124,120 @@
 									}
 								}
 							});
-							//전화번호 유효성 검사 end
-
+							//전화번호 유효성 검사 end				
+							
 							//전화번호 중복 검사 start
 							$("#sendCode").on("click", function(){
-								
-								//인증번호 제한시간 이벤트 start
-								function msg_time() {
-									m = addzero(Math.floor(setTime / 60)) + ":" + addzero(setTime % 60);
-									console.log(m);
-									var msg = m;
-									timer.innerHTML = msg;
-									setTime--;
-									if (setTime < 0) {
-										clearInterval(tid);
-										adviseVerifCode.innerHTML = "입력시간이 초과되었습니다.";
-										adviseVerifCode.style.color = "red";
-										hiddenRespPhone.innerHTML = "사용불가";
-										hiddenRespVerifCode.innerHTML = "인증실패";
-										confirmVerifCode.hidden = true;
-										verifyCode.disabled = true;
-										$.ajax({
-											url : "${pageContext.request.contextPath}/guest/removeVerifSession.do",
-											dataType : "json",
-											type : "post",
-										}).done(function(resp) {
-													if (resp.result == "Verif Code removed") {
-														timer.innerHTML = "";
-														sendCode.hidden = false;
-														resendCode.hidden = true;
-														verifyCode.value = "";
-														verifyCode.disabled = false;
-													}
-													console.log("인증번호 세션 삭제 실패");
-												}).fail(function(a, b, c) {
-													console.log(a);
-													console.log(b);
-													console.log(c);
-												});
-									}
-								}
-								function addzero(num) {
-									if (num < 10) {
-										num = "0" + num;
-									}
-									return num;
-								}
-								//인증번호 제한시간 이벤트 end  
-								
 								console.log(tid);
 								clearInterval(tid); //기존 카운트다운 삭제
-								setTime = 300; //카운트다운 초기화
-								if (phone2.value != "" && phone3.value != "") {
-									timer.innerHTML = "";
-									phone.value = phone1.value + phone2.value + phone3.value;
-									if (dto.phone == phone.value) {
-										advisePhone.innerHTML = "기존 번호와 동일하여 인증 불가합니다.";
-										advisePhone.style.color = "red";
-										hiddenRespPhone.innerHTML = "사용가능";
-										return false;
+								setTime = 300; //카운트다운 초기화								
+								
+								if (phone.value != "") {
+						            $.ajax({
+						                url: "${pageContext.request.contextPath}/guest/checkOverlap.do",
+						                data: {
+						                    phone: phone.value
+						                },
+						                dataType: "json",
+						                type: "post",
+						            }).done(function (resp) {
+						                        console.log("phone 중복여부 서버 검증 결과: "
+						                            + resp.result);
+						                        //전화번호 중복 검사 end
+						                        //인증번호 전송 start
+						                        if (resp.result == "available") {
+						                            tid = setInterval('msg_time()', 1000); //인증번호 전송 시 카운트다운 시작
+						                            sendCode.hidden = true;
+						                            resendCode.hidden = false;
+						                            verifyCode.value = "";
+						                            verifyCode.disabled = false;
+						                            confirmVerifyCode.hidden = true;
+						                            //잠시 테스트
+						                            hiddenRespPhone.innerHTML = "사용가능";
+						                            //
+						                            $.ajax({
+						                            	url: "${pageContext.request.contextPath}/guest/sendVerifCode.do",
+						                                data: {
+						                                           phone: phone.value
+						                                       },
+						                                dataType: "json",
+						                                type: "post"
+						                            }).done(function (resp) {
+						                                console.log("인증번호 서버 전송 결과: "+ resp.result);
+						                                    if (resp.result != "Verify Code sent") {
+						                                        adviseVerifCode.innerHTML("인증번호 전송에 실패했습니다.");
+						                                        adviseVerifCode.style.color = "red";
+						                                        hiddenRespPhone.innerHTML = "사용불가";
+						                                        hiddenRespVerifCode.innerHTML = "인증실패";
+						                                        confirmVerifyCode.hidden = true;
+						                                        sendCode.hidden = false;
+						                                        resendCode.hidden = true;
+						                                        verifyCode.disabled = true;
+						                                    } else {
+						                                        console.log("인증 코드 발송 완료");
+						                                        confirmVerifyCode.hidden = false;
+						                                    }
+						                           }).fail(function (a, b, c) {
+						                                        console.log(a);
+						                                        console.log(b);
+						                                        console.log(c);
+						                           });
+						                        } else if (resp.result == "unavailable") {
+						                            advisePhone.innerHTML = "중복된 번호입니다.";
+						                            advisePhone.style.color = "red";
+						                            hiddenRespPhone.innerHTML = "사용불가";
+						                        }
+						               }).fail(function (a, b, c) {
+						                    console.log(a);
+						                    console.log(b);
+						                    console.log(c);
+						                    return false;
+						               });
 									}
-									if (phone.value != "") {
-										$.ajax({
-															url : "${pageContext.request.contextPath}/guest/checkOverlap.do",
-															data : {
-																phone : phone.value
-															},
-															dataType : "json",
-															type : "post",
-														})
-												.done(
-														function(resp) {
-															console.log("phone 중복여부 서버 검증 결과: "
-																	+ resp.result);
-															//전화번호 중복 검사 end
-															//인증번호 전송 start
-															if (resp.result == "available") {
-																tid = setInterval('msg_time()', 1000); //인증번호 전송 시 카운트다운 시작 
-																sendCode.hidden = true;
-																resendCode.hidden = false;
-																verifyCode.value = "";
-																verifyCode.disabled = false;
-																confirmVerifyCode.hidden = true;
-																//잠시 테스트 
-																hiddenRespPhone.innerHTML = "사용가능";
-																//
-																$
-																		.ajax(
-																				{
-																					url : "${pageContext.request.contextPath}/guest/sendVerifCode.do",
-																					data : {
-																						phone : phone.value
-																					},
-																					dataType : "json",
-																					type : "post"
-																				})
-																		.done(
-																				function(resp) {
-																					console
-																							.log("인증번호 서버 전송 결과: "
-																									+ resp.result);
-																					if (resp.result != "Verify Code sent") {
-																						adviseVerifCode
-																								.innerHTML("인증번호 전송에 실패했습니다.");
-																						adviseVerifCode.style.color = "red";
-																						hiddenRespPhone.innerHTML = "사용불가";
-																						hiddenRespVerifCode.innerHTML = "인증실패";
-																						confirmVerifyCode.hidden = true;
-																						sendCode.hidden = false;
-																						resendCode.hidden = true;
-																						verifyCode.disabled = true;
-																					} else {
-																						console
-																								.log("인증 코드 발송 완료");
-																						confirmVerifyCode.hidden = false;
-																					}
-																				}).fail(
-																				function(a, b, c) {
-																					console.log(a);
-																					console.log(b);
-																					console.log(c);
-																				});
-															} else if (resp.result == "unavailable") {
-																advisePhone.innerHTML = "중복된 번호입니다.";
-																advisePhone.style.color = "red";
-																hiddenRespPhone.innerHTML = "사용불가";
-															}
-														}).fail(function(a, b, c) {
-													console.log(a);
-													console.log(b);
-													console.log(c);
-													return false;
-												});
+
+										//인증번호 제한시간 이벤트 start
+											function msg_time() {
+												m = addzero(Math.floor(setTime / 60)) + ":" + addzero(setTime % 60);
+												console.log(m);
+												var msg = m;
+												timer.innerHTML = msg;
+												setTime--;
+												if (setTime < 0) {
+													clearInterval(tid);
+													adviseVerifCode.innerHTML = "입력시간이 초과되었습니다.";
+													adviseVerifCode.style.color = "red";
+													hiddenRespPhone.innerHTML = "사용불가";
+													hiddenRespVerifCode.innerHTML = "인증실패";
+													confirmVerifCode.hidden = true;
+													verifyCode.disabled = true;
+													$.ajax({
+														url : "${pageContext.request.contextPath}/guest/removeVerifSession.do",
+														dataType : "json",
+														type : "post",
+													}).done(function(resp) {
+																if (resp.result == "Verif Code removed") {
+																	timer.innerHTML = "";
+																	sendCode.hidden = false;
+																	resendCode.hidden = true;
+																	verifyCode.value = "";
+																	verifyCode.disabled = false;
+																}
+																console.log("인증번호 세션 삭제 실패");
+															}).fail(function(a, b, c) {
+																console.log(a);
+																console.log(b);
+																console.log(c);
+															});
+												}
+											}
+											function addzero(num) {
+												if (num < 10) {
+													num = "0" + num;
+												}
+												return num;
+											}
+											//인증번호 제한시간 이벤트 end  
+											
 									}
 								} else {
 									alert("전화번호를 입력해 주세요.");
@@ -2303,6 +2285,8 @@
 							})
 							//인증번호 전송 end
 							 
+							
+							
 
 							//생년월일 select option 생성 start
 							function appendYear() {
