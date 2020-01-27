@@ -2,19 +2,16 @@ package kh.init.members;
 
 import java.util.HashMap;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.apache.http.HttpRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 import kh.init.configuration.Configuration;
@@ -107,8 +104,9 @@ public class MemberController {
 		return obj.toString();		    
 	}
 
-	@RequestMapping("/goMyInfo")  //내 정보 (편집) 가기
-	public String goMyInfo(String email, Model model) {
+	@RequestMapping(value="/goMyInfo", produces="text/html;charset=UTF-8")  //내 정보 (편집) 가기
+	@ResponseBody
+	public String goMyInfo(String email) {
 		System.out.println("개인 정보 CON 도착.");
 		
 		MemberDTO mDto = (MemberDTO)session.getAttribute("loginInfo");
@@ -124,14 +122,25 @@ public class MemberController {
 			String boption1 = dto.getBirth().substring(0, 4);
 			String boption2 = dto.getBirth().substring(5, 6);
 			String boption3 = dto.getBirth().substring(6, 8);
-			model.addAttribute("dto", dto);
-			model.addAttribute("poption1", poption1);
-			model.addAttribute("poption2", poption2);
-			model.addAttribute("poption3", poption3);
-			model.addAttribute("boption1", boption1);
-			model.addAttribute("boption2", boption2);
-			model.addAttribute("boption3", boption3);
-			return "members/myInformation";
+//			model.addAttribute("dto", dto);
+//			model.addAttribute("poption1", poption1);
+//			model.addAttribute("poption2", poption2);
+//			model.addAttribute("poption3", poption3);
+//			model.addAttribute("boption1", boption1);
+//			model.addAttribute("boption2", boption2);
+//			model.addAttribute("boption3", boption3);
+			JsonObject obj = new JsonObject();
+			Gson g = new Gson();
+			obj.addProperty("dto", g.toJson(dto));
+			obj.addProperty("poption1", poption1);
+			obj.addProperty("poption2", poption2);
+			obj.addProperty("poption3", poption3);
+			obj.addProperty("boption1", boption1);
+			obj.addProperty("boption2", boption2);
+			obj.addProperty("boption3", boption3);
+			
+			System.out.println(obj.toString());
+			return obj.toString();
 		}catch(Exception e) {
 			e.printStackTrace();
 			return "error";
@@ -233,6 +242,7 @@ public class MemberController {
 		System.out.println("이메일는 "+mDto.getEmail());
 		String emailResult = mDto.getEmail().replace("@", "%40");
 		//model.addAttribute("email", emailResult);
+		model.addAttribute("email", mDto.getEmail());
 		int result = 0;
 		try {
 			if(profileImg.getOriginalFilename() == "") {
