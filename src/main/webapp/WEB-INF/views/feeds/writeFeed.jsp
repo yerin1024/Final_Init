@@ -26,7 +26,9 @@
 
 
 <style>
-
+body{
+	background-color:#171C28;
+}
 #mediaRow{
 	width:1000px;
 	margin:auto;
@@ -87,9 +89,6 @@
 /* Tablet &amp; Desktop Device */
 @media all and (min-width:768px) {
 	/*     사용자 해상도가 768px 이상일 때 이 코드가 실행됨. 테블릿과 데스크톱의 공통 코드를 작성한다. */
-	body {
-		background-color: purple;
-	}
 }
 
 @media all and (max-width:768px) {
@@ -126,9 +125,7 @@
 /* Desktop Device */
 @media all and (min-width:1025px) {
 	/*     사용자 해상도가 1025px 이상일 때 이 코드가 실행됨. 1025px 이상의 랩탑 또는 데스크톱에 대응하는 코드를 작성한다. */
-	body {
-		background-color: pink;
-	}
+
 }
 </style>
 

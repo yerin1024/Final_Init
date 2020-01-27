@@ -41,7 +41,7 @@ $('#exampleModal').on('shown.bs.modal', function (event) {
 				if(i==0){
 					ol.append("<li data-target='#carouselExampleIndicators' data-slide-to='0' class='active'></li>");
 				}else{
-					ol.append("<li data-targer='#carouselExampleIndicators' data-slide-to='"+i+"'></li>");
+					ol.append("<li data-target='#carouselExampleIndicators' data-slide-to='"+i+"'></li>");
 				}
 			}
 			cei.append(ol);
