@@ -63,8 +63,8 @@
 
 }
 .row{
-	min-width:460px;
-	margin-bottom:15px;
+	width:100%;
+	height:100%;
 }
 /* .title{ */
 /*    display:inline-block; */
@@ -93,8 +93,8 @@
    color:black;
 }
 #likeBtn, #bookmarkBtn{
-   width:20px;
-   height:20px;
+   width:50px;
+   height:50px;
 }
 #carouselExampleIndicators{
    width:100%;
@@ -411,7 +411,6 @@
 .modal-btns{
 	position:absolute;
     padding: 16px 16px;
-    right:0px;
 }
 .writerInfo,.userInfo{
     margin-left: -12px;
@@ -444,11 +443,6 @@
     border: 1px solid rgb(239, 239, 239);
     border-radius: 16px;
     transition: all 1000ms ease 0s;
-}
-.footer-btns{
-	display:flex;
-    width: 50%;
-    height:10%;
 }
 .writeReplyBox{
 	display:flex;
@@ -1045,7 +1039,7 @@
             </div>
         </div>        
 	      <div class="detailView_footer">
-	      	<div class="footer-btns"></div>
+	      	<div class="footer-btns" style="display:flex;width:50%;height:10%;"></div>
 	      	<div class="writeReplyBox">					
 	         	<span class="myProfile"><img class="userProfileImg" src="${loginInfo.profile_img }" alt=""></span>
 	       		<h5 class="modal-title" id="exampleModalLabel">${loginInfo.nickname }</h5>
@@ -1065,19 +1059,15 @@
 			<div class="modal-content">
 				<div class="modal-header">
 					<h4 class="modal-title" id="myModalLabel">친구 관계 설정</h4>
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
-						<span aria-hidden="true">×</span>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">×</span>
 					</button>
 				</div>
 
 				<div class="modal-body1">
-					
-						<input type=radio name="relation" value="1"> 아는 사람<br>
-						<input type=radio name="relation" value="2"> 친구<br> 
-						<input type=radio name="relation" value="3"> 절친<br> 
-						
-					
+					<input type=radio name="relation" value="1"> 아는 사람<br>
+					<input type=radio name="relation" value="2"> 친구<br> 
+					<input type=radio name="relation" value="3"> 절친<br> 
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-primary" id="acceptModalBtn">확인</button>

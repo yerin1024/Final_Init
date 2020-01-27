@@ -397,10 +397,11 @@
 				
 				
 				//디테일뷰 글
-				var textRow = $("<span class='text'></span>");
-				textRow.append(dto.contents);
-				$("#exampleModalLabel").html(dto.title);
-				$(".writerInfo").append(textRow);
+				var textRow = $("<span class='row text'></span>");
+				textRow.html(dto.contents);
+				$(".writerInfo").html(textRow);
+				
+				
 				//디테일뷰 좋아요, 스크랩, 수정, 삭제 버튼
 				//좋아요버튼
 				if(likeCheck==0){
@@ -428,13 +429,31 @@
 				bookmarkA.append(bookmarkS);
 				bookmarkS.append(bookmarkI); 
 				
-				var modalBtns = $("<div></div>");
-				modalBtns.addClass("modal-btns");
-				modalBtns.append(likeA);
-				modalBtns.append(bookmarkA);
-				$(".footer-btns").append(modalBtns);
+				var modifyA = $("<a href='modifyFeedView?feed_seq="+dto.feed_seq+"'>수정</a>");
+				var deleteA = $("<a href='deleteProc?feed_seq="+dto.feed_seq+"'>삭제</a>");
+				
+				var sessionEmail = "${loginInfo.email}";
+				var writer = dto.email;
+				console.log(sessionEmail);
+				console.log(writer);
+				
+				if(sessionEmail==writer){ //좋아요스크랩은 없애고 수정삭제만 있음
+					console.log("작성자 본인입니다.");
+					$(".footer-btns").html("");
+					$(".footer-btns").append(modifyA);
+					$(".footer-btns").append(deleteA);
+				}else{
+					console.log("작성자가 아닙니다.")
+					$(".footer-btns").html("");
+					$(".footer-btns").append(likeA);
+					$(".footer-btns").append(bookmarkA);
+				}
+			
+				
 				$(".writerProfile").html("<img src="+writerProfile+" class='writerProfileImg'>");
 				
+			}).fail(function(a,b,c){
+				console.log("실패 : "+b);s
 			})
 			$('#myInput').trigger('focus');
 			

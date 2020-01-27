@@ -193,11 +193,9 @@ public class MemberController {
 			}else {
 				result = 0;
 			}
-
 			if(result > 0) {
-
 				System.out.println("정보변경에 성공하셨슴당.");
-				return "redirect:feeds/myFeed";
+				return "redirect:/feed/myFeed";
 			}else {
 				System.out.println("정보변경에 실패하셨슴당.");
 				return "error";
@@ -205,7 +203,7 @@ public class MemberController {
 		}catch(Exception e) {
 			e.printStackTrace();
 			System.out.println("입력실패.");
-			return "redirect:feeds/myFeed";
+			return "redirect:/feed/myFeed";
 		}
 	} 
 	
@@ -247,7 +245,7 @@ public class MemberController {
 			if(result> 0) {
 
 				System.out.println("정보변경에 성공하셨슴당.");
-				return "redirect:feeds/myFeed";
+				return "redirect:/feed/myFeed";
 			}else {
 				System.out.println("정보변경에 실패하셨슴당.");
 				return "error";
@@ -257,7 +255,7 @@ public class MemberController {
 		}catch(Exception e) {
 			e.printStackTrace();
 			System.out.println("입력실패.");
-			return "redirect:feeds/myFeed";
+			return "redirect:feed/myFeed";
 		}
 	}
 

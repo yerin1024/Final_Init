@@ -35,6 +35,7 @@ public class FeedController {
 	@RequestMapping("/myFeed")
 	public String myFeed(String email, Model model) {
 		System.out.println("myFeed 도착");
+		System.out.println("email : " + email);
 		int ipage = 1;
 		List<FeedDTO> list = null;
 		List<String> cover = new ArrayList<>();
