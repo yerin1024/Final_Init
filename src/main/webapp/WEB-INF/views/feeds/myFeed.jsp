@@ -2649,7 +2649,6 @@
 	
 	
 
-=======
             var bLength1 = $(".bOption1").length;
             for (var i = 0; i < bLength1; i++) {
                 if ($(".bOption1:nth-child(" + i + ")").val() == boption1) {
