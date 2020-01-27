@@ -34,7 +34,6 @@
 #wrapper {
 	border: 1px solid red;
 	margin: auto;
-	/* width: 50vw; */
 }
 
 html, body {
@@ -57,44 +56,29 @@ html, body {
 .dz-preview {
 	display: none;
 }
-
+/* 
 #carouselExampleIndicators {
 	 width: 100%; 
-}
+} */
 
 .carousel-inner {
-	 width: 720px; 
-/* 	width:1600px; */
+	/* width: 720px;  */
+	width: 100%;
 	height:600px;
 	overflow: hidden;
-
 	}
 
 .carousel-item {
 	margin: auto;
-/* width: 1600px; */
-	width: 720px;
+	/* width: 720px; */
+	width: 100%;
 	text-align: center;
 }
 
 .carousel-item * {
 	width: 100%;
-/* 	height: 100%; */
 	height:600px; 
-
 }
-
-.carousel-inner>img {
-	width: 100%;
-	height: 100%;
-}
-
-  .carousel-inner > .item > img {
-      top: 0;
-      left: 0;
-      min-width: 100%;
-      min-height: 720px;
-  }  
 
 .slide {
 	width: 99.5%;
@@ -195,9 +179,10 @@ html, body {
 	#wrapper {
 		width: 720px;
 	}
+ 
 	.media {
-		width: 720px;
-	}
+		max-width: 720px;
+	} 
 }
 
 @media all and (max-width:500px) {
@@ -205,9 +190,23 @@ html, body {
 	#wrapper {
 		max-width: 720px;
 	}
-	.media {
+ 	.media {
 		max-width: 720px;
 	}
+	.carousel-inner {
+	max-width: 720px; 
+	min-width:520px;
+ 	max-height:720px;
+	min-height:520px; 
+	height: 600px; 
+	overflow: hidden;
+	}
+	
+	.carousel-item * {
+	width: 100%;
+	max-height:720px;
+	min-height:520px; 
+	} 
 }
 
 /* Tablet Device */
@@ -216,9 +215,26 @@ html, body {
 	#wrapper {
 		max-width: 720px;
 	}
-	.media {
+ 	.media {
 		max-width: 720px;
 	}
+	.carousel-inner {
+	max-width: 720px; 
+	min-width:520px;
+	/* height:600px;  */
+	max-height:720px;
+	min-height:520px; 
+	overflow: hidden;
+	}
+	
+	.carousel-item * {
+	/* width: 100%; */
+	max-width: 720px; 
+	min-width:520px;
+	/* height:600px;  */
+	max-height:720px;
+	min-height:520px; 
+	} 
 }
 
 /* Desktop Device */
@@ -227,9 +243,9 @@ html, body {
 	#wrapper {
 		max-width: 720px;
 	}
-	.media {
+	 .media {
 		max-width: 720px;
-	}
+	} 
 }
 </style>
 <script>
@@ -331,8 +347,9 @@ html, body {
 								var media = $("<div class='row media'></div>");
 								var CEI = $("<div class='carousel slide' data-interval='false'></div>");
 								CEI.attr("id",'carouselExampleIndicators'+list[i].feed_seq);
+								media.append(CEI);
 								//ajax 사진이 두 장 이상일 경우 indicators와 control O 
-								//if(mediaList[i].length >1){
+								if(mediaList[i].length >1){
 								var olCEI = $("<ol class='carousel-indicators'></ol>");
 								for (var m = 0; m < mediaList[i].length; m++) {
 									var liCEI = $("<li></li>");
@@ -346,37 +363,39 @@ html, body {
 									olCEI.append(liCEI);
 								}
 								CEI.append(olCEI);
-								//}else{}
+								}else{}
 								media.append(CEI);
-								var ci = $("<div class='carousel-inner'></div>");
+								var ci = $("<div class='carousel-inner' style='height:600px; overflow: hidden;'></div>");
 								for (var m = 0; m < mediaList[i].length; m++) {
 									var divCI = $("<div class='carousel-item'></div>");
 									if (m == 0) {
 										divCI.addClass("active");
-										divCI.append(mediaList[i][m]);
+										var pic = $(mediaList[i][m]);
+										pic.attr("style",'height:600px;');
+										divCI.append(pic);
 									} else {
-										divCI.append(mediaList[i][m]);
+										var pic = $(mediaList[i][m]);
+										pic.attr("style",'height:600px;');
+										divCI.append(pic);
 									}
-									ci.append(divCI);
+									ci.append(divCI)
+									CEI.append(ci);
+									media.append(CEI);
 								}
-								//if(mediaList[i].length >1){
-								//ci.append("<a class='carousel-control-prev' role='button' data-slide='prev'>");
-								var prevC = $("<a class='carousel-control-prev' role='button' data-slide='prev'>");
+								if(mediaList[i].length >1){
+								var prevC = $("<a class='carousel-control-prev' role='button' data-slide='prev'></a>");
 								prevC.attr("href",'#carouselExampleIndicators'+list[i].feed_seq);
-								ci.append( prevC);
-								ci.append("<span class='carousel-control-prev-icon' aria-hidden='true'></span> <span class='sr-only'>Previous</span></a>");
-								
-								//ci.append("<a class='carousel-control-next' role='button' data-slide='next'>");
-								var nextC = $("<a class='carousel-control-next' role='button' data-slide='next'>");
+								prevC.append("<span class='carousel-control-prev-icon' aria-hidden='true'></span><span class='sr-only'>Previous</span>");
+								CEI.append(prevC);
+								var nextC = $("<a class='carousel-control-next' role='button' data-slide='next'></a>");
 								nextC.attr("href",'#carouselExampleIndicators'+list[i].feed_seq);
-								ci.append(nextC);
-								ci.append("<span class='carousel-control-next-icon' aria-hidden='true'></span> <span class='sr-only'>Next</span></a>");
-
-								media.append(ci);
-								//}else{}
+								nextC.append("<span class='carousel-control-next-icon' aria-hidden='true'></span> <span class='sr-only'>Next</span>");
+								CEI.append(nextC);
+								media.append(CEI);
+								}else{}
 								feed.append(media);
 								}else{}
-								var contents = $("<div class='row contents' style='height:100px'></div>");
+								var contents = $("<div class='row contents' style='min-height:100px; max-height:400px;'></div>");
 								contents.append(list[i].contents);
 
 // 								var replys = $("<div class='row replys'></div>");
@@ -540,15 +559,16 @@ html, body {
 					</c:when>	
 					<c:when test="${mediaList[status.index].size() == 0}"></c:when>
 					</c:choose>
-					
-					
-						<div class="row contents" style="height: 100px;">
+						<div class="row contents" style="min-height: 100px; max-height: 400px;">
 							${feed.contents }</div>
 						<div class="row replys">
 							<c:forEach items="${replyList[status.index]}" var="reply">
 								<div class="row reply">${reply }</div>
 							</c:forEach>
 						</div>
+						
+						<c:choose>
+						<c:when test="${feed.email ne loginInfo.email}">
 						<div class="row btns" style="">
 							<c:choose>
 								<c:when test="${likeCheckList[status.index]==0 }">
@@ -588,6 +608,10 @@ html, body {
 								</c:otherwise>
 							</c:choose>
 						</div>
+						</c:when>
+						<c:otherwise></c:otherwise>
+						</c:choose>
+						
 					</div>
 
 
