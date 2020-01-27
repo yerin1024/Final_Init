@@ -811,7 +811,7 @@
 	       $.ajax({
 	           type : 'POST',  
 	           dataType : 'json', 
-	           data : {"page" : page},
+	           data : {"page" : page,"email" : myMail},
 	           url : "/feed/myFeedAjax",
 	           dataType:"JSON"
 	       }).done(function(data){
@@ -847,17 +847,17 @@
 	                 
 	                  var data = "";
 	              }
-	              
+	              index++;
 	            }
 	            $("#feeds").append(data); 
-	            index++;
+	            
 	      })
 	   }
 	 function getScrapList(page){
 	       $.ajax({
 	           type : 'POST',  
 	           dataType : 'json', 
-	           data : {"page" : page},
+	           data : {"page" : page,"email" : myMail},
 	           url : "/feed/myScrapFeedAjax",
 	           dataType:"JSON"
 	       }).done(function(data){
@@ -893,10 +893,10 @@
 	                 
 	                  var data = "";
 	              }
-	              
+	              index++;
 	            }
 	            $("#feeds").append(data); 
-	            index++;
+	            
 //	          for(i; i<end; i++){
 //	             console.log(i);
 //	              var data = $("<div class='col-4 feed'></div>");

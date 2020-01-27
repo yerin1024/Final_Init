@@ -264,7 +264,7 @@ public class MemberController {
 		}catch(Exception e) {
 			e.printStackTrace();
 			System.out.println("입력실패.");
-			return "redirect:feed/myFeed";
+			return "redirect:/feed/myFeed";
 		}
 	}
 
