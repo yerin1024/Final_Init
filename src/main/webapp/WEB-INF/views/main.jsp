@@ -355,7 +355,7 @@
                                 <div class="tab1_container">
                                     <form action="${pageContext.request.contextPath}/member/loginProc.do" method="post" id="tab1_loginForm">
                                         <div class="tab1_loginContainer">
-                                        	<div class="tab1_logo d-sm-none">
+                                        	<div class="tab1_logo d-lg-none">
 	                                        	<div id="logoDiv">
 	                                        		<img src="${pageContext.request.contextPath}/resources/images/mainLogo.jpg">
 	                                        	</div>   
