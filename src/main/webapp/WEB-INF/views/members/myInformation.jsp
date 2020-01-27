@@ -129,8 +129,7 @@
 			<button type=button id="changeInfo" onclick="formValidation();">수정완료</button>
 			<button type=button id="backToFeed">뒤로가기</button>
 		</div>
-	</form>
-					
+	</form>					
 				</div>
 				<div class="modal-footer">
 					
@@ -139,7 +138,7 @@
 		</div>
 	</div>
 	
-	<script>
+	<script>	
 	$('#modalBox').modal('show');
 		var doc = document;
 	
@@ -271,9 +270,6 @@
 	    		console.log(b);
 	    		console.log(c);s
 	    	});
-	    	
-	    	
-
 	    });
 		
 
@@ -673,6 +669,9 @@
                     advisePhone.style.color = "red";
                     return false;
                 } 
+                
+                phone.value = phone1.value + phone2.value + phone3.value;
+                
                 if("${dto.phone}" != phone.value){
                 	if(verifyCode.value === ""){
                 		adviseVerifCode.innerHTML = "휴대폰 인증은 필수입니다."
@@ -696,7 +695,6 @@
                     console.log(day);
                 }
                 birth.value = birthYear.value + month + day;
-                phone.value = phone1.value + phone2.value + phone3.value;
                 //전화번호, 이메일 한 줄로 조합 end
 
                 console.log("최종 휴대폰 : " + phone.value);

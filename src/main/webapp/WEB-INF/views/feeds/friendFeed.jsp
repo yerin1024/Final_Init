@@ -408,7 +408,6 @@ html, body {
 									imgBTNS.attr("seq", list[i].feed_seq);
 									spanBTNS.append(imgBTNS);
 									spanBTNS.attr("seq", list[i].feed_seq);
-
 									var aBTNS = $("<a href='#' class='like' onclick='return false'></a>");
 									aBTNS.attr("id", list[i].feed_seq);
 									aBTNS.append(spanBTNS);

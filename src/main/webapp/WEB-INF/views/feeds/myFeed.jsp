@@ -6,6 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 <title></title>
 <link rel="stylesheet" href="/resources/css/nav.css">
@@ -1530,8 +1531,22 @@
 				.on(
 						"click",
 						function() {
-							location.href = "${pageContext.request.contextPath}/member/goMyInfo";
-						})
+							$.ajax({
+								url: "${pageCotnext.request.contextPath}/member/goMyInfo",
+								data: {email: "${loginInfo.email}"},
+								dataType: "json",
+								type: "post"
+							}).done(function(data){
+								var pas = JSON.parse(data.email)
+								console.log("email : " + pas);
+								
+								
+							}).fail(function(a,b,c){
+								console.log(a);
+								console.log(b);
+								console.log(c);
+							});
+						});
 		$('#closeModalBtn2').on('click', function() {
 
 			$('#modalBox3').modal('hide');
