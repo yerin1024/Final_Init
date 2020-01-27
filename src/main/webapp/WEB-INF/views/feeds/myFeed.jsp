@@ -196,6 +196,7 @@
 }
 
 .report {
+    
 	position: absolute;
 	right:0px;
 	border: none;
@@ -261,7 +262,7 @@
 }
 
 #reportBtn {
-	background-color: yellow;
+	
 	border: none;
 }
 /*This is coded CSS rainbow*/
@@ -925,10 +926,11 @@
 		<div class="profile">
 			<c:choose>
 				<c:when test="${loginInfo.email ne mvo.email}">
-					<div class="profileLayout">
-					<div class="report">
-						<button type="button" id="reportBtn">ㆍㆍㆍ</button>
+				<div class="report">
+						<img class="blockFr" src="/resources/images/whitex.png" alt="" style="width:15%;">
 					</div>
+					<div class="profileLayout">
+					
 						<div class="profileLayoutLeft">
 						<c:if test="${frResult == null || frResult == 0  }">
 							<button class="btn btn-primary btn-lg" id="openModalBtn">＋</button>
@@ -1169,7 +1171,7 @@
 
 				<div class="modal-body2">
 					
-						<button type=button>친구 끊기</button> 
+						<button type=button class="frcutfr" name="${mvo.email }">친구 끊기</button> 
 						
 						
 					
@@ -1181,6 +1183,36 @@
 			</div>
 		</div>
 	</div>
+	<!-- 친구 관계 설정 모달 영역 -->
+	<div id="modalBox4" class="modal fade" id="myModal"
+		role="dialog"  tabindex="-1" aria-labelledby="myModalLabel"
+		style="margin-top: 100px;">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title" id="myModalLabel">친구 관계 설정</h4>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+
+				</div>
+
+				<div class="modal-body4">
+					
+						<input type=radio name="relation" value="1"> 아는 사람<br>
+					<input type=radio name="relation" value="2"> 친구<br> 
+					<input type=radio name="relation" value="3"> 절친<br> 
+					
+				</div>
+				<div class="modal-footer">
+					
+					<button type="button" class="btn btn-default" id="closeModalBtn4">확인</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
 	<script>	
 
 	    $("#registerFeed").on("click", function() {
@@ -1358,7 +1390,7 @@
                                 + list[j].email
                                 + "'>"
                                 + list[j].email
-                                + " </a> <button type=button class='frInfo cutfr' name=" + list[j].email + ">친구 끊기</button></div>");
+                                + " </a> <button type=button class='frInfo cutfr' name=" + list[j].email + ">친구 끊기</button> <button type=button class='frInfo changeRelation' name=" + list[j].email + ">친구 관계 변경</button></div>");
                         }
                     }
                     
@@ -1460,7 +1492,7 @@
                                             + list[j].email
                                             + "'>"
                                             + list[j].email
-                                            + " </a> <button type=button class='frInfo cutfr' name=" + list[j].email + ">친구 끊기</button></div>");
+                                            + " </a> <button type=button class='frInfo cutfr' name=" + list[j].email + ">친구 끊기</button> <button type=button class='frInfo changeRelation' name=" + list[j].email + ">친구 관계 변경</button></div>");
 
                                     }
                                 }
@@ -1521,7 +1553,42 @@
                             }
                         })
                     });
-                },
+                  //친구 관계 설정
+                        $('.changeRelation').on('click', function() {
+			             $('#modalBox4').modal('show');
+		                 });
+                        $("#closeModalBtn4").on("click", function () {
+                        var yr_id = $(".changeRelation").attr("name");
+                        var relation = $('input[name=relation]').val();
+                        console.log(yr_id);
+                        $.ajax({
+                            url: "${pageContext.request.contextPath}/friend/changeRelation",
+                            type: "POST",
+                            data: {
+                                yr_id: yr_id,relation :relation
+                            },
+                            dataType: "text",
+                            success: function (res) {
+                                console.log(res);
+                                console.log(yr_id);
+                                alert("친구 관계 설정 변경이 완료되었습니다.");
+                                $('#modalBox4').modal('hide');
+
+                                //$('.modal-body2').append("<div class=frInfo>"+list[j].email+"  <button type=button class=frInfo id=cutfr name="+list[j].email+">친구 끊기</button></div>");
+
+                                // show modal
+
+                            },
+                            error: function (
+                                request,
+                                status,
+                                error) {
+                                console.log("ajax call went wrong:"
+                                    + request.responseText);
+                            }
+                        })
+                    });
+                }, //전체 리스트 done 영역
                 error: function (request, status, error) {
                     console.log("ajax call went wrong:"
                         + request.responseText);
@@ -1555,6 +1622,7 @@
 		$('#openModalBtn').on('click', function() {
 			$('#modalBox').modal('show');
 		});
+		
 		$('#openFrModal').on('click', function() {
 			$('#modalBox2').modal('show');
 		});
@@ -1691,6 +1759,43 @@
 	}
 
 	showTime();
+	
+	//친구 끊기
+    $(".frcutfr").on("click", function () {
+        var yr_id = $(this).attr("name");
+        
+        console.log(yr_id);
+        $.ajax({
+            url: "${pageContext.request.contextPath}/friend/cutFndRelation",
+            type: "POST",
+            data: {
+                yr_id: yr_id
+            },
+            dataType: "text",
+            success: function (res) {
+                console.log(res);
+                console.log(yr_id);
+                alert("친구취소가 완료되었습니다.");
+                $('#modalBox2').modal('hide');
+                $(".btn-lg").remove();
+                $(".btnText").remove();
+                $(".profileLayoutLeft").append("<button class=btn btn-primary btn-lg id=openModalBtn >＋</button><div class=btnText>친구요청</div>");
+               location.reload();
+                
+                //$('.modal-body2').append("<div class=frInfo>"+list[j].email+"  <button type=button class=frInfo id=cutfr name="+list[j].email+">친구 끊기</button></div>");
+
+                // show modal
+
+            },
+            error: function (
+                request,
+                status,
+                error) {
+                console.log("ajax call went wrong:"
+                    + request.responseText);
+            }
+        })
+    });
 		</script>
    	<jsp:include page="/resources/script/myFeedScript.jsp" />
 </body>

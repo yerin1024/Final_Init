@@ -82,5 +82,8 @@
 	 <delete id="deleteRequest" >
    delete from tb_friend_Request where from_id = #{from_id} and to_id = #{to_id}
   </delete>
+  <update id="changeRelation" parameterType="java.util.Map" >
+   update tb_friend set relation = #{relation} where my_id = #{my_id} and fr_id = #{fr_id}
+  </update>
 </mapper>
 
