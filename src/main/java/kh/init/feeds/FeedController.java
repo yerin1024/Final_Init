@@ -230,8 +230,7 @@ public class FeedController {
 			result = service.registerFeed(dto, mediaList, mediaPath, realPath);
 		}catch(Exception e) {
 			e.printStackTrace();
-		}
-		
+		}		
 		//등록이 되면 mediaList를 비워둠
 		session.setAttribute("mediaList", new ArrayList<String>());
 
@@ -457,7 +456,7 @@ public class FeedController {
 				
 				index++;
 				mediaList.add(service.getMediaListForFriendFeed(feed_seq));
-//				replyList.add(service.viewAllReply(feed_seq));
+				replyList.add(service.viewAllReply(feed_seq));
 				likeCheckList.add(service.likeCheck(feed_seq, ((MemberDTO)session.getAttribute("loginInfo")).getEmail()));
 				bookmarkCheckList.add(service.bookmarkCheck(feed_seq, ((MemberDTO)session.getAttribute("loginInfo")).getEmail()));
 			}
@@ -529,7 +528,7 @@ public class FeedController {
 				}
 				index++;
 				mediaList.add(service.getMediaListForFriendFeed(feed_seq));
-//				replyList.add(service.viewAllReply(feed_seq));
+				replyList.add(service.viewAllReply(feed_seq));
 				likeCheckList.add(service.likeCheck(feed_seq, ((MemberDTO)session.getAttribute("loginInfo")).getEmail()));
 				bookmarkCheckList.add(service.bookmarkCheck(feed_seq, ((MemberDTO)session.getAttribute("loginInfo")).getEmail()));
 			}

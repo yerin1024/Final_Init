@@ -9,19 +9,27 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 <title>Insert title here</title>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 <link rel="stylesheet" href="/resources/css/nav.css">
-<link rel="stylesheet" href="/resources/css/msg.css"> 
-<link rel="stylesheet" href="/resources/css/alr.css"> 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.css">
+<link rel="stylesheet" href="/resources/css/msg.css">
+<link rel="stylesheet" href="/resources/css/alr.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.css">
 
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" ></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.js"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.js"></script>
 
 <link rel="stylesheet" href="/resources/css/nav.css">
 <link rel="stylesheet" href="/resources/css/alr.css">
@@ -58,29 +66,27 @@ html, body {
 }
 
 #carouselExampleIndicators {
-	 width: 100%; 
+	width: 100%;
 }
 
 .carousel-inner {
-	 width: 720px; 
-/* 	width:1600px; */
-	height:600px;
+	width: 720px;
+	/* 	width:1600px; */
+	height: 600px;
 	overflow: hidden;
-
-	}
+}
 
 .carousel-item {
 	margin: auto;
-/* width: 1600px; */
+	/* width: 1600px; */
 	width: 720px;
 	text-align: center;
 }
 
 .carousel-item * {
 	width: 100%;
-/* 	height: 100%; */
-	height:600px; 
-
+	/* 	height: 100%; */
+	height: 600px;
 }
 
 .carousel-inner>img {
@@ -88,12 +94,12 @@ html, body {
 	height: 100%;
 }
 
-  .carousel-inner > .item > img {
-      top: 0;
-      left: 0;
-      min-width: 100%;
-      min-height: 720px;
-  }  
+.carousel-inner>.item>img {
+	top: 0;
+	left: 0;
+	min-width: 100%;
+	min-height: 720px;
+}
 
 .slide {
 	width: 99.5%;
@@ -164,8 +170,46 @@ html, body {
 	border: none;
 	background: none;
 }
+/* 댓글 */
+.writeReplyBox {
+	display: flex;
+	height: 65px;
+	border: 1px solid black;
+}
 
+.userProfileImg {
+	width: 50px;
+	height: 50px;
+	border-radius: 160px;
+	border: 1px solid black;
+}
 
+.myProfileImgBox {
+	margin: 7px 20px;
+}
+
+.myNickName {
+	font-size: 20px;
+	line-height: 63px;
+}
+
+#writeReply {
+	line-height: 38px;
+	margin: 12px 10px;
+	height: 40px;
+	font-size: 16px;
+	width: 516px;
+	border-radius: 16px;
+	border: 1px solid rgb(239, 239, 239);
+	padding: 0px 10px;
+}
+
+.replyBtn {
+	color: #999;
+	background: 0 0;
+	border: none;
+	font-size: 12px;
+}
 /* .modal {
           text-align: center;
         } */
@@ -456,102 +500,103 @@ html, body {
 			</c:when>
 			<c:otherwise>
 				<c:forEach items="${list}" var="feed" varStatus="status">
-					<div class="feed">
+					<div class="feed" feed_seq='${feed.feed_seq}'>
 						<div class="row profile">
 							<div class="row profileImg">
 								${profile_imgList[status.index]}</div>
 							<div class="row profileNickname">${feed.nickname}</div>
 
 
-					<c:choose>
-					<c:when test="${feed.email ne loginInfo.email}">
-							<div class="row profilefeedDeclaration" seq="${feed.feed_seq}">
-								<c:choose>
-									<c:when test="${declareCheckList[status.index] == 1}">
-										<img class="sirenImg" id="srI2_${feed.feed_seq}"
-											src="${pageContext.request.contextPath }/resources/images/siren2.png">
-									</c:when>
-									<c:otherwise>
-										<button type="button" id="srB_${feed.feed_seq}" role="btton"
-											seq="${feed.feed_seq}" class="sirenBtn" data-toggle="modal"
-											data-target="#declareModal" data-backdrop="static">
-											<img class="sirenImg" id="srI_${feed.feed_seq}"
-												src="${pageContext.request.contextPath }/resources/images/siren.png">
-										</button>
-									</c:otherwise>
-								</c:choose>
-							</div>
-						</c:when>
-						<c:otherwise>
-						</c:otherwise>
-						</c:choose>	
-						</div>
-					<c:choose>
-					<c:when test="${mediaList[status.index].size() != 0}">
-					<div class="row media">
-						<div id="carouselExampleIndicators${feed.feed_seq }" class="carousel slide" data-interval="false">
-						<c:choose>
-						<c:when test="${mediaList[status.index].size() > 1}">
-								<ol class="carousel-indicators">
-									<c:forEach items="${mediaList[status.index] }" var="media" varStatus="status1">
-										<c:if test="${status1.index ==0}">
-											<li data-target="#carouselExampleIndicators${feed.feed_seq }" data-slide-to="0"
-												class="active"></li>
-										</c:if>
-										<c:if test="${status1.index !=0}">
-											<li data-target="#carouselExampleIndicators${feed.feed_seq }"
-												data-slide-to="${status1.index }"></li>
-										</c:if>
-									</c:forEach>
-								</ol>
-						</c:when>
-						<c:otherwise>
-						</c:otherwise>
-						</c:choose>
-								<div class="carousel-inner">
-								<c:forEach items="${mediaList[status.index] }" var="media" varStatus="status1">
-									<c:if test="${status1.index ==0}">
-										<div class="carousel-item active">${media}</div>
-									</c:if>
-									<c:if test="${status1.index !=0}">
-										<div class="carousel-item">${media }</div>
-									</c:if>
-								</c:forEach>
-								</div>
 							<c:choose>
-							<c:when test="${mediaList[status.index].size() > 1}">
-								<a class="carousel-control-prev"
-									href="#carouselExampleIndicators${feed.feed_seq}" role="button" data-slide="prev"> 
-									<span class="carousel-control-prev-icon"
-									aria-hidden="true"></span> 
-									<span class="sr-only">Previous</span>
-								</a> 
-								<a class="carousel-control-next"
-									href="#carouselExampleIndicators${feed.feed_seq}" role="button"
-									data-slide="next"> <span class="carousel-control-next-icon"
-									aria-hidden="true"></span> <span class="sr-only">Next</span>
-								</a>
-							</c:when>
-							<c:otherwise>
-							</c:otherwise>
+								<c:when test="${feed.email ne loginInfo.email}">
+									<div class="row profilefeedDeclaration" seq="${feed.feed_seq}">
+										<c:choose>
+											<c:when test="${declareCheckList[status.index] == 1}">
+												<img class="sirenImg" id="srI2_${feed.feed_seq}"
+													src="${pageContext.request.contextPath }/resources/images/siren2.png">
+											</c:when>
+											<c:otherwise>
+												<button type="button" id="srB_${feed.feed_seq}" role="btton"
+													seq="${feed.feed_seq}" class="sirenBtn" data-toggle="modal"
+													data-target="#declareModal" data-backdrop="static">
+													<img class="sirenImg" id="srI_${feed.feed_seq}"
+														src="${pageContext.request.contextPath }/resources/images/siren.png">
+												</button>
+											</c:otherwise>
+										</c:choose>
+									</div>
+								</c:when>
+								<c:otherwise>
+								</c:otherwise>
 							</c:choose>
 						</div>
-					</div>
-					</c:when>
-					
-					<c:when test="${mediaList[status.index].size() == 0}">
-				
-					</c:when>
-					</c:choose>
-					
-					
+						<c:choose>
+							<c:when test="${mediaList[status.index].size() != 0}">
+								<div class="row media">
+									<div id="carouselExampleIndicators${feed.feed_seq }"
+										class="carousel slide" data-interval="false">
+										<c:choose>
+											<c:when test="${mediaList[status.index].size() > 1}">
+												<ol class="carousel-indicators">
+													<c:forEach items="${mediaList[status.index] }" var="media"
+														varStatus="status1">
+														<c:if test="${status1.index ==0}">
+															<li
+																data-target="#carouselExampleIndicators${feed.feed_seq }"
+																data-slide-to="0" class="active"></li>
+														</c:if>
+														<c:if test="${status1.index !=0}">
+															<li
+																data-target="#carouselExampleIndicators${feed.feed_seq }"
+																data-slide-to="${status1.index }"></li>
+														</c:if>
+													</c:forEach>
+												</ol>
+											</c:when>
+											<c:otherwise>
+											</c:otherwise>
+										</c:choose>
+										<div class="carousel-inner">
+											<c:forEach items="${mediaList[status.index] }" var="media"
+												varStatus="status1">
+												<c:if test="${status1.index ==0}">
+													<div class="carousel-item active">${media}</div>
+												</c:if>
+												<c:if test="${status1.index !=0}">
+													<div class="carousel-item">${media }</div>
+												</c:if>
+											</c:forEach>
+										</div>
+										<c:choose>
+											<c:when test="${mediaList[status.index].size() > 1}">
+												<a class="carousel-control-prev"
+													href="#carouselExampleIndicators${feed.feed_seq}"
+													role="button" data-slide="prev"> <span
+													class="carousel-control-prev-icon" aria-hidden="true"></span>
+													<span class="sr-only">Previous</span>
+												</a>
+												<a class="carousel-control-next"
+													href="#carouselExampleIndicators${feed.feed_seq}"
+													role="button" data-slide="next"> <span
+													class="carousel-control-next-icon" aria-hidden="true"></span>
+													<span class="sr-only">Next</span>
+												</a>
+											</c:when>
+											<c:otherwise>
+											</c:otherwise>
+										</c:choose>
+									</div>
+								</div>
+							</c:when>
+
+							<c:when test="${mediaList[status.index].size() == 0}">
+
+							</c:when>
+						</c:choose>
+
+
 						<div class="row contents" style="height: 100px;">
 							${feed.contents }</div>
-						<div class="row replys">
-							<c:forEach items="${replyList[status.index]}" var="reply">
-								<div class="row reply">${reply }</div>
-							</c:forEach>
-						</div>
 						<div class="row btns" style="">
 							<c:choose>
 								<c:when test="${likeCheckList[status.index]==0 }">
@@ -590,6 +635,53 @@ html, body {
 									</a>
 								</c:otherwise>
 							</c:choose>
+						</div>
+						<div class="reply">
+<%-- 							<c:forEach items="${replyList[status.index] }" var="reply">								 --%>
+<%-- 								<c:if test="${reply.parent == 0}"> --%>
+<%-- 								<div class="parentReply" reply_seq="${reply.reply_seq }"> --%>
+<!-- 									<div class="profileDiv"> -->
+<!-- 										<span class="userProfile">  -->
+<%-- 										<img class="userProfileImg"	src="${profile_imgList }" alt=""></span>  --%>
+<%-- 										<span class="userProfileID">${reply.email }</span>  --%>
+<!-- 										<span class="userReply"> -->
+<%-- 											<div class="replyContents" contenteditable="false">${reply.contents }</div> --%>
+<!-- 										</span> -->
+<!-- 									</div> -->
+<!-- 									<div class="replyBtns"> -->
+<!-- 										<button type="button" class="deleteReply" style="">삭제</button> -->
+<!-- 										<button type="button" class="registerChildBtn" style="">답글</button> -->
+<!-- 										<button type="button" class="showReply" style="display: none">ㅡ답글보기</button> -->
+<!-- 										<button type="button" class="hideReply" style="display: none">ㅡ답글숨기기</button> -->
+<!-- 									</div> -->
+<%-- 									<c:forEach items="${replyList[status.index] }" var="childReply">	 --%>
+<%-- 										<c:if test="${childReply.parent !=  }"> --%>
+<%-- 											<div class="childReply" value="1" parent_seq="${reply.parent }"	reply_seq="${reply.reply_seq }"> --%>
+<!-- 												<span class="userProfile">  -->
+<%-- 												<img class="userProfileImg"	src="${profile_imgList }" alt="사진오류"></span>  --%>
+<%-- 													<span class="userProfileID">${reply.email }</span> <span class="userReply"> --%>
+<%-- 													<div class="replyContents" contenteditable="false">${reply.contents }</div> --%>
+<!-- 												</span> -->
+<!-- 												<div class="replyBtns"> -->
+<!-- 													<button class="registerChildReply" style="display: none;">등록</button> -->
+<!-- 													<button class="childReplyCancel" style="display: none;">취소</button> -->
+<!-- 													<button class="deleteChildReplyBtn" style="">삭제</button> -->
+<!-- 												</div> -->
+<!-- 											</div> -->
+<%-- 										</c:if>		 --%>
+<%-- 									</c:forEach>									 --%>
+<!-- 								</div> -->
+<%-- 								</c:if>								 --%>
+<%-- 							</c:forEach>				 --%>
+						</div>
+						
+						<div class="writeReplyBox">
+							<span class="myProfileImgBox"><img class="userProfileImg"
+								src="${loginInfo.profile_img }" alt=""></span>
+							<div class="myNickName">${loginInfo.nickname }</div>
+							<div id="writeReply" contenteditable="true"></div>
+							<button type="button" class="replyBtn"
+								onclick="replyBtnOnclick('${loginInfo.email}',${feed.feed_seq });">등록</button>
 						</div>
 					</div>
 
@@ -673,9 +765,6 @@ html, body {
 	</div>
 
 	<script>	
-	
-	
-	
 	//신고확인 기능 모달
 	$(document).on("click",".sirenBtn",function(){
  		 var seq = $(this).attr("id");
@@ -765,6 +854,45 @@ html, body {
 						})
 						}
 				})
+		function replyBtnOnclick(email,feed_seq) {
+			var writeReply = $("#writeReply");
+			var contents = writeReply.html();
+			console.log(email + feed_seq + contents);
+			if(contents == ""){ //컨텐츠가 null 값일 경우 등록 동작
+				return false;
+			}
+			$.ajax({
+				type : "POST",
+				url : "${pageContext.request.contextPath }/feed/registerReply",
+				data : {
+					feed_seq : feed_seq,
+					contents : contents,
+					email : email
+				},
+				dataType : "json"
+				}).done(function(data) {
+					console.log(data);
+					var parentReply = "";
+					parentReply += "<div class=\"parentReply\" reply_seq="+data.reply_seq+">"
+					parentReply += "<div class=\"profileDiv\"><span class=\"userProfile\"><img class=\"userProfileImg\" src=\"${loginInfo.profile_img }\" alt=\"\"></span><span class=\"userProfileID\">"+data.email+"</span><span class=\"userReply\"><div class=\"replyContents\">"+data.contents+"</div></span></div>"
+					parentReply += "<div class=\"replyBtns\">"
+					parentReply += "<button type=\"button\" class=\"modifyReply\">수정</button>"
+					parentReply += "<button type=\"button\" class=\"deleteReply\">삭제</button>"
+					parentReply += "<button type=\"button\" class=\"modifyReplySuccess\" style='display:none'>완료</button>"
+					parentReply += "<button type=\"button\" class=\"modifyReplyCancel\" style='display:none'>취소</button>"
+					parentReply += "<button type=\"button\" class=\"registerChildBtn\">답글</button>"
+					parentReply += "<button type=\"button\" class=\"showReply\" style='display:none'>ㅡ답글보기</button>"
+					parentReply += "<button type=\"button\" class=\"hideReply\" style='display:none'>ㅡ답글숨기기</button>"	
+					parentReply += "</div>"		
+					parentReply += "</div>"
+					$(".reply").append(parentReply);
+					writeReply.html("");
+			}).fail(function(a, b, c) {
+				console.log(a);
+				console.log(b);
+				console.log(c);
+			})
+		}
 	</script>
 </body>
 </html>

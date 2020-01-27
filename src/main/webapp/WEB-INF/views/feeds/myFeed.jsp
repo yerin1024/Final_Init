@@ -75,7 +75,6 @@
 
 }
 .row{
-<<<<<<< HEAD
 	min-width:460px;
     margin-bottom: 30px;
 }
@@ -328,6 +327,7 @@
 	text-align: center;
 	font-size: 70px;
 	font-weight: bold;
+	color:white;
 }
 
 .profileMessageLayout {
@@ -339,6 +339,7 @@
     margin: auto;
     font-size: 15px;
 	font-family: 'Noto Serif KR', serif;
+    color: white;
 }
 
 .modal-dialog {
@@ -835,7 +836,7 @@
 	              console.log(i);
 	              if(i%3==1){
 	                 console.log(i+"는 1");
-	                 data = "<div class='row' style='margin:0px'>" +data;
+	                 data = "<div class='row'>" +data;
 	              }
 	              if(i%3==0){
 	                 console.log(i+"는0");
