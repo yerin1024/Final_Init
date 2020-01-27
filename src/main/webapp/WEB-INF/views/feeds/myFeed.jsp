@@ -54,17 +54,6 @@
 	margin: auto;
 	padding: 60px 20px 0;
 }
-.media>p{
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    word-break: break-all;
-    max-width: 150px;
-    max-height: 150px;
-    overflow-y: hidden;
-    font-size: 50px;
-}
 #search {
    margin: auto;
    text-align: center;
@@ -83,6 +72,9 @@
 	width:100%;
 	height:100%;
     margin: 0px;
+}
+.media>p{
+	padding:10px;
 }
 .parent([.title]){
 	border:1px solid red;

@@ -20,6 +20,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 <style>
+
 body{
 	background-color:#171C28;
 }
@@ -55,11 +56,12 @@ body{
    height:100%;
    min-width:150px;
 	min-height:150px;
-   border-color:white;
+   border:none;
    background-color:white;
    padding:0px;
    color:black;
 }
+
 #likeBtn, #bookmarkBtn{
    width:50px;
    height:50px;
@@ -121,9 +123,9 @@ div.cover {
     max-width: 150px;
     max-height: 150px;
     overflow-y: hidden;
-    width:100%;
-    height:100%;
+
 }
+
 
 .feed{
 	min-width:150px;
@@ -356,13 +358,16 @@ div.cover {
 .modal-main{
     display: flex;
     height: 650px;
+    border: 1px solid #ebebeb;
+   	width:99.99%;
 }
 .carousel-item>img{
 	width:100%;
 	height:100%;
 }
 .reply {
-		border:1px solid black;
+		border:1px solid #ebebeb;
+		width:99.9%;
         height: 100%;
         padding: 16px;
         overflow-y: scroll;
@@ -531,110 +536,10 @@ div.cover {
 	height:100%;
 	margin:0px;
 }
-/* .reply { */
-/*         height: 90%; */
-/*         padding: 16px; */
-/*         overflow-y: scroll; */
-/* } */
+.media>p{
+	padding:10px;
+}
 
-/* .reply::-webkit-scrollbar { */
-/*         width: 0 !important */
-/* } */
-
-/* .writerProfile,.userProfile,.myProfile{	 */
-/*     margin-right: 16px; */
-/* } */
-/* .writerProfileImg,.userProfileImg{ */
-/* 	width:40px; */
-/* 	height:40px; */
-/* 	border-radius: 160px; */
-/*     border: 1px solid black; */
-/* } */
-/* .childProfileImg{ */
-/* 	width:24px; */
-/* 	height:24px; */
-/* 	border-radius: 160px; */
-/*     border: 1px solid black; */
-/* } */
-/* .modal-btns{ */
-/* 	height:50px; */
-/* 	line-height:50px; */
-/*     padding: 0px 16px; */
-/* } */
-/* .writerInfo,.userInfo{ */
-/*     margin-left: -12px; */
-/*     margin-right: 0; */
-/*     padding: 12px 16px 0px 16px; */
-/*     display:flex; */
-/* } */
-/* .childReply{ */
-/*     margin-right: 0; */
-/*     padding: 12px 16px 0px 60px; */
-/*     display: flex; */
-/*     flex-wrap: wrap; */
-/* } */
-/* .userProfileID,.writerProfileID{ */
-/* 	font-weight: 600; */
-/*     padding-left: 5px; */
-/*     margin: 0px 5px 0px -5px; */
-/* } */
-/* .userReply,.text>p{ */
-/*     border-radius: 16px; */
-/*     border: 1px solid rgb(239, 239, 239); */
-/*     width: 100%; */
-/*     line-height: 50px; */
-/*     width: 400px; */
-/*     margin: 0px 20px; */
-/*     word-break: break-all;	 */
-/*     display: inherit; */
-/* } */
-/* } */
-/* .childContentsBox{ */
-/* 	width:322px; */
-/*     border: 1px solid rgb(239, 239, 239); */
-/*     border-radius: 16px; */
-/*     transition: all 1000ms ease 0s; */
-/* } */
-/* .writeReplyBox{ */
-/* 	display:flex; */
-/*     width: 100%; */
-/* } */
-/* .modal-title{ */
-/* 	line-height: 50px; */
-/* } */
-/* #writeReply{	 */
-/*     border-radius: 16px; */
-/*     border: 1px solid rgb(239, 239, 239); */
-/*     width: 100%; */
-/*     line-height:50px; */
-/*     margin: 0px 20px; */
-/* } */
-/* .replyContents{	 */
-/*     background: transparent; */
-/*     border: 0px; */
-/*     display: inline-block; */
-/*     min-height: 50px; */
-/*     font-size: 16px; */
-/*     outline: 0px; */
-/*     overflow-x: hidden; */
-/*     resize: none; */
-/*     white-space: pre-wrap; */
-/*     width: 100%; */
-/*     word-break: break-all; */
-/*     padding: 12px; */
-/* } */
-/* .modal-body1{ */
-/* 	width:55%; */
-/*     height: 100%; */
-/* } */
-/* .modal-title{ */
-/* 	width:45%; */
-/* } */
-/* .media{ */
-/* 	width:100%; */
-/* 	height:100%; */
-/* 	margin:0px; */
-/* } */
 /* All Device */
 /* 모든 해상도를 위한 공통 코드를 작성한다. 모든 해상도에서 이 코드가 실행됨. */
 
@@ -813,7 +718,7 @@ function getList(page){
 		<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="margin-top: 60px;">
 	  <div class="modal-dialog" role="document">
 	    <div class="modal-content">
-	      <div class="modal-header">
+	      <div class="modal-header" style="width:99.9%;">
 	         <span class="writerProfile"><img class="userProfileImg" src="${loginInfo.profile_img }" alt=""></span>
 	        <h5 class="modal-title" id="exampleModalLabel">DETAIL VIEW</h5>
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -821,8 +726,8 @@ function getList(page){
 	        </button>
 	      </div>
 		<div class="modal-main">			
-	      		<div class="modal-body1">
-	      		</div>
+	      	<div class="modal-body1">
+	      	</div>
             <div class="title">
                 <div class="reply">
                		<div class="writerInfo">
@@ -845,5 +750,57 @@ function getList(page){
 	  </div>
 	  </div>
    	<jsp:include page="/resources/script/myFeedScript.jsp" />
+   	
+   	<script>
+		$(document).on("click", "#like", function(e){
+			e.preventDefault();   
+		var seq = $(this).attr("class");
+		var likeCheck = $("#likeBtn").attr("class");
+		if(likeCheck=="likeBefore"){ //아직 좋아요를 안눌러있는 상태에서 좋아요했을때
+			$.ajax({
+				type : "POST",
+				url : "/feed/insertLike",
+				data : {feed_seq : seq}
+			}).done(function(){
+				$("#likeImg").html("<img class=\"likeAfter\" id=\"likeBtn\" src=\"${pageContext.request.contextPath }/resources/images/likeAfter.png\">");
+			})
+		}else{
+			$.ajax({
+				type : "POST",
+				url : "/feed/deleteLike",
+				data : {feed_seq : seq}
+			}).done(function(){
+				$("#likeImg").html("<img class=\"likeBefore\" id=\"likeBtn\" src=\"${pageContext.request.contextPath }/resources/images/likeBefore.png\">");
+			})
+		}
+	})
+	
+	$(document).on("click","#bookmark", function(e){
+		e.preventDefault();   
+		var seq = $(this).attr("class");
+		var bookmarkCheck = $("#bookmarkBtn").attr("class");
+		if(bookmarkCheck=="bookmarkBefore"){ //아직 좋아요를 안눌러있는 상태에서 좋아요했을때
+			$.ajax({
+				type : "POST",
+				url : "/feed/insertBookmark",
+				data : {feed_seq : seq}
+			}).done(function(){
+				console.log($("#bookmarkImg").html());
+				$("#bookmarkImg").html("<img class=\"bookmarkAfter\" id=\"bookmarkBtn\" src=\"${pageContext.request.contextPath }/resources/images/bookmarkAfter.png\">");
+				console.log($("#bookmarkImg").html());
+			})
+		}else{
+			$.ajax({
+				type : "POST",
+				url : "/feed/deleteBookmark",
+				data : {feed_seq : seq}
+			}).done(function(){
+				console.log("deleteBookmark done");
+				$("#bookmarkImg").html("<img class=\"bookmarkBefore\" id=\"bookmarkBtn\" src=\"${pageContext.request.contextPath }/resources/images/bookmarkBefore.png\">");
+			})
+		}
+			
+	})
+   	</script>
 </body>
 </html>
