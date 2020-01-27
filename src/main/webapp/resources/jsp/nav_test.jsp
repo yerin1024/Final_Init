@@ -24,7 +24,7 @@
             </li>
 			
             <li class="nav-item ac1" id="ac1_1">
-              <a class="nav-link" id="msg_exist" style="padding-top: 15px;">
+              <a class="nav-link gold" id="msg_exist" style="padding-top: 15px;">
               <img id="msg" src="/resources/images/msg.png"></a>
             </li>
             <li class="nav-item">
@@ -73,7 +73,6 @@ $(function() {
 				dataType: "json"
 			}).done(function(resp){
 				console.log(resp);
-<<<<<<< HEAD
 				$("#alarm_exist").attr("data-bubble",resp);
 // 				 $("#a_ac1_1").children().remove();
 // 		         $("#a_ac1_1").append("<a class='nav-link gold' id='alarm_exist' style='padding-top: 15px;' data-bubble='"+resp+"'>"

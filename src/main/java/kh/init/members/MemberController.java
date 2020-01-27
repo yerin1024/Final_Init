@@ -233,6 +233,7 @@ public class MemberController {
 		System.out.println("이메일는 "+mDto.getEmail());
 		String emailResult = mDto.getEmail().replace("@", "%40");
 		//model.addAttribute("email", emailResult);
+		model.addAttribute("email", mDto.getEmail());
 		int result = 0;
 		try {
 			if(profileImg.getOriginalFilename() == "") {
@@ -255,7 +256,7 @@ public class MemberController {
 		}catch(Exception e) {
 			e.printStackTrace();
 			System.out.println("입력실패.");
-			return "redirect:feed/myFeed";
+			return "redirect:/feed/myFeed";
 		}
 	}
 

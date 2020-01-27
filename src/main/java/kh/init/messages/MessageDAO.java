@@ -63,6 +63,13 @@ public class MessageDAO {
 		return jdbc.selectOne("Message.previewMsg", prm);
 	}
 	
+	// 미리 보기에 넣을 상대방
+	public List<MessageDTO> selectMsgUser(String email) {
+		Map<String, String> prm = new HashMap<>();
+		prm.put("email", email);
+		return jdbc.selectList("Message.selectMsgUser", prm);
+	}
+	
 	// 읽지 않은 메시지 수
 	public int unreadCount(String to_id, String from_id) {
 		Map<String, Object> prm = new HashMap<>();
