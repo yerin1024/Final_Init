@@ -39,6 +39,7 @@
 .row{
 	width:100%;
 	height:100%;
+	margin-bottom:15px;
 }
 
 /* .title{ */
@@ -431,7 +432,7 @@ div.cover {
     word-break: break-all;	
     display: inherit;
 }
-}
+
 .childContentsBox{
 	width:322px;
     border: 1px solid rgb(239, 239, 239);
