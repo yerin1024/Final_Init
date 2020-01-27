@@ -21,12 +21,6 @@
     * {
         box-sizing: border-box;
     }
-    
-<<<<<<< HEAD
- 		.modal {
-          text-align: center;
-        }
-=======
  	.modal {
          text-align: center;
     }
@@ -43,7 +37,6 @@
          text-align: left;
          vertical-align: middle;
     }
->>>>>>> 0270c0403d6b6047c840a780fd35ecb6dca6fa9f
     
     .modal-content {
         background-color: #fffefc;
