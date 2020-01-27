@@ -55,17 +55,6 @@
 	margin: auto;
 	padding: 60px 20px 0;
 }
-.media>p{
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    word-break: break-all;
-    max-width: 150px;
-    max-height: 150px;
-    overflow-y: hidden;
-    font-size: 50px;
-}
 #search {
    margin: auto;
    text-align: center;
@@ -84,6 +73,9 @@
 	width:100%;
 	height:100%;
     margin: 0px;
+}
+.media>p{
+	padding:10px;
 }
 .parent([.title]){
 	border:1px solid red;
@@ -185,7 +177,13 @@
 	max-width: 700px;
     margin: 30px auto 50px;
 }
-
+#myFeed{
+	color:white;
+	font-size:20px;
+	text-align:center;
+	margin-top:70px;
+	font-weight:bold;
+}
 
 /* 프로필 */
 .profile {
@@ -349,13 +347,16 @@
 .modal-main{
     display: flex;
     height: 650px;
+    border-top: 1px solid #ebebeb;
+   	width:99.99%;
 }
 .carousel-item>img{
 	width:100%;
 	height:100%;
 }
 .reply {
-		border:1px solid black;
+		border:1px solid #ebebeb;
+		width:99.9%;
         height: 100%;
         padding: 16px;
         overflow-y: scroll;
@@ -460,7 +461,6 @@
 	width:55%;
     height: 100%;
     position: relative;
-    border:1px solid black;
 }
 .title{
 	width:45%;
@@ -1009,9 +1009,9 @@
          <div class="wrapper">			
 			<div id="myFeed">
          <c:choose>
-            <c:when test="${fn:length(list) ==0}">
-            	게시물이 없습니다.
-            </c:when>
+            <c:when test="${fn:length(list) <1}">
+					게시물이 없습니다.
+			</c:when>
             <c:otherwise>
             <div id="feeds">
                   <c:forEach items="${list }" var="feed" varStatus="status">
@@ -1025,7 +1025,7 @@
                         </div>
                      </c:if>
                   </c:forEach>
-                  </div>
+            </div>
             </c:otherwise>
          </c:choose>
           </div>	

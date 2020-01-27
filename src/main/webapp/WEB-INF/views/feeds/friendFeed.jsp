@@ -30,8 +30,13 @@
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
 <style>
+body{
+	background-color:#171C28;
+}
 #wrapper {
-	border: 1px solid red;
+	color:white;
+	text-align:center;
+	font-size:30px;
 	margin: auto;
 }
 
