@@ -133,6 +133,8 @@
 	}
 }
 </style>
+
+<jsp:include page="/resources/jsp/select.jsp" />
 <script>
 	$(function() {
 		$("#writeFeedForm").on("submit", function() {
@@ -152,7 +154,7 @@
 		<br>
 			<form action="writeFeedProc" method="post" enctype="multipart/form-data" id="writeFeedForm">
 				제목&nbsp;&nbsp;<input type="text" name="title" id="title">
-				<select name="relation">
+				<select name="relation" data-menu>
 				<option value='0'>전체보기</option>
 				<option value='1'>지인</option>
 				<option value='2'>아는친구</option>
