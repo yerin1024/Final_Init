@@ -175,13 +175,31 @@ $('#exampleModal').on('shown.bs.modal', function (event) {
 		bookmarkA.append(bookmarkS);
 		bookmarkS.append(bookmarkI); 
 		
-		var modalBtns = $("<div></div>");
-		modalBtns.addClass("modal-btns");
-		modalBtns.append(likeA);
-		modalBtns.append(bookmarkA);
-		$(".footer-btns").append(modalBtns);
+		var modifyA = $("<a href='modifyFeedView?feed_seq="+dto.feed_seq+"'>수정</a>");
+		var deleteA = $("<a href='deleteProc?feed_seq="+dto.feed_seq+"'>삭제</a>");
+		
+		var sessionEmail = "${loginInfo.email}";
+		var writer = dto.email;
+		console.log(sessionEmail);
+		console.log(writer);
+		
+		if(sessionEmail==writer){ //좋아요스크랩은 없애고 수정삭제만 있음
+			console.log("작성자 본인입니다.");
+			$(".footer-btns").html("");
+			$(".footer-btns").append(modifyA);
+			$(".footer-btns").append(deleteA);
+		}else{
+			console.log("작성자가 아닙니다.")
+			$(".footer-btns").html("");
+			$(".footer-btns").append(likeA);
+			$(".footer-btns").append(bookmarkA);
+		}
+	
+		
 		$(".writerProfile").html("<img src="+writerProfile+" class='writerProfileImg'>");
 		
+	}).fail(function(a,b,c){
+		console.log("실패 : "+b);
 	})
 	$('#myInput').trigger('focus');
 	

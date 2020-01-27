@@ -35,6 +35,7 @@ public class FeedController {
 	@RequestMapping("/myFeed")
 	public String myFeed(String email, Model model) {
 		System.out.println("myFeed 도착");
+		System.out.println("email : " + email);
 		int ipage = 1;
 		List<FeedDTO> list = null;
 		List<String> cover = new ArrayList<>();
@@ -43,12 +44,16 @@ public class FeedController {
 			if(!(email.equalsIgnoreCase(myEmail))) {
 				System.out.println(email);
 				System.out.println(myEmail);
+				list = (List<FeedDTO>)service.getMyFeedByFriend(ipage, email, myEmail).get("list");
+				cover = (List<String>)service.getMyFeedByFriend(ipage, email, myEmail).get("cover");
             int frResult = fservice.friendIsOkService(email, myEmail);
             model.addAttribute("frResult", frResult);
+            }else {
+            	list = (List<FeedDTO>)service.getMyFeed(ipage, email).get("list");
+    			cover = (List<String>)service.getMyFeed(ipage, email).get("cover");
             }
 			MemberDTO dto = mservice.getMyPageService(email);
-			list = (List<FeedDTO>)service.getMyFeed(ipage, email).get("list");
-			cover = (List<String>)service.getMyFeed(ipage, email).get("cover");
+			
 			System.out.println("dto 이메일값 확인 : "+dto.getEmail()+dto.getName());
 			model.addAttribute("mvo", dto);		
 			model.addAttribute("list", list);
