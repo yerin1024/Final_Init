@@ -14,7 +14,6 @@
 <link rel="stylesheet" href="/resources/css/nav.css">
 <link rel="stylesheet" href="/resources/css/msg.css"> 
 <link rel="stylesheet" href="/resources/css/alr.css"> 
-<link rel="stylesheet" href="/resources/css/test.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.css">
 
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
@@ -34,7 +33,6 @@
 #wrapper {
 	border: 1px solid red;
 	margin: auto;
-	/* width: 50vw; */
 }
 
 html, body {
@@ -57,44 +55,29 @@ html, body {
 .dz-preview {
 	display: none;
 }
-
+/* 
 #carouselExampleIndicators {
 	 width: 100%; 
-}
+} */
 
 .carousel-inner {
-	 width: 720px; 
-/* 	width:1600px; */
+	/* width: 720px;  */
+	width: 100%;
 	height:600px;
 	overflow: hidden;
-
 	}
 
 .carousel-item {
 	margin: auto;
-/* width: 1600px; */
-	width: 720px;
+	/* width: 720px; */
+	width: 100%;
 	text-align: center;
 }
 
 .carousel-item * {
 	width: 100%;
-/* 	height: 100%; */
 	height:600px; 
-
 }
-
-.carousel-inner>img {
-	width: 100%;
-	height: 100%;
-}
-
-  .carousel-inner > .item > img {
-      top: 0;
-      left: 0;
-      min-width: 100%;
-      min-height: 720px;
-  }  
 
 .slide {
 	width: 99.5%;
@@ -195,9 +178,10 @@ html, body {
 	#wrapper {
 		width: 720px;
 	}
+ 
 	.media {
-		width: 720px;
-	}
+		max-width: 720px;
+	} 
 }
 
 @media all and (max-width:500px) {
@@ -205,9 +189,23 @@ html, body {
 	#wrapper {
 		max-width: 720px;
 	}
-	.media {
+ 	.media {
 		max-width: 720px;
 	}
+	.carousel-inner {
+	max-width: 720px; 
+	min-width:520px;
+ 	max-height:720px;
+	min-height:520px; 
+	height: 600px; 
+	overflow: hidden;
+	}
+	
+	.carousel-item * {
+	width: 100%;
+	max-height:720px;
+	min-height:520px; 
+	} 
 }
 
 /* Tablet Device */
@@ -216,9 +214,26 @@ html, body {
 	#wrapper {
 		max-width: 720px;
 	}
-	.media {
+ 	.media {
 		max-width: 720px;
 	}
+	.carousel-inner {
+	max-width: 720px; 
+	min-width:520px;
+	/* height:600px;  */
+	max-height:720px;
+	min-height:520px; 
+	overflow: hidden;
+	}
+	
+	.carousel-item * {
+	/* width: 100%; */
+	max-width: 720px; 
+	min-width:520px;
+	/* height:600px;  */
+	max-height:720px;
+	min-height:520px; 
+	} 
 }
 
 /* Desktop Device */
@@ -227,9 +242,9 @@ html, body {
 	#wrapper {
 		max-width: 720px;
 	}
-	.media {
+	 .media {
 		max-width: 720px;
-	}
+	} 
 }
 </style>
 <script>
@@ -292,8 +307,7 @@ html, body {
 							var mediaList = JSON.parse(data.mediaList);
 							var replyList = JSON.parse(data.replyList);
 							var likeCheckList = JSON.parse(data.likeCheckList);
-							var bookmarkCheckList = JSON
-									.parse(data.bookmarkCheckList);
+							var bookmarkCheckList = JSON.parse(data.bookmarkCheckList);
 							var profile_imgList = JSON.parse(data.profile_imgList);
 							var declareCheckList = JSON.parse(data.declareCheckList);
 							for (var i = 0; i < list.length; i++) {
@@ -305,6 +319,7 @@ html, body {
 								 var nick = $("<div class='row profileNickname'></div>");
 								 nick.append(list[i].nickname);
 								 profile.append(nick);
+								 if(list[i].email != "${loginInfo.email}"){
 								 var feedDeclaration = $("<div class='row profilefeedDeclaration'></div>");
 								 feedDeclaration.attr("seq",list[i].feed_seq);
 								 var afterDec = $("<img class='sirenImg' src='${pageContext.request.contextPath}/resources/images/siren2.png'>")
@@ -324,15 +339,17 @@ html, body {
 									 feedDeclaration.append(beforeDec);	 
 									 profile.append(feedDeclaration); 
 								 }
+								 }else{ }
 								feed.append(profile);
+								//ajax media가 있으면 carousel 없으면 바로 contents
+								if(mediaList[i].length != 0){
 								var media = $("<div class='row media'></div>");
-
 								var CEI = $("<div class='carousel slide' data-interval='false'></div>");
 								CEI.attr("id",'carouselExampleIndicators'+list[i].feed_seq);
-								
-								if(mediaList[i].length>1){
+								media.append(CEI);
+								//ajax 사진이 두 장 이상일 경우 indicators와 control O 
+								if(mediaList[i].length >1){
 								var olCEI = $("<ol class='carousel-indicators'></ol>");
-
 								for (var m = 0; m < mediaList[i].length; m++) {
 									var liCEI = $("<li></li>");
 									liCEI.attr("data-target",'#carouselExampleIndicators'+list[i].feed_seq);
@@ -345,38 +362,39 @@ html, body {
 									olCEI.append(liCEI);
 								}
 								CEI.append(olCEI);
-								}else{
-									
-								}
-								
-								var ci = $("<div class='carousel-inner'>");
-
+								}else{}
+								media.append(CEI);
+								var ci = $("<div class='carousel-inner' style='height:600px; overflow: hidden;'></div>");
 								for (var m = 0; m < mediaList[i].length; m++) {
 									var divCI = $("<div class='carousel-item'></div>");
 									if (m == 0) {
 										divCI.addClass("active");
-										divCI.append(mediaList[i][m]);
+										var pic = $(mediaList[i][m]);
+										pic.attr("style",'height:600px;');
+										divCI.append(pic);
 									} else {
-										divCI.append(mediaList[i][m]);
+										var pic = $(mediaList[i][m]);
+										pic.attr("style",'height:600px;');
+										divCI.append(pic);
 									}
-									ci.append(divCI);
+									ci.append(divCI)
+									CEI.append(ci);
+									media.append(CEI);
 								}
-								//ci.append("<a class='carousel-control-prev' role='button' data-slide='prev'>");
-								var a = $("<a class='carousel-control-prev' role='button' data-slide='prev'>");
-								a.attr("href",'#carouselExampleIndicators'+list[i].feed_seq);
-								ci.append(a);
-								ci.append("<span class='carousel-control-prev-icon' aria-hidden='true'></span> <span class='sr-only'>Previous</span></a>");
-								
-								//ci.append("<a class='carousel-control-next' role='button' data-slide='next'>");
-								var b = $("<a class='carousel-control-next' role='button' data-slide='next'>");
-								b.attr("href",'#carouselExampleIndicators'+list[i].feed_seq);
-								ci.append(b);
-								ci.append("<span class='carousel-control-next-icon' aria-hidden='true'></span> <span class='sr-only'>Next</span></a>");
-
-								media.append(ci);
+								if(mediaList[i].length >1){
+								var prevC = $("<a class='carousel-control-prev' role='button' data-slide='prev'></a>");
+								prevC.attr("href",'#carouselExampleIndicators'+list[i].feed_seq);
+								prevC.append("<span class='carousel-control-prev-icon' aria-hidden='true'></span><span class='sr-only'>Previous</span>");
+								CEI.append(prevC);
+								var nextC = $("<a class='carousel-control-next' role='button' data-slide='next'></a>");
+								nextC.attr("href",'#carouselExampleIndicators'+list[i].feed_seq);
+								nextC.append("<span class='carousel-control-next-icon' aria-hidden='true'></span> <span class='sr-only'>Next</span>");
+								CEI.append(nextC);
+								media.append(CEI);
+								}else{}
 								feed.append(media);
-
-								var contents = $("<div class='row contents' style='height:100px'></div>");
+								}else{}
+								var contents = $("<div class='row contents' style='min-height:100px; max-height:400px;'></div>");
 								contents.append(list[i].contents);
 
 // 								var replys = $("<div class='row replys'></div>");
@@ -482,8 +500,7 @@ html, body {
 								</c:choose>
 							</div>
 						</c:when>
-						<c:otherwise>
-						</c:otherwise>
+						<c:otherwise></c:otherwise>
 						</c:choose>	
 						</div>
 					<c:choose>
@@ -537,21 +554,19 @@ html, body {
 							</c:choose>
 						</div>
 					</div>
-					</c:when>
-					
-					<c:when test="${mediaList[status.index].size() == 0}">
-				
-					</c:when>
+					</c:when>	
+					<c:when test="${mediaList[status.index].size() == 0}"></c:when>
 					</c:choose>
-					
-					
-						<div class="row contents" style="height: 100px;">
+						<div class="row contents" style="min-height: 100px; max-height: 400px;">
 							${feed.contents }</div>
 						<div class="row replys">
 							<c:forEach items="${replyList[status.index]}" var="reply">
 								<div class="row reply">${reply }</div>
 							</c:forEach>
 						</div>
+						
+						<c:choose>
+						<c:when test="${feed.email ne loginInfo.email}">
 						<div class="row btns" style="">
 							<c:choose>
 								<c:when test="${likeCheckList[status.index]==0 }">
@@ -591,6 +606,10 @@ html, body {
 								</c:otherwise>
 							</c:choose>
 						</div>
+						</c:when>
+						<c:otherwise></c:otherwise>
+						</c:choose>
+						
 					</div>
 
 
