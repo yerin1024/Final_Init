@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="/resources/css/nav.css">
 <link rel="stylesheet" href="/resources/css/msg.css"> 
 <link rel="stylesheet" href="/resources/css/alr.css"> 
+<link rel="stylesheet" href="/resources/css/test.css">
 <script src="https://code.jquery.com/jquery-3.4.1.js"
 	type="text/javascript"></script>
 <link rel="stylesheet"
@@ -232,7 +233,7 @@
 	border: 1px solid black;
 }
 
-.profileButton {
+.profileButton{
 	width: 125px;
 	height: 125px;
 	border-radius: 80px;
@@ -951,7 +952,7 @@
 						<div class="profileMessage">${mvo.profile_msg}</div>
 					</div>
 					<div class="profileLayoutRight">
-						<button class="friendRequest">＋</button>
+						<button class="messageRequest" id="msgRequest">＋</button>
 						<div class="btnText">메세지</div>
 					</div>
 				</c:when>
@@ -1175,6 +1176,95 @@
 	    $("#registerFeed").on("click", function() {
 	    	location.href = "${pageContext.request.contextPath}/feed/writeFeed";
 		});
+	    
+	    
+	    // 메시지 보내기 -----------------------------------------------------------
+	    // 메시지 보내기 -----------------------------------------------------------
+	    // 메시지 보내기 -----------------------------------------------------------
+	    // 메시지 보내기 -----------------------------------------------------------
+	    // 메시지 보내기 -----------------------------------------------------------
+	    $("#msgRequest").on("click",function(){
+	    	
+	    	$("div[id='view1']").fadeIn(0);
+	    	var friendId = '${mvo.email}';
+			var nickname = '${mvo.nickname}';
+			
+				 $.ajax({
+					url: "${pageContext.request.contextPath}/message/messageView.msg",
+					method: "post",
+					data: {
+						to_id: friendId
+					},
+					dataType: "json"
+				 }).done(function(resp){
+					 $(".pre_top").children().remove();
+					 $(".pre_top").append("<div class='pre_back' style='display:none;'><img src='/images/left4.png' class='pre_back_img'></div>"
+					            + "<div class='pre_top_pf'></div>"
+					            + "<div class='pre_text'><span class='pre_text_name'>"+nickname+"</span></div>");
+					 
+					 $(".sector_in").children().remove();
+					 $(".search").children().remove();
+					 for(var i=0; i < resp.length; i++){
+						 
+						 if(resp[i].from_id=="${loginInfo.email}"){
+							 $(".sector_in").append("<ul class='ul_right'>"
+						                +"<li class='from_id'>"+resp[i].contents+"</li><span class=time_right>"
+						                +resp[i].write_date+"</span><br></ul>");
+						 }else{
+							 $(".sector_in").append("<ul class='ul_left'>"
+						                + "<li class='to_id'>"+resp[i].contents+"</li><span class=time>"
+						                +resp[i].write_date+"</span><br></ul>");
+						 }
+					}
+					 var objDiv = document.getElementById("view1");
+		        	 objDiv.scrollTop=objDiv.scrollHeight;
+		        	 $("#footer").children().remove();
+		        	 $("#footer").append("<div id='footer_cont'>"
+		                    	+"<input type='text' id='inputtxt' placeholder='Type a message...'>"
+		               			+"<button id='sendfly'><img src='/images/send.png' id=sendup></button>"
+		            			+"</div>");
+		        	
+		        	 // 메시지 엔터키 전송
+		        	$("#inputtxt").keydown(function(e) {
+		                if (e.keyCode == 13) {
+		                	document.getElementById("sendfly").click();
+		                }
+		            });
+		        	 
+		        	// 메시지 전송
+		        	 $("#sendfly").on("click",function(){
+		        		 $.ajax({
+		        			 url : "${pageContext.request.contextPath}/message/sendFly.msg",
+		        			 method : "post",
+		        			 data : {
+		        				 contents : $("#inputtxt").val(),
+		        				 to_id: friendId
+		        				 },
+        				 dataType : "json"
+		        		 }).done(function(resp) {
+		        			 $("#inputtxt").val("");
+		        			 $(".sector_in").append("<ul class='ul_right'><li class='from_id'>"
+		        					 +resp.contents+"</li><span class=time_right></span><span class=readCheck></span><br></ul>");
+		        			 var objDiv = document.getElementById("view1");
+		        			 objDiv.scrollTop=objDiv.scrollHeight;
+		        			 
+		        		 }).fail(function(a,b,c){
+		        			 console.log(a); console.log(b); console.log(c);
+		        		 })
+		        	 });
+		        	 
+		        	 // 대화창에서 목록으로
+		        	 $(".pre_back").on("click",function(){
+		        		 console.log("뒤로 가기 클릭");
+		        		 document.getElementById("ac1_1").click();
+	     			 });
+				 
+				 }).fail(function(a,b,c){
+					 console.log(a); console.log(b); console.log(c);
+				 })
+				
+	    });
+	    
 
 	    
 	

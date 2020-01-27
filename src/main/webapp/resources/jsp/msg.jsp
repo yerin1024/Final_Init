@@ -5,6 +5,53 @@
 <div id=collection>
 		<button id=toCollection class=toColl style="display:none;">메시지 목록</button>
 	</div>
+	
+	<div id='modalDiv'></div>
+	<div>
+<div class="modal fade" id="toWhereModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+<!--       ----------------------- -->
+        <div id='profileBigger'><img src='/images/b1.png' id='profileBiggerImg'></div>
+        
+        <div class='toWhere'>
+           <a href='#'>
+            <div id='toUserFeed'>
+                <div class='imgContainer'>
+                <img src='/images/toUserFeed.png' id='toUserFeedImg'>
+                </div>
+                <b>피드 가기</b>
+            </div>
+            </a>
+            
+            <a href='#'>
+            <div id='toUserMsg'>
+                <div class='imgContainer'>
+                <img src='/images/toUserMsg.png' id='toUserMsgImg'>
+                </div>
+                <b>메시지 보내기</b>
+            </div>
+            </a>
+        </div>
+<!--       ----------------------- -->
+      </div>
+      <div class="modal-footer">
+<!--        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>-->
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<!--       ----------------------------------------------------------------------------------------------- -->
 			
 	<div id="view1" style="z-index:999;">
 		<div class="ac2">
@@ -27,6 +74,9 @@
         </div>
 		</div>
     </div>
+    
+    
+
 	
 	
 	<script>
@@ -62,7 +112,7 @@
  				
  				for(var i=0; i < resp.length; i++){
  					$(".sector_in").append("<div class='ppre_line'>"		// img src 안에다가 dto 꺼내듯이 쓰면 됨
- 							+"<div class='pre_pf'><img src='"+resp[i].profile_img+"' class='pre_pf_img'></div>"
+ 							+"<div class='pre_pf' data-toggle='modal' data-target='#toWhereModal'><img src='"+resp[i].profile_img+"' class='pre_pf_img'></div>"
  			        		+"<div class='pre_text'>"+resp[i].nickname+"</div>"
  			                +"<div class='pre_time'>"
  			                +"<img src='/images/startMsg2.png' class='pre_start' id='"+resp[i].fr_id+"' value='"+resp[i].nickname+"' name='"+resp[i].profile_img+"'>"
@@ -72,6 +122,52 @@
  				$("#footer").append("<div class='toWhere ac1'><img src='/images/toFr_cl.png' id='toFrIcon'></div>"
  			            +"<div id='toBetween'></div>"
  			            +"<div class='toWhere toColl'><img src='/images/toMsg_un.png' id='toMsgIcon'></div>");
+ 				
+ 				// 모달 띄우기
+ 				$(".pre_pf").on("click",function(){
+ 					var friendId = $(this).attr('value');
+ 					console.log(friendId);
+ 					
+ 					$("#modalDiv").children().remove();
+ 					$("#modalDiv").append("<div class='modal fade' id='"+friendId+"' tabindex='-1' role='dialog' aria-labelledby='exampleModalCenterTitle' aria-hidden='true'>"
+ 							  +"<div class='modal-dialog modal-dialog-centered' role='document'>"
+ 				    +"<div class='modal-content'>"
+ 				      +"<div class='modal-header'>"
+ 				        +"<h5 class='modal-title' id='exampleModalCenterTitle'>Modal title</h5>"
+ 				        +"<button type='button' class='close' data-dismiss='modal' aria-label='Close'>"
+ 				          +"<span aria-hidden='true'>&times;</span>"
+ 				        +"</button>"
+ 				      +"</div>"
+ 				      +"<div class='modal-body'>"
+ 				        +"<div id='profileBigger'><img src='images/b1.png' id='profileBiggerImg'></div>"
+ 				        +"<div class='toWhere'>"
+ 				           +"<a href='#'>"
+ 				            +"<div id='toUserFeed'>"
+ 				                +"<div class='imgContainer'>"
+ 				                +"<img src='images/toUserFeed.png' id='toUserFeedImg'>"
+ 				               +"</div>"
+ 				                +"<b>피드 가기</b>"
+ 				            +"</div>"
+ 				            +"</a>"
+ 				            +"<a href='#'>"
+ 				            +"<div id='toUserMsg'>"
+ 				                +"<div class='imgContainer'>"
+ 				                +"<img src='images/toUserMsg.png' id='toUserMsgImg'>"
+ 				                +"</div>"
+ 				                +"<b>메시지 보내기</b>"
+ 				            +"</div>"
+ 				            +"</a>"
+ 				        +"</div>"
+ 				        
+ 				      +"</div>"
+ 				      +"<div class='modal-footer'>"
+ 				
+ 				      +"</div>"
+ 				    +"</div>"
+ 				  +"</div>"
+ 				+"</div>");
+ 				})
+ 				
  				
  				// 메시지 상세 보기
  				$(".pre_start").on("click",function(){

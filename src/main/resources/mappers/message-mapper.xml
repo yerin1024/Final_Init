@@ -34,15 +34,14 @@
 	
 	<!-- 미리 보기 상대방 출력 -->
 	<select id="selectMsgUser" resultType="kh.init.messages.MessageDTO">
-<!-- 		select * from tb_message where ((from_id=#{from_id} and to_id=#{to_id}) or (from_id=#{to_id} and to_id=#{from_id})) order by 1  -->
-		
-		select distinct email
-		from tb_message msg
-		full outer join tb_member mem on mem.email = msg.from_id or mem.email = msg.to_id
-		full outer join tb_block bl on (bl.from_id = msg.to_id or bl.from_id = msg.from_id) and (bl.to_id = msg.to_id or bl.to_id = msg.from_id)
-		where (msg.to_id ='123123123@naver.com' or msg.from_id='123123123@naver.com') and email!='123123123@naver.com'
+		select distinct email 
+		from tb_message msg 
+		full outer join tb_member mem on mem.email = msg.from_id or mem.email = msg.to_id 
+		full outer join tb_block bl on (bl.from_id = msg.to_id or bl.from_id = msg.from_id) and (bl.to_id = msg.to_id or bl.to_id = msg.from_id) 
+		where (msg.to_id =#{email} or msg.from_id=#{email}) and email!=#{email} 
 		and (bl.from_id is null and bl.to_id is null)
 	</select>
+	<!-- 		select * from tb_message where ((from_id=#{from_id} and to_id=#{to_id}) or (from_id=#{to_id} and to_id=#{from_id})) order by 1  -->
 	
 	<!-- 미리 보기 -->
 	<!-- from_id: 보낸 사람 / to_id: 받는 사람 -->	
