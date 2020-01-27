@@ -34,9 +34,11 @@
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
 <style>
-
+body{
+	background-color:#171C28;
+}
 #mediaRow{
-	min-width:1000px;
+	width:1000px;
 	margin:auto;
 }
 
@@ -61,8 +63,6 @@
 }
 
 .carousel-item {
-	margin: auto;
-	text-align: center;
 }
 
 .carousel-inner * {
@@ -75,12 +75,18 @@
 	width:55vw; 
 	min-width:670px;
 }
+.note-editor{
+	width:680px;
+}
 .note-editable{
-	height:26vw;
-	min-height:400px;
+	height:500px;
 }
 .cover{
-	margin-left:18px;
+	width:220px;
+	height:200px;
+}
+.note-toolbar{
+	z-index: 1;
 }
 /* All Device */
 /* 모든 해상도를 위한 공통 코드를 작성한다. 모든 해상도에서 이 코드가 실행됨. */
@@ -91,9 +97,7 @@
 /* Tablet &amp; Desktop Device */
 @media all and (min-width:768px) {
 	/*     사용자 해상도가 768px 이상일 때 이 코드가 실행됨. 테블릿과 데스크톱의 공통 코드를 작성한다. */
-	body {
-		background-color: purple;
-	}
+
 }
 
 @media all and (max-width:768px) {
@@ -127,9 +131,7 @@
 /* Desktop Device */
 @media all and (min-width:1025px) {
 	/*     사용자 해상도가 1025px 이상일 때 이 코드가 실행됨. 1025px 이상의 랩탑 또는 데스크톱에 대응하는 코드를 작성한다. */
-	body {
-		background-color: pink;
-	}
+
 }
 </style>
 <script>
@@ -148,6 +150,7 @@
 <body>
 	<div id="wrapper">
 		<div id="writeForm" style="height: 715px">
+		<br>
 			<form action="modifyFeedProc?feed_seq=${dto.feed_seq }" method="post" id="modifyProc">
 				제목&nbsp;&nbsp;<input type="text" name="title" id="title" value="${dto.title }">
 				<select name="relation">
