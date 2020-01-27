@@ -924,7 +924,7 @@
         
         doc.getElementById("tab5-1_cancelBtn").addEventListener("click", function (){
         	clearInput(userInput, userInput.length);
-        	doc.getElementById("mainTab").click();
+        	doc.getElementById("mainTab").click();  	
         });
 
         // 입력 변수
