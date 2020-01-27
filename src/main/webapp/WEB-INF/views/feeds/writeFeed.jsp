@@ -36,16 +36,24 @@ body{
 
 
 #writeForm{
-	border:2px solid red;
+	border:3px solid white;
   	margin:auto;
-  	padding-top:60px;
+  	margin-top:60px;
+  	height:700px;
+  	width:1000px;
+  	border-radius:20px;
 }
 
 #title {
 	width:40%;
 }
 .dz-default {
-	border: 1px solid black;
+	text-align:center;
+	margin-left:13px;
+	border: 2px solid white;
+	border-radius : 15px;
+	color:white;
+	font-weight:100;
 	width:90%;
 	margin-top:10px;
 }
