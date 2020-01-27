@@ -1892,6 +1892,76 @@
             boption1 = data.boption1;
             boption2 = data.boption2;
             boption3 = data.boption3;         
+                     
+            var dLength = $(".pOption1").length;
+            for (var i = 0; i < dLength; i++) {
+                if ($(".pOption1:nth-child(" + i + ")").val() == poption1) {
+                    $(".pOption1:nth-child(" + i + ")")
+                        .attr('selected', 'selected');
+                }
+            }
+
+
+	//친구 끊기
+    $(".frcutfr").on("click", function () {
+        var yr_id = $(this).attr("name");
+        
+        console.log(yr_id);
+        $.ajax({
+            url: "${pageContext.request.contextPath}/friend/cutFndRelation",
+            type: "POST",
+            data: {
+                yr_id: yr_id
+            },
+            dataType: "text",
+            success: function (res) {
+                console.log(res);
+                console.log(yr_id);
+                alert("친구취소가 완료되었습니다.");
+                $('#modalBox2').modal('hide');
+                $(".btn-lg").remove();
+                $(".btnText").remove();
+                $(".profileLayoutLeft").append("<button class=btn btn-primary btn-lg id=openModalBtn >＋</button><div class=btnText>친구요청</div>");
+               location.reload();
+                
+                //$('.modal-body2').append("<div class=frInfo>"+list[j].email+"  <button type=button class=frInfo id=cutfr name="+list[j].email+">친구 끊기</button></div>");
+
+                // show modal
+
+            },
+            error: function (
+                request,
+                status,
+                error) {
+                console.log("ajax call went wrong:"
+                    + request.responseText);
+            }
+        })
+    });
+
+    var poption1;
+    var boption1;
+    var boption2;
+    var boption3;
+
+    $("#changeInfo").on("click", function () {
+        $.ajax({
+            url: "${pageCotnext.request.contextPath}/member/goMyInfo",
+            data: { email: "${loginInfo.email}" },
+            dataType: "json",
+            type: "post"
+        }).done(function (data) {
+            $('#modalModifyInfo').modal('show');
+            console.log("email : " + data.dto);
+            var dto = JSON.parse(data.dto);
+            console.log("dto : " + dto.email);
+            $("#username").val(dto.name);
+            $("#phone2").val(data.poption2);
+            $("#phone3").val(data.poption3);
+            poption1 = data.poption1;
+            boption1 = data.boption1;
+            boption2 = data.boption2;
+            boption3 = data.boption3;         
 
             //생년월일 select option 생성 start
             function appendYear() {
@@ -1959,697 +2029,6 @@
                 }
             }
 
-
-	//친구 끊기
-    $(".frcutfr").on("click", function () {
-        var yr_id = $(this).attr("name");
-        
-        console.log(yr_id);
-        $.ajax({
-            url: "${pageContext.request.contextPath}/friend/cutFndRelation",
-            type: "POST",
-            data: {
-                yr_id: yr_id
-            },
-            dataType: "text",
-            success: function (res) {
-                console.log(res);
-                console.log(yr_id);
-                alert("친구취소가 완료되었습니다.");
-                $('#modalBox2').modal('hide');
-                $(".btn-lg").remove();
-                $(".btnText").remove();
-                $(".profileLayoutLeft").append("<button class=btn btn-primary btn-lg id=openModalBtn >＋</button><div class=btnText>친구요청</div>");
-               location.reload();
-                
-                //$('.modal-body2').append("<div class=frInfo>"+list[j].email+"  <button type=button class=frInfo id=cutfr name="+list[j].email+">친구 끊기</button></div>");
-
-                // show modal
-
-            },
-            error: function (
-                request,
-                status,
-                error) {
-                console.log("ajax call went wrong:"
-                    + request.responseText);
-            }
-        })
-    });
-
-
-	$("#changeInfo").on("click", function() {
-						$.ajax({
-							url: "${pageCotnext.request.contextPath}/member/goMyInfo",
-							data: {email: "${loginInfo.email}"},
-							dataType: "json",
-							type: "post"
-						}).done(function(data){
-
-							$('#modalModifyInfo').modal('show');
-							console.log("email : " + data.dto);
-							var dto = JSON.parse(data.dto);
-							console.log("dto : " + dto.email);
-							$("#username").val(dto.name);
-							$("#phone2").val(data.poption2);
-							$("#phone3").val(data.poption3);
-							var poption1 = data.poption1;
-							var boption1 = data.boption1;
-							var boption2 = data.boption2;
-							var boption3 = data.boption3;
-							
-							// 내 정보 수정 modal 관련 script 시작
-							//입력 변수
-							var curPw = doc.getElementById("curPw");
-							var pw = doc.getElementById("pw");
-							var confirmPw = doc.getElementById("confirmPw");
-							var username = doc.getElementById("username");
-							var birthYear = doc.getElementById("birthYear");
-							var birthMonth = doc.getElementById("birthMonth");
-							var birthDay = doc.getElementById("birthDay");
-							var birth = doc.getElementById("birth");
-							var phone = doc.getElementById("phone");
-							var phone1 = doc.getElementById("phone1");
-							var phone2 = doc.getElementById("phone2");
-							var phone3 = doc.getElementById("phone3");
-							var verifyCode = doc.getElementById("verifyCode");
-							var sendCode = doc.getElementById("sendCode");
-							var resendCode = doc.getElementById("resendCode");
-							var confirmVerifyCode = doc.getElementById("confirmVerifyCode");
-							var timer = doc.getElementById("timer");
-							var changePwDiv = doc.getElementById("changePwDiv");
-							var changePw = doc.getElementById("changePw");
-							var changePwComplete = doc.getElementById("changePwComplete");
-							var cancelChangePw = doc.getElementById("cancelChangePw");
-
-							// 검증 실시간 확인 변수
-							var adviseCurPw = doc.getElementById("adviseCurPw");
-							var advisePw = doc.getElementById("advisePw");
-							var adviseName = doc.getElementById("adviseName");
-							var adviseBirth = doc.getElementById("adviseBirth");
-							var advisePhone = doc.getElementById("advisePhone");
-							var adviseVerifCode = doc.getElementById("adviseVerifCode");
-
-							// 검증결과 변수
-							var hiddenResp = doc.getElementsByClassName("hiddenResp");
-							var hiddenRespCurPw = doc.getElementById("hiddenRespCurPw");
-							var hiddenRespPw = doc.getElementById("hiddenRespPw");
-							var hiddenRespName = doc.getElementById("hiddenRespName");
-							var hiddenRespBirth = doc.getElementById("hiddenRespBirth");
-							var hiddenRespPhone = doc.getElementById("hiddenRespPhone");
-							var hiddenVerifCode = doc.getElementById("hiddenVerifCode");
-
-							// 기타 전역 변수
-							var setTime = 300;
-							var tid = null;
-							var rawStr = null;
-
-								appendYear();
-								appendMonth();
-								appendDay();
-
-								var dLength = $(".pOption1").length;
-								for (var i = 0; i < dLength; i++) {
-									if ($(".pOption1:nth-child(" + i + ")").val() == poption1) {
-										// 			if ($(".pOption1:nth-child(" + i + ")").val() == '${poption1}') {
-										$(".pOption1:nth-child(" + i + ")")
-												.attr('selected', 'selected');
-									}
-								}
-
-								var bLength1 = $(".bOption1").length;
-								for (var i = 0; i < bLength1; i++) {
-									
-									if ($(".bOption1:nth-child(" + i + ")").val() == boption1
-//						 			if ($(".bOption1:nth-child(" + i + ")").val() == '${boption1}'
-											+ "년") {
-										$(".bOption1:nth-child(" + i + ")")
-												.attr('selected', 'selected');
-									}
-								}
-
-								var bLength2 = $(".bOption2").length;
-								for (var i = 0; i < bLength2; i++) {
-									if ($(".bOption2:nth-child(" + i + ")").val() == boption2
-//						 			if ($(".bOption2:nth-child(" + i + ")").val() == '${boption2}'
-											+ "월") {
-										$(".bOption2:nth-child(" + i + ")")
-												.attr('selected', 'selected');
-									}
-								}
-
-								var bLength3 = $(".bOption3").length;
-								for (var i = 0; i < bLength3; i++) {
-									if ($(".bOption3:nth-child(" + i + ")").val() == boption3
-//						 			if ($(".bOption3:nth-child(" + i + ")").val() == '${boption3}'
-											+ "일") {
-										$(".bOption3:nth-child(" + i + ")")
-												.attr('selected', 'selected');
-									}
-								}
-
-							changePw.addEventListener("click", function() {
-								adviseCurPw.innerHTML = "";
-								advisePw.innerHTML = "";
-								changePwComplete.style.display = "initial";
-								cancelChangePw.style.display = "initial";
-								changePw.style.display = "none";
-								changePwDiv.style.display = "initial";
-							});
-
-							cancelChangePw.addEventListener("click", function() {
-								adviseCurPw.innerHTML = "";
-								advisePw.innerHTML = "";
-						        var userInput = doc.querySelectorAll(".userInput_pw");
-								clearInput(userInput, userInput.length);
-								pw.value = "";
-								changePwComplete.style.display = "none";
-								cancelChangePw.style.display = "none";
-								changePw.style.display = "initial";
-								changePwDiv.style.display = "none";
-							});
-
-							changePwComplete.addEventListener("click", function() {
-								if (pw.value === "") {
-									advisePw.innerHTML = "필수 입력사항입니다."
-									advisePw.style.color = "red";
-									return false;
-								}
-								
-								if(curPw.value == pw.value){
-									advisePw.innerHTML = "기존 비밀번호와 동일하게 설정 불가합니다."
-									advisePw.style.color = "red";
-									hiddenRespPw.innerHTML = "사용불가";
-									return false;
-								}
-								
-								$.ajax({
-									url : "${pageContext.request.contextPath}/member/changePw",
-									data : {
-										pw : pw.value
-									},
-									type : "post",
-									dataType : "json"
-								}).done(function(resp) {
-									if (resp.result == "complete") {
-										changePwComplete.style.display = "none";
-										cancelChangePw.style.display = "none";
-										changePw.style.display = "initial";
-										changePwDiv.style.display = "none";
-										alert("비밀번호가 정상적으로 변경되었습니다.");
-										adviseCurPw.innerHTML = "";
-										advisePw.innerHTML = "";
-								        var userInput = doc.querySelectorAll(".userInput_pw");
-										clearInput(userInput, userInput.length);
-									} else {
-										alert("비밀번호 변경에 실패했습니다.");
-										adviseCurPw.innerHTML = "";
-										advisePw.innerHTML = "";
-								        var userInput = doc.querySelectorAll(".userInput_pw");
-										clearInput(userInput, userInput.length);
-									}
-								}).fail(function(a, b, c) {
-									console.log(a);
-									console.log(b);
-									console.log(c);
-								});
-							});
-
-							$("#withdrawMem").on("click",function() {
-								if(confirm("정말 탈퇴하시겠습니까?")){
-									location.href = "${pageContext.request.contextPath}/member/withdrawMem";
-								}
-							});
-							
-							$("#backToFeed").on("click",function() {
-								location.href = "${pageContext.request.contextPath}/feed/myFeed?email=${loginInfo.email}";
-							});
-
-							//현재 비밀번호 일치여부 검사 start
-							curPw.addEventListener("blur", function() {
-								$.ajax({
-									url : "${pageContext.request.contextPath}/member/identifyMemPw",
-									data : {
-										pw : curPw.value
-									},
-									type : "post",
-									dataType : "json",
-								}).done(function(resp) {
-									console.log(resp);
-									if (resp.result == "validate") {
-										adviseCurPw.innerHTML = "일치"
-										adviseCurPw.style.color = "green";
-										hiddenRespPw.innerHTML = "사용가능";
-									} else if (resp.result == "invalidate") {
-										adviseCurPw.innerHTML = "비밀번호를 정확히 입력해 주세요."
-										adviseCurPw.style.color = "red";
-										hiddenRespPw.innerHTML = "사용불가";
-									}
-								}).fail(function(a, b, c) {
-									console.log(a);
-									console.log(b);
-									console.log(c);
-									hiddenRespPw.innerHTML = "사용불가";
-								});
-							});
-
-							// 비밀번호 유효성 검사 start
-							pw.addEventListener("blur", function() {
-								rawStr = pw.value;
-								console.log("pw: " + rawStr);
-								var regExp = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,15}$/;
-								if (rawStr.length != 0) {
-									if (regExp.test(rawStr)) {
-										if (rawStr === curPw.value) {
-											advisePw.innerHTML = "기존 비밀번호와 동일하게 설정 불가합니다."
-											advisePw.style.color = "red";
-											hiddenRespPw.innerHTML = "사용불가";
-										}else{
-											advisePw.innerHTML = "";
-											console.log("pw 유효성 검사결과: validate");
-										}
-
-									} else {
-										advisePw.innerHTML = "올바른 비밀번호 형식이 아닙니다."
-										advisePw.style.color = "red";
-										hiddenRespPw.innerHTML = "사용불가";
-										console.log("pw 유효성 검사결과: invalidate");
-									}
-								}
-							});
-
-							confirmPw.addEventListener("blur", function() {
-								if (rawStr.length != 0) {
-									if (confirmPw.value != pw.value) {
-										advisePw.innerHTML = "비밀번호가 일치하지 않습니다."
-										advisePw.style.color = "red";
-										hiddenRespPw.innerHTML = "사용불가";
-										confirmPw.value = "";
-										console.log("confirmPw 일치여부: invalidate");
-									} else {
-										advisePw.innerHTML = "";
-										hiddenRespPw.innerHTML = "사용가능";
-										console.log("confirmPw 일치여부: validate");
-									}
-								}
-							});
-
-							pw.addEventListener("change", function() {
-								confirmPw.value = "";
-								advisePw.innerHTML = "";
-							});
-							//비밀번호 유효성 검사 end
-							//이름 유효성 검사 start
-							username.addEventListener("blur", function() {
-								rawStr = username.value;
-								console.log("name: " + rawStr);
-								var regExp = /^[가-힣]{2,35}$/;
-								if (rawStr.length != 0) {
-									if (regExp.test(rawStr)) {
-										console.log("name 유효성 검사결과: validate");
-										adviseName.innerHTML = "";
-										hiddenRespName.innerHTML = "사용가능";
-									} else {
-										adviseName.innerHTML = "올바른 이름이 아닙니다."
-										adviseName.style.color = "red";
-										hiddenRespName.innerHTML = "사용불가";
-										username.focus();
-										console.log("name 유효성 검사결과: invalidate");
-									}
-								}
-							});
-
-							username.addEventListener("change", function() {
-								adviseName.innerHTML = "";
-							});
-							//이름 유효성 검사 end
-
-							//전화번호 유효성 검사 start
-							phone2.addEventListener("blur", function() {
-								rawStr = phone2.value;
-								console.log("phone2: " + rawStr);
-								var regExp = /^[0-9]{3,4}$/;
-								if (rawStr.length != 0) {
-									if (regExp.test(rawStr)) {
-										console.log("phone2 유효성 검사결과: validate");
-										advisePhone.innerHTML = "";
-									} else {
-										advisePhone.innerHTML = "올바른 전화번호 형식이 아닙니다."
-										advisePhone.style.color = "red";
-										hiddenRespPhone.innerHTML = "사용불가";
-										phone2.focus();
-										console.log("phone2 유효성 검사결과: invalidate");
-									}
-								}
-							});
-
-							phone3.addEventListener("blur", function() {
-								rawStr = phone3.value;
-								console.log("phone3: " + rawStr);
-								var regExp = /^[0-9]{4}$/;
-								if (rawStr.length != 0) {
-									if (regExp.test(rawStr)) {
-										console.log("phone3 유효성 검사결과: validate");
-										advisePhone.innerHTML = "";
-									} else {
-										advisePhone.innerHTML = "올바른 전화번호 형식이 아닙니다."
-										advisePhone.style.color = "red";
-										hiddenRespPhone.innerHTML = "사용불가";
-										phone3.focus();
-										console.log("phone3 유효성 검사결과: invalidate");
-									}
-								}
-							});
-							//전화번호 유효성 검사 end				
-							
-							//전화번호 중복 검사 start
-							$("#sendCode").on("click", function(){
-								console.log(tid);
-								clearInterval(tid); //기존 카운트다운 삭제
-								setTime = 300; //카운트다운 초기화								
-								
-								if (phone.value != "") {
-						            $.ajax({
-						                url: "${pageContext.request.contextPath}/guest/checkOverlap.do",
-						                data: {
-						                    phone: phone.value
-						                },
-						                dataType: "json",
-						                type: "post",
-						            }).done(function (resp) {
-						                        console.log("phone 중복여부 서버 검증 결과: "
-						                            + resp.result);
-						                        //전화번호 중복 검사 end
-						                        //인증번호 전송 start
-						                        if (resp.result == "available") {
-						                            tid = setInterval('msg_time()', 1000); //인증번호 전송 시 카운트다운 시작
-						                            sendCode.hidden = true;
-						                            resendCode.hidden = false;
-						                            verifyCode.value = "";
-						                            verifyCode.disabled = false;
-						                            confirmVerifyCode.hidden = true;
-						                            //잠시 테스트
-						                            hiddenRespPhone.innerHTML = "사용가능";
-						                            //
-						                            $.ajax({
-						                            	url: "${pageContext.request.contextPath}/guest/sendVerifCode.do",
-						                                data: {
-						                                           phone: phone.value
-						                                       },
-						                                dataType: "json",
-						                                type: "post"
-						                            }).done(function (resp) {
-						                                console.log("인증번호 서버 전송 결과: "+ resp.result);
-						                                    if (resp.result != "Verify Code sent") {
-						                                        adviseVerifCode.innerHTML("인증번호 전송에 실패했습니다.");
-						                                        adviseVerifCode.style.color = "red";
-						                                        hiddenRespPhone.innerHTML = "사용불가";
-						                                        hiddenRespVerifCode.innerHTML = "인증실패";
-						                                        confirmVerifyCode.hidden = true;
-						                                        sendCode.hidden = false;
-						                                        resendCode.hidden = true;
-						                                        verifyCode.disabled = true;
-						                                    } else {
-						                                        console.log("인증 코드 발송 완료");
-						                                        confirmVerifyCode.hidden = false;
-						                                    }
-						                           }).fail(function (a, b, c) {
-						                                        console.log(a);
-						                                        console.log(b);
-						                                        console.log(c);
-						                           });
-						                        } else if (resp.result == "unavailable") {
-						                            advisePhone.innerHTML = "중복된 번호입니다.";
-						                            advisePhone.style.color = "red";
-						                            hiddenRespPhone.innerHTML = "사용불가";
-						                        }
-						               }).fail(function (a, b, c) {
-						                    console.log(a);
-						                    console.log(b);
-						                    console.log(c);
-						                    return false;
-						               });
-									}
-
-										//인증번호 제한시간 이벤트 start
-											function msg_time() {
-												m = addzero(Math.floor(setTime / 60)) + ":" + addzero(setTime % 60);
-												console.log(m);
-												var msg = m;
-												timer.innerHTML = msg;
-												setTime--;
-												if (setTime < 0) {
-													clearInterval(tid);
-													adviseVerifCode.innerHTML = "입력시간이 초과되었습니다.";
-													adviseVerifCode.style.color = "red";
-													hiddenRespPhone.innerHTML = "사용불가";
-													hiddenRespVerifCode.innerHTML = "인증실패";
-													confirmVerifCode.hidden = true;
-													verifyCode.disabled = true;
-													$.ajax({
-														url : "${pageContext.request.contextPath}/guest/removeVerifSession.do",
-														dataType : "json",
-														type : "post",
-													}).done(function(resp) {
-																if (resp.result == "Verif Code removed") {
-																	timer.innerHTML = "";
-																	sendCode.hidden = false;
-																	resendCode.hidden = true;
-																	verifyCode.value = "";
-																	verifyCode.disabled = false;
-																}
-																console.log("인증번호 세션 삭제 실패");
-															}).fail(function(a, b, c) {
-																console.log(a);
-																console.log(b);
-																console.log(c);
-															});
-												}
-											}
-											function addzero(num) {
-												if (num < 10) {
-													num = "0" + num;
-												}
-												return num;
-											}
-											//인증번호 제한시간 이벤트 end  
-											
-									}
-								} else {
-									alert("전화번호를 입력해 주세요.");
-								}
-								
-								//사용자 입력 인증번호 일치여부 검사 start
-								function confirmVerifCode() {
-									$.ajax({
-										url : "${pageContext.request.contextPath}/guest/verifyUser.do",
-										data : {
-											verifyCode : verifyCode.value
-										},
-										dataType : "json",
-										type : "post",
-									}).done(function(resp) {
-										console.log("인증번호 서버 검증 결과 : " + resp.result);
-										if (resp.result == "verified") {
-											console.log("인증 완료 ");
-											adviseVerifCode.innerHTML = "인증완료";
-											adviseVerifCode.style.color = "green";
-											hiddenRespPhone.innerHTML = "사용가능";
-											hiddenRespVerifCode.innerHTML = "사용가능";
-											sendCode.hidden = true;
-											resendCode.hidden = true;
-											verifyCode.disabled = true;
-										} else if (resp.result == "unverified") {
-											console.log("인증 실패 ");
-											adviseVerifCode.innerHTML = "인증실패";
-											adviseVerifCode.style.color = "red";
-											hiddenRespPhone.innerHTML = "사용불가";
-											hiddenRespVerifCode.innerHTML = "인증실패";
-											sendCode.hidden = true;
-											resendCode.hidden = false;
-											verifyCode.disabled = false;
-										}
-										;
-									}).fail(function(a, b, c) {
-										console.log(a);
-										console.log(b);
-										console.log(c);
-										return false;
-									});
-								}
-								//사용자 입력 인증번호 일치여부 검사 end  
-							})
-							//인증번호 전송 end
-							 
-							
-							
-
-							//생년월일 select option 생성 start
-							function appendYear() {
-								var date = new Date();
-								var year = date.getFullYear();
-								var selectVal = doc.getElementById("birthYear");
-								var optionIndex = 0;
-								for (var i = year - 100; i <= year; i++) {
-//						 			if ("${boption1}" == i) {
-									if (boption1 == i) {
-										console.log("boption1 : " + boption1);
-										var opt = new Option(i + "년", i);
-										selectVal.add(opt, optionIndex++);
-										opt.setAttribute("class", "bOption1");
-										opt.setAttribute("selected", "selected");
-									} else {
-										var opt = new Option(i + "년", i);
-										selectVal.add(opt, optionIndex++);
-										opt.setAttribute("class", "bOption1");
-									}
-								}
-							}
-
-							function appendMonth() {
-								var selectVal = doc.getElementById("birthMonth");
-								var optionIndex = 0;
-								for (var i = 1; i <= 12; i++) {
-									if (boption2 == i) {
-//						 			if ("${boption2}" == i) {
-										console.log("boption2 : " + boption2);			
-										var opt = new Option(i + "월", i);
-										selectVal.add(opt, optionIndex++);
-										opt.setAttribute("class", "bOption2");
-										opt.setAttribute("selected", "selected");
-									} else {
-										var opt = new Option(i + "월", i);
-										selectVal.add(opt, optionIndex++);
-										opt.setAttribute("class", "bOption2");
-									}
-								}
-							}
-
-							function appendDay() {
-								var selectVal = doc.getElementById("birthDay");
-								var optionIndex = 0;
-								for (var i = 1; i <= 31; i++) {
-									if (boption3 == i) {
-//						 			if ("${boption3}" == i) {
-										console.log("boption3 : " + boption3);
-										var opt = new Option(i + "일", i);
-										selectVal.add(opt, optionIndex++);
-										opt.setAttribute("class", "bOption3");
-										opt.setAttribute("selected", "selected");
-									} else {
-										var opt = new Option(i + "일", i);
-										selectVal.add(opt, optionIndex++);
-										opt.setAttribute("class", "bOption3");
-									}
-								}
-							}
-							//생년월일 select option 생성 end
-
-							//회원가입 form submit 이벤트 start
-							$("#changeMyInfo").on("click", function(){
-								
-								//모든 입력창 유효성 결과 체크 start
-								for (var i = 0; i < hiddenResp.length; i++) {
-									if (hiddenResp[i].innerHTML === "사용불가") {
-										console.log("유효성 통과 탈락");
-										alert("잘못된 입력입니다.");
-										return false;
-									}
-								}
-								//모든 입력창 유효성 결과 체크 end  
-
-								if (hiddenRespVerifCode.innerHTML == "인증실패") {
-									alert("휴대폰 인증에 실패하였습니다. 다시 인증해 주세요.");
-									verifyCode.value();
-								}
-
-								//모든 입력창 null 체크 start                 
-								if (username.value === "") {
-									adviseName.innerHTML = "필수 입력사항입니다."
-									adviseName.style.color = "red";
-									return false;
-								} else if (birthYear.value === "선택하세요.") {
-									adviseBirth.innerHTML = "필수 입력사항입니다."
-									adviseBirth.style.color = "red";
-									return false;
-								} else if (birthMonth.value === "선택하세요.") {
-									adviseBirth.innerHTML = "필수 입력사항입니다."
-									adviseBirth.style.color = "red";
-									return false;
-								} else if (birthDay.value === "선택하세요.") {
-									adviseBirth.innerHTML = "필수 입력사항입니다."
-									adviseBirth.style.color = "red";
-									return false;
-								} else if (phone2.value === "") {
-									advisePhone.innerHTML = "필수 입력사항입니다."
-									advisePhone.style.color = "red";
-									return false;
-								} else if (phone3.value === "") {
-									advisePhone.innerHTML = "필수 입력사항입니다."
-									advisePhone.style.color = "red";
-									return false;
-								}
-
-								phone.value = phone1.value + phone2.value + phone3.value;
-
-								if (dto.phone != phone.value) {
-									if (verifyCode.value === "") {
-										adviseVerifCode.innerHTML = "휴대폰 인증은 필수입니다."
-										adviseVerifCode.style.color = "red";
-										return false;
-									}
-								}
-								//모든 입력창 null 체크 end 
-
-								//전화번호, 이메일 한 줄로 조합 start
-								var month = birthMonth.value;
-								var day = birthDay.value;
-								if (month < 10) {
-									console.log(month);
-									month = "0" + month;
-									console.log(month);
-								}
-								if (day < 10) {
-									console.log(day);
-									day = "0" + day;
-									console.log(day);
-								}
-								birth.value = birthYear.value + month + day;
-								//전화번호, 이메일 한 줄로 조합 end
-
-								console.log("최종 휴대폰 : " + phone.value);
-								console.log("최종 비밀번호 : " + pw.value);
-								console.log("최종 이름 : " + username.value);
-								console.log("최종 생년월일 : " + birth.value);
-
-								doc.getElementById("signUpForm").submit();
-								
-							
-							});
-							// 내 정보 수정 modal 관련 script 끝
-							
-// 							function formValidation() {
-
-								
-// 							};
-							
-							
-						}).fail(function(a,b,c){
-							console.log(a);
-							console.log(b);
-							console.log(c);
-						});
-					});
-	
-		            function clearInput(userInput, length) { //pw 입력취소 시 모든 input창 clear
-		                for (var i = 0; i < length; i++) {
-		                    userInput[i].value = "";
-		                }
-		            }
-	
-	
-
-=======
             var bLength1 = $(".bOption1").length;
             for (var i = 0; i < bLength1; i++) {
                 if ($(".bOption1:nth-child(" + i + ")").val() == boption1) {
@@ -2965,13 +2344,13 @@
             }
         }
     });
-    //전화번호 유효성 검사 end	
+    //전화번호 유효성 검사 end   
 
     //전화번호 중복 검사 start
     $("#sendCode").on("click", function () {
         console.log(tid);
         clearInterval(tid); //기존 카운트다운 삭제
-        setTime = 300; //카운트다운 초기화								
+        setTime = 300; //카운트다운 초기화                        
 
         if (phone.value != "") {
             $.ajax({
@@ -3264,9 +2643,11 @@
         for (var i = 0; i < length; i++) {
             userInput[i].value = "";
         }
-    };
-
-		</script>
+    }
+    });
+    });
+    
+    </script>
    	<jsp:include page="/resources/script/myFeedScript.jsp" />
 </body>
 </html>
