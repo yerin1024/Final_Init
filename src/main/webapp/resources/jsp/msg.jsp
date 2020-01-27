@@ -18,7 +18,7 @@
 <!--         </button> -->
 <!--       </div> -->
 <!--       <div class="modal-body"> -->
-<!-- <!--       ----------------------- --> -->
+<!-- <!--       ----------------------- --> 
 <!--         <div id='profileBigger'><img src='/images/b1.png' id='profileBiggerImg'></div> -->
         
 <!--         <div class='toWhere'> -->
@@ -40,10 +40,10 @@
 <!--             </div> -->
 <!--             </a> -->
 <!--         </div> -->
-<!-- <!--       ----------------------- --> -->
+<!-- <!--       ----------------------- --> 
 <!--       </div> -->
 <!--       <div class="modal-footer"> -->
-<!-- <!--        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>--> -->
+<!-- <!--        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>--> 
 <!--       </div> -->
 <!--     </div> -->
 <!--   </div> -->
