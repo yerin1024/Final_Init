@@ -50,12 +50,13 @@ public class MessageController {
 	@ResponseBody
 	public String toPreviewList(MessageDTO dto, String to_id, Model model) {
 		MemberDTO sessionDTO = (MemberDTO)session.getAttribute("loginInfo");
-		List<MessageDTO> resultF = service.friendList(sessionDTO.getEmail());
+		List<MessageDTO> resultF = service.selectMsgUser(sessionDTO.getEmail());
+//		List<MessageDTO> resultF = service.friendList(sessionDTO.getEmail());
 //		List<MessageDTO> resultF = service.friendList("123@123.123"); // 123@부분 session id로 바꿔야 함
 		List<MessageDTO> result = new ArrayList<>();
 		
 		for(MessageDTO tmp : resultF) {
-			MessageDTO result2 = service.previewMsg(sessionDTO.getEmail(), tmp.getFr_id());
+			MessageDTO result2 = service.previewMsg(sessionDTO.getEmail(), tmp.getEmail());
 //			MessageDTO result2 = service.previewMsg("123@123.123", tmp.getFr_id()); // 123@부분 session id로 바꿔야 함
 			result.add(result2);
 		}
