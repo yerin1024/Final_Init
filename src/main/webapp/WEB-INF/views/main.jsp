@@ -5,9 +5,13 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+
 <title>Init</title>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 <link href="https://fonts.googleapis.com/css?family=Do+Hyeon|Nanum+Gothic+Coding|Noto+Sans+KR|Noto+Serif+KR&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/resources/css/index.css">
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
@@ -17,7 +21,24 @@
     * {
         box-sizing: border-box;
     }
-
+    
+ 		.modal {
+          text-align: center;
+        }
+        @@media screen and (min-width: 768px) {
+          .modal:before {
+            display: inline-block;
+            vertical-align: middle;
+            content: " ";
+            height: 100%;
+          }
+        }
+        .modal-dialog {
+          display: inline-block;
+          text-align: left;
+          vertical-align: middle;
+        }
+    
     .modal-content {
         background-color: #fffefc;
     }
@@ -28,9 +49,10 @@
     }
 
     .modal-body {
-        padding: 100px;
+        /* padding: 100px; */
+        padding: 30px;
     }
-
+    
     #indexModalTitle {
         font-size: 50px;
         font-family: 'Noto Sans KR', sans-serif;
@@ -41,44 +63,68 @@
         font-size: 30px;
         color: #fffefc;
     }
+    
+    .tab1_container{
+    	width: 100%;
 
+    }
+	.tab1_loginContainer{
+        display: flex;
+		width: 100%;
+        margin: 0px;
+ 
+	}
     .tab1_body {
         font-family: 'Noto Sans KR', sans-serif;
+        width: 50%;
+
+    }
+    
+    .tab1_logo {
+    	width: 50%;
+    	height: 100%;
+        margin: 0px;
+        padding: 0px;
     }
 
     .tab1_body .userInput {
-        width: 400px;
+        width: 300px; 
         height: 50px;
         padding: 5px;
-        margin: 5px;
+        margin: 5px; 
         border-radius: 8px;
         font-size: 15px;
-    }
+    } 
 
     .userInput:focus {
         outline: none;
+        background-color: transparent;
     }
 
     #tab1_loginBtn {
-        width: 400px;
-        height: 50px;
+        width: 250px;
+        height: 60px;
         padding: 5px;
-        margin: 10px;
+        margin: 5px;
         border: none;
         border-radius: 8px;
-        font-size: 20px;
+        font-size: 19px;
         background-color: #0f4c81;
         color: #fffefc;
     }
     
     #tab1_kakaoLoginBtn {
-    	width: 400px;
-        height: 50px;
-        margin: 10px;
+    	width: 250px;
+        height: 60px;
+        margin: 5px;
         border: none;
         border-radius: 8px;
     }
-
+	
+	#logoDiv img{
+		width: 100%;
+	}
+	
     #tab1_saveIdCheck {
         margin: 10px;
         padding: 10px;
@@ -86,6 +132,7 @@
     
     .tab1_footer {
         margin-top: 10px;
+        width: 100%;
     }
 
     .tab1_footer a {
@@ -174,24 +221,130 @@
         /* border: 1px thin gray; */
         font-size: 11px;
         overflow:hidden;
-    }
+    }   
+       	
+   	.inp {
+	  position: relative;
+	  margin-bottom: 15px;
+	  width: 100%;
+	  max-width: 280px;
+	}
+	
+	.inp .label {
+	  position: absolute;
+	  top: 16px;
+	  left: 0;
+	  font-size: 16px;
+	  color: #9098a9;
+	  font-weight: 500;
+	  transform-origin: 0 0;
+	  transition: all 0.2s ease;
+	}
+	
+	.inp .border {
+	  position: absolute;
+	  bottom: 0;
+	  left: 0;
+	  height: 2px;
+	  width: 100%;
+	  transform: scaleX(0);
+	  transform-origin: 0 0;
+	  transition: all 0.15s ease;
+	  background: #0f4c81;
+	}
+	
+	.inp input {
+	  -webkit-appearance: none;
+	  width: 100%;
+	  border: 0;
+	  font-family: inherit;
+	  padding: 12px 0;
+	  height: 48px;
+	  font-size: 16px;
+	  font-weight: 500;
+	  border-bottom: 2px solid #c8ccd4;
+	  background: none;
+	  border-radius: 0;
+	  color: #223254;
+	  transition: all 0.15s ease;
+	}
+	.inp input:hover {
+	  background: rgba(34,50,84,0.03);
+	}
+	.inp input:not(:placeholder-shown) + span {
+	  color: #5a667f;
+	  transform: translateY(-26px) scale(0.75);
+	}
+	.inp input:focus {
+	  background: none;
+	  outline: none;
+	}
+	.inp input:focus + span {
+ 	  color: #07f; 
+	  transform: translateY(-26px) scale(0.75);
+	}
+	.inp input:focus + span + .border {
+	  transform: scaleX(1);
+	}
+	.inputLogin:focus {
+		background-color: transparent;
+	}  	
 
+    /* All Device */
+/* 모든 해상도를 위한 공통 코드를 작성한다. 모든 해상도에서 이 코드가 실행됨. */
+
+/* Mobile Device */
+/* 768px 미만 해상도의 모바일 기기를 위한 코드를 작성한다. 모든 해상도에서 이 코드가 실행됨. 미디어 쿼리를 지원하지 않는 모바일 기기를 위해 미디어 쿼리 구문을 사용하지 않는다. */
+
+/* Tablet &amp; Desktop Device */
+@media all and (min-width:768px) {
+	/*     사용자 해상도가 768px 이상일 때 이 코드가 실행됨. 테블릿과 데스크톱의 공통 코드를 작성한다. */
+	body {
+		background-color: purple;
+	}
+}
+
+@media all and (max-width:768px) {
+	/*     사용자 해상도가 768px 이하일 때 이 코드가 실행됨. 테블릿과 데스크톱의 공통 코드를 작성한다. */
+	.section {
+		height: 150px;
+		margin: 0px;
+		padding: 0px;
+	}
+}
+/* Tablet Device */
+@media all and (max-width:1024px) {
+	/*     사용자 해상도가 768px 이상이고 1024px 이하일 때 이 코드가 실행됨. 아이패드 또는 비교적 작은 해상도의 랩탑이나 데스크톱에 대응하는 코드를 작성한다. */
+	.section {
+		height: 250px;
+		padding: 0px;
+	}
+	.profileImageBox {
+		height: 200px;
+		width: 200px;
+	}
+	.friendRequest {
+		width: 80px;
+		height: 80px;
+	}
+}
+/* Desktop Device */
+@media all and (min-width:1025px) {
+	/*     사용자 해상도가 1025px 이상일 때 이 코드가 실행됨. 1025px 이상의 랩탑 또는 데스크톱에 대응하는 코드를 작성한다. */
+	body {
+		background-color: pink;
+	}
+}
 </style>
-
 <body>
-    <!-- modal popup 임시버튼 -->
-    <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#indexModal"
-        style="margin:100px;width:200px;height:200px;">
-        Modal
-    </button> -->
-
+ <jsp:include page="/resources/script/index.jsp" flush="true"/>
     <!-- Modal start -->
     <div class="modal fade bd-example-modal-lg" id="indexModal" tabindex="-1" role="dialog"
         aria-labelledby="eindexModalTitle" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h2 class="modal-title" id="indexModalTitle">Init</h2>
+                    <h2 class="modal-title" id="indexModalTitle" style="letter-spacing:5px;">In;t</h2>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true" id="closeBtn">&times;</span>
                     </button>
@@ -205,18 +358,31 @@
                                 <div class="tab1_container">
                                     <form action="${pageContext.request.contextPath}/member/loginProc.do" method="post" id="tab1_loginForm">
                                         <div class="tab1_loginContainer">
-                                            <div class="tab1_body">
-                                                <input type="text" class="userInput" id="tab1_email" name="email" placeholder="아이디 입력"><br>
-                                                <input type="password" class="userInput" autocomplete="off" id="tab1_pw" name="pw" placeholder="비밀번호 입력"><br>
+                                        <div class="tab1_logo d-sm-none d-md-block">
+	                                        	<div id="logoDiv">
+	                                        		<img src="${pageContext.request.contextPath}/resources/images/mainLogo.jpg">
+	                                        	</div>   
+                                        	 </div>
+                                            <div class="tab1_body">                                            
+                                            	<label for="tab1_email" class="inp">
+												  <input type="text" class="inputLogin" id="tab1_email" name="email" placeholder="&nbsp;">
+												  <span class="label">Email</span>
+												  <span class="border"></span>
+												</label>
+												<br>
+												<label for="tab1_pw" class="inp">
+												  <input type="password" class="inputLogin" id="tab1_pw" name="pw" placeholder="&nbsp;">
+												  <span class="label">Password</span>
+												  <span class="border"></span>
+												</label>
+												<br>
                                                 <button type="button" id="tab1_loginBtn" onclick="toLogin();">로그인</button><br>
-                                                <img src="resources/images/kakaoLogin_btn.png" id="tab1_kakaoLoginBtn"><br>
+                                                <img src="${pageContext.request.contextPath}/resources/images/kakao_login_large.png" id="tab1_kakaoLoginBtn"><br>
 	                                            <div class="saveId">
 	                                            	<input type="checkbox" id="tab1_saveIdCheck" onChange="toCheckCbox();">
 	                                                <span>아이디 저장</span>
 	                                            </div>
-                                            </div>
-                                            <div class="tab1_footer">
-                                                <a href="#findPw" id="goFindPW">비밀번호 찾기 </a>
+	                                            <a href="#findPw" id="goFindPW">비밀번호 찾기 </a>
                                                 <span> | </span>
                                                 <a href="#signUp" id="goSignUp">회원가입 </a>
                                             </div>
@@ -259,7 +425,7 @@
                                     <div class="tab4_body">
                                     	<div class="tab4_signupBtnBox">
 											<button type="button" id="tab5-1_generalSignup">일반 회원가입</button>
-											<img src="resources/images/kakaoSignup_btn.png" id="tab5-2_kakaoLoginBtn"><br>
+											<img src="${pageContext.request.contextPath}/resources/images/kakaoSignup_btn.png" id="tab5-2_kakaoLoginBtn" style=""><br>
                                     	</div>
                                         <div class="tab4_btnBox">
                                             <button type="button" id="tab4_goMain">이전</button>
@@ -352,7 +518,7 @@
                                             <!-- 프로필 사진 -->
                                             <label>프로필 사진</label><br>
                                             <p class="advise" id="adviseProfile" readonly>*프로필 사진 미등록시 기본이미지로 등록됩니다.</p>
-                                            <img src="resources/images/default_profile_img.png" id="tab5-1_setProfile" style="width: 50px;">
+                                            <img src="${pageContext.request.contextPath}/resources/images/default_profile_img.png" id="tab5-1_setProfile" style="width: 50px;">
                                             <button type="button" id="tab5-1_deleteProfile">X</button>
                                             <input type="file" id="tab5-1_profileImg" name="profileImg"><br>
                                         </div>
@@ -390,7 +556,7 @@
 											<!-- 프로필 사진 -->
 											<label>프로필 사진</label><br>
 											<p class="advise" id="tab5-2_adviseProfile" readonly>*프로필 사진 미등록시 기본이미지로 등록됩니다.</p>
-											<img src="resources/images/default_profile_img.png" name="profile_img" id="tab5-2_setProfile" style="width: 50px;">	
+											<img src="${pageContext.request.contextPath}/resources/images/default_profile_img.png" name="profile_img" id="tab5-2_setProfile" style="width: 50px;">	
 											<button type="button" id="tab5-2_deleteProfile">X</button>
 											<input type="text" id="tab5-2_hiddenProfileImg" name="profile_img" style="display:none;"><br>
 											<input type="file" id="tab5-2_profileImg" name="profileImg"><br>
@@ -442,23 +608,18 @@
         
         window.onload = function () {
         	Kakao.init("798b7f7028249ef2a4388b4944cf88ce");
-        	
-            $("#indexModal").modal({backdrop: 'static', keyboard: false, show: true});//일단 예제로 띄우기
-            clearInput(userInput, userInput.length);           
-            
-            var url = document.location.toString();
-            	$('#main').tab('show'); //예제 연습                   	
-            	toCheckCookie();                	
-        		          
+        	              
+			doc.getElementById("popupIndexModal").addEventListener("click", function(){
+				$("#indexModal").modal({backdrop: 'static', keyboard: false});
+				clearInput(userInput, userInput.length);
+				doc.getElementById("mainTab").click();
+				toCheckCookie();             	
+            })      
         }    
         //tab1_로그인 start
         var login = doc.getElementById("tab1_loginBtn");
-//         var email = doc.getElementById("tab1_email");
-//         var pw = doc.getElementById("tab1_pw");
         
         function toLogin() { //로그인 시도
-//         	var email = doc.getElementById("tab1_email");
-//             var pw = doc.getElementById("tab1_pw");
         	if(doc.getElementById("tab1_email").value == ""){
         		alert("이메일을 입력해 주세요.");
         		return;
@@ -500,7 +661,6 @@
         //아이디 저장 쿠키 연관 함수 start
         var exdate = new Date();
      
-
         function toCheckCbox() {
             if (saveIdCheck.checked == true) {
                 exdate.setDate(exdate.getDate() + 30);
@@ -563,6 +723,10 @@
                     doc.getElementById("tab3_userEmail").innerHTML = resp.email;
                 }else if(resp.result == "invalid"){
                 	alert("등록된 계정이 아닙니다.");
+                	email.click();
+                }else if(resp.result == "error"){
+                	alert("일시적인 오류가 발생하였습니다. 다시 시도해 주세요.");
+                	email.click();
                 }
             }).fail(function (a, b, c) {
                 console.log(a);
@@ -618,7 +782,7 @@
 							email.value = data.user_id;
 							emailOverlapCheck();
 							if(data.kakaoProfile == "none"){
-								setProfile.src = "resources/images/default_profile_img.png";
+								setProfile.src = "${pageContext.request.contextPath}/resources/images/default_profile_img.png";
 								hiddenProfileImg.value = "resources/images/default_profile_img.png";
 							}else{
 								console.log("카톡 프로필 exist");
@@ -655,8 +819,8 @@
                 });
         		
         		doc.getElementById("tab5-2_deleteProfile").addEventListener("click", function(){
-        			setProfile.src = "resources/images/default_profile_img.png";
-        			hiddenProfileImg.value = "resources/images/default_profile_img.png";
+        			setProfile.src = "${pageContext.request.contextPath}/resources/images/default_profile_img.png";
+        			hiddenProfileImg.value = "${pageContext.request.contextPath}/resources/images/default_profile_img.png";
         		});
         		//프로필 사진 uploda 이벤트 end
         		
@@ -728,7 +892,7 @@
             }
         });
         //닉네임 유효성 검사 end
-			doc.getElementById("tab5-2_signupBtn").addEventListener("click", function(){
+		doc.getElementById("tab5-2_signupBtn").addEventListener("click", function(){
 				
 				if (nickname.value === "") {
 					adviseNickname.innerHTML = "필수 입력사항입니다."
@@ -1043,7 +1207,7 @@
             setTime = 300; //카운트다운 초기화
             if(phone2.value != "" && phone3.value != ""){    		
                 timer.innerHTML = "";
-                phone.value = phone1.value + phone2.value + phone3.value;   	        
+                phone.value = phone1.value + phone2.value + phone3.value;   	
                 
                 if (phone.value != "") {
                     $.ajax({
@@ -1062,31 +1226,34 @@
                             verifyCode.value = "";
                             verifyCode.disabled = false;
                             confirmVerifyCode.hidden = true;
-                            $.ajax({
-                                url: "${pageContext.request.contextPath}/guest/sendVerifCode.do",
-                                data: { phone: phone.value },
-                                dataType: "json",
-                                type: "post"
-                            }).done(function (resp) {
-                            console.log("인증번호 서버 전송 결과: " + resp.result);            
-                            if (resp.result != "Verify Code sent") {
-                                adviseVerifCode.innerHTML("인증번호 전송에 실패했습니다.");
-                                adviseVerifCode.style.color = "red";
-                                hiddenRespPhone.innerHTML = "사용불가";
-                                hiddenRespVerifCode.innerHTML = "인증실패";
-                                confirmVerifyCode.hidden = true;
-                                sendCode.hidden = false;
-                                resendCode.hidden = true;
-                                verifyCode.disabled = true;
-                            }else{
-                                console.log("인증 코드 발송 완료");
-                                confirmVerifyCode.hidden = false;                  
-                            }              
-                            }).fail(function (a, b, c) {
-                                console.log(a);
-                                console.log(b);
-                                console.log(c);
-                            });
+                            //잠시 테스트 
+                             hiddenRespPhone.innerHTML = "사용가능";
+                            //
+//                             $.ajax({
+//                                 url: "${pageContext.request.contextPath}/guest/sendVerifCode.do",
+//                                 data: { phone: phone.value },
+//                                 dataType: "json",
+//                                 type: "post"
+//                             }).done(function (resp) {
+//                             console.log("인증번호 서버 전송 결과: " + resp.result);            
+//                             if (resp.result != "Verify Code sent") {
+//                                 adviseVerifCode.innerHTML("인증번호 전송에 실패했습니다.");
+//                                 adviseVerifCode.style.color = "red";
+//                                 hiddenRespPhone.innerHTML = "사용불가";
+//                                 hiddenRespVerifCode.innerHTML = "인증실패";
+//                                 confirmVerifyCode.hidden = true;
+//                                 sendCode.hidden = false;
+//                                 resendCode.hidden = true;
+//                                 verifyCode.disabled = true;
+//                             }else{
+//                                 console.log("인증 코드 발송 완료");
+//                                 confirmVerifyCode.hidden = false;                  
+//                             }              
+//                             }).fail(function (a, b, c) {
+//                                 console.log(a);
+//                                 console.log(b);
+//                                 console.log(c);
+//                             });
                         } else if (resp.result == "unavailable") {
                             advisePhone.innerHTML = "중복된 번호입니다.";
                             advisePhone.style.color = "red";
@@ -1105,40 +1272,40 @@
             }
         	//인증번호 전송 end
             //사용자 입력 인증번호 일치여부 검사 start
-                function confirmVerifCode() {
-                    $.ajax({
-                        url: "${pageContext.request.contextPath}/guest/verifyUser.do",
-                        data: { verifyCode: verifyCode.value },
-                        dataType: "json",
-                        type: "post",
-                    }).done(function (resp) {
-                        console.log("인증번호 서버 검증 결과 : " + resp.result);
-        	          if (resp.result == "verified") {
-        	            console.log("인증 완료 ");
-                        adviseVerifCode.innerHTML = "인증완료";
-                        adviseVerifCode.style.color = "green";
-                        hiddenRespPhone.innerHTML = "사용가능";
-                        hiddenRespVerifCode.innerHTML = "사용가능";
-                        sendCode.hidden = true;
-                        resendCode.hidden = true;
-                        verifyCode.disabled = true;
-        	          } else if (resp.result == "unverified") {
-        	            console.log("인증 실패 ");
-        	            adviseVerifCode.innerHTML = "인증실패";
-        	            adviseVerifCode.style.color = "red";
-        	            hiddenRespPhone.innerHTML = "사용불가";
-        	            hiddenRespVerifCode.innerHTML = "인증실패";
-        	            sendCode.hidden = true;
-        	            resendCode.hidden = false;
-        	            verifyCode.disabled = false;
-        	          };
-                    }).fail(function (a, b, c) {
-                        console.log(a);
-                        console.log(b);
-                        console.log(c);
-                        return false;
-                    });
-                }
+//                 function confirmVerifCode() {
+//                     $.ajax({
+//                         url: "${pageContext.request.contextPath}/guest/verifyUser.do",
+//                         data: { verifyCode: verifyCode.value },
+//                         dataType: "json",
+//                         type: "post",
+//                     }).done(function (resp) {
+//                         console.log("인증번호 서버 검증 결과 : " + resp.result);
+//         	          if (resp.result == "verified") {
+//         	            console.log("인증 완료 ");
+//                         adviseVerifCode.innerHTML = "인증완료";
+//                         adviseVerifCode.style.color = "green";
+//                         hiddenRespPhone.innerHTML = "사용가능";
+//                         hiddenRespVerifCode.innerHTML = "사용가능";
+//                         sendCode.hidden = true;
+//                         resendCode.hidden = true;
+//                         verifyCode.disabled = true;
+//         	          } else if (resp.result == "unverified") {
+//         	            console.log("인증 실패 ");
+//         	            adviseVerifCode.innerHTML = "인증실패";
+//         	            adviseVerifCode.style.color = "red";
+//         	            hiddenRespPhone.innerHTML = "사용불가";
+//         	            hiddenRespVerifCode.innerHTML = "인증실패";
+//         	            sendCode.hidden = true;
+//         	            resendCode.hidden = false;
+//         	            verifyCode.disabled = false;
+//         	          };
+//                     }).fail(function (a, b, c) {
+//                         console.log(a);
+//                         console.log(b);
+//                         console.log(c);
+//                         return false;
+//                     });
+//                 }
                 //사용자 입력 인증번호 일치여부 검사 end  
             //인증번호 제한시간 이벤트 start
             function msg_time() {
@@ -1198,7 +1365,7 @@
             });
 
             deleteProfile.addEventListener("click", function () {
-                setProfile.src = "resources/default_profile_img.png";
+                setProfile.src = "${pageContext.request.contextPath}/resources/default_profile_img.png";
             });
             //프로필 사진 이벤트 end
 

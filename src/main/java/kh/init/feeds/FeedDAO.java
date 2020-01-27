@@ -36,6 +36,19 @@ public class FeedDAO {
 		result.put("rnum", rnum);
 		return result;
 	}
+	public Map<String, Object> getMyFeedByFriend(String email,String myEmail, int startNum, int endNum) throws Exception{
+		Map<String, String> param = new HashMap<>();
+		param.put("myEmail", myEmail);
+		param.put("yourEmail", email);
+		param.put("startNum", startNum+"");
+		param.put("endNum", endNum+"");
+		List<FeedDTO> list = jdbc.selectList("Feed.getMyFeedByFriend", param);
+		List<Integer> rnum = jdbc.selectList("Feed.getMyFeedRnumByFriend", param);
+		Map<String, Object> result = new HashMap<>();
+		result.put("list", list);
+		result.put("rnum", rnum);
+		return result;
+	}
 	public Map<String, Object> getMyScrapFeed(String email, int startNum, int endNum) throws Exception{
 		Map<String, String> param = new HashMap<>();
 		param.put("email", email);
@@ -56,11 +69,12 @@ public class FeedDAO {
 	}
 
 	//wholeFeed에서 해시태그 검색 또는 그냥 기본wholeFeed뽑을때 
-	public Map<String, Object> selectAll(String keyword,  int startNum, int endNum) throws Exception{
+	public Map<String, Object> selectAll(String keyword,  int startNum, int endNum, String email) throws Exception{
 		Map<String, String> param = new HashMap<>();
 		param.put("keyword", keyword);
 		param.put("startNum", startNum+"");
 		param.put("endNum", endNum+"");
+		param.put("email", email);
 		System.out.println("keyword : "+keyword);
 		System.out.println("dao sNum : "+startNum);
 		System.out.println("dao eNum : "+endNum);
@@ -78,8 +92,11 @@ public class FeedDAO {
 		System.out.println("dao title : "+title);
 		return title;
 	}
-	public int selectAllCount(String keyword) throws Exception{
-		int result = jdbc.selectOne("Feed.selectAllCount", keyword);
+	public int selectAllCount(String keyword, String email) throws Exception{
+		Map<String, String> param = new HashMap<>();
+		param.put("keyword", keyword);
+		param.put("email", email);
+		int result = jdbc.selectOne("Feed.selectAllCount", param);
 		return result;
 	}
 

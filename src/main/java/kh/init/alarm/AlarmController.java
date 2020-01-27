@@ -2,6 +2,8 @@ package kh.init.alarm;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,12 +12,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
+import kh.init.members.MemberDTO;
+
 @RequestMapping("/alarm")
 @Controller
 public class AlarmController {
 	
 	@Autowired
 	private AlarmService service;
+	@Autowired
+	private HttpSession session;
 	
 	// 알림 메인
 	@RequestMapping("alarmMain")
@@ -29,7 +35,9 @@ public class AlarmController {
 	@ResponseBody
 	public String alarmList() {
 		System.out.println("알림 리스트 열기 성공");
-		List<AlarmVO> result = service.alarmList("123@123.123");
+		MemberDTO sessionDTO = (MemberDTO)session.getAttribute("loginInfo");
+		List<AlarmVO> result = service.alarmList(sessionDTO.getEmail());
+//		List<AlarmVO> result = service.alarmList("123@123.123");
 		// 나중엔 이메일 부분 session id로 받을 것
 		
 		Gson gs = new Gson();
@@ -41,8 +49,11 @@ public class AlarmController {
 	@ResponseBody
 	public String deleteAlarm(String email, int alarm_seq) {
 		System.out.println("알림 삭제 성공");
-		service.deleteAlarm("123@123.123", alarm_seq);
-		List<AlarmVO> result = service.alarmList("123@123.123");
+		MemberDTO sessionDTO = (MemberDTO)session.getAttribute("loginInfo");
+		service.deleteAlarm(sessionDTO.getEmail(), alarm_seq);
+		List<AlarmVO> result = service.alarmList(sessionDTO.getEmail());
+//		service.deleteAlarm("123@123.123", alarm_seq);
+//		List<AlarmVO> result = service.alarmList("123@123.123");
 		// 나중엔 이메일 부분 session id로 받을 것
 		
 		Gson gs = new Gson();
@@ -54,7 +65,9 @@ public class AlarmController {
 	@ResponseBody
 	public String alarmCheck() {
 		System.out.println("알림 check 확인");
-		service.alarmCheck("123@123.123");
+		MemberDTO sessionDTO = (MemberDTO)session.getAttribute("loginInfo");
+		service.alarmCheck(sessionDTO.getEmail());
+//		service.alarmCheck("123@123.123");
 		// 나중엔 이메일 부분 session id로 받을 것
 		
 		return null;
@@ -64,7 +77,9 @@ public class AlarmController {
 	@RequestMapping(value="/isNewAlarm.al", produces="text/html; charset=utf8")
 	@ResponseBody
 	public String checkNewAlarm(String email) {
-		String result = Integer.toString(service.isNewAlarm("123@123.123"));
+		MemberDTO sessionDTO = (MemberDTO)session.getAttribute("loginInfo");
+		String result = Integer.toString(service.isNewAlarm(sessionDTO.getEmail()));
+//		String result = Integer.toString(service.isNewAlarm("123@123.123"));
 		// 나중엔 이메일 부분 session id로 받을 것
 		return result;
 	}

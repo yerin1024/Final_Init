@@ -14,7 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.Gson;
 
-import kh.init.admin.DeclareDTO;
+import kh.init.alarm.AlarmDAO;
 import kh.init.members.MemberDTO;
 
 
@@ -25,6 +25,8 @@ public class FeedService {
 	private FeedDAO dao;
 	@Autowired
 	private ReplyDAO replyDAO;
+	@Autowired
+	private AlarmDAO aldao;
 
 	@Transactional
 	public int registerFeed(FeedDTO dto, List<String> mediaList, String mediaPath, String realPath) throws Exception{
@@ -120,13 +122,13 @@ public class FeedService {
 			int feed_seq = tmp.getFeed_seq();
 			List<String> media = dao.getMediaList(feed_seq);
 			if(media.size()==0) { //이미지나 비디오가 없기 때문에 제목으로 커버를 만들어야되는 경우
-				cover.add("<span class='cover' style='width:100%;height:100%'>"+tmp.getTitle()+"</span>");
+				cover.add("<span class='cover'>"+tmp.getTitle()+"</span>");
 			}else {
 				if(media.get(0).endsWith("mp4")) { //파일이 동영상일 경우
-					String video = "<video class='cover' style='width:100%;height:100%' src=\""+media.get(0)+"\">";
+					String video = "<video class='cover' src=\""+media.get(0)+"\">";
 					cover.add(video);
 				}else {//파일이 이미지
-					String img = "<img class='cover' style='width:100%;height:100%' src=\""+media.get(0)+"\">";
+					String img = "<img class='cover' src=\""+media.get(0)+"\">";
 					cover.add(img);
 				}
 			}
@@ -140,6 +142,53 @@ public class FeedService {
 		map.put("endtNum", endNum);
 		return map;
 	}
+	//myFeed를 위한
+		public Map<String, Object> getMyFeedByFriend(int page, String email,String myEmail) throws Exception{
+			int totalFeed = dao.getMyFeedCount(email);
+			int startNum = 0;
+			int endNum = 0;
+			if (page==1){
+				startNum = 1;
+				endNum = 12;  //데이터를 10개씩 가져오겠다.
+			}else{
+				startNum = page+(11*(page-1));  //10개씩 가져오고싶다면  9로 
+				endNum = page*12;   //20, 40, 60
+				if(startNum>totalFeed) {
+					return null;
+				}else if(endNum>totalFeed) {
+					endNum = totalFeed;
+				}
+			}
+			List<FeedDTO> list = (List<FeedDTO>)dao.getMyFeedByFriend(email, myEmail, startNum, endNum).get("list");
+			List<Integer> rnum = (List<Integer>)dao.getMyFeedByFriend(email, myEmail, startNum, endNum).get("rnum");
+			List<String> cover = new ArrayList<>();//전체피드의 바둑판 대문사진
+
+			//미디어리스트 체크
+			for(FeedDTO tmp : list) {
+				int feed_seq = tmp.getFeed_seq();
+				List<String> media = dao.getMediaList(feed_seq);
+				if(media.size()==0) { //이미지나 비디오가 없기 때문에 제목으로 커버를 만들어야되는 경우
+					cover.add("<span class='cover' style='width:100%;height:100%'>"+tmp.getTitle()+"</span>");
+				}else {
+					if(media.get(0).endsWith("mp4")) { //파일이 동영상일 경우
+						String video = "<video class='cover' style='width:100%;height:100%' src=\""+media.get(0)+"\">";
+						cover.add(video);
+					}else {//파일이 이미지
+						String img = "<img class='cover' style='width:100%;height:100%' src=\""+media.get(0)+"\">";
+						cover.add(img);
+					}
+				}
+			}
+
+			Map<String, Object> map = new HashMap<>();
+			map.put("list", list);
+			map.put("rnum", rnum);
+			map.put("cover", cover);
+			map.put("startNum", startNum);
+			map.put("endtNum", endNum);
+			return map;
+		}
+	
 	//myFeed를 위한
 		public Map<String, Object> getMyScrapFeed(int page, String email) throws Exception{
 			int totalFeed = dao.getMyFeedCount(email);
@@ -188,8 +237,8 @@ public class FeedService {
 		}
 
 
-	public Map<String, Object> wholeFeed(int page, String keyword) throws Exception{
-		int totalFeed = dao.selectAllCount(keyword);
+	public Map<String, Object> wholeFeed(int page, String keyword, String email) throws Exception{
+		int totalFeed = dao.selectAllCount(keyword, email);
 		int startNum = 0;
 		int endNum = 0;
 		if (page==1){
@@ -208,9 +257,9 @@ public class FeedService {
 		if(keyword!=null) {
 			keyword = "%"+keyword+"%";
 		}
-		List<FeedDTO> list = (List<FeedDTO>)dao.selectAll(keyword, startNum, endNum).get("list");
+		List<FeedDTO> list = (List<FeedDTO>)dao.selectAll(keyword, startNum, endNum, email).get("list");
 		System.out.println("service list : "+list.toString());
-		List<Integer> rnum = (List<Integer>)dao.selectAll(keyword, startNum, endNum).get("rnum");
+		List<Integer> rnum = (List<Integer>)dao.selectAll(keyword, startNum, endNum, email).get("rnum");
 		List<String> cover = new ArrayList<>();//전체피드의 바둑판 대문사진
 
 		//미디어리스트 체크
@@ -218,7 +267,7 @@ public class FeedService {
 			int feed_seq = tmp.getFeed_seq();
 			List<String> media = dao.getMediaList(feed_seq);
 			if(media.size()==0) { //이미지나 비디오가 없기 때문에 제목으로 커버를 만들어야되는 경우
-				cover.add("<div class='title'>"+tmp.getTitle()+"</div>");
+				cover.add("<div class='cover' >"+tmp.getTitle()+"</div>");
 			}else {
 				if(media.get(0).endsWith("mp4")) { //파일이 동영상일 경우
 					String video = "<video class='cover' src=\""+media.get(0)+"\">";
@@ -266,7 +315,7 @@ public class FeedService {
 			int feed_seq = tmp.getFeed_seq();
 			List<String> media = dao.getMediaList(feed_seq);
 			if(media.size()==0) {
-				cover.add("<span class='cover'>"+tmp.getTitle()+"</span>");
+				cover.add("<div class='cover' style='display:inline-block;'>"+tmp.getTitle()+"</div>");
 			}else {
 				if(media.get(0).endsWith("mp4")) { //파일이 동영상일 경우
 					String video = "<video class='cover' src=\""+media.get(0)+"\">";
@@ -301,7 +350,6 @@ public class FeedService {
 			}
 		}
 		dto.setContents(contents);
-		System.out.println(contents);
 		return dto;
 	}
 
@@ -358,21 +406,48 @@ public class FeedService {
 
 		if(list.size()==0) {
 			System.out.println("title입력");
-			String title = dao.getTitle(feed_seq);
-			list.add("<span class='cover'>"+title+"</span>");
+//			String title = dao.getTitle(feed_seq);
+//			list.add("<div class='cover' style=\"display:inline-block;text-align:center;font-size:70px;padding-top:200px;word-break:break-all\">"+title+"</div>");
 		}else {
+			System.out.println("list size = "+list.size());
 			for(int i=0; i<list.size(); i++) {
 				if(list.get(i).endsWith("mp4")) { //파일이 동영상일 경우
-					String video = "<video class='cover' src=\""+list.get(i)+"\">";
+					System.out.println("파일이 동영상입니다.");
+					String video = "<video class='cover' style=\"height:100%;size:20px;text-align:center;vertical-align:center\" src=\""+list.get(i)+"\">";
 					list.set(i, video);
 				}else {//파일이 이미지
-					String img = "<img class='cover' src=\""+list.get(i)+"\">";
+					System.out.println("파일이 이미지입니다.");
+					String img = "<img class='cover' style=\"height:100%;size:20px;text-align:center;vertical-align:center\" src=\""+list.get(i)+"\">";
 					list.set(i, img);
 				}
 			}
 		}
 		return list;
 	}
+	
+	//controller-detailView에서 media 목록을 얻기 위한 service(친구를 위한)
+	public List<String> getMediaListForFriendFeed(int feed_seq) throws Exception{
+	List<String> list = dao.getMediaList(feed_seq);
+	System.out.println("service list : "+list.toString());
+
+	if(list.size()==0) {
+		
+	}else {
+		System.out.println("list size = "+list.size());
+		for(int i=0; i<list.size(); i++) {
+			if(list.get(i).endsWith("mp4")) { //파일이 동영상일 경우
+				System.out.println("파일이 동영상입니다.");
+				String video = "<video class='cover' src=\""+list.get(i)+"\">";
+				list.set(i, video);
+			}else {//파일이 이미지
+				System.out.println("파일이 이미지입니다.");
+				String img = "<img class='cover' src=\""+list.get(i)+"\">";
+				list.set(i, img);
+			}
+		}
+	}
+	return list;
+}
 
 	//controller-detailView에서 profile_img 목록을 얻기 위한 service
 	public String getProfile_img(String email) throws Exception{
@@ -404,6 +479,8 @@ public class FeedService {
 	public int insertLike(int feed_seq, String email) throws Exception{
 		int like_seq = dao.getLikeSeq();
 		int result = dao.insertLike(like_seq, feed_seq, email);
+		String receiverEmail = aldao.alarmReceiver(feed_seq);	//--- 좋아요 당한 사람 찾기
+		aldao.alarmLike(like_seq, receiverEmail); 				//--- 좋아요 알림 추가
 		return result;
 	}
 	public int deleteLike(int feed_seq, String email) throws Exception{
@@ -432,10 +509,13 @@ public class FeedService {
 		int reply_seq = replyDAO.replyNextSeq();
 		dto.setReply_seq(reply_seq);
 		replyDAO.registerReply(dto);
+		String receiverEmail = aldao.alarmReceiver(dto.getFeed_seq());	//--- 댓글 주인 찾기
+		aldao.alarmReply(reply_seq, receiverEmail);						//--- 댓글 알림 추가
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("email", dto.getEmail());
 		map.put("contents", dto.getContents());
 		map.put("reply_seq", dto.getReply_seq());
+		map.put("parent", dto.getParent());
 		String jsonString = gson.toJson(map);
 		return jsonString;
 	}

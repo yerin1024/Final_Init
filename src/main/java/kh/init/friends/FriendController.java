@@ -16,6 +16,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import kh.init.members.MemberDTO;
+import kh.init.members.MemberService;
 
 
 
@@ -26,19 +27,32 @@ public class FriendController {
 
 	@Autowired
 	private FriendService service;
-
+	@Autowired
+	private MemberService mservice;
 	@Autowired
 	private HttpSession session;
     
 	@RequestMapping("/friendRequest") //친구 요청 하기
+	@ResponseBody
 	public String friendRequest(FriendRequestDTO dto,Model model) {
 		try { 
 			MemberDTO mDto = (MemberDTO)session.getAttribute("loginInfo");
 		int result = service.friendRequestService(dto,mDto.getEmail());
-		 if(result > 0) {
-			 return "feeds/myFeed";
-		 }else {
-			 return "feeds/myFeed";
+		System.out.println("친구요청 결과 : "+result);
+		if(!(dto.getTo_id().equalsIgnoreCase(mDto.getEmail()))) {
+            int frResult = service.friendIsOkService(dto.getTo_id(), mDto.getEmail());
+            model.addAttribute("frResult", frResult);
+            }
+//		MemberDTO ydto = mservice.getMyPageService(dto.getTo_id());
+//		model.addAttribute("mvo", ydto);
+		 if(result == 1) {
+			 return "complete";
+		 }else if(result == 3){
+			 return "alreadyFriend";
+		 }else if(result == 4){
+			 return "alreadyApply";
+		 }else{
+			 return "errors";
 		 }
 		
 		}catch(Exception e) {
@@ -46,14 +60,48 @@ public class FriendController {
 			return "error";
 		}
 	}
+	@RequestMapping("/rejectFndRequest") //친구요청 거부하기~
+	@ResponseBody
+	public String rejectFndRequest(String yr_id) {
+		System.out.println("친구 요청 거부 CON 도착"); 
+		System.out.println(yr_id);
+		MemberDTO mDto = (MemberDTO)session.getAttribute("loginInfo");
+		try {
+			int result = service.rejectFriendRequestService(mDto.getEmail(), yr_id);
+			
+			return "ok";
+		 } catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return "error";
+		}
+		
+	}
+	@RequestMapping("/redoFndRequest") //친구요청 거부하기~
+	@ResponseBody
+	public String redoFndRequest(String yr_id) {
+		System.out.println("친구 요청 취소 CON 도착"); 
+		System.out.println(yr_id);
+		MemberDTO mDto = (MemberDTO)session.getAttribute("loginInfo");
+		try {
+			int result = service.rejectFriendRequestService( yr_id,mDto.getEmail());
+			
+			return "ok";
+		 } catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return "error";
+		}
+		
+	}
 	@RequestMapping("/acceptFndRequest") //친구 받아주기~
 	@ResponseBody
-	public String acceptFndRequest(String yr_id,String my_relation) {
+	public String acceptFndRequest(String yr_id,String relation) {
 		System.out.println("친구 수락 CON 도착"); 
 		System.out.println(yr_id);
 		try {
 			MemberDTO mDto = (MemberDTO)session.getAttribute("loginInfo");
-			int result = service.acceptFriendRequest(mDto.getEmail(), yr_id,"1");
+			int result = service.acceptFriendRequest(mDto.getEmail(), yr_id,relation);
 			return "ok";
 		 } catch (Exception e) {
 			// TODO Auto-generated catch block

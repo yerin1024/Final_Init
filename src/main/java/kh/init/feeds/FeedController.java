@@ -35,21 +35,27 @@ public class FeedController {
 	@RequestMapping("/myFeed")
 	public String myFeed(String email, Model model) {
 		System.out.println("myFeed 도착");
+		System.out.println("email : " + email);
 		int ipage = 1;
 		List<FeedDTO> list = null;
 		List<String> cover = new ArrayList<>();
 		String myEmail = ((MemberDTO)session.getAttribute("loginInfo")).getEmail();
 		try {
 			if(!(email.equalsIgnoreCase(myEmail))) {
+				System.out.println(email);
+				System.out.println(myEmail);
+				list = (List<FeedDTO>)service.getMyFeedByFriend(ipage, email, myEmail).get("list");
+				cover = (List<String>)service.getMyFeedByFriend(ipage, email, myEmail).get("cover");
             int frResult = fservice.friendIsOkService(email, myEmail);
             model.addAttribute("frResult", frResult);
+            }else {
+            	list = (List<FeedDTO>)service.getMyFeed(ipage, email).get("list");
+    			cover = (List<String>)service.getMyFeed(ipage, email).get("cover");
             }
 			MemberDTO dto = mservice.getMyPageService(email);
-			list = (List<FeedDTO>)service.getMyFeed(ipage, email).get("list");
-			cover = (List<String>)service.getMyFeed(ipage, email).get("cover");
-			System.out.println("dto 이메일값 확인 : "+dto.getEmail()+dto.getName());
-			model.addAttribute("mvo", dto);
 			
+			System.out.println("dto 이메일값 확인 : "+dto.getEmail()+dto.getName());
+			model.addAttribute("mvo", dto);		
 			model.addAttribute("list", list);
 			model.addAttribute("cover", cover);
 		}catch(Exception e) {
@@ -122,11 +128,11 @@ public class FeedController {
 	
 	@RequestMapping(value = "/myScrapFeed", produces = "application/json; charset=UTF-8")
 	@ResponseBody
-	public String myScrapFeed(String page) {
+	public String myScrapFeed(String email) {
 		System.out.println("myScrapFeed 도착");
-		int ipage = Integer.parseInt(page);
+		int ipage = 1;
 		System.out.println("ipage :  "+ipage);
-		String email = ((MemberDTO)session.getAttribute("loginInfo")).getEmail();
+		
 		System.out.println("로그인 세션 값 확인 : " + email);
 		//로그인 세션 테스트 코드 끝
 
@@ -259,6 +265,8 @@ public class FeedController {
 				
 				//writeFeedProc에서 media들의 경로가 필요해서 session에 넣어둠 , mediaList는 임시로 homeController에서 생성함
 				((ArrayList<String>)session.getAttribute("mediaList")).add(filePath);
+				System.out.println("session : "+session);
+				System.out.println("session.getAttribute(\"mediaList\")) : "+session.getAttribute("mediaList"));
 				returnVal = "{\"result\" : \""+filePath+"\", \"type\" : \""+fileType+"\"}";
 			}else {
 				//파일형식이 image나 video가 아닌 경우 업로드가 되지 않도록하고 fail을 리턴해서 alert창으로 불가능한 파일이라고 띄우도록 했음
@@ -280,11 +288,12 @@ public class FeedController {
 		List<FeedDTO> list = new ArrayList<>();
 		List<MemberDTO> friendList = new ArrayList<>();
 		List<String> cover = new ArrayList<>();
+		String email = ((MemberDTO)session.getAttribute("loginInfo")).getEmail();
 		try {
 				if(keyword==null || keyword.startsWith("#")) {//전체피드 가져오기 또는 해시태그 검색
 					System.out.println("해시태그검색");
-					list = (List<FeedDTO>)service.wholeFeed(ipage, keyword).get("list");
-					cover = (List<String>)service.wholeFeed(ipage, keyword).get("cover");
+					list = (List<FeedDTO>)service.wholeFeed(ipage, keyword, email).get("list");
+					cover = (List<String>)service.wholeFeed(ipage, keyword, email).get("cover");
 					for(int i=0; i<list.size(); i++) {
 						System.out.println("list("+i+") : " +list.get(i));
 						System.out.println("cover("+i+") : " +cover.get(i));
@@ -316,7 +325,7 @@ public class FeedController {
 		List<Integer> rnum = new ArrayList<>();
 		List<MemberDTO> friendList = new ArrayList<>();
 		List<String> cover = new ArrayList<>();
-		
+		String email = ((MemberDTO)session.getAttribute("loginInfo")).getEmail();
 		System.out.println("rnum : "+rnum.toString());
 		Gson g = new Gson();
 		
@@ -324,9 +333,9 @@ public class FeedController {
 		try {
 				if(keyword==null || keyword.startsWith("#")) {//전체피드 가져오기 또는 해시태그 검색
 					System.out.println("해시태그검색");
-					list = (List<FeedDTO>)service.wholeFeed(ipage, keyword).get("list");
-					rnum = (List<Integer>)service.wholeFeed(ipage, keyword).get("rnum");
-					cover = (List<String>)service.wholeFeed(ipage, keyword).get("cover");
+					list = (List<FeedDTO>)service.wholeFeed(ipage, keyword, email).get("list");
+					rnum = (List<Integer>)service.wholeFeed(ipage, keyword, email).get("rnum");
+					cover = (List<String>)service.wholeFeed(ipage, keyword, email).get("cover");
 					for(int i=0; i<list.size(); i++) {
 						System.out.println("list("+i+") : " +list.get(i));
 						System.out.println("rnum("+i+") : " +rnum.get(i));
@@ -340,7 +349,7 @@ public class FeedController {
 				}
 				obj.addProperty("option", "nfriend");
 		}catch(Exception e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 		}
 		
 		obj.addProperty("list", g.toJson(list));
@@ -380,31 +389,29 @@ public class FeedController {
 		int bookmarkCheck = 0; //0은 안한것 1은 한것
 		FeedDTO dto = null;
 		List<String> list = new ArrayList<>();
-
 		JsonObject obj = new JsonObject();
 		Gson g = new Gson();
-
 		List<ReplyDTO> replyList = new ArrayList<>();
 		try {
 			dto = service.detailView(feed_seq);
 			likeCheck = service.likeCheck(feed_seq, ((MemberDTO)session.getAttribute("loginInfo")).getEmail());
 			bookmarkCheck = service.bookmarkCheck(feed_seq, ((MemberDTO)session.getAttribute("loginInfo")).getEmail());
 			list = service.getMediaList(feed_seq);
-			System.out.println(list.toString() + " 리스트의 투스트링입니다!");
 			replyList = service.viewAllReply(feed_seq);
 			System.out.println("Email : "+dto.getEmail());
 			System.out.println("memberDTO : "+mservice.getMemberDTO(dto.getEmail()));
 			obj.addProperty("writerProfile", g.toJson((mservice.getMemberDTO(dto.getEmail())).getProfile_img()));
-			obj.addProperty("likeCheck", g.toJson(likeCheck));
+			obj.addProperty("writer", g.toJson((mservice.getMemberDTO(dto.getEmail())).getNickname()));
 			obj.addProperty("likeCheck", g.toJson(likeCheck));
 			obj.addProperty("bookmarkCheck", g.toJson(bookmarkCheck));
 			obj.addProperty("replyList",  g.toJson(replyList));
-			obj.addProperty("media", g.toJson(list));
+			obj.addProperty("media", g.toJson(list));			
 			obj.addProperty("dto", g.toJson(dto));	
-
+			System.out.println(obj.toString());
 		}catch(Exception e) {
 			e.printStackTrace();
 		}			
+		
 		return obj.toString();
 
 	}
@@ -449,7 +456,7 @@ public class FeedController {
 				}
 				
 				index++;
-				mediaList.add(service.getMediaList(feed_seq));
+				mediaList.add(service.getMediaListForFriendFeed(feed_seq));
 //				replyList.add(service.viewAllReply(feed_seq));
 				likeCheckList.add(service.likeCheck(feed_seq, ((MemberDTO)session.getAttribute("loginInfo")).getEmail()));
 				bookmarkCheckList.add(service.bookmarkCheck(feed_seq, ((MemberDTO)session.getAttribute("loginInfo")).getEmail()));
@@ -521,7 +528,7 @@ public class FeedController {
 					}
 				}
 				index++;
-				mediaList.add(service.getMediaList(feed_seq));
+				mediaList.add(service.getMediaListForFriendFeed(feed_seq));
 //				replyList.add(service.viewAllReply(feed_seq));
 				likeCheckList.add(service.likeCheck(feed_seq, ((MemberDTO)session.getAttribute("loginInfo")).getEmail()));
 				bookmarkCheckList.add(service.bookmarkCheck(feed_seq, ((MemberDTO)session.getAttribute("loginInfo")).getEmail()));
@@ -560,7 +567,7 @@ public class FeedController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "redirect:detailView?feed_seqS="+dto.getFeed_seq();
+		return "redirect:myFeed";
 	}
 	
 	@RequestMapping("/modifyFeedView")
@@ -656,10 +663,10 @@ public class FeedController {
 		try {
 			if(dto.getDepth() == 0) {
 				System.out.println("댓글");
-				result = service.registerReply(dto);			
+				result = service.registerReply(dto);
 			}else{
 				System.out.println("답글");
-				result = service.registerReply(dto);	
+				result = service.registerReply(dto);
 			}
 		}catch(Exception e) {
 			e.printStackTrace();
