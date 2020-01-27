@@ -25,19 +25,6 @@
  		.modal {
           text-align: center;
         }
-        @@media screen and (min-width: 768px) {
-          .modal:before {
-            display: inline-block;
-            vertical-align: middle;
-            content: " ";
-            height: 100%;
-          }
-        }
-        .modal-dialog {
-          display: inline-block;
-          text-align: left;
-          vertical-align: middle;
-        }
     
     .modal-content {
         background-color: #fffefc;
@@ -207,7 +194,12 @@
         background-color: #0f4c81;
         color: #fffefc;
     }
-
+	
+	#tab5-2_kakaoLoginBtn{
+		width: 100px;
+        height: 30px;
+	}
+	
     .tab5-1_container {
         text-align: left;
     }
