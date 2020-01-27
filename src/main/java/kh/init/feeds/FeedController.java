@@ -66,22 +66,33 @@ public class FeedController {
 	
 	@RequestMapping(value = "/myFeedAjax", produces = "application/json; charset=UTF-8")
 	@ResponseBody
-	public String myFeedAjax(String page) {
+	public String myFeedAjax(String page,String email) {
 		System.out.println("myFeedAjax 도착");
 		int ipage = Integer.parseInt(page);
 		System.out.println("ipage :  "+ipage);
 		List<FeedDTO> list = new ArrayList<>();
 		List<Integer> rnum = new ArrayList<>();
 		List<String> cover = new ArrayList<>();
-		String email = ((MemberDTO)session.getAttribute("loginInfo")).getEmail();
+		String myEmail = ((MemberDTO)session.getAttribute("loginInfo")).getEmail();
 		try {
 //			if((List<FeedDTO>)service.getMyFeed(ipage, email)==null) {
 //				System.out.println("list는 null입니다.");
 //				return "{\"result\" : \"false\"}";
 //			}
-			list = (List<FeedDTO>)service.getMyFeed(ipage, email).get("list");
-			rnum = (List<Integer>)service.getMyFeed(ipage, email).get("rnum");
-			cover = (List<String>)service.getMyFeed(ipage, email).get("cover");
+			
+			if(!(email.equalsIgnoreCase(myEmail))) {
+				list = (List<FeedDTO>)service.getMyFeedByFriend(ipage, email, myEmail).get("list");
+				rnum = (List<Integer>)service.getMyFeedByFriend(ipage, email, myEmail).get("rnum");
+				cover = (List<String>)service.getMyFeedByFriend(ipage, email, myEmail).get("cover");
+            int frResult = fservice.friendIsOkService(email, myEmail);
+            
+            }else {
+            	list = (List<FeedDTO>)service.getMyFeed(ipage, email).get("list");
+    			rnum = (List<Integer>)service.getMyFeed(ipage, email).get("rnum");
+    			cover = (List<String>)service.getMyFeed(ipage, email).get("cover");
+            }
+			
+			
 			System.out.println("1 : "+service);
 			System.out.println("2 : "+service.getMyFeed(ipage, email));
 			System.out.println("3 : "+service.getMyFeed(ipage, email).get("list"));
@@ -109,10 +120,19 @@ public class FeedController {
 		List<FeedDTO> list = null;
 		List<String> cover = new ArrayList<>();
 		
-	
+		String myEmail = ((MemberDTO)session.getAttribute("loginInfo")).getEmail();
 		try {
-			list = (List<FeedDTO>)service.getMyFeed(ipage, email).get("list");
-			cover = (List<String>)service.getMyFeed(ipage, email).get("cover");
+			if(!(email.equalsIgnoreCase(myEmail))) {
+				System.out.println(email);
+				System.out.println(myEmail);
+				list = (List<FeedDTO>)service.getMyFeedByFriend(ipage, email, myEmail).get("list");
+				cover = (List<String>)service.getMyFeedByFriend(ipage, email, myEmail).get("cover");
+            int frResult = fservice.friendIsOkService(email, myEmail);
+            
+            }else {
+            	list = (List<FeedDTO>)service.getMyFeed(ipage, email).get("list");
+    			cover = (List<String>)service.getMyFeed(ipage, email).get("cover");
+            }
 			
 		}catch(Exception e) {
 			return "{\"result\" : \"false\"}";
