@@ -17,6 +17,7 @@
 <link rel="stylesheet" href="/resources/css/nav.css">
 <link rel="stylesheet" href="/resources/css/alr.css">
 <link rel="stylesheet" href="/resources/css/msg.css">
+<link rel="stylesheet" href="/resources/css/test.css">
 
 <style>
 
