@@ -4,29 +4,38 @@
 <!DOCTYPE html>
 <html>
 <head>
-<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<link rel="stylesheet" href="/resources/css/nav.css">
+<script src="https://code.jquery.com/jquery-3.4.1.js"
+	type="text/javascript"></script>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<script
+	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
 <body>
+<jsp:include page="${pageContext.request.contextPath}/resources/jsp/nav.jsp" />
 <form action="${pageContext.request.contextPath}/member/changeProfile" method="post" enctype="multipart/form-data" id="changeProfile">
         <div class="container">
             <div class="signUpContainer">
                 <div class="modal fade" id="signUpModal" tabindex="-1" role="dialog" aria-labelledby="loginModalTitle" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content">
-                            <div class="modal-header">
+                            <div class="modal-header header" style="color:white;">
                                 <h5 class="modal-title" id="title">프로필 편집</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-                            <div class="modal-body">
+                            <div class="modal-body" style="text-align:center; color:#0D4373;">
                                
                                 
                                 
-                                <label>프로필 사진</label>
-                                <img src="/resources/images/default_profile_img.png" id="setProfile" style="width:50px;">
+                                <label style="margin:auto;">프로필 사진</label><br>
+                                <img src="/resources/images/default_profile_img.png" id="setProfile" style="margin:auto; width:30%; border-radius:50%"><br><br>
                                 <button type="button" id="deletePic">X</button>
                                 <input type="file" id="profileImg" name="profileImg" ><br> 
                                 <p class="adviseOut" id="adviseProfile" readonly>*프로필 사진 미등록시 기본이미지로 등록됩니다.</p>
@@ -41,8 +50,8 @@
                                 <p class="adviseOut" id="adviseProfile-msg" readonly>*4~200자 영문 대 소문자, 숫자, 특수문자(_)만 사용 가능합니다.</p>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" id="changeProfileBtn" onclick="formValidation();">편집 완료</button>
-                                <button type="button" id="cancelBtn">취소</button>
+                                <button type="button" id="changeProfileBtn"  onclick="formValidation();" style="color:#0D4373; width:200px; margin-right:5%;">편집 완료</button>
+                                <button type="button" id="cancelBtn"   style="color:#0D4373; width:200px; margin-right:5%;">취소</button>
                             </div>
                         </div>
                     </div>
@@ -51,6 +60,8 @@
         </div>
     </form>
     <script>
+    
+	$('#signUpModal').modal('show');
         var doc = document;
         var rawStr = null;
         var changeProfile = doc.getElementById("changeProfile");

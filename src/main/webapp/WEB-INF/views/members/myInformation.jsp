@@ -4,23 +4,53 @@
 <!DOCTYPE html>
 <html>
 <head>
-<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<link rel="stylesheet" href="/resources/css/nav.css">
+<script src="https://code.jquery.com/jquery-3.4.1.js"
+	type="text/javascript"></script>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<script
+	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+	<style>
+	body{
+	background-color:white;
+	}
+	#modalBox{
+	 
+	}
+	</style>
 <meta charset="UTF-8">
 <title>내 정보 수정</title>
 </head>
 <body>
+<jsp:include page="${pageContext.request.contextPath}/resources/jsp/nav.jsp" />
+	<div id="modalBox" class="modal fade" id="myModal"
+		role="dialog"  tabindex="-1" aria-labelledby="myModalLabel"
+		style="margin-top: 45px;">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header header">
+					<h4 class="modal-title" id="myModalLabel" style="color:white;">My Information</h4>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true" style="color:white;">×</span>
+					</button>
 
-	<form action="${pageContext.request.contextPath}/member/changeMyInfo"
+				</div>
+
+				<div class="modal-body">
+					
+						<form action="${pageContext.request.contextPath}/member/changeMyInfo"
 		method="post" id="signUpForm">
-		<div class="header">
-			<h5 id="modifyInfoTitle">정보 수정</h5>
-		</div>
-		<div class="body">
+		
+		<div class="body" style="text-align:center; color:#0D4373;">
 			<!-- 이메일 -->
-			<label>이메일</label>
-			<br> 
-			<div class="userInput" id="email" name="email">${loginInfo.email}</div>
-			
+			<label></label>
+			 
+			<div class="userInput" id="email" name="email" style=" font-family:fantasy;font-size: 20px; ">${loginInfo.email}</div>
+			<br>
 			<label>비밀번호</label><br>
 			<div id="changePwDiv" style="display:none;">
 				<!-- 현재 비밀번호 -->
@@ -94,15 +124,23 @@
 			<p class="advise" id="adviseVerifCode" readonly></p>
 			<p class="hiddenResp" id="hiddenRespVerifCode" hidden></p>
 		</div>
-		<div class="footer">
+		<div class="footer" style="text-align:center;">
 			<button type=button id="withdrawMem">회원탈퇴</button>
 			<button type=button id="changeInfo" onclick="formValidation();">수정완료</button>
 			<button type=button id="backToFeed">뒤로가기</button>
 		</div>
 	</form>
-
-	<script>
+					
+				</div>
+				<div class="modal-footer">
+					
+				</div>
+			</div>
+		</div>
+	</div>
 	
+	<script>
+	$('#modalBox').modal('show');
 		var doc = document;
 	
 	    // 입력 변수
