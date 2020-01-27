@@ -4,6 +4,11 @@
  	
 <div class="navBar" >
         <div class="header">
+        
+        <button class="navbar-hbg" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+		    <span class="navbar-hbg-icon"><img src='/images/hbg.png'></span>
+		  </button>
+  
            <div class="inner">
             <div class="nav-left">
                 <div class="logo">

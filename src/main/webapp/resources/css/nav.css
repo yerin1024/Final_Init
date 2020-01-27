@@ -15,11 +15,12 @@ html, body {
 }
 
 .header {
-	margin: 0px
+	margin: 0px;
+	min-width: 490px;
 }
 
 .nav-left, .nav-center {
-	float: left
+	float: left;
 }
 
 #logoA{

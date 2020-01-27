@@ -16,6 +16,27 @@
 	<link rel="stylesheet" href="/resources/css/alr.css">
 	<link rel="stylesheet" href="/resources/css/test.css">
 	<style>
+	
+	@media (min-width: 700px){
+           .navbar-hbg {
+                display: none;
+            }
+        }
+        .navbar-hbg-icon{
+            display: inline-block;
+/*            border: 1px solid red;*/
+            width: 35px; height: 35px;
+        }
+        .navbar-hbg-icon>img{
+            width: 100%;
+        }
+        .navbar-hbg{
+            border: none;
+            background-color: rgba(255, 255, 255, 0);
+        }
+        
+        
+        
     #noFriendExist{
 /*        border: 1px solid red;*/
         position: absolute;
