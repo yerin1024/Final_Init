@@ -262,7 +262,7 @@
 }
 
 #reportBtn {
-	background-color: transparent;
+	background-color: yellow;
 	border: none;
 }
 /*This is coded CSS rainbow*/
@@ -927,6 +927,9 @@
 			<c:choose>
 				<c:when test="${loginInfo.email ne mvo.email}">
 					<div class="profileLayout">
+					<div class="report">
+						<button type="button" id="reportBtn">ㆍㆍㆍ</button>
+					</div>
 						<div class="profileLayoutLeft">
 						<c:if test="${frResult == null || frResult == 0  }">
 							<button class="btn btn-primary btn-lg" id="openModalBtn">＋</button>
@@ -957,16 +960,9 @@
 					</div>
 				</c:when>
 				<c:otherwise>
-				<c:choose>
-					<c:when test="${loginInfo ne null}">
-							<!-- 신고버튼 사라지기  -->
-					</c:when>
-					<c:otherwise>
-					<div class="report">
-						<button type="button" id="reportBtn">ㆍㆍㆍ</button>
-					</div>
-					</c:otherwise>
-				</c:choose>
+				
+					
+					
 					
 					<div class="profileLayout">
 						<div class="profileLayoutLeft">
@@ -990,15 +986,30 @@
 						<div class="profileName">${mvo.nickname }</div>
 						<div class="profileMessage">${mvo.profile_msg}</div>
 					</div>
+				<div class="static" style="margin:auto; text-align:center;">
+				<br>
+				<table style="width:80%; margin:auto; ">
+				<tr>
+				<td style="color:gainsboro; font-size:40px;">127
+				<td style="color:gainsboro; font-size:40px;">250
+				</tr>
+				<tr>
+				<td style="color:grey; font-size:13px;">Posts
+				<td style="color:grey; font-size:13px;">Friends
+				</tr>
+				</table>
+				<br>
+				</div>
+				<div class="menubar">
+		<button type="button" id="personalFeed">Personal feed</button>
+		<button type="button" id="scrapFeed">scrap feed</button>
+		<button type="button" id="registerFeed">게시물 등록</button>	
+		</div>
 				</c:otherwise>
 
 			</c:choose>
 		</div>
-		<div class="menubar">
-		<button type="button" id="personalFeed">Personal feed</button>
-		<button type="button" id="scrapFeed">scrap feed</button>
-		<button type="button" id="registerFeed">게시물 등록</button>	
-		</div>			
+					
          <div class="wrapper">			
 			<div id="myFeed">
          <c:choose>
