@@ -110,7 +110,10 @@ public class MemberController {
 	@RequestMapping("/goMyInfo")  //내 정보 (편집) 가기
 	public String goMyInfo(String email, Model model) {
 		System.out.println("개인 정보 CON 도착.");
+		
 		MemberDTO mDto = (MemberDTO)session.getAttribute("loginInfo");
+		String emailResult =mDto.getEmail().replace("@", "%40");
+		System.out.println("고인포 : "+ emailResult);
 		try {			
 			MemberDTO dto = service.getMyPageService(mDto.getEmail());
 			System.out.println(dto.getEmail());
@@ -231,7 +234,7 @@ public class MemberController {
 		MemberDTO mDto = (MemberDTO)session.getAttribute("loginInfo");
 		System.out.println("이메일는 "+mDto.getEmail());
 		String emailResult = mDto.getEmail().replace("@", "%40");
-		model.addAttribute("email", emailResult);
+		//model.addAttribute("email", emailResult);
 		int result = 0;
 		try {
 			if(profileImg.getOriginalFilename() == "") {
