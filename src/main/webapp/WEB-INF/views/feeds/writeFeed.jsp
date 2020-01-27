@@ -5,38 +5,30 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
 <title>Insert title here</title>
 <script src="/resources/script/dropzone.js"></script>
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
-<script
-	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-<script
-	src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
-<link
-	href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.css"
-	rel="stylesheet">
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.js"></script>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.css">
 <link rel="stylesheet" href="/resources/css/nav.css"> 
 <link rel="stylesheet" href="/resources/css/alr.css">
 <link rel="stylesheet" href="/resources/css/msg.css">
 <link rel="stylesheet" href="/resources/css/test.css">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
 
 <style>
 
 #mediaRow{
-	min-width:1000px;
+	width:1000px;
 	margin:auto;
 }
 
@@ -61,13 +53,10 @@
 }
 
 .carousel-item {
-	margin: auto;
-	text-align: center;
 }
 
 .carousel-inner * {
 	width: 14vw;
-	height: 14vw;
 }
 .carousel-inner{
 	width:60vw;
@@ -76,12 +65,18 @@
 	width:55vw; 
 	min-width:670px;
 }
+.note-editor{
+	width:680px;
+}
 .note-editable{
-	height:26vw;
-	min-height:400px;
+	height:500px;
 }
 .cover{
-	margin-left:18px;
+	width:220px;
+	height:220px;
+}
+.note-toolbar{
+	z-index: 1;
 }
 /* All Device */
 /* 모든 해상도를 위한 공통 코드를 작성한다. 모든 해상도에서 이 코드가 실행됨. */
@@ -123,6 +118,9 @@
 }
 #wrapper{
 	margin:auto;
+	min-width:1000px;
+}
+#mediaRow{
 	min-width:1000px;
 }
 /* Desktop Device */
@@ -175,7 +173,7 @@
 							id="my-awesome-dropzone" enctype="multipart/form-data"></form>
 					</div>
 					<div class="col-12" style="padding-top:40px">
-						<div id="carouselExampleIndicators" class=" slide"
+						<div id="carouselExampleIndicators" class="carousel slide"
 							data-interval="false" >
 							<ol class="carousel-indicators">
 					
