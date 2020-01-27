@@ -12,6 +12,9 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 <link rel="stylesheet" href="/resources/css/nav.css">
+<link rel="stylesheet" href="/resources/css/msg.css"> 
+<link rel="stylesheet" href="/resources/css/alr.css"> 
+<link rel="stylesheet" href="/resources/css/test.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.css">
 
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
@@ -21,6 +24,11 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.js"></script>
 
+<link rel="stylesheet" href="/resources/css/nav.css">
+<link rel="stylesheet" href="/resources/css/alr.css">
+<link rel="stylesheet" href="/resources/css/msg.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
 
 <style>
 #wrapper {
@@ -67,7 +75,6 @@ html, body {
 /* width: 1600px; */
 	width: 720px;
 	text-align: center;
-/* 	overflow: hidden; */
 }
 
 .carousel-item * {
@@ -440,6 +447,8 @@ html, body {
 </head>
 <body>
 	<jsp:include page="/resources/jsp/nav.jsp" />
+	<jsp:include page="/resources/jsp/msg.jsp" />
+	<jsp:include page="/resources/jsp/alr.jsp" />
 	<div id="wrapper" style="position: relative; top: 62px">
 		<!-- <h1>친구피드</h1> -->
 		<c:choose>

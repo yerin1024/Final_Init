@@ -21,7 +21,24 @@
     * {
         box-sizing: border-box;
     }
-
+    
+ 		.modal {
+          text-align: center;
+        }
+        @@media screen and (min-width: 768px) {
+          .modal:before {
+            display: inline-block;
+            vertical-align: middle;
+            content: " ";
+            height: 100%;
+          }
+        }
+        .modal-dialog {
+          display: inline-block;
+          text-align: left;
+          vertical-align: middle;
+        }
+    
     .modal-content {
         background-color: #fffefc;
     }
@@ -32,7 +49,8 @@
     }
 
     .modal-body {
-        padding: 100px;
+        /* padding: 100px; */
+        padding: 30px;
     }
     
     #indexModalTitle {
@@ -48,18 +66,25 @@
     
     .tab1_container{
     	width: 100%;
+
     }
 	.tab1_loginContainer{
+        display: flex;
 		width: 100%;
+        margin: 0px;
+ 
 	}
     .tab1_body {
         font-family: 'Noto Sans KR', sans-serif;
-        width: 70%;
+        width: 50%;
+
     }
     
     .tab1_logo {
-    	width: 30%;
+    	width: 50%;
     	height: 100%;
+        margin: 0px;
+        padding: 0px;
     }
 
     .tab1_body .userInput {
@@ -95,10 +120,6 @@
         border: none;
         border-radius: 8px;
     }
-	
-	#logoDiv{
- 		width: 100%; 
-	}
 	
 	#logoDiv img{
 		width: 100%;
@@ -268,7 +289,52 @@
 	.inputLogin:focus {
 		background-color: transparent;
 	}  	
- 
+
+    /* All Device */
+/* 모든 해상도를 위한 공통 코드를 작성한다. 모든 해상도에서 이 코드가 실행됨. */
+
+/* Mobile Device */
+/* 768px 미만 해상도의 모바일 기기를 위한 코드를 작성한다. 모든 해상도에서 이 코드가 실행됨. 미디어 쿼리를 지원하지 않는 모바일 기기를 위해 미디어 쿼리 구문을 사용하지 않는다. */
+
+/* Tablet &amp; Desktop Device */
+@media all and (min-width:768px) {
+	/*     사용자 해상도가 768px 이상일 때 이 코드가 실행됨. 테블릿과 데스크톱의 공통 코드를 작성한다. */
+	body {
+		background-color: purple;
+	}
+}
+
+@media all and (max-width:768px) {
+	/*     사용자 해상도가 768px 이하일 때 이 코드가 실행됨. 테블릿과 데스크톱의 공통 코드를 작성한다. */
+	.section {
+		height: 150px;
+		margin: 0px;
+		padding: 0px;
+	}
+}
+/* Tablet Device */
+@media all and (max-width:1024px) {
+	/*     사용자 해상도가 768px 이상이고 1024px 이하일 때 이 코드가 실행됨. 아이패드 또는 비교적 작은 해상도의 랩탑이나 데스크톱에 대응하는 코드를 작성한다. */
+	.section {
+		height: 250px;
+		padding: 0px;
+	}
+	.profileImageBox {
+		height: 200px;
+		width: 200px;
+	}
+	.friendRequest {
+		width: 80px;
+		height: 80px;
+	}
+}
+/* Desktop Device */
+@media all and (min-width:1025px) {
+	/*     사용자 해상도가 1025px 이상일 때 이 코드가 실행됨. 1025px 이상의 랩탑 또는 데스크톱에 대응하는 코드를 작성한다. */
+	body {
+		background-color: pink;
+	}
+}
 </style>
 <body>
  <jsp:include page="/resources/script/index.jsp" flush="true"/>
@@ -292,11 +358,11 @@
                                 <div class="tab1_container">
                                     <form action="${pageContext.request.contextPath}/member/loginProc.do" method="post" id="tab1_loginForm">
                                         <div class="tab1_loginContainer">
-                                        	<div class="tab1_logo">
+                                        <div class="tab1_logo d-sm-none d-md-block">
 	                                        	<div id="logoDiv">
-	                                        		<img src="resources/images/test03.png">
-	                                        	</div>                                        		
-                                        	</div>
+	                                        		<img src="${pageContext.request.contextPath}/resources/images/mainLogo.jpg">
+	                                        	</div>   
+                                        	 </div>
                                             <div class="tab1_body">                                            
                                             	<label for="tab1_email" class="inp">
 												  <input type="text" class="inputLogin" id="tab1_email" name="email" placeholder="&nbsp;">
@@ -311,14 +377,12 @@
 												</label>
 												<br>
                                                 <button type="button" id="tab1_loginBtn" onclick="toLogin();">로그인</button><br>
-                                                <img src="resources/images/kakao_login_large.png" id="tab1_kakaoLoginBtn"><br>
+                                                <img src="${pageContext.request.contextPath}/resources/images/kakao_login_large.png" id="tab1_kakaoLoginBtn"><br>
 	                                            <div class="saveId">
 	                                            	<input type="checkbox" id="tab1_saveIdCheck" onChange="toCheckCbox();">
 	                                                <span>아이디 저장</span>
 	                                            </div>
-                                            </div>
-                                            <div class="tab1_footer">
-                                                <a href="#findPw" id="goFindPW">비밀번호 찾기 </a>
+	                                            <a href="#findPw" id="goFindPW">비밀번호 찾기 </a>
                                                 <span> | </span>
                                                 <a href="#signUp" id="goSignUp">회원가입 </a>
                                             </div>
@@ -361,7 +425,7 @@
                                     <div class="tab4_body">
                                     	<div class="tab4_signupBtnBox">
 											<button type="button" id="tab5-1_generalSignup">일반 회원가입</button>
-											<img src="resources/images/kakaoSignup_btn.png" id="tab5-2_kakaoLoginBtn"><br>
+											<img src="${pageContext.request.contextPath}/resources/images/kakaoSignup_btn.png" id="tab5-2_kakaoLoginBtn" style=""><br>
                                     	</div>
                                         <div class="tab4_btnBox">
                                             <button type="button" id="tab4_goMain">이전</button>
@@ -454,7 +518,7 @@
                                             <!-- 프로필 사진 -->
                                             <label>프로필 사진</label><br>
                                             <p class="advise" id="adviseProfile" readonly>*프로필 사진 미등록시 기본이미지로 등록됩니다.</p>
-                                            <img src="resources/images/default_profile_img.png" id="tab5-1_setProfile" style="width: 50px;">
+                                            <img src="${pageContext.request.contextPath}/resources/images/default_profile_img.png" id="tab5-1_setProfile" style="width: 50px;">
                                             <button type="button" id="tab5-1_deleteProfile">X</button>
                                             <input type="file" id="tab5-1_profileImg" name="profileImg"><br>
                                         </div>
@@ -492,7 +556,7 @@
 											<!-- 프로필 사진 -->
 											<label>프로필 사진</label><br>
 											<p class="advise" id="tab5-2_adviseProfile" readonly>*프로필 사진 미등록시 기본이미지로 등록됩니다.</p>
-											<img src="resources/images/default_profile_img.png" name="profile_img" id="tab5-2_setProfile" style="width: 50px;">	
+											<img src="${pageContext.request.contextPath}/resources/images/default_profile_img.png" name="profile_img" id="tab5-2_setProfile" style="width: 50px;">	
 											<button type="button" id="tab5-2_deleteProfile">X</button>
 											<input type="text" id="tab5-2_hiddenProfileImg" name="profile_img" style="display:none;"><br>
 											<input type="file" id="tab5-2_profileImg" name="profileImg"><br>
@@ -659,6 +723,10 @@
                     doc.getElementById("tab3_userEmail").innerHTML = resp.email;
                 }else if(resp.result == "invalid"){
                 	alert("등록된 계정이 아닙니다.");
+                	email.click();
+                }else if(resp.result == "error"){
+                	alert("일시적인 오류가 발생하였습니다. 다시 시도해 주세요.");
+                	email.click();
                 }
             }).fail(function (a, b, c) {
                 console.log(a);
@@ -714,7 +782,7 @@
 							email.value = data.user_id;
 							emailOverlapCheck();
 							if(data.kakaoProfile == "none"){
-								setProfile.src = "resources/images/default_profile_img.png";
+								setProfile.src = "${pageContext.request.contextPath}/resources/images/default_profile_img.png";
 								hiddenProfileImg.value = "resources/images/default_profile_img.png";
 							}else{
 								console.log("카톡 프로필 exist");
@@ -751,8 +819,8 @@
                 });
         		
         		doc.getElementById("tab5-2_deleteProfile").addEventListener("click", function(){
-        			setProfile.src = "resources/images/default_profile_img.png";
-        			hiddenProfileImg.value = "resources/images/default_profile_img.png";
+        			setProfile.src = "${pageContext.request.contextPath}/resources/images/default_profile_img.png";
+        			hiddenProfileImg.value = "${pageContext.request.contextPath}/resources/images/default_profile_img.png";
         		});
         		//프로필 사진 uploda 이벤트 end
         		
@@ -1139,7 +1207,7 @@
             setTime = 300; //카운트다운 초기화
             if(phone2.value != "" && phone3.value != ""){    		
                 timer.innerHTML = "";
-                phone.value = phone1.value + phone2.value + phone3.value;   	        
+                phone.value = phone1.value + phone2.value + phone3.value;   	
                 
                 if (phone.value != "") {
                     $.ajax({
@@ -1297,7 +1365,7 @@
             });
 
             deleteProfile.addEventListener("click", function () {
-                setProfile.src = "resources/default_profile_img.png";
+                setProfile.src = "${pageContext.request.contextPath}/resources/default_profile_img.png";
             });
             //프로필 사진 이벤트 end
 

@@ -32,21 +32,43 @@
 		update tb_message set receive_read = 'Y' where from_id=#{to_id} and to_id=#{from_id}
 	</update>
 	
+	<!-- 미리 보기 상대방 출력 -->
+	<select id="selectMsgUser" resultType="kh.init.messages.MessageDTO">
+		select distinct email 
+		from tb_message msg 
+		full outer join tb_member mem on mem.email = msg.from_id or mem.email = msg.to_id 
+		full outer join tb_block bl on (bl.from_id = msg.to_id or bl.from_id = msg.from_id) and (bl.to_id = msg.to_id or bl.to_id = msg.from_id) 
+		where (msg.to_id =#{email} or msg.from_id=#{email}) and email!=#{email} 
+		and (bl.from_id is null and bl.to_id is null)
+	</select>
+	<!-- 		select * from tb_message where ((from_id=#{from_id} and to_id=#{to_id}) or (from_id=#{to_id} and to_id=#{from_id})) order by 1  -->
+	
 	<!-- 미리 보기 -->
 	<!-- from_id: 보낸 사람 / to_id: 받는 사람 -->	
 	<select id="previewMsg" resultType="kh.init.messages.MessageDTO">
 		<![CDATA[
-		select * from (
-			select 
-			    msg_seq, from_id, to_id, contents, write_date, receive_read,
-			    (select count(*) unread_count from tb_message where (from_id=#{to_id} and to_id=#{from_id}) and receive_read = 'N') unread_count,
-			    nickname, profile_img, email
-			from tb_message msg
-			full outer join tb_friend fr on fr.fr_id = msg.from_id or fr.fr_id = msg.to_id
-			full outer join tb_member mem on mem.email = fr.fr_id
-			where my_id =#{from_id} and fr_id=#{to_id} and contents is not null
-			order by 1 desc ) where rownum <= 1
+			select * from(
+			    select
+			        msg_seq, from_id, to_id, contents, write_date, receive_read,
+			        (select count(*) unread_count from tb_message where (from_id=#{to_id} and to_id=#{from_id}) and receive_read = 'N') unread_count,
+			        email, nickname, profile_img
+			    from tb_message msg
+			    full outer join tb_member mem on mem.email = msg.from_id or mem.email = msg.to_id 
+			    where email !=#{from_id} and ((from_id=#{to_id} and to_id=#{from_id}) or (to_id=#{to_id} and from_id=#{from_id}))
+			    order by 1 desc
+			) where rownum <=1
 		]]>
+		
+<!-- 		select * from ( -->
+<!-- 			select  -->
+<!-- 			    msg_seq, from_id, to_id, contents, write_date, receive_read, -->
+<!-- 			    (select count(*) unread_count from tb_message where (from_id=#{to_id} and to_id=#{from_id}) and receive_read = 'N') unread_count, -->
+<!-- 			    nickname, profile_img, email -->
+<!-- 			from tb_message msg -->
+<!-- 			full outer join tb_friend fr on fr.fr_id = msg.from_id or fr.fr_id = msg.to_id -->
+<!-- 			full outer join tb_member mem on mem.email = fr.fr_id -->
+<!-- 			where my_id =#{from_id} and fr_id=#{to_id} and contents is not null -->
+<!-- 			order by 1 desc ) where rownum <= 1 -->
 	</select>
 	
 	<!-- 읽지 않은 메시지 수 -->

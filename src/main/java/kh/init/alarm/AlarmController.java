@@ -36,8 +36,8 @@ public class AlarmController {
 	public String alarmList() {
 		System.out.println("알림 리스트 열기 성공");
 		MemberDTO sessionDTO = (MemberDTO)session.getAttribute("loginInfo");
-//		List<AlarmVO> result = service.alarmList(sessionDTO.getEmail());
-		List<AlarmVO> result = service.alarmList("123@123.123");
+		List<AlarmVO> result = service.alarmList(sessionDTO.getEmail());
+//		List<AlarmVO> result = service.alarmList("123@123.123");
 		// 나중엔 이메일 부분 session id로 받을 것
 		
 		Gson gs = new Gson();
@@ -50,10 +50,10 @@ public class AlarmController {
 	public String deleteAlarm(String email, int alarm_seq) {
 		System.out.println("알림 삭제 성공");
 		MemberDTO sessionDTO = (MemberDTO)session.getAttribute("loginInfo");
-//		service.deleteAlarm(sessionDTO.getEmail(), alarm_seq);
-//		List<AlarmVO> result = service.alarmList(sessionDTO.getEmail());
-		service.deleteAlarm("123@123.123", alarm_seq);
-		List<AlarmVO> result = service.alarmList("123@123.123");
+		service.deleteAlarm(sessionDTO.getEmail(), alarm_seq);
+		List<AlarmVO> result = service.alarmList(sessionDTO.getEmail());
+//		service.deleteAlarm("123@123.123", alarm_seq);
+//		List<AlarmVO> result = service.alarmList("123@123.123");
 		// 나중엔 이메일 부분 session id로 받을 것
 		
 		Gson gs = new Gson();
@@ -66,8 +66,8 @@ public class AlarmController {
 	public String alarmCheck() {
 		System.out.println("알림 check 확인");
 		MemberDTO sessionDTO = (MemberDTO)session.getAttribute("loginInfo");
-//		service.alarmCheck(sessionDTO.getEmail());
-		service.alarmCheck("123@123.123");
+		service.alarmCheck(sessionDTO.getEmail());
+//		service.alarmCheck("123@123.123");
 		// 나중엔 이메일 부분 session id로 받을 것
 		
 		return null;
@@ -78,8 +78,8 @@ public class AlarmController {
 	@ResponseBody
 	public String checkNewAlarm(String email) {
 		MemberDTO sessionDTO = (MemberDTO)session.getAttribute("loginInfo");
-//		String result = Integer.toString(service.isNewAlarm(sessionDTO.getEmail()));
-		String result = Integer.toString(service.isNewAlarm("123@123.123"));
+		String result = Integer.toString(service.isNewAlarm(sessionDTO.getEmail()));
+//		String result = Integer.toString(service.isNewAlarm("123@123.123"));
 		// 나중엔 이메일 부분 session id로 받을 것
 		return result;
 	}

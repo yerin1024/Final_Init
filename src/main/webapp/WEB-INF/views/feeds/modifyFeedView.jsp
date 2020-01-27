@@ -27,6 +27,9 @@
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.js"></script>
 <link rel="stylesheet" href="/resources/css/nav.css"> 
+<link rel="stylesheet" href="/resources/css/msg.css"> 
+<link rel="stylesheet" href="/resources/css/alr.css">
+<link rel="stylesheet" href="/resources/css/test.css">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
@@ -140,6 +143,8 @@
 </script>
 </head>
 <jsp:include page="/resources/jsp/nav.jsp" />
+<jsp:include page="/resources/jsp/alr.jsp"/>
+<jsp:include page="/resources/jsp/msg.jsp"/>
 <body>
 	<div id="wrapper">
 		<div id="writeForm" style="height: 715px">
@@ -160,7 +165,7 @@
 			<div class="row" id="mediaRow">
 			<div class="col-3">
 				<c:choose>             
-					<c:when test="${fn:length(media) >1 }">
+					<c:when test="${fn:length(media) >=1 }">
 						<div id="carouselExampleIndicators" class="carousel slide" data-interval="false">
 							<ol class="carousel-indicators">
 									<c:forEach items="${media }" var="media" varStatus="status">

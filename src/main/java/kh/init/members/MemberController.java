@@ -17,6 +17,8 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 
 import com.google.gson.JsonObject;
 
+import kh.init.configuration.Configuration;
+
 @RequestMapping("/member")
 @Controller
 public class MemberController {
@@ -93,8 +95,11 @@ public class MemberController {
 		System.out.println("사용자 이메일  : " + email);
 		JsonObject obj = new JsonObject();
 		
-		if(service.findPw(email) == "invalid") {
+		String result = service.findPw(email);
+		if(result == "invalid") {
 			obj.addProperty("result", "invalid");
+		}else if(result == "error occured"){
+			obj.addProperty("result", "error");
 		}else {
 			obj.addProperty("result", "success");
 			obj.addProperty("email", email);
@@ -105,7 +110,10 @@ public class MemberController {
 	@RequestMapping("/goMyInfo")  //내 정보 (편집) 가기
 	public String goMyInfo(String email, Model model) {
 		System.out.println("개인 정보 CON 도착.");
+		
 		MemberDTO mDto = (MemberDTO)session.getAttribute("loginInfo");
+		String emailResult =mDto.getEmail().replace("@", "%40");
+		System.out.println("고인포 : "+ emailResult);
 		try {			
 			MemberDTO dto = service.getMyPageService(mDto.getEmail());
 			System.out.println(dto.getEmail());
@@ -159,7 +167,7 @@ public class MemberController {
 			if(result> 0) {
 				session.invalidate();
 				System.out.println("회원탈퇴 성공하셨슴당.");
-				return "home";
+				return "main";
 			}else {
 				System.out.println("회원탈퇴 실패하셨슴당.");
 				return "error";
@@ -169,26 +177,25 @@ public class MemberController {
 		}catch(Exception e) {
 			e.printStackTrace();
 			System.out.println("입력실패.");
-			return "home";
+			return "error";
 		}
 	}
 
 	@RequestMapping("/changeMyInfo") //회원 정보 수정하기
-	public String changeInfo(MemberDTO dto) {
+	public String changeInfo(MemberDTO dto, Model model) {
 		System.out.println("회원 정보 수정 CON 도착.");
+		MemberDTO mDto = (MemberDTO)session.getAttribute("loginInfo");
 		try {
 			int result = 0;
-			MemberDTO mDto = (MemberDTO)session.getAttribute("loginInfo");
+			model.addAttribute("email", mDto.getEmail());
 			if(mDto.getEmail() != null) {
 				result = service.changeMyInfoService(mDto.getEmail(), dto);
 			}else {
 				result = 0;
 			}
-
 			if(result > 0) {
-
 				System.out.println("정보변경에 성공하셨슴당.");
-				return "home";
+				return "redirect:/feed/myFeed";
 			}else {
 				System.out.println("정보변경에 실패하셨슴당.");
 				return "error";
@@ -196,15 +203,36 @@ public class MemberController {
 		}catch(Exception e) {
 			e.printStackTrace();
 			System.out.println("입력실패.");
-			return "redirect:home";
+			return "redirect:/feed/myFeed";
 		}
 	} 
+	
+	@RequestMapping("/changePw") // 비밀번호 변경
+	@ResponseBody
+	public String changePw(String pw) {
+		String email = ((MemberDTO)session.getAttribute("loginInfo")).getEmail();
+		JsonObject obj = new JsonObject();
+		try {
+			if(service.changePw(email, pw) > 0) {
+				obj.addProperty("result", "complete");
+			}else {
+				return "error";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "error";
+		}
+		return obj.toString();
+	}
 
 	@RequestMapping("/changeProfile") //프로필 바꿔버리기
-	public String changeMyProfile(MemberDTO dto, MultipartFile profileImg) {
+	public String changeMyProfile(MemberDTO dto, MultipartFile profileImg,Model model) {
 		System.out.println("회원 정보 수정 CON 도착.");
 		String path = session.getServletContext().getRealPath("files");
 		MemberDTO mDto = (MemberDTO)session.getAttribute("loginInfo");
+		System.out.println("이메일는 "+mDto.getEmail());
+		String emailResult = mDto.getEmail().replace("@", "%40");
+		//model.addAttribute("email", emailResult);
 		int result = 0;
 		try {
 			if(profileImg.getOriginalFilename() == "") {
@@ -217,7 +245,7 @@ public class MemberController {
 			if(result> 0) {
 
 				System.out.println("정보변경에 성공하셨슴당.");
-				return "home";
+				return "redirect:/feed/myFeed";
 			}else {
 				System.out.println("정보변경에 실패하셨슴당.");
 				return "error";
@@ -227,7 +255,7 @@ public class MemberController {
 		}catch(Exception e) {
 			e.printStackTrace();
 			System.out.println("입력실패.");
-			return "redirect:home";
+			return "redirect:feed/myFeed";
 		}
 	}
 
@@ -236,16 +264,17 @@ public class MemberController {
 	public String identifyMemPw(String pw) {
 		System.out.println("현재 비밀번호 확인 CON 도착"); 
 		System.out.println("현재 적은 비번은 "+pw);
+		JsonObject obj = new JsonObject();
 		try {
 			MemberDTO mDto = (MemberDTO)session.getAttribute("loginInfo");
 			MemberDTO dto = service.identifyMemPwService(mDto.getEmail());
 			System.out.println("비번은 "+dto.getPw());
-			if(pw.equalsIgnoreCase(dto.getPw())) {
-				return "yes";
+			if(Configuration.encrypt(pw).equalsIgnoreCase(dto.getPw())) {
+				obj.addProperty("result", "validate");
 			}else {
-				return "no";
+				obj.addProperty("result", "invalidate");
 			}
-
+			return obj.toString();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

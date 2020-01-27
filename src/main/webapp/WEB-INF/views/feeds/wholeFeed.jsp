@@ -14,6 +14,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="/resources/css/nav.css"> 
+<link rel="stylesheet" href="/resources/css/alr.css">
+<link rel="stylesheet" href="/resources/css/msg.css">
+<link rel="stylesheet" href="/resources/css/test.css">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 <style>
@@ -35,24 +38,25 @@
 
 }
 .row{
-	min-width:460px;
-	margin-bottom:15px;
+	width:100%;
+	height:100%;
 }
-.title{
-   display:inline-block;
-   position:absolute;
-   top:50%;
-   left:50%;
-   transform: translate(-50%, -50%);
-}
+
+/* .title{ */
+/*    display:inline-block; */
+/*    position:absolute; */
+/*    top:50%; */
+/*    left:50%; */
+/*    transform: translate(-50%, -50%); */
+/* } */
+/* .title{ */
+/* 	display:inline-block; */
+/* 	position:absolute;top:50%;left:50%;transform: translate(-50%, -50%); */
+/* 	 word-break: break-all; */
+/*     white-space: normal; */
+/* } */
 .parent([.title]){
 	border:1px solid red;
-}
-.title{
-	display:inline-block;
-	position:absolute;top:50%;left:50%;transform: translate(-50%, -50%);
-	 word-break: break-all;
-    white-space: normal;
 }
 .btn-primary{
    width:100%;
@@ -65,8 +69,8 @@
    color:black;
 }
 #likeBtn, #bookmarkBtn{
-   width:20px;
-   height:20px;
+   width:50px;
+   height:50px;
 }
 #carouselExampleIndicators{
    width:100%;
@@ -112,10 +116,21 @@
 	text-decoration:none;
 }
 
-.cover {
-	border: 1px solid black;
-	width: 100%;
-	height: 100%;
+.cover{
+	width:100%;
+	height:100%;
+}
+div.cover {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    word-break: break-all;
+    max-width: 150px;
+    max-height: 150px;
+    overflow-y: hidden;
+    width:100%;
+    height:100%;
 }
 
 .feed{
@@ -126,8 +141,8 @@
 	width:25vw;
 }
 #likeBtn, #bookmarkBtn{
-   width:20px;
-   height:20px;
+   width:50px;
+   height:50px;
 }
 
 .container-fluid {
@@ -138,20 +153,19 @@
 }
 #carouselExampleIndicators{
    width:100%;
+   height:100%;
 }
 
 .carousel-item{
-	margin:auto;
-	width:200px;
+	margin:auto;	
+	width:100%;
+	height:100%;
 	text-align:center;
 }
 .carousel-inner{
-	width:500px;
+	width:100%;
+	height:100%;
 	margin:auto;
-}
-.carousel-item{
-	width:200px;
-	heigth:200px;
 }
 
 .wrapper {
@@ -335,10 +349,6 @@
 	border:none;
 	background-color:white;
 }
-.cover {
-	width: 100%;
-	height: 100%;
-}
 .btn-primary1{
 	width:100%;
 	height:100%;
@@ -356,11 +366,12 @@
     height: 650px;
 }
 .carousel-item>img{
-	width:500px;
-	height:500px;
+	width:100%;
+	height:100%;
 }
 .reply {
-        height: 90%;
+		border:1px solid black;
+        height: 100%;
         padding: 16px;
         overflow-y: scroll;
 }
@@ -371,8 +382,15 @@
 
 .writerProfile,.userProfile,.myProfile{	
     margin-right: 16px;
+    line-height: 50px;
 }
-.writerProfileImg,.userProfileImg{
+.writerProfileImg{
+	width:80px;
+	height:80px;
+	border-radius: 160px;
+    border: 1px solid black;
+}
+.userProfileImg{
 	width:40px;
 	height:40px;
 	border-radius: 160px;
@@ -385,19 +403,20 @@
     border: 1px solid black;
 }
 .modal-btns{
-	height:50px;
-	line-height:50px;
-    padding: 0px 16px;
+	position:absolute;
+    padding: 16px 16px;
+    right:0px;
 }
 .writerInfo,.userInfo{
     margin-left: -12px;
     margin-right: 0;
     padding: 12px 16px 0px 16px;
     display:flex;
+    flex-direction: column;
 }
 .childReply{
     margin-right: 0;
-    padding: 12px 16px 0px 60px;
+    padding: 0px 16px 0px 48px;
     display: flex;
     flex-wrap: wrap;
 }
@@ -405,14 +424,11 @@
 	font-weight: 600;
     padding-left: 5px;
     margin: 0px 5px 0px -5px;
+    line-height: 50px;
 }
 .userReply,.text>p{
-    border-radius: 16px;
-    border: 1px solid rgb(239, 239, 239);
-    width: 100%;
     line-height: 50px;
     width: 400px;
-    margin: 0px 20px;
     word-break: break-all;	
     display: inherit;
 }
@@ -425,42 +441,209 @@
 }
 .writeReplyBox{
 	display:flex;
-    width: 100%;
+    width: 50%;
+    height:50%;
 }
 .modal-title{
 	line-height: 50px;
 }
 #writeReply{	
+    line-height:80px;
+    margin: 0px 20px;
+    min-height: 50px;
+    font-size: 16px;
+    width: 100%;
     border-radius: 16px;
     border: 1px solid rgb(239, 239, 239);
-    width: 100%;
-    line-height:50px;
-    margin: 0px 20px;
+    padding: 0px 10px;
+    
+}
+.replyBtns{
+	margin:20px 20px;
 }
 .replyContents{	
     background: transparent;
     border: 0px;
-    display: inline-block;
+    min-height: 50px;
+    font-size: 16px;
+    margin: 0px 12px;
+    width: 100%;
+    border-radius: 16px;
+    border: 1px solid rgb(239, 239, 239);
+    padding: 0px 10px;
+}
+.modal-body1{
+	width:55%;
+    height: 100%;
+    position: relative;
+    border:1px solid black;
+}
+.title{
+	width:45%;
+}
+
+.childContentsBox{
+    width: 350px;
+}
+.childReplyContents{
+    border-radius: 16px;
+    border: 1px solid rgb(239, 239, 239);
+	background: transparent;
     min-height: 50px;
     font-size: 16px;
     outline: 0px;
     overflow-x: hidden;
     resize: none;
+    width:100%;
+    height:100%;
     white-space: pre-wrap;
-    width: 100%;
     word-break: break-all;
-    padding: 12px;
+    padding: 10px;
+    
 }
-.modal-body1{
-	width:55%;
-    height: 100%;
+.profileDiv{	
+    display: flex;
+}
+.detailView_header{
+    display: flex;
+    padding: 16px 20px;
+}
+.detailView_footer{
+    display: flex;
+    padding: 1rem 1rem;
+	
 }
 .modal-title{
-	width:45%;
+	margin:auto;
+}
+.modal-content{	
+    border-radius: 30px;
+}
+.replyBtns>button, .replyBtn{
+	background: 0 0;
+    border: 0;
+    cursor: pointer;
+    display: inline;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 14px;
+    margin-right: 8px;
+    padding: 0;
+    color: #999;
+    min-width: 30px;
+    border: 1px solid #999;
+    padding: 5px 7px;
+    border-radius: 8px;
 }
 .media{
 	width:100%;
+	height:100%;
+	margin:0px;
 }
+/* .reply { */
+/*         height: 90%; */
+/*         padding: 16px; */
+/*         overflow-y: scroll; */
+/* } */
+
+/* .reply::-webkit-scrollbar { */
+/*         width: 0 !important */
+/* } */
+
+/* .writerProfile,.userProfile,.myProfile{	 */
+/*     margin-right: 16px; */
+/* } */
+/* .writerProfileImg,.userProfileImg{ */
+/* 	width:40px; */
+/* 	height:40px; */
+/* 	border-radius: 160px; */
+/*     border: 1px solid black; */
+/* } */
+/* .childProfileImg{ */
+/* 	width:24px; */
+/* 	height:24px; */
+/* 	border-radius: 160px; */
+/*     border: 1px solid black; */
+/* } */
+/* .modal-btns{ */
+/* 	height:50px; */
+/* 	line-height:50px; */
+/*     padding: 0px 16px; */
+/* } */
+/* .writerInfo,.userInfo{ */
+/*     margin-left: -12px; */
+/*     margin-right: 0; */
+/*     padding: 12px 16px 0px 16px; */
+/*     display:flex; */
+/* } */
+/* .childReply{ */
+/*     margin-right: 0; */
+/*     padding: 12px 16px 0px 60px; */
+/*     display: flex; */
+/*     flex-wrap: wrap; */
+/* } */
+/* .userProfileID,.writerProfileID{ */
+/* 	font-weight: 600; */
+/*     padding-left: 5px; */
+/*     margin: 0px 5px 0px -5px; */
+/* } */
+/* .userReply,.text>p{ */
+/*     border-radius: 16px; */
+/*     border: 1px solid rgb(239, 239, 239); */
+/*     width: 100%; */
+/*     line-height: 50px; */
+/*     width: 400px; */
+/*     margin: 0px 20px; */
+/*     word-break: break-all;	 */
+/*     display: inherit; */
+/* } */
+/* } */
+/* .childContentsBox{ */
+/* 	width:322px; */
+/*     border: 1px solid rgb(239, 239, 239); */
+/*     border-radius: 16px; */
+/*     transition: all 1000ms ease 0s; */
+/* } */
+/* .writeReplyBox{ */
+/* 	display:flex; */
+/*     width: 100%; */
+/* } */
+/* .modal-title{ */
+/* 	line-height: 50px; */
+/* } */
+/* #writeReply{	 */
+/*     border-radius: 16px; */
+/*     border: 1px solid rgb(239, 239, 239); */
+/*     width: 100%; */
+/*     line-height:50px; */
+/*     margin: 0px 20px; */
+/* } */
+/* .replyContents{	 */
+/*     background: transparent; */
+/*     border: 0px; */
+/*     display: inline-block; */
+/*     min-height: 50px; */
+/*     font-size: 16px; */
+/*     outline: 0px; */
+/*     overflow-x: hidden; */
+/*     resize: none; */
+/*     white-space: pre-wrap; */
+/*     width: 100%; */
+/*     word-break: break-all; */
+/*     padding: 12px; */
+/* } */
+/* .modal-body1{ */
+/* 	width:55%; */
+/*     height: 100%; */
+/* } */
+/* .modal-title{ */
+/* 	width:45%; */
+/* } */
+/* .media{ */
+/* 	width:100%; */
+/* 	height:100%; */
+/* 	margin:0px; */
+/* } */
 /* All Device */
 /* 모든 해상도를 위한 공통 코드를 작성한다. 모든 해상도에서 이 코드가 실행됨. */
 
@@ -578,6 +761,8 @@ function getList(page){
 </head>
 <body>
  <jsp:include page="/resources/jsp/nav.jsp" />
+ <jsp:include page="/resources/jsp/alr.jsp"/>
+<jsp:include page="/resources/jsp/msg.jsp"/>
 	<div id="wrapper">
 		<div id="search">
 			<br><br>
@@ -621,14 +806,11 @@ function getList(page){
 							<c:forEach items="${list }" var="feed" varStatus="status">
 								<c:if test="${status.count mod 3==1}">
 									<div class="row" >
-								</c:if>
-								
+								</c:if>								
 								<div class="col-4 feed">
 									<a class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" href="#" data-id="${feed.feed_seq }" style="min-height: 150px;">${cover[status.count-1] }</a>
-								</div>
-								
+								</div>								
 								<c:if test="${status.count mod 3==0}">
-
 									</div>
 								</c:if>
 							</c:forEach>
@@ -651,215 +833,30 @@ function getList(page){
 	          <span aria-hidden="true">&times;</span>
 	        </button>
 	      </div>
-	      <div class="modal-main">			
+		<div class="modal-main">			
 	      		<div class="modal-body1">
-			
 	      		</div>
-            <div class="modal-title">
+            <div class="title">
                 <div class="reply">
                		<div class="writerInfo">
-                    		<span class="writerProfile"></span>
+                    		<span class="writerProfile"><img class="userProfileImg" src="${loginInfo.profile_img }" alt=""></span>
                      		<span class="writerProfileID">asdsadas</span>
-                    </div>
-                    <div class="userInfo">
-                    		<span class="userProfile"><img class="userProfileImg" src="${pageContext.request.contextPath }/resources/images/dog.jpg" alt=""></span>
-                     		<span class="userProfileID">asdsadas</span>
-                    		<span class="userReply"></span>
-                    </div>   
-                     <div class="userInfo">
-                    		<span class="userProfile"><img class="userProfileImg" src="${pageContext.request.contextPath }/resources/images/dog.jpg" alt=""></span>
-                     		<span class="userProfileID">asdsadas</span>
-                    		<span class="userReply"></span>
-                    </div>          
+                    </div>                     
                 </div>
-                <div class="modal-btns" style="border:solid 1px red;"></div>
             </div>
-        </div>
-	      <div class="modal-header">
-				<div class="writeReplyBox">					
-	         		<span class="myProfile"><img class="userProfileImg" src="${loginInfo.profile_img }" alt=""></span>
-	       			 <h5 class="modal-title" id="exampleModalLabel">${loginInfo.nickname }</h5>
-	       			 <div id="writeReply" contenteditable="true"></div>
-	       			 <button type="button" id="replyBtn" onclick="replyBtnOnclick('${loginInfo.email }')">등록</button>
-				</div>
+        </div>        
+	      <div class="detailView_footer">
+	      	<div class="footer-btns" style="display:flex;width:50%;height:10%;"></div>
+	      	<div class="writeReplyBox">					
+	         	<span class="myProfile"><img class="userProfileImg" src="${loginInfo.profile_img }" alt=""></span>
+	       		<h5 class="modal-title" id="exampleModalLabel">${loginInfo.nickname }</h5>
+	       		<div id="writeReply" contenteditable="true"></div>
+	       		<button type="button" class="replyBtn" onclick="replyBtnOnclick('${loginInfo.email}');">등록</button>
+			</div>
 	      </div>
 	    </div>
 	  </div>
 	  </div>
-	<script>
-	$('#exampleModal').on('shown.bs.modal', function (event) {
-		var seq= $(event.relatedTarget).data('id');
-		console.log("seq : "+seq);
-		//피드시퀀스값
-		var feedSeqDiv = $("<div class=\"feedSeqDiv\" style=\"visibility:hidden\">"+seq+"</div>");
-		$(".writeReplyBox").append(feedSeqDiv);
-		$.ajax({
-			type:"post",
-			url:"/feed/detailView",
-			data:{
-				feed_seqS:seq
-			},
-			dataType:"json"
-		}).done(function(data){
-			console.log(data);
-			var writerProfile = data.writerProfile;
-			var likeCheck = data.likeCheck;
-			var bookmarkCheck = data.bookmarkCheck;
-			var mediaList = JSON.parse(data.media);
-			var dto = JSON.parse(data.dto);
-			console.log(mediaList.length);
-			//디테일뷰 미디어
-			if(mediaList.length>1){ //미디어가 존재하므로 캐러셀 만들어줌
-				console.log("캐러셀 시작");
-				var mediaRow = $("<div class='row media'></div>");
-				var cei = $("<div id='carouselExampleIndicators' class='carousel slide' data-interval='false'></div>");
-				var ol = $("<ol class='carousel-indicators'></ol>");
-				console.log(ol.html());
-				for(var i=0; i<mediaList.length; i++){
-					console.log(i);
-					if(i==0){
-						ol.append("<li data-target='#carouselExampleIndicators' data-slide-to='0' class='active'></li>");
-						console.log("i는 0");
-						console.log(ol.html());
-					}else{
-						ol.append("<li data-targer='#carouselExampleIndicators' data-slide-to='"+i+"'></li>");
-						console.log("i는 "+i);
-						console.log(ol.html());
-					}
-				}
-				cei.append(ol);
-				
-				var cInner = $("<div class='carousel-inner'></div>");
-				for(var i=0; i<mediaList.length; i++){
-					if(i==0){
-						var cItem = $("<div class='carousel-item active'>"+mediaList[i]+"</div>");
-					}else{
-						var cItem = $("<div class='carousel-item'>"+mediaList[i]+"</div>");
-					}
-					cInner.append(cItem);
-				}
-				var prevA = $("<a class='carousel-control-prev' href='#carouselExampleIndicators' role='button' data-slide='prev'></a>");
-				prevA.append("<span class='carousel-control-prev-icon' aria-hidden='true'></span>");
-				prevA.append("<span class='sr-only'>Previous</span>");
-				var nextA = $("<a class='carousel-control-next' href='#carouselExampleIndicators' role='button' data-slide='next'></a>");
-				nextA.append("<span class='carousel-control-next-icon' aria-hidden='true'></span>");
-				nextA.append("<span class='sr-only'>Next</span>");
-				cInner.append(prevA);
-				cInner.append(nextA);
-				cei.append(cInner);
-				mediaRow.append(cei);
-			}else{
-				var mediaRow = $("<div class='media' style='height:100%;size:20px;text-align:center;vertical-align:center'></div>");
-				mediaRow.append(mediaList[0]);
-			}
-			$(".modal-body1").html(mediaRow);
-			
-			//디테일뷰 글
-			var textRow = $("<span class='row text'></span>");
-			textRow.html(dto.contents);
-			$(".writerInfo").html(textRow);
-			
-			
-			//디테일뷰 좋아요, 스크랩, 수정, 삭제 버튼
-			//좋아요버튼
-			if(likeCheck==0){
-				var likeA = $("<a href='#' id='like' class='"+dto.feed_seq+"'></a>");
-				var likeS = $("<span id='likeImg'></span>");
-				var likeI = $("<img id='likeBtn' class='likeBefore' src='${pageContext.request.contextPath}/resources/images/likeBefore.png'>");
-			}else{
-				var likeA = $("<a href='#' id='like' class='"+dto.feed_seq+"'></a>");
-				var likeS = $("<span id='likeImg'></span>");
-				var likeI = $("<img id='likeBtn' class='likeAfter' src='${pageContext.request.contextPath}/resources/images/likeAfter.png'>");
-			}
-			likeA.append(likeS);
-			likeS.append(likeI); 
-		
-			//스크랩버튼
-			if(bookmarkCheck==0){
-				var bookmarkA = $("<a href='#' id='bookmark' class='"+dto.feed_seq+"'></a>");
-				var bookmarkS = $("<span id='bookmarkImg'></span>");
-				var bookmarkI = $("<img id='bookmarkBtn' class='bookmarkBefore' src='${pageContext.request.contextPath}/resources/images/bookmarkBefore.png'>");
-			}else{
-				var bookmarkA = $("<a href='#' id='bookmark' class='"+dto.feed_seq+"'></a>");
-				var bookmarkS = $("<span id='bookmarkImg'></span>");
-				var bookmarkI = $("<img id='bookmarkBtn' class='bookmarkAfter' src='${pageContext.request.contextPath}/resources/images/bookmarkAfter.png'>");
-			}
-			bookmarkA.append(bookmarkS);
-			bookmarkS.append(bookmarkI); 
-			
-			var modifyA = $("<a href='modifyFeedView?feed_seq="+dto.feed_seq+"'>수정</a>");
-			var deleteA = $("<a href='deleteProc?feed_seq="+dto.feed_seq+"'>삭제</a>");
-			
-			var sessionEmail = "${loginInfo.email}";
-			var writer = dto.email;
-			console.log(sessionEmail);
-			console.log(writer);
-			
-			if(sessionEmail==writer){ //좋아요스크랩은 없애고 수정삭제만 있음
-				console.log("작성자 본인입니다.");
-				$(".modal-btns").html("");
-				$(".modal-btns").append(modifyA);
-				$(".modal-btns").append(deleteA);
-			}else{
-				console.log("작성자가 아닙니다.")
-				$(".modal-btns").html("");
-				$(".modal-btns").append(likeA);
-				$(".modal-btns").append(bookmarkA);
-			}
-		
-			
-			$(".writerProfile").html("<img src="+writerProfile+" class='writerProfileImg'>");
-			
-		}).fail(function(a,b,c){
-			console.log("실패 : "+b);s
-		})
-		$('#myInput').trigger('focus');
-		
-	})
-			$(document).on("click", "#like", function(){
-			var seq = $(this).attr("class");
-			var likeCheck = $("#likeBtn").attr("class");
-			if(likeCheck=="likeBefore"){ //아직 좋아요를 안눌러있는 상태에서 좋아요했을때
-				$.ajax({
-					type : "POST",
-					url : "/feed/insertLike",
-					data : {feed_seq : seq}
-				}).done(function(){
-					$("#likeImg").html("<img class=\"likeAfter\" id=\"likeBtn\" src=\"${pageContext.request.contextPath }/resources/images/likeAfter.png\">");
-				})
-			}else{
-				$.ajax({
-					type : "POST",
-					url : "/feed/deleteLike",
-					data : {feed_seq : seq}
-				}).done(function(){
-					$("#likeImg").html("<img class=\"likeBefore\" id=\"likeBtn\" src=\"${pageContext.request.contextPath }/resources/images/likeBefore.png\">");
-				})
-			}
-		})
-		
-		$(document).on("click","#bookmark", function(){
-			var seq = $(this).attr("class");
-			var bookmarkCheck = $("#bookmarkBtn").attr("class");
-			if(bookmarkCheck=="bookmarkBefore"){ //아직 좋아요를 안눌러있는 상태에서 좋아요했을때
-				$.ajax({
-					type : "POST",
-					url : "/feed/insertBookmark",
-					data : {feed_seq : seq}
-				}).done(function(){
-					$("#bookmarkImg").html("<img class=\"bookmarkAfter\" id=\"bookmarkBtn\" src=\"${pageContext.request.contextPath }/resources/images/bookmarkAfter.png\">");
-				})
-			}else{
-				$.ajax({
-					type : "POST",
-					url : "/feed/deleteBookmark",
-					data : {feed_seq : seq}
-				}).done(function(){
-					$("#bookmarkImg").html("<img class=\"bookmarkBefore\" id=\"bookmarkBtn\" src=\"${pageContext.request.contextPath }/resources/images/bookmarkBefore.png\">");
-				})
-			}
-				
-		})
-	</script>
+   	<jsp:include page="/resources/script/myFeedScript.jsp" />
 </body>
 </html>

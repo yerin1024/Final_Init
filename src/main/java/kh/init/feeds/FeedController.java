@@ -35,6 +35,7 @@ public class FeedController {
 	@RequestMapping("/myFeed")
 	public String myFeed(String email, Model model) {
 		System.out.println("myFeed 도착");
+		System.out.println("email : " + email);
 		int ipage = 1;
 		List<FeedDTO> list = null;
 		List<String> cover = new ArrayList<>();
@@ -43,12 +44,16 @@ public class FeedController {
 			if(!(email.equalsIgnoreCase(myEmail))) {
 				System.out.println(email);
 				System.out.println(myEmail);
+				list = (List<FeedDTO>)service.getMyFeedByFriend(ipage, email, myEmail).get("list");
+				cover = (List<String>)service.getMyFeedByFriend(ipage, email, myEmail).get("cover");
             int frResult = fservice.friendIsOkService(email, myEmail);
             model.addAttribute("frResult", frResult);
+            }else {
+            	list = (List<FeedDTO>)service.getMyFeed(ipage, email).get("list");
+    			cover = (List<String>)service.getMyFeed(ipage, email).get("cover");
             }
 			MemberDTO dto = mservice.getMyPageService(email);
-			list = (List<FeedDTO>)service.getMyFeed(ipage, email).get("list");
-			cover = (List<String>)service.getMyFeed(ipage, email).get("cover");
+			
 			System.out.println("dto 이메일값 확인 : "+dto.getEmail()+dto.getName());
 			model.addAttribute("mvo", dto);		
 			model.addAttribute("list", list);
@@ -123,11 +128,11 @@ public class FeedController {
 	
 	@RequestMapping(value = "/myScrapFeed", produces = "application/json; charset=UTF-8")
 	@ResponseBody
-	public String myScrapFeed(String page) {
+	public String myScrapFeed(String email) {
 		System.out.println("myScrapFeed 도착");
-		int ipage = Integer.parseInt(page);
+		int ipage = 1;
 		System.out.println("ipage :  "+ipage);
-		String email = ((MemberDTO)session.getAttribute("loginInfo")).getEmail();
+		
 		System.out.println("로그인 세션 값 확인 : " + email);
 		//로그인 세션 테스트 코드 끝
 
@@ -396,7 +401,7 @@ public class FeedController {
 			System.out.println("Email : "+dto.getEmail());
 			System.out.println("memberDTO : "+mservice.getMemberDTO(dto.getEmail()));
 			obj.addProperty("writerProfile", g.toJson((mservice.getMemberDTO(dto.getEmail())).getProfile_img()));
-			obj.addProperty("likeCheck", g.toJson(likeCheck));
+			obj.addProperty("writer", g.toJson((mservice.getMemberDTO(dto.getEmail())).getNickname()));
 			obj.addProperty("likeCheck", g.toJson(likeCheck));
 			obj.addProperty("bookmarkCheck", g.toJson(bookmarkCheck));
 			obj.addProperty("replyList",  g.toJson(replyList));
@@ -406,6 +411,7 @@ public class FeedController {
 		}catch(Exception e) {
 			e.printStackTrace();
 		}			
+		
 		return obj.toString();
 
 	}
@@ -657,10 +663,10 @@ public class FeedController {
 		try {
 			if(dto.getDepth() == 0) {
 				System.out.println("댓글");
-				result = service.registerReply(dto);			
+				result = service.registerReply(dto);
 			}else{
 				System.out.println("답글");
-				result = service.registerReply(dto);	
+				result = service.registerReply(dto);
 			}
 		}catch(Exception e) {
 			e.printStackTrace();
