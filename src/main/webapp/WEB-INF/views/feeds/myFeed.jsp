@@ -20,11 +20,14 @@
 <script
 	src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 <style>
-	body{
-		background-color:white;
-	}
+/* 	폰트 */
+@import url('https://fonts.googleapis.com/css?family=Noto+Serif+KR|Orbitron&display=swap');
 	
-	span.cover { 
+	body{
+		background-color:#171C28;
+    	font-family: Orbitron;
+	}
+	div.cover { 
     position: absolute;
     top: 50%;
     left: 50%;
@@ -33,6 +36,7 @@
     max-width: 150px;
     max-height: 150px;
     overflow-y: hidden;
+    color:black;
 	}
 	img.cover{	
     width: 100%;
@@ -49,37 +53,36 @@
 	margin: auto;
 	padding: 60px 20px 0;
 }
-
+.media>p{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    word-break: break-all;
+    max-width: 150px;
+    max-height: 150px;
+    overflow-y: hidden;
+    font-size: 50px;
+}
 #search {
    margin: auto;
    text-align: center;
 }
 
 #contents {
-/* 	width:60vw; */
 	margin:0px;
-/*     margin: auto; */
     text-align: center;
 
 }
 .row{
+	min-width:460px;
+    margin-bottom: 30px;
+}
+.media{	
 	width:100%;
 	height:100%;
-	margin-bottom:15px;
+    margin: 0px;
 }
-/* .title{ */
-/*    display:inline-block; */
-/*    position:absolute; */
-/*    top:50%; */
-/*    left:50%; */
-/*    transform: translate(-50%, -50%); */
-/* } */
-/* .title{ */
-/* 	display:inline-block; */
-/* 	position:absolute;top:50%;left:50%;transform: translate(-50%, -50%); */
-/* 	 word-break: break-all; */
-/*     white-space: normal; */
-/* } */
 .parent([.title]){
 	border:1px solid red;
 }
@@ -88,10 +91,10 @@
    height:100%;
    min-width:150px;
 	min-height:150px;
-   border-color:white;
    background-color:white;
    padding:0px;
    color:black;
+   border: 1px solid black;
 }
 #likeBtn, #bookmarkBtn{
    width:50px;
@@ -178,17 +181,9 @@
 
 .wrapper {
 	max-width: 700px;
-	margin: auto;
-	height: 1200px;
+    margin: 30px auto 50px;
 }
 
-.btn-primary:hover, .btn-primary:hover{
-   background-color:white;
-}
-.btn-primary:not(:disabled):not(.disabled).active, .btn-primary:not(:disabled):not(.disabled):active, .show>.btn-primary.dropdown-toggle{
-   border:none;
-   background-color:white;
-}
 
 /* 프로필 */
 .profile {
@@ -339,34 +334,15 @@
 }
 
 .profileMessage {
-	text-align: center;
+    max-width: 600px;
+    margin: auto;
+    font-size: 15px;
+	font-family: 'Noto Serif KR', serif;
 }
 
-.btn-primary1:hover, .btn-primary1:hover{
-	background-color:white;
-}
-.btn-primary1:not(:disabled):not(.disabled).active, .btn-primary1:not(:disabled):not(.disabled):active, .show>.btn-primary1.dropdown-toggle{
-	border:none;
-	background-color:white;
-}
-.btn-primary{
-    width: 100%;
-    height: 100%;
-    min-width: 150px;
-    min-height: 150px;
-    border-color: white;
-    background-color: white;
-    padding: 0px;
-    color: black;
-}
 .modal-dialog {
     max-width: 1200px;
     margin: 1.75rem auto;
-}
-
-.row{
-    min-width: 460px;
-    margin-bottom: 15px;
 }
 .modal-main{
     display: flex;
@@ -413,7 +389,7 @@
 	position:absolute;
     padding: 16px 16px;
 }
-.writerInfo,.userInfo{
+.writerInfo,.parentReply{
     margin-left: -12px;
     margin-right: 0;
     padding: 12px 16px 0px 16px;
@@ -541,6 +517,84 @@
 .myProfile{	
     margin: 5px 10px;
 }
+
+/* 메뉴바 */
+.menubar{
+    max-width: 600px;;
+    min-width: 464px;
+    margin: auto;
+}
+.menubar>button{
+	border:none; 
+	background-color:transparent;
+    font-size: 20px;
+    color:white;
+    width: 32.7%;
+}
+
+/* 버튼호버 */
+.profileButton:hover, .profileImageBox:hover{
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+          justify-content: center;
+  --borderWidth: 3px;
+  position: relative;
+}
+.profileButton:after, .profileImageBox:after {  
+  content: '';
+  position: absolute;
+  top: calc(-1 * var(--borderWidth));
+  left: calc(-1 * var(--borderWidth));
+  height: calc(100% + var(--borderWidth) * 2);
+  width: calc(100% + var(--borderWidth) * 2);
+  background: linear-gradient(60deg, #f79533, #f37055, #ef4e7b, #a166ab, #5073b8, #1098ad, #07b39b, #6fba82);
+  z-index: -1;
+  animation: animatedgradient 3s ease alternate infinite;
+  background-size: 300% 300%;
+  border-radius: 160px;
+}
+
+
+@-webkit-keyframes animatedgradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
+
+@keyframes animatedgradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
+.clock {
+	position: absolute; 
+    top: -80px;
+	left: 50%; 	
+    color: #17D4FE;
+    font-size: 20px;
+    font-family: Orbitron;
+    letter-spacing: 7px;
+    transition-duration: 0.5s;
+    transform: translateX(-50%);
+}
+/* 호버 */
 /* All Device */
 /* 모든 해상도를 위한 공통 코드를 작성한다. 모든 해상도에서 이 코드가 실행됨. */
 
@@ -551,16 +605,27 @@
 @media all and (min-width:768px) {
 	/*     사용자 해상도가 768px 이상일 때 이 코드가 실행됨. 테블릿과 데스크톱의 공통 코드를 작성한다. */
 	body {
-		background-color: purple;
+		background-color: #171C28;
 	}
 }
 
 @media all and (max-width:768px) {
 	/*     사용자 해상도가 768px 이하일 때 이 코드가 실행됨. 테블릿과 데스크톱의 공통 코드를 작성한다. */
-	.section {
-		height: 150px;
-		margin: 0px;
-		padding: 0px;
+	.profileButton {
+    	width: 70px;
+   		height: 70px;
+	}
+/* 	.row{ */
+/* 		margin:0px; */
+/* 	} */
+	.container-fluid {
+    	padding:0px;
+    }
+/*     .feed{ */
+/*     	padding:0px; */
+/*     } */
+    .profileMessage {
+    	max-width: 400px;
 	}
 }
 /* Tablet Device */
@@ -584,7 +649,7 @@
 @media all and (min-width:1025px) {
 	/*     사용자 해상도가 1025px 이상일 때 이 코드가 실행됨. 1025px 이상의 랩탑 또는 데스크톱에 대응하는 코드를 작성한다. */
 	body {
-		background-color: pink;
+		background-color: #171C28;
 	}
 }
 </style>
@@ -624,7 +689,7 @@
 			              console.log(i);
 			              if((i+1)%3==1){
 			                 console.log(i+"는 1");
-			                 data = "<div class='row' style='margin:0px'>" +data;
+			                 data = "<div class='row'>" +data;
 			              }
 			              if((i+1)%3==0){
 			                 console.log(i+"는0");
@@ -676,7 +741,7 @@
 			              console.log(i);
 			              if((i+1)%3==1){
 			                 console.log(i+"는 1");
-			                 data = "<div class='row' style='margin:0px'>" +data;
+			                 data = "<div class='row'>" +data;
 			              }
 			              if((i+1)%3==0){
 			                 console.log(i+"는0");
@@ -855,6 +920,7 @@
     <jsp:include page="/resources/jsp/alr.jsp"/>
 	<jsp:include page="/resources/jsp/msg.jsp"/>
 	<div class="container-fluid">
+		<div id="MyClockDisplay" class="clock" onload="showTime()"></div>
 		<div class="profile">
 			<c:choose>
 				<c:when test="${loginInfo.email ne mvo.email}">
@@ -926,16 +992,11 @@
 
 			</c:choose>
 		</div>
-
-		<div class="menubar" style="height:200px;">
+		<div class="menubar">
 		<button type="button" id="personalFeed">Personal feed</button>
 		<button type="button" id="scrapFeed">scrap feed</button>
-
-		
-		<button type="button" id="registerFeed">게시물 등록</button>
-	
-		</div>		
-         </div>
+		<button type="button" id="registerFeed">게시물 등록</button>	
+		</div>			
          <div class="wrapper">			
 			<div id="myFeed">
          <c:choose>
@@ -958,7 +1019,8 @@
                   </div>
             </c:otherwise>
          </c:choose>
-          </div>
+          </div>	
+         </div>
 	<!-- 친구요청 모달 영역 -->
 	<div id="modalBox" class="modal fade" id="myModal"
 		role="dialog"  tabindex="-1" aria-labelledby="myModalLabel"
@@ -1492,7 +1554,42 @@
             
 
         })
-		
+	
+    $(".profileImageBox").mouseenter(function(){
+		$("#MyClockDisplay").css("top","0px");
+    });
+     $(".profileImageBox").mouseleave(function(){ 
+ 		$("#MyClockDisplay").css("top","-80px");
+    }); 
+	function showTime(){
+	    var date = new Date();
+	    var h = date.getHours(); // 0 - 23
+	    var m = date.getMinutes(); // 0 - 59
+	    var s = date.getSeconds(); // 0 - 59
+	    var session = "AM";
+	    
+	    if(h == 0){
+	        h = 12;
+	    }
+	    
+	    if(h > 12){
+	        h = h - 12;
+	        session = "PM";
+	    }
+	    
+	    h = (h < 10) ? "0" + h : h;
+	    m = (m < 10) ? "0" + m : m;
+	    s = (s < 10) ? "0" + s : s;
+	    
+	    var time = h + ":" + m + ":" + s + " " + session;
+	    document.getElementById("MyClockDisplay").innerText = time;
+	    document.getElementById("MyClockDisplay").textContent = time;
+	    
+	    setTimeout(showTime, 1000);
+	    
+	}
+
+	showTime();
 		</script>
    	<jsp:include page="/resources/script/myFeedScript.jsp" />
 </body>
