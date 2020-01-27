@@ -285,8 +285,7 @@ html, body {
 							var mediaList = JSON.parse(data.mediaList);
 							var replyList = JSON.parse(data.replyList);
 							var likeCheckList = JSON.parse(data.likeCheckList);
-							var bookmarkCheckList = JSON
-									.parse(data.bookmarkCheckList);
+							var bookmarkCheckList = JSON.parse(data.bookmarkCheckList);
 							var profile_imgList = JSON.parse(data.profile_imgList);
 							var declareCheckList = JSON.parse(data.declareCheckList);
 							for (var i = 0; i < list.length; i++) {
@@ -298,6 +297,7 @@ html, body {
 								 var nick = $("<div class='row profileNickname'></div>");
 								 nick.append(list[i].nickname);
 								 profile.append(nick);
+								 if(list[i].email != "${loginInfo.email}"){
 								 var feedDeclaration = $("<div class='row profilefeedDeclaration'></div>");
 								 feedDeclaration.attr("seq",list[i].feed_seq);
 								 var afterDec = $("<img class='sirenImg' src='${pageContext.request.contextPath}/resources/images/siren2.png'>")
@@ -317,15 +317,16 @@ html, body {
 									 feedDeclaration.append(beforeDec);	 
 									 profile.append(feedDeclaration); 
 								 }
+								 }else{ }
 								feed.append(profile);
+								//ajax media가 있으면 carousel 없으면 바로 contents
+								if(mediaList[i].length != 0){
 								var media = $("<div class='row media'></div>");
-
 								var CEI = $("<div class='carousel slide' data-interval='false'></div>");
 								CEI.attr("id",'carouselExampleIndicators'+list[i].feed_seq);
-								
-								if(mediaList[i].length>1){
+								//ajax 사진이 두 장 이상일 경우 indicators와 control O 
+								//if(mediaList[i].length >1){
 								var olCEI = $("<ol class='carousel-indicators'></ol>");
-
 								for (var m = 0; m < mediaList[i].length; m++) {
 									var liCEI = $("<li></li>");
 									liCEI.attr("data-target",'#carouselExampleIndicators'+list[i].feed_seq);
@@ -338,12 +339,9 @@ html, body {
 									olCEI.append(liCEI);
 								}
 								CEI.append(olCEI);
-								}else{
-									
-								}
-								
-								var ci = $("<div class='carousel-inner'>");
-
+								//}else{}
+								media.append(CEI);
+								var ci = $("<div class='carousel-inner'></div>");
 								for (var m = 0; m < mediaList[i].length; m++) {
 									var divCI = $("<div class='carousel-item'></div>");
 									if (m == 0) {
@@ -354,21 +352,23 @@ html, body {
 									}
 									ci.append(divCI);
 								}
+								//if(mediaList[i].length >1){
 								//ci.append("<a class='carousel-control-prev' role='button' data-slide='prev'>");
-								var a = $("<a class='carousel-control-prev' role='button' data-slide='prev'>");
-								a.attr("href",'#carouselExampleIndicators'+list[i].feed_seq);
-								ci.append(a);
+								var prevC = $("<a class='carousel-control-prev' role='button' data-slide='prev'>");
+								prevC.attr("href",'#carouselExampleIndicators'+list[i].feed_seq);
+								ci.append( prevC);
 								ci.append("<span class='carousel-control-prev-icon' aria-hidden='true'></span> <span class='sr-only'>Previous</span></a>");
 								
 								//ci.append("<a class='carousel-control-next' role='button' data-slide='next'>");
-								var b = $("<a class='carousel-control-next' role='button' data-slide='next'>");
-								b.attr("href",'#carouselExampleIndicators'+list[i].feed_seq);
-								ci.append(b);
+								var nextC = $("<a class='carousel-control-next' role='button' data-slide='next'>");
+								nextC.attr("href",'#carouselExampleIndicators'+list[i].feed_seq);
+								ci.append(nextC);
 								ci.append("<span class='carousel-control-next-icon' aria-hidden='true'></span> <span class='sr-only'>Next</span></a>");
 
 								media.append(ci);
+								//}else{}
 								feed.append(media);
-
+								}else{}
 								var contents = $("<div class='row contents' style='height:100px'></div>");
 								contents.append(list[i].contents);
 
@@ -474,8 +474,7 @@ html, body {
 								</c:choose>
 							</div>
 						</c:when>
-						<c:otherwise>
-						</c:otherwise>
+						<c:otherwise></c:otherwise>
 						</c:choose>	
 						</div>
 					<c:choose>
@@ -529,11 +528,8 @@ html, body {
 							</c:choose>
 						</div>
 					</div>
-					</c:when>
-					
-					<c:when test="${mediaList[status.index].size() == 0}">
-				
-					</c:when>
+					</c:when>	
+					<c:when test="${mediaList[status.index].size() == 0}"></c:when>
 					</c:choose>
 					
 					
