@@ -69,7 +69,7 @@
 	</select>
 	
 	<select id="getMyFeedByFriend" resultType="kh.init.feeds.FeedDTO" parameterType="java.util.Map">
-		select distinct(feed_seq), email, nickname, title, contents, relation, sysdate, hashtag
+		select distinct(feed_seq), email, nickname, title, contents, relation, sysdate, hashtag, rnum
 		from
     		(select p.*, r.fr_id, r.relation as fr_rel, ROW_NUMBER() OVER(ORDER BY p.feed_seq desc) rnum 
     		from tb_feed p left join tb_friend r on p.email = r.my_id
@@ -83,8 +83,10 @@
 	            (r.fr_id not in (select to_id from tb_block where from_id = #{myEmail}) and 
 	            r.fr_id not in (select from_id from tb_block where to_id = #{myEmail})) )
 		where rnum between #{startNum} and #{endNum} order by rnum 
+  
+    
 
-	</select>
+   </select>
 
 	<select id="getMyFeedRnumByFriend" resultType="Integer"
 		parameterType="java.util.Map">

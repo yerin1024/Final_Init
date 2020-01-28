@@ -38,8 +38,8 @@ public class FeedController {
 		System.out.println("email : " + email);
 		int ipage = 1;
 		List<FeedDTO> tmp1 = null;
+		List<String> tmp3 = null;
 		List<FeedDTO> list = new ArrayList<>();
-		
 		List<String> cover = new ArrayList<>();
 		List<MemberDTO> flist = new ArrayList<>();
 		int totalFeedSize =  0;
@@ -49,13 +49,13 @@ public class FeedController {
 				System.out.println(email);
 				System.out.println(myEmail);
 				tmp1 = (List<FeedDTO>)service.getMyFeedByFriend(ipage, email, myEmail).get("list");
-				cover = (List<String>)service.getMyFeedByFriend(ipage, email, myEmail).get("cover");
+				tmp3 = (List<String>)service.getMyFeedByFriend(ipage, email, myEmail).get("cover");
             int frResult = fservice.friendIsOkService(email, myEmail);
             
             model.addAttribute("frResult", frResult);
             }else {
             	tmp1 = (List<FeedDTO>)service.getMyFeed(ipage, email).get("list");
-    			cover = (List<String>)service.getMyFeed(ipage, email).get("cover");
+    			tmp3 = (List<String>)service.getMyFeed(ipage, email).get("cover");
     			flist = fservice.getFriendsListService(myEmail);
     			totalFeedSize = service.getMyFeedCountSVC(myEmail);
             }
@@ -69,6 +69,9 @@ public class FeedController {
 			
 			for(int i=tmp1.size()-1; i>-1; i--) {
 				list.add(tmp1.get(i));
+			}
+			for(int i=tmp3.size()-1; i>-1; i--) {
+				cover.add(tmp3.get(i));
 			}
 			model.addAttribute("list", list);
 			model.addAttribute("cover", cover);
@@ -85,6 +88,8 @@ public class FeedController {
 		int ipage = Integer.parseInt(page);
 		System.out.println("ipage :  "+ipage);
 		List<FeedDTO> tmp1 = null;
+		List<Integer> tmp2 = null;
+		List<String> tmp3 = null;
 		List<FeedDTO> list = new ArrayList<>();
 		List<Integer> rnum = new ArrayList<>();
 		List<String> cover = new ArrayList<>();
@@ -97,17 +102,23 @@ public class FeedController {
 			
 			if(!(email.equalsIgnoreCase(myEmail))) {
 				tmp1 = (List<FeedDTO>)service.getMyFeedByFriend(ipage, email, myEmail).get("list");
-				rnum = (List<Integer>)service.getMyFeedByFriend(ipage, email, myEmail).get("rnum");
-				cover = (List<String>)service.getMyFeedByFriend(ipage, email, myEmail).get("cover");
+				tmp2= (List<Integer>)service.getMyFeedByFriend(ipage, email, myEmail).get("rnum");
+				tmp3 = (List<String>)service.getMyFeedByFriend(ipage, email, myEmail).get("cover");
             int frResult = fservice.friendIsOkService(email, myEmail);
             
             }else {
             	tmp1 = (List<FeedDTO>)service.getMyFeed(ipage, email).get("list");
-    			rnum = (List<Integer>)service.getMyFeed(ipage, email).get("rnum");
-    			cover = (List<String>)service.getMyFeed(ipage, email).get("cover");
+    			tmp2 = (List<Integer>)service.getMyFeed(ipage, email).get("rnum");
+    			tmp3 = (List<String>)service.getMyFeed(ipage, email).get("cover");
             }
 			for(int i=tmp1.size()-1; i>-1; i--) {
 				list.add(tmp1.get(i));
+			}
+//			for(int i=tmp2.size()-1; i>-1; i--) {
+//				rnum.add(tmp2.get(i));
+//			}
+			for(int i=tmp3.size()-1; i>-1; i--) {
+				cover.add(tmp3.get(i));
 			}
 			
 			System.out.println("1 : "+service);
@@ -122,7 +133,7 @@ public class FeedController {
 		
 		JsonObject obj = new JsonObject();
 		obj.addProperty("list", g.toJson(list));
-		obj.addProperty("rnum", g.toJson(rnum));
+		obj.addProperty("rnum", g.toJson(tmp2));
 		obj.addProperty("cover", g.toJson(cover));
 		
 		return obj.toString();
@@ -356,6 +367,7 @@ public class FeedController {
 					cover = null;
 					System.out.println("wholeFeed controller- 친구검색");
 					friendList = service.searchFriend(email, keyword);
+					System.out.println("friendList Size : "+friendList.size());
 					model.addAttribute("option", "friend");
 				}
 		}catch(Exception e) {

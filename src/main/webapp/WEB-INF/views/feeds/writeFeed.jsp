@@ -26,6 +26,11 @@
 
 
 <style>
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans+KR&display=swap');
+*{
+	font-family: 'Noto Sans KR', sans-serif;
+	
+}
 body{
 	background-color:#171C28;
 }

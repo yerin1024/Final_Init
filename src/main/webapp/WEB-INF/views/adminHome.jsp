@@ -8,7 +8,9 @@
 <title>AdminHome</title>
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <style>
-* {
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans+KR&display=swap');
+*{
+	font-family: 'Noto Sans KR', sans-serif;
 	margin-top: 3px;
 }
 #loginForm{

@@ -16,6 +16,11 @@
 <link rel="stylesheet" href="/resources/css/detailModal.css"> 
 
 <style>
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans+KR&display=swap');
+*{
+	font-family: 'Noto Sans KR', sans-serif;
+	
+}
 .dBtn {
    box-shadow: 0.5px 0.5px 0.5px 0.5px gray;
    border-radius: 5px 5px 5px 5px;

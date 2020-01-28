@@ -25,8 +25,11 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.js"></script>
 
 <style>
-/* 	폰트 */
-@import url('https://fonts.googleapis.com/css?family=Noto+Serif+KR|Orbitron&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans+KR&display=swap');
+*{
+	font-family: 'Noto Sans KR', sans-serif;
+	
+}
 	#exampleModal{
 	width:1200px;
 	margin:auto;
@@ -207,6 +210,7 @@
 
 .profileMessageLayout {
 	position: relative;
+	color:white;
 }
 
 
@@ -350,7 +354,6 @@
     max-width: 600px;
     margin: auto;
     font-size: 15px;
-	font-family: 'Noto Serif KR', serif;
 }
 
 .modal-dialog {

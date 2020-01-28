@@ -48,6 +48,13 @@
 		
 	})
 </script>
+<style>
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans+KR&display=swap');
+*{
+	font-family: 'Noto Sans KR', sans-serif;
+	
+}
+</style>
 </head>
 <body>
 	<jsp:include page="/resources/jsp/nav.jsp"/>
