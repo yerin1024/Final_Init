@@ -5,7 +5,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> -->
 <meta http-equiv="x-ua-compatible" content="ie=edge">
 
 <title>Init</title>
@@ -23,27 +24,17 @@
     }
  	.modal {
          text-align: center;
-    }
-    @@media screen and (min-width: 768px) {
-         .modal:before {
-         	display: inline-block;
-         	vertical-align: middle;
-            content: " ";
-            height: 100%;
-         }
-    }
-    .modal-dialog {
-         display: inline-block;
-         text-align: left;
-         vertical-align: middle;
+
     }
     
     .modal-content {
         background-color: #fffefc;
+        min-height: 500px;
+        vertical-align: center;
     }
 
     .modal-header {
-        background-color: #0f4c81;
+        background-color: #171C28;
         color: #fffefc;
     }
 
@@ -59,7 +50,7 @@
 
     #closeBtn {
         font-size: 30px;
-        color: #fffefc;
+        color: #171C28;
     }
     
     .tab1_container{
@@ -75,7 +66,9 @@
         font-family: 'Noto Sans KR', sans-serif;
         width: 50%;
     }
+    .tab1_body > a{
     
+    }
     .tab1_logo {
     	width: 50%;
     	height: 100%;
@@ -105,8 +98,8 @@
         border: none;
         border-radius: 8px;
         font-size: 19px;
-        background-color: #0f4c81;
-        color: #fffefc;
+        background-color: #171C28;
+        color: white;
     }
     
     #tab1_kakaoLoginBtn {
@@ -336,6 +329,10 @@
 		background-color: pink;
 	}
 }
+
+@media all and (min-width : 320px) and (max-width : 768px) {
+    .tab1_logo { display:none }
+}
 </style>
 <body>
  <jsp:include page="/resources/script/index.jsp" flush="true"/>
@@ -372,7 +369,7 @@
 												</label>
 												<br>
 												<label for="tab1_pw" class="inp">
-												  <input type="password" class="inputLogin" id="tab1_pw" name="pw" placeholder="&nbsp;">
+												  <input type="password" class="inputLogin" id="tab1_pw" name="pw" placeholder="&nbsp;" onkeyup="enterkey();">
 												  <span class="label">Password</span>
 												  <span class="border"></span>
 												</label>
@@ -619,6 +616,14 @@
         }    
         //tab1_로그인 start
         var login = doc.getElementById("tab1_loginBtn");
+
+        function enterkey(){
+            if(window.event.keyCode == 13){
+                if(doc.getElementById("tab1_email").value != "" && doc.getElementById("tab1_pw").value != ""){
+                	toLogin();
+                }
+            }    
+        }    
         
         function toLogin() { //로그인 시도
         	if(doc.getElementById("tab1_email").value == ""){

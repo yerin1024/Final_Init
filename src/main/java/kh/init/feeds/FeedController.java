@@ -39,6 +39,7 @@ public class FeedController {
 		int ipage = 1;
 		List<FeedDTO> list = null;
 		List<String> cover = new ArrayList<>();
+		List<MemberDTO> flist = new ArrayList<>();
 		String myEmail = ((MemberDTO)session.getAttribute("loginInfo")).getEmail();
 		try {
 			if(!(email.equalsIgnoreCase(myEmail))) {
@@ -47,15 +48,19 @@ public class FeedController {
 				list = (List<FeedDTO>)service.getMyFeedByFriend(ipage, email, myEmail).get("list");
 				cover = (List<String>)service.getMyFeedByFriend(ipage, email, myEmail).get("cover");
             int frResult = fservice.friendIsOkService(email, myEmail);
+            
             model.addAttribute("frResult", frResult);
             }else {
             	list = (List<FeedDTO>)service.getMyFeed(ipage, email).get("list");
     			cover = (List<String>)service.getMyFeed(ipage, email).get("cover");
+    			flist = fservice.getFriendsListService(myEmail);
             }
 			MemberDTO dto = mservice.getMyPageService(email);
-			
+			int blockSize = mservice.blockSizeService(myEmail,  email);
 			System.out.println("dto 이메일값 확인 : "+dto.getEmail()+dto.getName());
-			model.addAttribute("mvo", dto);		
+			model.addAttribute("mvo", dto);
+			model.addAttribute("blockSize", blockSize);	
+			model.addAttribute("flist", flist);
 			model.addAttribute("list", list);
 			model.addAttribute("cover", cover);
 		}catch(Exception e) {
@@ -250,8 +255,7 @@ public class FeedController {
 			result = service.registerFeed(dto, mediaList, mediaPath, realPath);
 		}catch(Exception e) {
 			e.printStackTrace();
-		}
-		
+		}		
 		//등록이 되면 mediaList를 비워둠
 		session.setAttribute("mediaList", new ArrayList<String>());
 
@@ -322,7 +326,7 @@ public class FeedController {
 				}else { //친구검색
 					cover = null;
 					System.out.println("wholeFeed controller- 친구검색");
-					friendList = service.searchFriend(keyword);
+					friendList = service.searchFriend(email, keyword);
 					model.addAttribute("option", "friend");
 				}
 		}catch(Exception e) {
@@ -364,7 +368,7 @@ public class FeedController {
 					obj.addProperty("option", "nfriend");
 				}else { //친구검색
 					cover = null;
-					friendList = service.searchFriend(keyword);
+					friendList = service.searchFriend(email, keyword);
 					obj.addProperty("option", "friend");
 				}
 				obj.addProperty("option", "nfriend");
@@ -418,6 +422,9 @@ public class FeedController {
 			bookmarkCheck = service.bookmarkCheck(feed_seq, ((MemberDTO)session.getAttribute("loginInfo")).getEmail());
 			list = service.getMediaList(feed_seq);
 			replyList = service.viewAllReply(feed_seq);
+			for(int i=0;i<replyList.size();i++) {
+				System.out.println(replyList.get(i).getNickname());				
+			}
 			System.out.println("Email : "+dto.getEmail());
 			System.out.println("memberDTO : "+mservice.getMemberDTO(dto.getEmail()));
 			obj.addProperty("writerProfile", g.toJson((mservice.getMemberDTO(dto.getEmail())).getProfile_img()));
@@ -441,7 +448,7 @@ public class FeedController {
 		int ipage = 1;
 		System.out.println("friendFeed 도착");
 		String email = ((MemberDTO)session.getAttribute("loginInfo")).getEmail();
-		String profile_img = ((MemberDTO)session.getAttribute("loginInfo")).getProfile_img();
+//		String profile_img = ((MemberDTO)session.getAttribute("loginInfo")).getProfile_img();
 		try {
 			List<FeedDTO> list = service.getFriendFeed(ipage, email);
 			System.out.println("feed size : "+list.size());
@@ -450,6 +457,7 @@ public class FeedController {
 			List<Integer> declareCheckList = new ArrayList<>();
 			List<List<String>> mediaList = new ArrayList<>();
 			List<List<ReplyDTO>> replyList = new ArrayList<>();
+
 			List<Integer> likeCheckList = new ArrayList<>();
 			List<Integer> bookmarkCheckList = new ArrayList<>();
 			tfeed_seqList=service.getDeclare(email);
@@ -477,7 +485,8 @@ public class FeedController {
 				
 				index++;
 				mediaList.add(service.getMediaListForFriendFeed(feed_seq));
-//				replyList.add(service.viewAllReply(feed_seq));
+				replyList.add(service.viewAllReply(feed_seq));
+				
 				likeCheckList.add(service.likeCheck(feed_seq, ((MemberDTO)session.getAttribute("loginInfo")).getEmail()));
 				bookmarkCheckList.add(service.bookmarkCheck(feed_seq, ((MemberDTO)session.getAttribute("loginInfo")).getEmail()));
 			}
@@ -549,7 +558,7 @@ public class FeedController {
 				}
 				index++;
 				mediaList.add(service.getMediaListForFriendFeed(feed_seq));
-//				replyList.add(service.viewAllReply(feed_seq));
+				replyList.add(service.viewAllReply(feed_seq));
 				likeCheckList.add(service.likeCheck(feed_seq, ((MemberDTO)session.getAttribute("loginInfo")).getEmail()));
 				bookmarkCheckList.add(service.bookmarkCheck(feed_seq, ((MemberDTO)session.getAttribute("loginInfo")).getEmail()));
 			}
@@ -557,7 +566,7 @@ public class FeedController {
 			System.out.println(profile_imgList);
 			System.out.println(declareCheckList);
 			System.out.println(mediaList);
-			System.out.println(replyList);
+			System.out.println(" 에이잭스 리플라이리스트~: " + replyList);
 			System.out.println(likeCheckList);
 			System.out.println(bookmarkCheckList);
 

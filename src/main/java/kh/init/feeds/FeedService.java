@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.google.gson.Gson;
 
 import kh.init.alarm.AlarmDAO;
+import kh.init.members.MemberDAO;
 import kh.init.members.MemberDTO;
 
 
@@ -27,6 +28,8 @@ public class FeedService {
 	private ReplyDAO replyDAO;
 	@Autowired
 	private AlarmDAO aldao;
+	@Autowired
+	private MemberDAO mdao;
 
 	@Transactional
 	public int registerFeed(FeedDTO dto, List<String> mediaList, String mediaPath, String realPath) throws Exception{
@@ -285,8 +288,8 @@ public class FeedService {
 		return map;
 	}
 
-	public List<MemberDTO> searchFriend(String keyword) throws Exception{
-		List<MemberDTO> list = dao.searchFriend(keyword);
+	public List<MemberDTO> searchFriend(String email, String keyword) throws Exception{
+		List<MemberDTO> list = dao.searchFriend(email, keyword);
 		return list;
 	}
 
@@ -506,6 +509,7 @@ public class FeedService {
 	public String registerReply(ReplyDTO dto)throws Exception{
 		Gson gson = new Gson();
 		int reply_seq = replyDAO.replyNextSeq();
+		MemberDTO mdto = mdao.getMyInfo(dto.getEmail());
 		dto.setReply_seq(reply_seq);
 		replyDAO.registerReply(dto);
 		String receiverEmail = aldao.alarmReceiver(dto.getFeed_seq());	//--- 댓글 주인 찾기
@@ -515,6 +519,9 @@ public class FeedService {
 		map.put("contents", dto.getContents());
 		map.put("reply_seq", dto.getReply_seq());
 		map.put("parent", dto.getParent());
+		map.put("profile_img", mdto.getProfile_img());
+		map.put("nickname", mdto.getNickname());
+		String nickname = (String) map.get("nickname");
 		String jsonString = gson.toJson(map);
 		return jsonString;
 	}

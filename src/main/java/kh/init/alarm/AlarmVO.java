@@ -7,6 +7,7 @@ public class AlarmVO {
 	private String type;
 	private int applied_seq;
 	private Timestamp reg_date;
+	private String reg_date_edit;
 	private String alarm_check;
 	private String email;
 	
@@ -26,14 +27,16 @@ public class AlarmVO {
 	private String profile_img;
 
 	public AlarmVO() {}
-	public AlarmVO(int alarm_seq, String type, int applied_seq, Timestamp reg_date, String alarm_check, String email,
-			int replyfeed, int reply_seq, String replyer, String contents, int like_seq, int likefeed, String liker,
-			String fr_requester, String member_email, String nickname, String profile_img) {
+	public AlarmVO(int alarm_seq, String type, int applied_seq, Timestamp reg_date, String reg_date_edit,
+			String alarm_check, String email, int replyfeed, int reply_seq, String replyer, String contents,
+			int like_seq, int likefeed, String liker, String fr_requester, String member_email, String nickname,
+			String profile_img) {
 		super();
 		this.alarm_seq = alarm_seq;
 		this.type = type;
 		this.applied_seq = applied_seq;
 		this.reg_date = reg_date;
+		this.reg_date_edit = reg_date_edit;
 		this.alarm_check = alarm_check;
 		this.email = email;
 		this.replyfeed = replyfeed;
@@ -48,7 +51,7 @@ public class AlarmVO {
 		this.nickname = nickname;
 		this.profile_img = profile_img;
 	}
-	
+
 	public int getAlarm_seq() {
 		return alarm_seq;
 	}
@@ -80,7 +83,13 @@ public class AlarmVO {
 	public void setReg_date(Timestamp reg_date) {
 		this.reg_date = reg_date;
 	}
-
+	
+	public String getReg_date_edit() {
+		return reg_date_edit;
+	}
+	public void setReg_date_edit(String reg_date_edit) {
+		this.reg_date_edit = reg_date_edit;
+	}
 	public String getAlarm_check() {
 		return alarm_check;
 	}

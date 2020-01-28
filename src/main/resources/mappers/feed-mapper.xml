@@ -9,7 +9,7 @@
 		from (select p.*, row_number()over(order by p.feed_seq) rnum
 			from tb_feed p where relation='0'
 			                     and 
-			                    (p.email not in (select to_id from tb_block where from_id = #{email}) and 
+			                    (p.email not in (select to_id from tb_block where from_id = #{email}) and
 			                    p.email not in (select from_id from tb_block where to_id = #{email}))
 								<if test="keyword != null">
 									and hashtag Like #{keyword}
@@ -25,7 +25,7 @@
 		from (select p.*, row_number()over(order by p.feed_seq) rnum
 			from tb_feed p where relation='0'
 			                     and 
-			                    (p.email not in (select to_id from tb_block where from_id = #{email}) and 
+			                    (p.email not in (select to_id from tb_block where from_id = #{email}) and
 			                    p.email not in (select from_id from tb_block where to_id = #{email}))
 								<if test="keyword != null">
 									and hashtag Like #{keyword}
@@ -38,7 +38,7 @@
 		from (select p.*, row_number()over(order by p.feed_seq) rnum
 			from tb_feed p where relation='0'
 			                     and 
-			                    (p.email not in (select to_id from tb_block where from_id = #{email}) and 
+			                    (p.email not in (select to_id from tb_block where from_id = #{email}) and
 			                    p.email not in (select from_id from tb_block where to_id = #{email}))
 								<if test="keyword != null">
 									and hashtag Like #{keyword}
@@ -137,9 +137,11 @@
 		#{email})
 	</select>
 
-	<select id="searchFriend" resultType="kh.init.members.MemberDTO">
+	<select id="searchFriend" resultType="kh.init.members.MemberDTO" parameterType="java.util.Map">
 		select * from tb_member
 		where nickname=#{keyword}
+			and (p.email not in (select to_id from tb_block where from_id = #{email}) and
+			                    p.email not in (select from_id from tb_block where to_id = #{email}))
 	</select>
 
 	<select id="getFeedSeq" resultType="integer">
@@ -220,8 +222,10 @@
 	            
 	            or p.email = #{email} and
 	            (r.fr_id not in (select to_id from tb_block where from_id = #{email}) and 
-	            r.fr_id not in (select from_id from tb_block where to_id = #{email})) )
-		where rnum between #{startNum} and #{endNum}
+	            r.fr_id not in (select from_id from tb_block where to_id = #{email}))
+				order by rnum desc, feed_seq desc)
+		where rnum between #{startNum} and #{endNum} 
+        order by feed_seq desc
 
 		
 <!-- 		select feed_seq, email, nickname, title, contents, -->
@@ -306,18 +310,9 @@
 	</delete>
 
 	<select id="viewAllReply" resultType="kh.init.feeds.ReplyDTO">
-		select * from tb_reply
-		where feed_seq = #{feed_seq}
-		start with parent = 0
-		connect by prior
-		reply_seq = parent order SIBLINGS by write_date asc
+		select tb_reply.*, tb_member.profile_img, tb_member.nickname from tb_reply ,tb_member where tb_reply.email = tb_member.email and feed_seq = #{feed_seq}
 	</select>
 	
-	<select id="viewAllReplyTest" resultType="kh.init.feeds.ReplyDTO">
-		select * from tb_reply
-		where feed_seq = #{feed_seq} order by 7 desc
-	</select>
-
 	<select id="replyNextSeq" resultType="Integer">
 		select reply_seq.nextval
 		from dual

@@ -7,9 +7,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
 <title></title>
-<link rel="stylesheet" href="/resources/css/nav.css">
+<link rel="stylesheet" href="/resources/css/nav.css?new"> 
 <link rel="stylesheet" href="/resources/css/msg.css"> 
 <link rel="stylesheet" href="/resources/css/alr.css"> 
 <link rel="stylesheet" href="/resources/css/test.css">
@@ -194,13 +193,7 @@
 	position: relative;
 }
 
-.report {
-    
-	position: absolute;
-	right:0px;
-	border: none;
-	background-color: none;
-}
+
 
 .profileLayout {
 	display: flex;
@@ -223,6 +216,8 @@
 	height: 300px;
 	width: 300px;
 	display: block;
+    border: 1px solid black;
+    border-radius: 180px;
 }
 
 .profileImg {
@@ -255,6 +250,7 @@
 	bottom: -10px;
 	border-radius: 20px;
 	padding: 5px 20px;
+	width:120px;
 	font-weight: bold;
 	font-size: 13px;
 	background-color: white;
@@ -328,6 +324,7 @@
 	text-align: center;
 	font-size: 70px;
 	font-weight: bold;
+	color:white;
 }
 
 .profileMessageLayout {
@@ -339,6 +336,7 @@
     margin: auto;
     font-size: 15px;
 	font-family: 'Noto Serif KR', serif;
+    color: white;
 }
 
 .modal-dialog {
@@ -597,6 +595,15 @@
     transition-duration: 0.5s;
     transform: translateX(-50%);
 }
+.report{	
+    position: absolute;
+    right: 110px; 	
+    top: -50px;
+}
+.blockFr{	
+    width: 30px;
+    height: 30px;
+}
 /* 호버 */
 /* All Device */
 /* 모든 해상도를 위한 공통 코드를 작성한다. 모든 해상도에서 이 코드가 실행됨. */
@@ -833,7 +840,7 @@
 	              console.log(i);
 	              if(i%3==1){
 	                 console.log(i+"는 1");
-	                 data = "<div class='row' style='margin:0px'>" +data;
+	                 data = "<div class='row'>" +data;
 	              }
 	              if(i%3==0){
 	                 console.log(i+"는0");
@@ -919,26 +926,33 @@
     <jsp:include page="/resources/jsp/alr.jsp"/>
 	<jsp:include page="/resources/jsp/msg.jsp"/>
 	<div class="container-fluid">
+		${loginInfo.profile_img } ???????????????????????
 		<div id="MyClockDisplay" class="clock" onload="showTime()"></div>
 		<div class="profile">
 			<c:choose>
 				<c:when test="${loginInfo.email ne mvo.email}">
 				<div class="report">
-						<img class="blockFr" src="/resources/images/whitex.png" alt="" style="width:15%;">
+				        <c:if test="${blockSize == 0  }">
+							<img class="blockFr" src="/resources/images/whitex.png" alt="">
+						</c:if>
+						<c:if test="${blockSize > 0  }">
+							<img class="blockFr" src="/resources/images/limex.png" alt="">
+						</c:if>
+						
 					</div>
 					<div class="profileLayout">
 					
 						<div class="profileLayoutLeft">
 						<c:if test="${frResult == null || frResult == 0  }">
-							<button class="btn btn-primary btn-lg" id="openModalBtn">＋</button>
+							<button class="profileButton btn-lg" id="openModalBtn">＋</button>
 							<div class="btnText">친구요청</div>
 						</c:if>			
 							<c:if test="${frResult == 1 }">
-						<button class="btn btn-primary btn-lg" id="ingReq">＋</button>
+						<button class="profileButton btn-lg" id="ingReq">＋</button>
 							<div class="btnText">친구요청중</div>
 						</c:if>	
 						<c:if test="${frResult == 2  }">
-							<button class="friend btn btn-primary btn-lg" id="openFrModal" >＋</button>
+							<button class="profileButton btn-lg" id="openFrModal" >＋</button>
 							<div class="btnText">친구</div>
 						</c:if>	
 						
@@ -948,13 +962,15 @@
 								<img class="profileImg" src="${mvo.profile_img}" alt="">
 						</div>
 					</div>
+					
+					<div class="profileLayoutRight">
+						<button class="messageRequest profileButton" id="msgRequest">＋</button>
+						<div class="btnText">메세지</div>
+					</div>
+					</div>
 					<div class="profileMessageLayout">
 						<div class="profileName">${mvo.nickname }</div>
 						<div class="profileMessage">${mvo.profile_msg}</div>
-					</div>
-					<div class="profileLayoutRight">
-						<button class="messageRequest" id="msgRequest">＋</button>
-						<div class="btnText">메세지</div>
 					</div>
 				</c:when>
 				<c:otherwise>
@@ -988,8 +1004,8 @@
 				<br>
 				<table style="width:80%; margin:auto; ">
 				<tr>
-				<td style="color:gainsboro; font-size:40px;">127
-				<td style="color:gainsboro; font-size:40px;">250
+				<td style="color:gainsboro; font-size:40px;">${fn:length(list)}
+				<td style="color:gainsboro; font-size:40px;">${fn:length(flist)}
 				</tr>
 				<tr>
 				<td style="color:grey; font-size:13px;">Posts
@@ -1048,10 +1064,11 @@
 				</div>
 
 				<div class="modal-body">
-					
-						<input type=radio name="relation" value="1"> 아는 사람<br>
-						<input type=radio name="relation" value="2"> 친구<br> <input
-							type=radio name="relation" value="3"> 절친<br> 
+					<input type=radio name="relation" value="3"> 절친<br>
+					<input type=radio name="relation" value="2"> 친구<br>
+					<input type=radio name="relation" value="1" checked="checked"> 아는 사람<br>
+						 
+						 
 					
 				</div>
 				<div class="modal-footer">
@@ -1081,8 +1098,6 @@
 				</div>
 				<div class="modal-body2"></div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-primary"
-						id="identifyModalBtn2">확인</button>
 					<button type="button" class="btn btn-default" id="closeModalBtn3">취소</button>
 				</div>
 			</div>
@@ -1118,7 +1133,7 @@
 	         	<span class="myProfile"><img class="userProfileImg" src="${loginInfo.profile_img }" alt=""></span>
 	       		<h5 class="modal-title" id="exampleModalLabel">${loginInfo.nickname }</h5>
 	       		<div id="writeReply" contenteditable="true"></div>
-	       		<button type="button" class="replyBtn" onclick="replyBtnOnclick('${loginInfo.email}');">등록</button>
+							<button class="replyBtn" onclick="replyBtnOnclick('${loginInfo.email}','${loginInfo.nickname }');">등록</button>
 			</div>
 	      </div>
 	    </div>
@@ -1139,9 +1154,10 @@
 				</div>
 
 				<div class="modal-body1">
-					<input type=radio name="relation" value="1"> 아는 사람<br>
-					<input type=radio name="relation" value="2"> 친구<br> 
-					<input type=radio name="relation" value="3"> 절친<br> 
+					<input type=radio name="arelation" value="3"> 절친<br>
+					<input type=radio name="arelation" value="2"> 친구<br> 
+					<input type=radio name="arelation" value="1" checked="checked"> 아는 사람<br>
+					
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-primary" id="acceptModalBtn">확인</button>
@@ -1181,7 +1197,7 @@
 		</div>
 	</div>
 
-	<!-- 친구 관계 설정 모달 영역 -->
+	
 	<div id="modalBox4" class="modal fade" id="myModal"
 		role="dialog"  tabindex="-1" aria-labelledby="myModalLabel"
 		style="margin-top: 100px;">
@@ -1198,10 +1214,9 @@
 
 				<div class="modal-body4">
 					
-						<input type=radio name="relation" value="1"> 아는 사람<br>
-					<input type=radio name="relation" value="2"> 친구<br> 
-					<input type=radio name="relation" value="3"> 절친<br> 
-					
+					<input type=radio name="crelation" value="3"> 절친<br> 
+					<input type=radio name="crelation" value="2"> 친구<br> 
+					<input type=radio name="crelation" value="1" checked="checked"> 아는 사람<br>
 				</div>
 				<div class="modal-footer">
 					
@@ -1213,7 +1228,7 @@
 
 	
 	
-<!-- 	내 정보 수정 시작 -->
+<!-- 친구 관계 설정 모달 영역 --><!-- 	내 정보 수정 시작 -->
 	<div id="modalModifyInfo" class="modal fade" role="dialog" tabindex="-1"
 	aria-labelledby="modalModify" style="margin-top: 45px;">
 	<div class="modal-dialog" role="document">
@@ -1348,7 +1363,7 @@
                                 <p class="adviseOut" id="adviseProfile-msg" readonly>*200자 이내로 입력 가능합니다.</p>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" id="changeProfileBtn" onclick="formValidation();" style="color:#0D4373; width:200px; margin-right:5%;">편집 완료</button>
+                                <button type="button" id="changeProfileBtn" style="color:#0D4373; width:200px; margin-right:5%;">편집 완료</button>
                                 <button type="button" id="cancelBtn"  style="color:#0D4373; width:200px; margin-right:5%;">취소</button>
                             </div>
                         </div>
@@ -1361,15 +1376,14 @@
 
 	
 	<script>	
+	var myMail = '${mvo.email }';
 		var doc = document;
-
+		var relation = "";
 	    $("#registerFeed").on("click", function() {
 	    	location.href = "${pageContext.request.contextPath}/feed/writeFeed";
 		});
 	    
 	    
-	    // 메시지 보내기 -----------------------------------------------------------
-	    // 메시지 보내기 -----------------------------------------------------------
 	    // 메시지 보내기 -----------------------------------------------------------
 	    // 메시지 보내기 -----------------------------------------------------------
 	    // 메시지 보내기 -----------------------------------------------------------
@@ -1399,11 +1413,11 @@
 						 if(resp[i].from_id=="${loginInfo.email}"){
 							 $(".sector_in").append("<ul class='ul_right'>"
 						                +"<li class='from_id'>"+resp[i].contents+"</li><span class=time_right>"
-						                +resp[i].write_date+"</span><br></ul>");
+						                +resp[i].write_date_edit+"</span><br></ul>");
 						 }else{
 							 $(".sector_in").append("<ul class='ul_left'>"
 						                + "<li class='to_id'>"+resp[i].contents+"</li><span class=time>"
-						                +resp[i].write_date+"</span><br></ul>");
+						                +resp[i].write_date_edit+"</span><br></ul>");
 						 }
 					}
 					 var objDiv = document.getElementById("view1");
@@ -1546,14 +1560,14 @@
                     //친구수락 로직~
                     $("#acceptModalBtn").on("click", function () {
                         var yr_id = $('.acceptfr').attr("name");
-                        var relation = $('input[name=relation]').val();
+                        var arelation = $('input[name=arelation]:checked').val();
                         console.log(yr_id);
                         $.ajax({
                             url: "${pageContext.request.contextPath}/friend/acceptFndRequest",
                             type: "POST",
                             data: {
-                                yr_id: yr_id,
-                                relation : relation
+                                "yr_id": yr_id,
+                                "relation" : arelation
                             },
                             dataType: "text",
                             success: function (
@@ -1707,13 +1721,14 @@
 		                 });
                         $("#closeModalBtn4").on("click", function () {
                         var yr_id = $(".changeRelation").attr("name");
-                        var relation = $('input[name=relation]').val();
+                        var crelation = $('input:radio[name="crelation"]:checked').val();
                         console.log(yr_id);
+                        console.log(crelation);
                         $.ajax({
                             url: "${pageContext.request.contextPath}/friend/changeRelation",
                             type: "POST",
                             data: {
-                                yr_id: yr_id,relation :relation
+                                "yr_id": yr_id,"relation" :crelation
                             },
                             dataType: "text",
                             success: function (res) {
@@ -1751,7 +1766,7 @@
 			var doc = document;
 	        var changeProfile = doc.getElementById("changeProfile");
 	        var nickname = doc.getElementById("inputNick");
-	        var profile_msg = doc.getElementById("profile_msg");
+	        var profile_msg = doc.getElementById("inputProfile_msg");
 	        
 	        var adviseNickname = doc.getElementById("adviseNickname");
 	        var adviseInNickname = doc.getElementById("adviseInNickname");
@@ -1769,12 +1784,14 @@
 			}).done(function(data){
 				var dto = JSON.parse(data.dto)
 				$('#modalProfile').modal('show');
-				nickname.value = dto.nickname;
-				console.log("profile_msg : " + dto.profile_msg);
+				console.log("profile_img : " + dto.profile_img);
+				
+				$("#inputNick").val("${loginInfo.nickname}");
 				if(typeof dto.profile_msg != "undefined"){
-					profile_msg.value = dto.profile_msg;
+					$("#inputProfile_msg").val(dto.profile_msg);
+					console.log("profile_msg : " + dto.profile_msg);
 				}
-				setProfile.src = dto.profile_img;
+				$("#setProfile").attr("src", dto.profile_img);
 								
 				 function readURL(input) {
 			            if (input.files && input.files[0]) {
@@ -1792,7 +1809,7 @@
 			        });
 
 			        deletePic.addEventListener("click", function(){
-			            setProfile.src = "resources/default_profile_img.png";
+			            setProfile.src = "/resources/images/default_profile_img.png";
 			        });     
 
 			        nickname.addEventListener("keyup", function(){
@@ -1852,7 +1869,7 @@
 			        //submit 직전 유효성 검사
 
 			        $("#cancelBtn").on("click", function() {
-							location.href = "${pageContext.request.contextPath}/feed/myFeed?email=${dto.email}";
+							$("#modalProfile").modal("hide");
 						});
 				
 			}).fail(function(a,b,c){
@@ -1899,14 +1916,14 @@
 		
 		
 		$('#identifyModalBtn').on('click', function () {
-			var relation = $('input[name=relation]').val();          
+			relation = $('input[name=relation]:checked').val();          
             
             $.ajax({
                 url: "${pageContext.request.contextPath}/friend/friendRequest?to_id=${mvo.email}",
                 type: "POST",
                 dataType: "text",
                 data: {
-                    relation: relation
+                    "relation": relation
                 },
                 success: function (res) {
                 	$('#modalBox').modal('hide');
@@ -1976,6 +1993,42 @@
             
 
         })
+        //친구 끊기
+    $(".frcutfr").on("click", function () {
+        var yr_id = $(this).attr("name");
+        
+        console.log(yr_id);
+        $.ajax({
+            url: "${pageContext.request.contextPath}/friend/cutFndRelation",
+            type: "POST",
+            data: {
+                yr_id: yr_id
+            },
+            dataType: "text",
+            success: function (res) {
+                console.log(res);
+                console.log(yr_id);
+                alert("친구취소가 완료되었습니다.");
+                $('#modalBox2').modal('hide');
+                $(".btn-lg").remove();
+                $(".btnText").remove();
+                $(".profileLayoutLeft").append("<button class=btn btn-primary btn-lg id=openModalBtn >＋</button><div class=btnText>친구요청</div>");
+               location.reload();
+                
+                //$('.modal-body2').append("<div class=frInfo>"+list[j].email+"  <button type=button class=frInfo id=cutfr name="+list[j].email+">친구 끊기</button></div>");
+
+                // show modal
+
+            },
+            error: function (
+                request,
+                status,
+                error) {
+                console.log("ajax call went wrong:"
+                    + request.responseText);
+            }
+        })
+    });
 	
     $(".profileImageBox").mouseenter(function(){
 		$("#MyClockDisplay").css("top","0px");
@@ -2046,42 +2099,7 @@
             }
 
 
-	//친구 끊기
-    $(".frcutfr").on("click", function () {
-        var yr_id = $(this).attr("name");
-        
-        console.log(yr_id);
-        $.ajax({
-            url: "${pageContext.request.contextPath}/friend/cutFndRelation",
-            type: "POST",
-            data: {
-                yr_id: yr_id
-            },
-            dataType: "text",
-            success: function (res) {
-                console.log(res);
-                console.log(yr_id);
-                alert("친구취소가 완료되었습니다.");
-                $('#modalBox2').modal('hide');
-                $(".btn-lg").remove();
-                $(".btnText").remove();
-                $(".profileLayoutLeft").append("<button class=btn btn-primary btn-lg id=openModalBtn >＋</button><div class=btnText>친구요청</div>");
-               location.reload();
-                
-                //$('.modal-body2').append("<div class=frInfo>"+list[j].email+"  <button type=button class=frInfo id=cutfr name="+list[j].email+">친구 끊기</button></div>");
-
-                // show modal
-
-            },
-            error: function (
-                request,
-                status,
-                error) {
-                console.log("ajax call went wrong:"
-                    + request.responseText);
-            }
-        })
-    });
+	
 
     var poption1;
     var boption1;
@@ -2172,6 +2190,7 @@
                         .attr('selected', 'selected');
                 }
             }
+
 
             var bLength1 = $(".bOption1").length;
             for (var i = 0; i < bLength1; i++) {
@@ -2327,7 +2346,8 @@
     });
 
     $("#backToFeed").on("click", function () {
-        location.href = "${pageContext.request.contextPath}/feed/myFeed?email=${loginInfo.email}";
+    	clearInterval(tid);
+    	$("#modalModifyInfo").modal('hide');
     });
 
     //현재 비밀번호 일치여부 검사 start
@@ -2510,7 +2530,7 @@
                 //전화번호 중복 검사 end
                 //인증번호 전송 start
                 if (resp.result == "available") {
-                    tid = setInterval('msg_time()', 1000); //인증번호 전송 시 카운트다운 시작
+                    tid = setInterval(msg_time, 1000); //인증번호 전송 시 카운트다운 시작
                     sendCode.hidden = true;
                     resendCode.hidden = false;
                     verifyCode.value = "";
@@ -2626,6 +2646,9 @@
                 sendCode.hidden = true;
                 resendCode.hidden = true;
                 verifyCode.disabled = true;
+                
+                clearInterval(tid);
+                
             } else if (resp.result == "unverified") {
                 console.log("인증 실패 ");
                 adviseVerifCode.innerHTML = "인증실패";
@@ -2779,7 +2802,9 @@
         console.log("최종 비밀번호 : " + pw.value);
         console.log("최종 이름 : " + username.value);
         console.log("최종 생년월일 : " + birth.value);
-
+        
+        clearInterval(tid);
+        
         doc.getElementById("signUpForm").submit();
     });
 
@@ -2791,6 +2816,45 @@
     });
     });
     
+  //차단
+    $(".blockFr").on("click", function () {
+        
+        console.log(myMail);
+        $.ajax({
+            url: "${pageContext.request.contextPath}/member/blockMem",
+            type: "POST",
+            data: {
+                yr_id: myMail
+            },
+            dataType: "text",
+            success: function (res) {
+                console.log(res);
+                if(res == "notInsert"){
+                	 
+                     $(".blockFr").attr("src", $(".blockFr").attr("src").replace("/resources/images/whitex.png", "/resources/images/limex.png"));  
+                     //location.reload();
+                	
+                }else{
+                	
+                    $(".blockFr").attr("src", $(".blockFr").attr("src").replace("/resources/images/limex.png", "/resources/images/whitex.png"));
+                    //location.reload();
+                }
+                
+
+                //$('.modal-body2').append("<div class=frInfo>"+list[j].email+"  <button type=button class=frInfo id=cutfr name="+list[j].email+">친구 끊기</button></div>");
+
+                // show modal
+
+            },
+            error: function (
+                request,
+                status,
+                error) {
+                console.log("ajax call went wrong:"
+                    + request.responseText);
+            }
+        })
+    });
     </script>
    	<jsp:include page="/resources/script/myFeedScript.jsp" />
 </body>

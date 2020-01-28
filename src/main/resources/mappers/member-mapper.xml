@@ -53,12 +53,20 @@
 	    <if test="profile_msg != null">
 	       ,profile_msg = #{profile_msg}
 	    </if>
-	    <if test="id != null">
 	       where email = #{id}
-	    </if>
 	     
 	    
 	    </trim>
 	  </update>
+	  <insert id="insertBlock">
+		insert into tb_block values(#{from_id},#{to_id})
+	</insert>
+	 <delete id="deleteBlock" >
+	   delete from tb_block where from_id = #{from_id} and to_id = #{to_id}
+	  </delete>
+	  <select id="selectBlock" parameterType="java.util.Map" resultType="kh.init.members.BlockDTO">
+  		select * from tb_block where from_id = #{from_id} and to_id = #{to_id}
+ 	</select>  
+	  
 </mapper>
 

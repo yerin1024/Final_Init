@@ -6,9 +6,9 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Properties;
 
-import javax.mail.Authenticator;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
@@ -323,22 +323,22 @@ public class MemberService {
 	
 	//내 프로필 변경하기
 	@Transactional("txManager")
-	public int changeMyProfileService(String id,MemberDTO dto,MultipartFile profile_img, String path) throws Exception {
+	public int changeMyProfileService(String email,MemberDTO dto,MultipartFile profile_img, String path) throws Exception {
 		File filePath = new File(path);
 		if(!filePath.exists()) {
 			filePath.mkdir();
 		}
 		System.out.println(profile_img);
 		if(profile_img != null) {		
-			String profile =  "/files/" + dto.getEmail() + "_profile_img.jpg";
+			String profile =  "/files/" + email + "_profile_img.jpg";
 			dto.setProfile_img(profile);
 			try {
-				profile_img.transferTo(new File(path + "/" + dto.getEmail() + "_profile_img.jpg"));
+				profile_img.transferTo(new File(path + "/" + email + "_profile_img.jpg"));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
-		int result = dao.changeMyInfo(id,dto);
+		int result = dao.changeMyInfo(email, dto);
 		return result;
 
 	}
@@ -347,5 +347,37 @@ public class MemberService {
 
 		MemberDTO dto = dao.getMyInfo(email);
 		return dto;
+	}
+	@Transactional("txManager")
+	public String blockService(String myEmail, String yr_id) throws Exception{
+		BlockDTO dto = new BlockDTO(myEmail, yr_id);
+		int result = 0;
+		String realResult ="false";
+		List<BlockDTO> list = dao.getMyBlock(dto);
+		System.out.println("블락 사이즈는 "+list.size());
+		if(list.size() == 0) {
+			result = dao.insertBlock(dto);
+			if(result > 0) {
+				realResult = "notInsert" ;
+				return realResult;
+			}
+		}else {
+			result = dao.deleteBlock(dto);
+            if(result > 0) {
+            	realResult = "notDelete" ;
+	        return realResult;
+			}
+		}
+		return realResult;
+	}
+	public int blockSizeService(String myEmail, String yr_id) throws Exception{
+		BlockDTO dto = new BlockDTO(myEmail, yr_id);
+		int result = 0;
+		
+		List<BlockDTO> list = dao.getMyBlock(dto);
+		System.out.println("블락 사이즈는 "+list.size());
+		result = list.size();
+		
+		return result;
 	}
 }

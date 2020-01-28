@@ -234,12 +234,12 @@ public class MemberController {
 	@RequestMapping("/changeProfile") //프로필 바꿔버리기
 	public String changeMyProfile(MemberDTO dto, MultipartFile profileImg,Model model) {
 		System.out.println("회원 정보 수정 CON 도착.");
+		System.out.println("dto 출력 : " + dto.toString());
 		String path = session.getServletContext().getRealPath("files");
 		MemberDTO mDto = (MemberDTO)session.getAttribute("loginInfo");
-		System.out.println("이메일는 "+mDto.getEmail());
-		String emailResult = mDto.getEmail().replace("@", "%40");
-		//model.addAttribute("email", emailResult);
 		model.addAttribute("email", mDto.getEmail());
+		System.out.println("이메일는 "+mDto.getEmail());
+		System.out.println("파일명은 : " + profileImg.getOriginalFilename());
 		int result = 0;
 		try {
 			if(profileImg.getOriginalFilename() == "") {
@@ -247,8 +247,6 @@ public class MemberController {
 			}else {
 				result = service.changeMyProfileService(mDto.getEmail(), dto,profileImg,path);
 			}
-
-
 			if(result> 0) {
 
 				System.out.println("정보변경에 성공하셨슴당.");
@@ -257,8 +255,6 @@ public class MemberController {
 				System.out.println("정보변경에 실패하셨슴당.");
 				return "error";
 			}
-
-
 		}catch(Exception e) {
 			e.printStackTrace();
 			System.out.println("입력실패.");
@@ -287,5 +283,19 @@ public class MemberController {
 			e.printStackTrace();
 			return "error";
 		}
+	}
+	@RequestMapping("/blockMem") // 비밀번호 변경
+	@ResponseBody
+	public String blockMem(String yr_id) {
+		String myEmail = ((MemberDTO)session.getAttribute("loginInfo")).getEmail();
+		
+		try {
+			String result =service.blockService(myEmail, yr_id);
+			return result;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "error";
+		}
+		
 	}
 }
