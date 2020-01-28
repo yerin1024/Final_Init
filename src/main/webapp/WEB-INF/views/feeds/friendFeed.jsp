@@ -27,11 +27,13 @@
 <style>
 body{
 	background-color:#171C28;
+    color: white;
 }
 #wrapper {
-   border: 1px solid red;
    margin: auto;
+   color:white;
 }
+
 html,body {
    padding: 0px;
    margin: 0px;
@@ -42,7 +44,8 @@ html,body {
 }
 
 .feed {
-   border: 1px solid blue;
+   border: 3px solid white;
+   margin-bottom:30px;
 }
 
 .dz-default {
@@ -72,7 +75,7 @@ html,body {
 }
 
 .carousel-item * {
-   width: 100%;
+   width: 99.5%;
    height:600px; 
 }
 
@@ -86,15 +89,15 @@ html,body {
 }
 
 .likeImg>img {
-   width: 28px;
-   height: 28px;
-   margin-left: 10px;
+	width: 35px;
+	height: 35px;
+	margin-left: 10px;
 }
 
 .bookmarkImg>img {
-   width: 28px;
-   height: 28px;
-   margin-left: 10px;
+	width: 35px;
+	height: 35px;
+	margin-left: 10px;
 }
 
 .row {
@@ -104,6 +107,8 @@ html,body {
 .profileNickname {
    position: absolute;
    left: 80px;
+   font-size:20px;
+   font-weight:600;
 }
 
 .profile {
@@ -147,9 +152,7 @@ html,body {
 }
 
 /* 댓글 */
-.reply{	
-    margin-bottom: 40px;
-}
+
 .myProfileImgBox,.userProfile{
 	margin:10px 20px;
 }
@@ -355,6 +358,7 @@ html,body {
              }
         } 
    });
+
    $(window).scroll(
          function() { //스크롤이 최하단 으로 내려가면 리스트를 조회하고 page를 증가시킨다.
             if ($(window).scrollTop() >= $(document).height()
@@ -398,7 +402,7 @@ html,body {
                          var Img = $("<div class='row profileImg'></div>") 
                          Img.append(profile_imgList[i]); 
                          profile.append(Img);
-                         
+
                          var nick = $("<div class='row profileNickname'></div>");
                          nick.append(list[i].nickname);
                          profile.append(nick);
@@ -422,7 +426,9 @@ html,body {
                             feedDeclaration.append(beforeDec);    
                             profile.append(feedDeclaration); 
                          }
+
                          }else{ }                         
+
                         feed.append(profile);
                         //ajax media가 있으면 carousel 없으면 바로 contents
                         if(mediaList[i].length != 0){
@@ -479,8 +485,8 @@ html,body {
                         }else{}
                         var contents = $("<div class='row contents' style='min-height:100px; max-height:400px;'></div>");
                         contents.append(list[i].contents);
-
                         feed.append(contents);
+
 
                         var btns = $("<div class='row btns'></div>");
 
@@ -533,8 +539,9 @@ html,body {
                         }
                         feed.append(btns);
                         $("#wrapper").append(feed);
+
                         
-                        var replyDiv = $("<div class='reply' style='border:1px solid red'></div>") 
+                        var replyDiv = $("<div class='reply'></div>") 
                         feed.append(replyDiv);
                         
                         if(replyList[i].length != 0){
@@ -610,7 +617,7 @@ html,body {
    <jsp:include page="/resources/jsp/nav.jsp" />
    <jsp:include page="/resources/jsp/msg.jsp" />
    <jsp:include page="/resources/jsp/alr.jsp" />
-   <div id="wrapper" style="position: relative; top: 62px">
+   <div id="wrapper" style="position: relative; top: 30px">
       <!-- <h1>친구피드</h1> -->
       <c:choose>
          <c:when test="${fn:length(list) <1}">
@@ -618,12 +625,12 @@ html,body {
          </c:when>
          <c:otherwise>
             <c:forEach items="${list}" var="feed" varStatus="status">
+
                <div class="feed" feed_seq=${feed.feed_seq }>
                   <div class="row profile">
                      <div class="row profileImg">
                         ${profile_imgList[status.index]}</div>
                      <div class="row profileNickname">${feed.nickname}</div>
-
 
                <c:choose>
                <c:when test="${feed.email ne loginInfo.email}">
@@ -701,10 +708,12 @@ html,body {
                <c:when test="${mediaList[status.index].size() == 0}"></c:when>
                </c:choose>
                   <div class="row contents" style="min-height: 100px; max-height: 400px;">
-                     ${feed.contents }</div> 
+                     ${feed.contents }</div>
+
                      <div class="reply">
+                     	<button type="button" class="allReply" style="display:none">──────────────  댓글보기</button>
 							<c:forEach items="${replyList[status.index] }" var="reply">								
-								<c:if test="${reply.parent == 0}">
+								<c:if test="${reply.parent == 0}">							
 								<div class="parentReply" reply_seq="${reply.reply_seq }" >
 									<div class="profileDiv">
 										<span class="userProfile"> 
@@ -722,7 +731,7 @@ html,body {
 									</div>
 									<c:forEach items="${replyList[status.index] }" var="childReply">	
 										<c:if test="${childReply.parent ==  reply.reply_seq}">											
-											<div class="childReply" value="1" parent_seq="${childReply.parent }" reply_seq="${childReply.reply_seq }">
+											<div class="childReply" value="1" parent_seq="${childReply.parent }" reply_seq="${childReply.reply_seq }" style="display:none">
 												<span class="userProfile"> 
 												<img class="userProfileImg"src="${reply.profile_img}" alt="사진오류"></span> 
 													<span class="userProfileID">${childReply.nickname }</span> 
@@ -734,10 +743,22 @@ html,body {
 													<button class="deleteChildReplyBtn" style="">삭제</button>
 												</div>
 											</div>
-											<script>
+											<script>	
+// 												console.log($(".reply").children(".parentReply").length);
+// 												console.log($("div[parent_seq=${childReply.parent }]").closest(".feed").attr("feed_seq") + "???");
+// 												if($(".reply").children(".parentReply").length == 0){
+// 													$("div[parent_seq=${childReply.parent }]").parent().show();
+// 													$("div[parent_seq=${childReply.parent }]").parent().siblings(".allReply").hide();
+// 												}else{
+// 													$("div[parent_seq=${childReply.parent }]").parent().hide();
+// 													$("div[parent_seq=${childReply.parent }]").parent().siblings(".allReply").show();													
+// 												}
+												
 												$("div[parent_seq=${childReply.parent }]").parent().attr("child",1);
-												if($("div[parent_seq=${childReply.parent }]").attr("child") == 1){
-													$(".showReply").show();
+												console.log($("div[parent_seq=${childReply.parent }]").closest(".reply").children(".parentReply").length + "????????");
+												if($("div[parent_seq=${childReply.parent }]").parent().attr("child") == 1){
+													$("div[parent_seq=${childReply.parent }]").parent().find(".showReply").show();
+													$("div[parent_seq=${childReply.parent }]").parent().siblings(".allReply").show();
 												}
 											</script>
 										</c:if>		
@@ -881,8 +902,7 @@ html,body {
       </c:choose>
    </div>
 
-   <script>   
-   
+   <script>
    //신고확인 기능 모달
    $(document).on("click",".sirenBtn",function(){
         var seq = $(this).attr("id");
@@ -1014,8 +1034,6 @@ html,body {
 				console.log(c);
 			})
 		}
-		
-		
 		
 		//댓글 삭제 버튼
 		$(document).on("click",".deleteReply", function(){
@@ -1166,6 +1184,7 @@ html,body {
 				parentReply.find(".hideReply").hide();
 			}	
 		})
+
    </script>
 </body>
 </html>

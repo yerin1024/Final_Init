@@ -98,9 +98,9 @@ body{
 .carousel-inner * {
 	width: 14vw;
 }
-.carousel-inner{
-	width:60vw;
-}
+/* .carousel-inner{ */
+/* 	width:60vw; */
+/* } */
 #summernote{
 	width:55vw; 
 	min-width:670px;
@@ -167,11 +167,13 @@ body{
 
 <script>
 	$(function() {
-		$("#writeFeedForm").on("submit", function() {
-			$(".note-editable img").removeAttr("style");
+		$("#modifyProc").on("submit", function() {
 			var note = $(".note-editable").html();
 			$("#contents").val(note);
 		})
+		console.log("relation : ${dto.relation}");
+		
+		$("#selectRelation option:eq(${dto.relation})").attr("selected", "selected");
 	})
 </script>
 </head>
@@ -184,18 +186,18 @@ body{
 		<br>
 			<form action="modifyFeedProc?feed_seq=${dto.feed_seq }" method="post" id="modifyProc">
 				&nbsp;&nbsp;<input type="text" name="title" id="title" value="${dto.title }">
-				<select name="relation" data-menu>
+				<select name="relation" data-menu id="selectRelation">
 				<option value='0'>전체보기</option>
 				<option value='1'>지인</option>
 				<option value='2'>아는친구</option>
 				<option value='3'>절친</option>
-				<option value='4' selected>나만보기</option>
+				<option value='4'>나만보기</option>
+				<textarea name="contents" style="display: none" id="contents"></textarea>
 				</select> <button id="register">등록</button><button type="button" id="back">취소</button>
 			</form>
 			<br>
-			<br>
-						
-					
+			<br>	
+							
 			<div class="row" id="mediaRow">
 			<div class="col-8" style="margin:auto">
 			<div id="summernote">
@@ -242,7 +244,6 @@ body{
 					</c:when>
 				</c:choose>
 			</div>
-			<textarea name="contents" style="display: none" id="contents"></textarea>
 
 	
 			

@@ -125,11 +125,11 @@
             <!--Grid row-->
             <div class="row">
               <div class="col-2">
-                <span class="dot"><img class="profile" src="/resources/script/indexScript/img/poohProfile.jpg"></span>
+                <span class="dot"><img class="profile" src="/resources/script/indexScript/img/kangsik.jpg"></span>
               </div>
               <div class="col-10 mb-2 pl-3">
                 <h5 class="feature-title font-bold mb-1">김강식</h5>
-                <p class="grey-text mt-2">쿠글 구석 개발자 출신의 중국집 자금성 철가방 유지보수 관리 개발자
+                <p class="grey-text mt-2">감성은 minor 심성은 major 
                 </p>
               </div>
             </div>
@@ -141,7 +141,7 @@
             <!--Grid row-->
             <div class="row">
               <div class="col-2">
-                <span class="dot"><img class="profile" src="/resources/script/indexScript/img/poohProfile.jpg"></span>
+                <span class="dot"><img class="profile" src="/resources/script/indexScript/img/sewon.jpg"></span>
               </div>
               <div class="col-10 mb-2">
                 <h5 class="feature-title font-bold mb-1">김세원</h5>
@@ -157,7 +157,7 @@
             <!--Grid row-->
             <div class="row">
               <div class="col-2">
-                <span class="dot"><img class="profile" src="/resources/script/indexScript/img/poohProfile.jpg"></span>
+                <span class="dot"><img class="profile" src="/resources/script/indexScript/img/yuri.jpg"></span>
               </div>
               <div class="col-10 mb-2">
                 <h5 class="feature-title font-bold mb-1">나유리</h5>
@@ -173,12 +173,11 @@
             <!--Grid row-->
             <div class="row">
               <div class="col-2">
-                <span class="dot"><img class="profile" src="/resources/script/indexScript/img/poohProfile.jpg"></span>
+                <span class="dot"><img class="profile" src="/resources/script/indexScript/img/yerin.jpg"></span>
               </div>
               <div class="col-10 mb-2">
                 <h5 class="feature-title font-bold mb-1">이예린</h5>
-                <p class="grey-text mt-2">방구대장 트름대장 북북이 트북이
-                </p>
+                <p class="grey-text mt-2">방구대장 트름대장 북북이 트북이</p>
               </div>
             </div>
             <!--/Grid row-->
@@ -189,7 +188,7 @@
             <!--Grid row-->
             <div class="row">
               <div class="col-2">
-                <span class="dot"><img class="profile" src="/resources/script/indexScript/img/poohProfile.jpg"></span>
+                <span class="dot"><img class="profile" src="/resources/script/indexScript/img/ujin.jpg"></span>
               </div>
               <div class="col-10 mb-2">
                 <h5 class="feature-title font-bold mb-1">전유진</h5>
@@ -204,7 +203,7 @@
             <!--Grid row-->
             <div class="row">
               <div class="col-2">
-                <span class="dot"><img class="profile" src="/resources/script/indexScript/img/poohProfile.jpg"></span>
+                <span class="dot"><img class="profile" src="/resources/script/indexScript/img/eunbi.jpg"></span>
               </div>
               <div class="col-10 mb-2">
                 <h5 class="feature-title font-bold mb-1">조은비</h5>

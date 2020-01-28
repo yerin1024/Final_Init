@@ -7,22 +7,39 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Whole Feed</title>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"> 
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-<link rel="stylesheet" href="/resources/css/nav.css?new"> 
-<link rel="stylesheet" href="/resources/css/alr.css">
-<link rel="stylesheet" href="/resources/css/msg.css?new">
-<link rel="stylesheet" href="/resources/css/test.css">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
-<style>
+<title>Insert title here</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="/resources/css/nav.css">
+<link rel="stylesheet" href="/resources/css/msg.css"> 
+<link rel="stylesheet" href="/resources/css/alr.css"> 
+<link rel="stylesheet" href="/resources/css/test.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.css">
 
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.js"></script>
+
+<style>
+#exampleModal{
+	width:1200px;
+	margin:auto;
+}
 body{
    background-color:#171C28;
+}
+#searchBtn{
+	border:2.5px solid white;
+	border-radius:5px;
+	height:30px;
+	background:none;
+	color:white;
+	margin-left:10px;
 }
 #wrapper {
    margin: auto;
@@ -44,10 +61,21 @@ body{
     font-size:20px;
 
 }
+
+.modifyA, .deleteA{
+	color:black;
+	margin-right:10px;
+	font-size:15px;
+}
+.modifyA:hover, .deleteA:hover{
+	font-weight:bold;
+	color:black;
+}
+
 .row{
-   width:100%;
-   height:100%;
-   margin-bottom:15px;
+	width:100%;
+	height:100%;
+	margin-bottom:30px;
 }
 
 .parent([.title]){
@@ -95,7 +123,7 @@ body{
 }
 
 #keyword{
-   width:300px;
+	width:450px;
 }
 
 .nickname{
@@ -116,11 +144,15 @@ body{
    text-decoration:none;
 }
 
-.cover{
-   width:100%;
-   height:100%;
+img.cover{	
+    width: 100%;
+    height: 100%;
 }
-div.cover {
+video.cover{	
+    width: 100%;
+    height: 100%;
+}
+div.cover { 
     position: absolute;
     top: 50%;
     left: 50%;
@@ -129,9 +161,10 @@ div.cover {
     max-width: 150px;
     max-height: 150px;
     overflow-y: hidden;
-
+    color:black;
+    font-size:17px;
+    font-weight:600;
 }
-
 
 .feed{
    min-width:150px;
@@ -474,8 +507,8 @@ div.cover {
     border: 1px solid rgb(239, 239, 239);
     padding: 0px 10px;
 }
-.modal-body1{
-   width:55%;
+.modal-body5{
+	width:55%;
     height: 100%;
     position: relative;
 /*     border:1px solid black; */
@@ -543,7 +576,10 @@ div.cover {
    margin:0px;
 }
 .media>p{
-   padding:10px;
+	padding:30px;
+	word-break:break-all;
+	text-align:left;
+	font-size:20px;
 }
 
 /* All Device */
@@ -661,79 +697,82 @@ function getList(page){
  <jsp:include page="/resources/jsp/nav.jsp" />
  <jsp:include page="/resources/jsp/alr.jsp"/>
 <jsp:include page="/resources/jsp/msg.jsp"/>
-   <div id="wrapper">
-      <div id="search">
-         <br><br>
-         <form action="wholeFeed" method="post">
-            <input type="text" name="keyword" id="keyword">&nbsp;&nbsp;
-            <button id="searchBtn">검색</button>
-         </form>
-         <br><br>
-      </div>
-<!--       wholeFeed는 친구검색일 경우와 피드검색일 경우로 나뉘고 default는 검색내용없이 전체피드가 나오도록 했음 -->
-      <div id="contents">
-         <c:if test="${option eq 'friend' }"><!--       친구검색일 경우 -->
-            <c:choose>
-               <c:when test="${fn:length(friendList) >0 }">
-               <div id="feeds">
-                  <c:forEach items="${friendList}" var="friend">
-                  <div class="row fRow">
-                     <div class="col-4 img">
-                        <img src="${friend.profile_img}" style="width:60px;height:60px;">
-                     </div>
-                     <div class="col-8 nickname">
-                        <a class="nicknameA" href="${pageContext.request.contextPath}/feed/myFeed?email=${friend.email}">${friend.nickname}</a>
-                     </div>
-                  </div>
-                  </c:forEach>
-               </div>
-               </c:when>
-               <c:otherwise>
-               검색한 친구 없습니다.
-               </c:otherwise>
-            </c:choose>
-         </c:if>
 
-         <c:if test="${option eq 'nfriend' }"><!--       피드검색일 경우 -->
-            <c:choose>
-               <c:when test="${fn:length(list) <1}">
-               게시물이 없습니다.
-               </c:when>
-               <c:otherwise>
-                  <div id="feeds">
-                     <c:forEach items="${list }" var="feed" varStatus="status">
-                        <c:if test="${status.count mod 3==1}">
-                           <div class="row" >
-                        </c:if>                        
-                        <div class="col-4 feed">
-                           <a class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" href="#" data-id="${feed.feed_seq }" style="min-height: 150px;">${cover[status.count-1] }</a>
-                        </div>                        
-                        <c:if test="${status.count mod 3==0}">
-                           </div>
-                        </c:if>
-                     </c:forEach>
-                  </div>
-               </c:otherwise>
-            </c:choose>
-         </c:if>
-      </div>
-   </div>
+	<div id="wrapper">
+		<div id="search">
+			<br><br>
+			<form action="wholeFeed" method="post">
+				<input type="text" name="keyword" id="keyword">&nbsp;&nbsp;
+				<button id="searchBtn">검색</button>
+			</form>
+			<br><br>
+		</div>
+<!-- 		wholeFeed는 친구검색일 경우와 피드검색일 경우로 나뉘고 default는 검색내용없이 전체피드가 나오도록 했음 -->
+		<div id="contents">
+			<c:if test="${option eq 'friend' }"><!-- 		친구검색일 경우 -->
+				<c:choose>
+					<c:when test="${fn:length(friendList) >0 }">
+					<div id="feeds">
+						<c:forEach items="${friendList}" var="friend">
+						<div class="row fRow">
+							<div class="col-4 img">
+								<img src="${friend.profile_img}" style="width:60px;height:60px;">
+							</div>
+							<div class="col-8 nickname">
+								<a class="nicknameA" href="${pageContext.request.contextPath}/feed/myFeed?email=${friend.email}">${friend.nickname}</a>
+							</div>
+						</div>
+						</c:forEach>
+					</div>
+					</c:when>
+					<c:otherwise>
+					검색한 친구 없습니다.
+					</c:otherwise>
+				</c:choose>
+			</c:if>
 
-   
-      
-      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="margin-top: 60px;">
-     <div class="modal-dialog" role="document">
-       <div class="modal-content">
-         <div class="modal-header" style="width:99.9%;">
-            <span class="writerProfile"><img class="userProfileImg" src="${loginInfo.profile_img }" alt=""></span>
-           <h5 class="modal-title" id="exampleModalLabel">DETAIL VIEW</h5>
-           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-             <span aria-hidden="true">&times;</span>
-           </button>
-         </div>
-      <div class="modal-main">         
-            <div class="modal-body1">
-            </div>
+			<c:if test="${option eq 'nfriend' }"><!-- 		피드검색일 경우 -->
+				<c:choose>
+					<c:when test="${fn:length(list) <1}">
+					게시물이 없습니다.
+					</c:when>
+					<c:otherwise>
+						<div id="feeds">
+							<c:forEach items="${list }" var="feed" varStatus="status">
+								<c:if test="${status.count mod 3==1}">
+									<div class="row" >
+								</c:if>								
+								<div class="col-4 feed">
+									<a class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" href="#" data-id="${feed.feed_seq }" style="min-height: 150px;">${cover[status.count-1] }</a>
+								</div>								
+								<c:if test="${status.count mod 3==0}">
+									</div>
+								</c:if>
+							</c:forEach>
+						</div>
+					</c:otherwise>
+				</c:choose>
+			</c:if>
+		</div>
+	</div>
+
+	
+		
+		<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="margin-top: 60px;">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header" style="width:99.9%;">
+	         <span class="writerProfile"><img class="userProfileImg" src="${loginInfo.profile_img }" alt=""></span>
+	         <h5 class="modal-title" id="exampleModalLabel" style="font-size:30px;font-weight:bold;"></h5>
+
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+		<div class="modal-main">			
+	      	<div class="modal-body5">
+	      	</div>
+	      	
             <div class="title">
                 <div class="reply">
                      <div class="writerInfo">

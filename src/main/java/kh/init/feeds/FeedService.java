@@ -75,6 +75,20 @@ public class FeedService {
 
 		return result;
 	}
+	
+	public int modifyFeed(FeedDTO dto)throws Exception{
+		//해시태그 찾아냄
+				Pattern p = Pattern.compile("(#[가-히a-zA-Z]*[가-히a-zA-Z])");
+				Matcher m = p.matcher(dto.getContents());
+				String hashtag = "";
+				while(m.find()) {
+					hashtag += (m.group(0)+",");
+				}
+				dto.setHashtag(hashtag);
+		
+		int result = dao.modifyFeed(dto);
+		return result;
+	}
 
 	public String mediaTmpUpload(MultipartFile file, String tmpPath) throws Exception{
 
@@ -258,6 +272,7 @@ public class FeedService {
 
 		if(keyword!=null) {
 			keyword = "%"+keyword+"%";
+			System.out.println("service의 keyword"+keyword);
 		}
 		List<FeedDTO> list = (List<FeedDTO>)dao.selectAll(keyword, startNum, endNum, email).get("list");
 		System.out.println("service list : "+list.toString());
@@ -302,10 +317,7 @@ public class FeedService {
 		return replyResult;
 	}
 
-	public int modifyFeed(FeedDTO dto)throws Exception{
-		int result = dao.modifyFeed(dto);
-		return result;
-	}
+
 
 
 	public Map<String, Object> scrapFeed(String email) throws Exception{
@@ -357,6 +369,7 @@ public class FeedService {
 
 	public List<FeedDTO> getFriendFeed(int page, String email) throws Exception{
 		System.out.println("service page: "+page);
+		System.out.println("service email:"+ email);
 		int totalFeed = dao.getFriendFeedCount(email);
 		int startNum = 0;
 		int endNum = 0;
@@ -374,6 +387,7 @@ public class FeedService {
 		}
 		System.out.println();
 		List<FeedDTO> list = dao.getFriendFeed(email, startNum, endNum);
+		System.out.println("email확인 : " + email);
 		System.out.println("service getFriendFeed size : "+list.size());
 		System.out.println("service startNum: "+startNum);
 		System.out.println("service endNum: "+endNum);
@@ -519,6 +533,7 @@ public class FeedService {
 		map.put("parent", dto.getParent());
 		map.put("profile_img", mdto.getProfile_img());
 		map.put("nickname", mdto.getNickname());
+		String nickname = (String) map.get("nickname");
 		String jsonString = gson.toJson(map);
 		return jsonString;
 	}
@@ -532,6 +547,10 @@ public class FeedService {
 	}
 	public int updateReply(ReplyDTO dto)throws Exception{
 		int result = replyDAO.updateReply(dto);
+		return result;
+	}
+	public int getMyFeedCountSVC(String email)throws Exception{
+		int result  = dao.getMyFeedCount(email);
 		return result;
 	}
 
