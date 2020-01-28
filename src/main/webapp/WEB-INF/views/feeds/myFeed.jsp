@@ -27,8 +27,7 @@
 <style>
 @import url('https://fonts.googleapis.com/css?family=Noto+Sans+KR&display=swap');
 *{
-	font-family: 'Noto Sans KR', sans-serif;
-	
+	font-family: 'Noto Sans KR', sans-serif;	
 }
 	#exampleModal{
 	width:1200px;
@@ -248,11 +247,15 @@
 }
 
 .profileButton{
-	width: 125px;
-	height: 125px;
-	border-radius: 80px;
-	border: 1px solid black;
-	background-color: white;
+    width: 90px;
+    height: 38px;
+    border-radius: 13px;
+    border: 1px solid white;
+    background-color: white;
+    font-size: 21px;
+    font-family: 'Do Hyeon', sans-serif;
+    background: transparent;
+    color: white;
 }
 
 .btn btn-primary btn-lg {
@@ -279,70 +282,11 @@
 	
 	border: none;
 }
-/*This is coded CSS rainbow*/
-#changeProfile:hover {
-	-webkit-animation: rainbow 1s infinite;
-	-ms-animation: rainbow 1s infinite;
-	-o-animation: rainbow 1s infinite;
-	animation: rainbow 1s infinite;
-}
-
-@-webkit-keyframes rainbow {
-0% {color: #ff0000;}
-10% {color: #ff8000;}
-20% {color: #ffff00;}
-30% {color: #80ff00;}
-40% {color: #00ff00;}
-50% {color: #00ff80;}
-60% {color: #00ffff;}
-70% {color: #0080ff;}
-80% {color: #0000ff;}
-90% {color: #8000ff;}
-100% {color: #ff0080;}
-}
-@-ms-keyframes rainbow {
-0% {color: #ff0000;}
-10% {color: #ff8000;}
-20% {color: #ffff00;}
-30% {color: #80ff00;}
-40% {color: #00ff00;}
-50% {color: #00ff80;}
-60% {color: #00ffff;}
-70% {color: #0080ff;}
-80% {color: #0000ff;}
-90% {color: #8000ff;}
-100% {color: #ff0080;}
-}
-@-o-keyframes rainbow {
-0% {color: #ff0000;}
-10% {color: #ff8000;}
-20% {color: #ffff00;}
-30% {color: #80ff00;}
-40% {color: #00ff00;}
-50% {color: #00ff80;}
-60% {color: #00ffff;}
-70% {color: #0080ff;}
-80% {color: #0000ff;}
-90% {color: #8000ff;}
-100% {color: #ff0080;}
-}
-@keyframes rainbow {
-0% {color: #ff0000;}
-10% {color: #ff8000;}
-20% {color: #ffff00;}
-30% {color: #80ff00;}
-40% {color: #00ff00;}
-50% {color: #00ff80;}
-60% {color: #00ffff;}
-70% {color: #0080ff;}
-80% {color: #0000ff;}
-90% {color: #8000ff;}
-100% {color: #ff0080;}
-}
 .profileName {
 	text-align: center;
 	font-size: 70px;
 	font-weight: bold;
+	color:#ffdeb0;
 }
 
 .profileMessageLayout {
@@ -354,6 +298,8 @@
     max-width: 600px;
     margin: auto;
     font-size: 15px;
+	font-family: 'Noto Serif KR', serif;
+	color:white;
 }
 
 .modal-dialog {
@@ -445,7 +391,7 @@
     width: 50%;
     height:10%;
 }
-.modal-title{
+.myNickname{
 	line-height: 50px;
 }
 #writeReply{	
@@ -457,7 +403,12 @@
     border-radius: 16px;
     border: 1px solid rgb(239, 239, 239);
     padding: 0px 10px;
-    
+    max-height:400px;
+    overflow-y:scroll;
+	white-space:normal;
+}
+#writeReply::-webkit-scrollbar{
+        width: 0 !important;	
 }
 .replyBtns{
 	margin:20px 20px;
@@ -512,9 +463,6 @@
     display: flex;
     padding: 1rem 1rem;	
 }
-.modal-title{
-	margin:auto;
-}
 .replyBtns>button, .replyBtn{
 	background: 0 0;
     border: 0;
@@ -530,6 +478,7 @@
     border: 1px solid #999;
     padding: 5px 7px;
     border-radius: 8px;
+    max-height:70px;
 }
 
 .myProfile{	
@@ -551,17 +500,17 @@
 }
 
 /* 버튼호버 */
-.profileButton:hover, .profileImageBox:hover{
+.profileImageBox:hover{
   display: -webkit-box;
   display: flex;
   -webkit-box-align: center;
           align-items: center;
   -webkit-box-pack: center;
           justify-content: center;
-  --borderWidth: 3px;
+  --borderWidth: 5px;
   position: relative;
 }
-.profileButton:after, .profileImageBox:after {  
+.profileImageBox:after {  
   content: '';
   position: absolute;
   top: calc(-1 * var(--borderWidth));
@@ -601,17 +550,6 @@
 	}
 }
 
-.clock {
-	position: absolute; 
-    top: -80px;
-	left: 50%; 	
-    color: #17D4FE;
-    font-size: 20px;
-    font-family: Orbitron;
-    letter-spacing: 7px;
-    transition-duration: 0.5s;
-    transform: translateX(-50%);
-}
 .report{	
     position: absolute;
     right: 110px; 	
@@ -626,10 +564,7 @@
   text-align:center;
   width:35%;
 }
-.frInfo{
-style=background-color:#171C28;
-margin:5px;
-}
+
 /* 호버 */
 /* All Device */
 /* 모든 해상도를 위한 공통 코드를 작성한다. 모든 해상도에서 이 코드가 실행됨. */
@@ -648,8 +583,9 @@ margin:5px;
 @media all and (max-width:768px) {
 	/*     사용자 해상도가 768px 이하일 때 이 코드가 실행됨. 테블릿과 데스크톱의 공통 코드를 작성한다. */
 	.profileButton {
-    	width: 70px;
-   		height: 70px;
+   		width: 65px;
+    	height: 30px;
+    	font-size: 13px;
 	}
 /* 	.row{ */
 /* 		margin:0px; */
@@ -1067,8 +1003,6 @@ button.learn-more .button-text {
     <jsp:include page="/resources/jsp/alr.jsp"/>
 	<jsp:include page="/resources/jsp/msg.jsp"/>
 	<div class="container-fluid">
-		${loginInfo.profile_img } ???????????????????????
-		<div id="MyClockDisplay" class="clock" onload="showTime()"></div>
 		<div class="profile">
 			<c:choose>
 				<c:when test="${loginInfo.email ne mvo.email}">
@@ -1081,20 +1015,16 @@ button.learn-more .button-text {
 						</c:if>
 						
 					</div>
-					<div class="profileLayout">
-					
+					<div class="profileLayout">					
 						<div class="profileLayoutLeft">
 						<c:if test="${frResult == null || frResult == 0  }">
-							<button class="profileButton btn-lg" id="openModalBtn">＋</button>
-							<div class="btnText">친구요청</div>
+							<button class="profileButton btn-lg" id="openModalBtn">+</button>
 						</c:if>			
 							<c:if test="${frResult == 1 }">
 						<button class="profileButton btn-lg" id="ingReq">＋</button>
-							<div class="btnText">친구요청중</div>
 						</c:if>	
 						<c:if test="${frResult == 2  }">
-							<button class="profileButton btn-lg" id="openFrModal" >＋</button>
-							<div class="btnText">친구</div>
+							<button class="profileButton btn-lg" id="openFrModal" >+</button>
 						</c:if>	
 						
 						</div>
@@ -1106,7 +1036,6 @@ button.learn-more .button-text {
 					
 					<div class="profileLayoutRight">
 						<button class="messageRequest profileButton" id="msgRequest">＋</button>
-						<div class="btnText">메세지</div>
 					</div>
 					</div>
 					<div class="profileMessageLayout">
@@ -1121,8 +1050,7 @@ button.learn-more .button-text {
 					
 					<div class="profileLayout">
 						<div class="profileLayoutLeft">
-							<button class="profileButton" id="friendsList">＋</button>
-							<div class="btnText">친구목록</div>
+							<button class="profileButton" id="friendsList">친구목록</button>
 						</div>
 						<div class="profileLayoutCenter">
 							<div class="profileImageBox">
@@ -1132,8 +1060,7 @@ button.learn-more .button-text {
 						</div>
 						<c:if test="${loginInfo.id_type eq 'E'}">
 							<div class="profileLayoutRight">
-								<button class="profileButton" id="changeInfo">＋</button>
-								<div class="btnText">회원정보</div>
+								<button class="profileButton" id="changeInfo">정보수정</button>
 							</div>
 						</c:if>						
 					</div>
@@ -1275,7 +1202,7 @@ button.learn-more .button-text {
 	      	<div class="footer-btns" style="display:flex;width:50%;height:10%;"></div>
 	      	<div class="writeReplyBox">					
 	         	<span class="myProfile"><img class="userProfileImg" src="${loginInfo.profile_img }" alt=""></span>
-	       		<h5 class="modal-title" id="exampleModalLabel">${loginInfo.nickname }</h5>
+	       		<h5 class="myNickname">${loginInfo.nickname }</h5>
 	       		<div id="writeReply" contenteditable="true"></div>
 	       		<button type="button" class="replyBtn" onclick="replyBtnOnclick('${loginInfo.email}');">등록</button>
 			</div>
@@ -2189,47 +2116,6 @@ button.learn-more .button-text {
             }
         })
     });
-	
-    $(".profileImageBox").mouseenter(function(){
-		$("#MyClockDisplay").css("top","0px");
-    });
-     $(".profileImageBox").mouseleave(function(){ 
- 		$("#MyClockDisplay").css("top","-80px");
-    }); 
-	function showTime(){
-	    var date = new Date();
-	    var h = date.getHours(); // 0 - 23
-	    var m = date.getMinutes(); // 0 - 59
-	    var s = date.getSeconds(); // 0 - 59
-	    var session = "AM";
-	    
-	    if(h == 0){
-	        h = 12;
-	    }
-	    
-	    if(h > 12){
-	        h = h - 12;
-	        session = "PM";
-	    }
-	    
-	    h = (h < 10) ? "0" + h : h;
-	    m = (m < 10) ? "0" + m : m;
-	    s = (s < 10) ? "0" + s : s;
-	    
-	    var time = h + ":" + m + ":" + s + " " + session;
-	    document.getElementById("MyClockDisplay").innerText = time;
-	    document.getElementById("MyClockDisplay").textContent = time;
-	    
-	    setTimeout(showTime, 1000);
-	    
-	}
-
-	showTime();
-	
-    var poption1;
-    var boption1;
-    var boption2;
-    var boption3;
 
     $("#changeInfo").on("click", function () {
         $.ajax({
