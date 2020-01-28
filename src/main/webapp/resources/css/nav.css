@@ -15,11 +15,12 @@ html, body {
 }
 
 .header {
-	margin: 0px
+	margin: 0px;
+	min-width: 490px;
 }
 
 .nav-left, .nav-center {
-	float: left
+	float: left;
 }
 
 #logoA{
@@ -57,7 +58,7 @@ html, body {
 }
 
 .header {
-	background-image: linear-gradient(to right, #0F4C81 0%, #ffecd2 51%, #0F4C81 100%);
+	background-image: linear-gradient(to right, #171C28 5%, #ffecd2 51%, #171C28 100%);
 }
 
 .inner {
