@@ -288,4 +288,18 @@ public class MemberController {
 			return "error";
 		}
 	}
+	@RequestMapping("/blockMem") // 비밀번호 변경
+	@ResponseBody
+	public String blockMem(String yr_id) {
+		String myEmail = ((MemberDTO)session.getAttribute("loginInfo")).getEmail();
+		
+		try {
+			String result =service.blockService(myEmail, yr_id);
+			return result;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "error";
+		}
+		
+	}
 }

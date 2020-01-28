@@ -47,7 +47,7 @@ $(function() {
          $("#my_feed").attr("src", $("#my_feed").attr("src").replace("/resources/images/user.png", "/resources/images/user2.png"));  
          $("#logout").attr("src", $("#logout").attr("src").replace("/resources/images/logout.png", "/resources/images/logout2.png"));
         $("#logoA").css("background-position","right center"); 
-   	 	$("#logoA").css("color","#0f4c81");
+   	 	$("#logoA").css("color","#171C28");
      });
      $(".header").mouseleave(function(){
         $("#total_feed").attr("src", $("#total_feed").attr("src").replace("/resources/images/friends2.png", "/resources/images/friends.png"));  
