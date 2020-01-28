@@ -30,10 +30,10 @@ $('#exampleModal').on('shown.bs.modal', function (event) {
 		console.log(dto.contents);
 		
 		console.log("writer : "  + writer);
-		console.log("writerImg : " + writerProfile);
+// 		console.log("writerImg : " + writerProfile);
 		
 		$(".writer").html(writer);
-		$(".userProfileImg").attr("src", writerProfile);
+// 		$(".userProfileImg").attr("src", writerProfile);
 		//디테일뷰 미디어
 		if(mediaList.length>1){ //미디어가 존재하므로 캐러셀 만들어줌
 			console.log("캐러셀 시작");

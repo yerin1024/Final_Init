@@ -65,6 +65,7 @@
     .tab1_body {
         font-family: 'Noto Sans KR', sans-serif;
         width: 50%;
+        margin: auto;
     }
     .tab1_body > a{
     	color: #062f5c;
@@ -197,24 +198,16 @@
         color: #fffefc;
     }
 	
-	#tab5-1_generalSignup{
+	#tab5-1_generalSignup, #tab5-2_kakaoLoginBtn{
         width: 200px;
 	    height: 200px;
 	    padding: 5px;
-	    margin: 5px;
+	    margin: 10px;
 	    border: none;
 	    border-radius: 8px;
 	    font-size: 19px;
 	    background-color: #171C28;
 	    color: white;
-	}
-	#tab5-2_kakaoLoginBtn{
-		width: 200px;
-	    height: 200px;
-	    margin: 5px;
-	    border: none;
-	    border-radius: 8px;
-	    font-size: 19px;
 	}
 	
 	#tab5-2_kakaoLoginBtn:hover{
@@ -452,7 +445,7 @@
                                     <div class="tab4_body">
                                     	<div class="tab4_signupBtnBox">
 											<button type="button" id="tab5-1_generalSignup">일반 회원가입</button>
-											<img src="${pageContext.request.contextPath}/resources/images/kakaoSignup_btn.png" id="tab5-2_kakaoLoginBtn" style=""><br>
+											<button type="button" id="tab5-2_kakaoLoginBtn"><img src="/resources/images/kakaolink_btn.png"></button>
                                     	</div>
                                         <div class="tab4_btnBox">
                                             <button type="button" id="tab4_goMain">이전</button>
