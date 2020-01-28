@@ -5,51 +5,54 @@
 <div id=collection>
 		<button id=toCollection class=toColl style="display:none;">메시지 목록</button>
 	</div>
-	
-<!-- 	<div id='modalDiv'></div> -->
-<!-- 	<div> -->
-<!-- <div class="modal fade" id="toWhereModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true"> -->
-<!--   <div class="modal-dialog modal-dialog-centered" role="document"> -->
-<!--     <div class="modal-content"> -->
-<!--       <div class="modal-header"> -->
-<!--         <h5 class="modal-title" id="exampleModalCenterTitle">Modal title</h5> -->
-<!--         <button type="button" class="close" data-dismiss="modal" aria-label="Close"> -->
-<!--           <span aria-hidden="true">&times;</span> -->
-<!--         </button> -->
-<!--       </div> -->
-<!--       <div class="modal-body"> -->
-<!-- <!--       ----------------------- --> 
-<!--         <div id='profileBigger'><img src='/images/b1.png' id='profileBiggerImg'></div> -->
-        
-<!--         <div class='toWhere'> -->
-<!--            <a href='#'> -->
-<!--             <div id='toUserFeed'> -->
-<!--                 <div class='imgContainer'> -->
-<!--                 <img src='/images/toUserFeed.png' id='toUserFeedImg'> -->
-<!--                 </div> -->
-<!--                 <b>피드 가기</b> -->
-<!--             </div> -->
-<!--             </a> -->
-            
-<!--             <a href='#'> -->
-<!--             <div id='toUserMsg'> -->
-<!--                 <div class='imgContainer'> -->
-<!--                 <img src='/images/toUserMsg.png' id='toUserMsgImg'> -->
-<!--                 </div> -->
-<!--                 <b>메시지 보내기</b> -->
-<!--             </div> -->
-<!--             </a> -->
-<!--         </div> -->
-<!-- <!--       ----------------------- --> 
-<!--       </div> -->
-<!--       <div class="modal-footer"> -->
-<!-- <!--        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>--> 
-<!--       </div> -->
-<!--     </div> -->
-<!--   </div> -->
-<!-- </div> -->
 
-<!-- </div> -->
+<div class="jolyClass" data-toggle="modal" data-target="#toWhereModal" value='toWhereModal' style="display:none;">모달 띄우기</div>
+
+
+
+<!-- Modal -->
+<div>
+	<div class="modal fade" id="toWhereModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	  <div class="modal-dialog modal-dialog-centered" role="document" style="width: 400px;">
+	    <div class="modal-content" >
+	      <div class="modal-header modal-header-nickname" >
+	        <h5 class="modal-title modal-nickname" id="modal-nickname-title"></h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	<!--       ----------------- -->
+	        <div id='profileBigger'>
+<!-- 	        <img src='/images/sadCat.jpg' id='profileBiggerImg'> -->
+	        </div>
+	        
+	        <div class='userToWhere'>
+	            <div id='toUserFeed'>
+	                <div class='imgContainer'>
+	                <img src='/images/toUserFeed.png' id='toUserFeedImg'>
+	                </div>
+	                <b>피드 가기</b>
+	            </div>
+	            
+	            <div id='toUserMsg'>
+	                <div class='imgContainer'>
+	                <img src='/images/toUserMsg.png' id='toUserMsgImg'>
+	                </div>
+	                <b>메시지 보내기</b>
+	            </div>
+	        </div>
+	<!--       ----------------- -->
+	      </div>
+	      <div class="modal-footer">
+	<!--        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>-->
+	      </div>
+	    </div>
+	  </div>
+	</div>
+</div>
+<!-- Modal End -->
+
 
 <!--       ----------------------------------------------------------------------------------------------- -->
 			
@@ -113,60 +116,78 @@
  				for(var i=0; i < resp.length; i++){
  					$(".sector_in").append("<div class='ppre_line'>"		// img src 안에다가 dto 꺼내듯이 쓰면 됨
  							+"<div class='pre_pf' data-toggle='modal' data-target='#toWhereModal'><img src='"+resp[i].profile_img+"' class='pre_pf_img'></div>"
- 			        		+"<div class='pre_text'>"+resp[i].nickname+"</div>"
+ 							+"<div class='pre_text' id='"+resp[i].fr_id+"' value='"+resp[i].nickname+"' name='"+resp[i].profile_img+"'>"+resp[i].nickname+"</div>"
  			                +"<div class='pre_time'>"
  			                +"<img src='/images/startMsg2.png' class='pre_start' id='"+resp[i].fr_id+"' value='"+resp[i].nickname+"' name='"+resp[i].profile_img+"'>"
  			                +"</div></div>");
 				}
+ 				
+ 			// 모달 띄우기
+ 				$(".pre_text").on("click", function(){
+ 					$('#toWhereModal').modal('show');
+ 					var friendId = $(this).attr('id');
+ 					var friendNick = $(this).attr('value');
+ 					var friendImg = $(this).attr('name');
+ 					console.log(friendId);
+ 					console.log(friendNick);
+ 					console.log(friendImg);
+ 					console.log("프로필 모달 가지고 왔어");
+ 					
+//  					$(".modal-nickname").children().remove();
+//  					$(".modal-nickname").append(friendNick);
+					$(".modal-header-nickname").children().remove();
+					$(".modal-header-nickname").append("<h5 class='modal-title modal-nickname' id='modal-nickname-title'>"+friendNick+"</h5>"
+							+"<button type='button' class='close' data-dismiss='modal' aria-label='Close'>"
+							+"<span aria-hidden='true'>&times;</span>"
+							+"</button>");
+					
+ 					$("#profileBigger").children().remove();
+ 					$("#profileBigger").append("<img src='"+friendImg+"' id='profileBiggerImg'>");
+ 					
+ 					
+ 					$("#toUserFeed").children().remove();
+ 					$("#toUserFeed").append("<div id='toUserFeed'>"
+ 			                +"<div class='imgContainer'>"
+ 			                +"<img src='/images/toUserFeed.png' id='toUserFeedImg'>"
+ 			                +"</div>"
+ 			                +"<b>피드 가기</b>"
+ 			            +"</div>");
+ 					
+ 					$(".userToWhere").children().remove();
+ 					$(".userToWhere").append("<div class='userToWhere'>"
+ 							+"<a href='${pageContext.request.contextPath}/feed/myFeed?email="+friendId+"'>"
+ 		 		            +"<div id='toUserFeed'>"
+ 		 		            +"<div class='imgContainer'>"
+ 		 		            +"<img src='/images/toUserFeed.png' id='toUserFeedImg'>"
+ 		 		            +"</div>"
+ 		 		            +"<b>피드 가기</b>"
+ 		 		            +"</div>"
+ 		 		            +"</a>"
+ 		 		            
+ 		 		            +"<a href='#'>"
+ 		 		            +"<div id='toUserMsg'>"
+ 		 		            +"<div class='imgContainer'>"
+ 		 		            +"<img src='/images/toUserMsg.png' id='toUserMsgImg'>"
+ 		 		            +"</div>"
+ 		 		            +"<b>메시지 보내기</b>"
+ 		 		            +"</div>"
+ 		 		            +"</a>"
+ 		 		            +"</div>");
+ 					
+ 					$("#toUserMsg").on("click",function(){
+ 						$("img[id='"+friendId+"']").click();
+ 						$('#toWhereModal').modal('hide');
+ 						
+ 					});
+ 					
+ 				});
+ 			
  				$("#footer").children().remove();
  				$("#footer").append("<div class='toWhere ac1'><img src='/images/toFr_cl.png' id='toFrIcon'></div>"
  			            +"<div id='toBetween'></div>"
  			            +"<div class='toWhere toColl'><img src='/images/toMsg_un.png' id='toMsgIcon'></div>");
  				
-//  				// 모달 띄우기
-//  				$(".pre_pf").on("click",function(){
-//  					var friendId = $(this).attr('value');
-//  					console.log(friendId);
- 					
-//  					$("#modalDiv").children().remove();
-//  					$("#modalDiv").append("<div class='modal fade' id='"+friendId+"' tabindex='-1' role='dialog' aria-labelledby='exampleModalCenterTitle' aria-hidden='true'>"
-//  							  +"<div class='modal-dialog modal-dialog-centered' role='document'>"
-//  				    +"<div class='modal-content'>"
-//  				      +"<div class='modal-header'>"
-//  				        +"<h5 class='modal-title' id='exampleModalCenterTitle'>Modal title</h5>"
-//  				        +"<button type='button' class='close' data-dismiss='modal' aria-label='Close'>"
-//  				          +"<span aria-hidden='true'>&times;</span>"
-//  				        +"</button>"
-//  				      +"</div>"
-//  				      +"<div class='modal-body'>"
-//  				        +"<div id='profileBigger'><img src='images/b1.png' id='profileBiggerImg'></div>"
-//  				        +"<div class='toWhere'>"
-//  				           +"<a href='#'>"
-//  				            +"<div id='toUserFeed'>"
-//  				                +"<div class='imgContainer'>"
-//  				                +"<img src='images/toUserFeed.png' id='toUserFeedImg'>"
-//  				               +"</div>"
-//  				                +"<b>피드 가기</b>"
-//  				            +"</div>"
-//  				            +"</a>"
-//  				            +"<a href='#'>"
-//  				            +"<div id='toUserMsg'>"
-//  				                +"<div class='imgContainer'>"
-//  				                +"<img src='images/toUserMsg.png' id='toUserMsgImg'>"
-//  				                +"</div>"
-//  				                +"<b>메시지 보내기</b>"
-//  				            +"</div>"
-//  				            +"</a>"
-//  				        +"</div>"
- 				        
-//  				      +"</div>"
-//  				      +"<div class='modal-footer'>"
  				
-//  				      +"</div>"
-//  				    +"</div>"
-//  				  +"</div>"
-//  				+"</div>");
-//  				})
  				
  				
  				// 메시지 상세 보기
