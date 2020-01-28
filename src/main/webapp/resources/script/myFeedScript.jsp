@@ -81,9 +81,9 @@ $('#exampleModal').on('shown.bs.modal', function (event) {
 				replyhtml += "<div class='parentReply' reply_seq='"+replyList[i].reply_seq+"'>"							
 				replyhtml += "<div class='profileDiv'>"
 				replyhtml += "<span class='userProfile'>"
-				replyhtml += 		"<img class='userProfileImg' src="+writerProfile+" alt=''>"
+				replyhtml += 		"<img class='userProfileImg' src="+replyList[i].profile_img+" alt=''>"
 				replyhtml +=   "</span>"
-				replyhtml +=         	"<span class='userProfileID'>${loginInfo.nickname }</span>"
+				replyhtml +=         	"<span class='userProfileID'>"+replyList[i].nickname+"</span>"
 				replyhtml +=          "<span class='userReply'>"
              	replyhtml +=       	  "<div class='replyContents'>"+replyList[i].contents+"</div>"
              	replyhtml +=       "</span>"
@@ -114,9 +114,9 @@ $('#exampleModal').on('shown.bs.modal', function (event) {
 				var currentSeq = replyList[i].parent;
 				childhtml +=       "<div class='childReply' value=1 style='display:none' reply_seq='"+replyList[i].reply_seq+"' parent_seq='"+replyList[i].parent+"'>"
 				childhtml +=     		"<span class='userProfile'>"
-				childhtml +=     			"<img class='userProfileImg' src="+writerProfile+" alt='사진오류'>"
+				childhtml +=     			"<img class='userProfileImg' src="+replyList[i].profile_img+" alt='사진오류'>"
 				childhtml +=      		"</span>"
-				childhtml +=      		"<span class='userProfileID'>"+replyList[i].email+"</span>"
+				childhtml +=      		"<span class='userProfileID'>"+replyList[i].nickname+"</span>"
 				childhtml +=      "<span class='userReply'>"
 				childhtml +=      		"<div class='replyContents' contenteditable='false'>"+replyList[i].contents+"</div>"
 		       	childhtml +=      "</span>"
@@ -197,17 +197,18 @@ $('#exampleModal').on('shown.bs.modal', function (event) {
 		console.log("실패 : "+b);
 	})
 	$('#myInput').trigger('focus');
-	
+	$("#writeReply").html("");
 })
-		function replyBtnOnclick(email) {
-			console.log()
-			var writeReply = $("#writeReply");
-			var contents = writeReply.html();
+		
+            
+		function replyBtnOnclick(email,nickname) {	   
+	   		console.log("들어왔따따따따따따!");
+			var feed_seq = $("#exampleModal").attr("feed_seq");
+	   		var writeReply = $("#writeReply");
+			var contents = $("#writeReply").html();
 			if(contents == ""){ //컨텐츠가 null 값일 경우 등록 동작
 				return false;
 			}
-			var feed_seq = $("#exampleModal").attr("feed_seq");
-			console.log(feed_seq + " ## ?");
 			$.ajax({
 				type : "POST",
 				url : "${pageContext.request.contextPath }/feed/registerReply",
@@ -221,12 +222,12 @@ $('#exampleModal').on('shown.bs.modal', function (event) {
 					console.log(data);
 					var parentReply = "";
 					parentReply += "<div class=\"parentReply\" reply_seq="+data.reply_seq+">"
-					parentReply += "<div class=\"profileDiv\"><span class=\"userProfile\"><img class=\"userProfileImg\" src=\"${loginInfo.profile_img }\" alt=\"\"></span><span class=\"userProfileID\">"+data.email+"</span><span class=\"userReply\"><div class=\"replyContents\">"+data.contents+"</div></span></div>"
+					parentReply += "<div class=\"profileDiv\"><span class=\"userProfile\"><img class=\"userProfileImg\" src=\""+data.profile_img+"\" alt=\"\"></span><span class=\"userProfileID\">"+data.nickname+"</span><span class=\"userReply\"><div class=\"replyContents\">"+data.contents+"</div></span></div>"
 					parentReply += "<div class=\"replyBtns\">"
 					parentReply += "<button type=\"button\" class=\"deleteReply\">삭제</button>"
 					parentReply += "<button type=\"button\" class=\"registerChildBtn\">답글</button>"
-					parentReply += "<button type=\"button\" class=\"showReply\" style='display:none'>ㅡ답글보기</button>"
-					parentReply += "<button type=\"button\" class=\"hideReply\" style='display:none'>ㅡ답글숨기기</button>"	
+					parentReply += "<button type=\"button\" class=\"showReply\" style='display:none'>────────────── 답글보기</button>"
+					parentReply += "<button type=\"button\" class=\"hideReply\" style='display:none'>────────────── 답글숨기기</button>"	
 					parentReply += "</div>"		
 					parentReply += "</div>"
 					$(".reply").append(parentReply);
@@ -364,10 +365,6 @@ $('#exampleModal').on('shown.bs.modal', function (event) {
 				data : {reply_seq:reply_seq}				
 			}).done(function(resp) {
 				deleteDiv.remove();
-// 				if(parentReply.find(".childReply").length <= 1){
-// 					$(this).closest(".parentReply").attr("child",0);
-// 				}
-				console.log(parentReply.find(".childReply").length +"답글삭제?????");
 				if(parentReply.find(".childReply").length == 0){
 					parentReply.attr("child",0);
 					parentReply.find(".showReply").hide();

@@ -255,6 +255,7 @@
 	bottom: -10px;
 	border-radius: 20px;
 	padding: 5px 20px;
+	width:120px;
 	font-weight: bold;
 	font-size: 13px;
 	background-color: white;
@@ -1121,7 +1122,7 @@
 	         	<span class="myProfile"><img class="userProfileImg" src="${loginInfo.profile_img }" alt=""></span>
 	       		<h5 class="modal-title" id="exampleModalLabel">${loginInfo.nickname }</h5>
 	       		<div id="writeReply" contenteditable="true"></div>
-	       		<button type="button" class="replyBtn" onclick="replyBtnOnclick('${loginInfo.email}');">등록</button>
+							<button class="replyBtn" onclick="replyBtnOnclick('${loginInfo.email}','${loginInfo.nickname }');">등록</button>
 			</div>
 	      </div>
 	    </div>

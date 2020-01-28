@@ -149,7 +149,92 @@ html, body {
    background: none;
 }
 
-
+/* 댓글 */
+.reply{	
+    margin-bottom: 40px;
+}
+.myProfileImgBox,.userProfile{
+	margin:10px 20px;
+}
+.myNickName,.userProfileID{	
+    font-size: 20px;
+    line-height: 70px;
+}
+.writeReply{
+    background: transparent;
+    font-size: 16px;
+    margin: 12px 12px;
+    width: 100%;
+    height: 50px;
+    border-radius: 16px;
+    border: 1px solid rgb(239, 239, 239);
+    padding: 0px 10px;
+    line-height: 48px;
+}
+.replyContents{	
+    background: transparent;
+    font-size: 16px;
+    margin: 12px 12px;
+    width: 100%;
+    height: 50px;
+    border-radius: 16px;
+    border: 1px solid rgb(239, 239, 239);
+    padding: 0px 10px;
+    line-height: 48px;
+}
+.userProfileImg{
+	width:50px;
+	height:50px;
+	border-radius: 160px;
+    border: 1px solid black;
+}
+.writeReplyBox{
+	display: flex;
+    border-top: 1px solid black;
+}
+.replyBtn{	    
+    border: 1px solid #999;
+    background: transparent;
+    font-size: 16px;
+    width: 65px;
+    border-radius: 11px;
+    margin: 12px;
+    color: #999;
+}
+.replyBtns{	
+    margin: 10px 20px;
+    text-align:right;
+}
+.profileDiv{
+	display:flex;
+}
+.childReply{
+    margin: 10px 50px;
+}
+.userReply{	
+    display: inline-block;
+    width: 430px;
+}
+.replyBtns>button:not(.showReply):not(.hideReply){	
+    border: 1px solid #999;
+    background: transparent;
+    font-size: 16px;
+    border-radius: 11px;
+    color: #999;
+}
+.contentsBox{
+	width:100%;
+}
+.showReply,.hideReply{
+	display: block;
+	width:100%;
+    border: none;
+    background: transparent;
+    color:#999;
+}
+.parentReply{
+	border:1px solid #999;
+}
 /* .modal {
           text-align: center;
         } */
@@ -310,12 +395,14 @@ html, body {
                      var bookmarkCheckList = JSON.parse(data.bookmarkCheckList);
                      var profile_imgList = JSON.parse(data.profile_imgList);
                      var declareCheckList = JSON.parse(data.declareCheckList);
+                     console.log(replyList[7] + "##");
                      for (var i = 0; i < list.length; i++) {
-                         var feed = $("<div class='feed'></div>");
+                         var feed = $("<div class='feed' feed_seq="+list[i].feed_seq+"></div>");
                          var profile = $("<div class='row profile'></div>");
                          var Img = $("<div class='row profileImg'></div>") 
                          Img.append(profile_imgList[i]); 
                          profile.append(Img);
+                         
                          var nick = $("<div class='row profileNickname'></div>");
                          nick.append(list[i].nickname);
                          profile.append(nick);
@@ -339,7 +426,7 @@ html, body {
                             feedDeclaration.append(beforeDec);    
                             profile.append(feedDeclaration); 
                          }
-                         }else{ }
+                         }else{ }                         
                         feed.append(profile);
                         //ajax media가 있으면 carousel 없으면 바로 contents
                         if(mediaList[i].length != 0){
@@ -397,15 +484,7 @@ html, body {
                         var contents = $("<div class='row contents' style='min-height:100px; max-height:400px;'></div>");
                         contents.append(list[i].contents);
 
-//                         var replys = $("<div class='row replys'></div>");
-//                         for (var r = 0; r < replyList[i].length; i++) {
-//                            var reply = $("<div class='row reply'></div>");
-//                            reply.append(replyList[i][r]);
-//                            replys.append(reply);
-//                         }
-
                         feed.append(contents);
-//                         feed.append(replys);
 
                         var btns = $("<div class='row btns'></div>");
 
@@ -458,6 +537,74 @@ html, body {
                         }
                         feed.append(btns);
                         $("#wrapper").append(feed);
+                        
+                        var replyDiv = $("<div class='reply' style='border:1px solid red'></div>") 
+                        feed.append(replyDiv);
+                        
+                        if(replyList[i].length != 0){
+                        	
+                            var replyhtml = "";          
+                    		for(var z=0; z<replyList[i].length; z++){
+                    			if(replyList[i][z].parent == 0){
+                    				replyhtml += "<div class='parentReply' reply_seq='"+replyList[i][z].reply_seq+"'>"							
+                    				replyhtml += "<div class='profileDiv'>"
+                    				replyhtml += "<span class='userProfile'>"
+                    				replyhtml += 		"<img class='userProfileImg' src="+replyList[i][z].profile_img+" alt=''>"
+                    				replyhtml +=   "</span>"
+                    				replyhtml +=         	"<span class='userProfileID'>"+replyList[i][z].nickname+"</span>"
+                    				replyhtml +=          "<span class='userReply'>"
+                                 	replyhtml +=       	  "<div class='replyContents'>"+replyList[i][z].contents+"</div>"
+                                 	replyhtml +=       "</span>"
+                                 	replyhtml +=        "</div>"	            
+                                 	replyhtml +=        "<div class='replyBtns'>"
+                                    if('${loginInfo.email}' == replyList[i][z].email){   
+                                 	replyhtml +=  				"<button type='button' class='deleteReply'>삭제</button>"		
+                                    }             	
+                                 	replyhtml +=        		"<button type='button' class='registerChildBtn'>답글</button>"
+                                    replyhtml += 				"<button type=\"button\" class=\"showReply\" style='display:none'>ㅡ답글보기</button>"
+                                    replyhtml += 				"<button type=\"button\" class=\"hideReply\" style='display:none'>ㅡ답글숨기기</button>"
+                                 	replyhtml +=       "</div>"	
+                                 	replyhtml +=   "</div>";
+                    		}
+                    		}
+                    		
+                    		replyDiv.append(replyhtml);
+                    		
+                    		for(var z=0; z<replyList[i].length; z++){
+                    			if(replyList[i].parent != 0){
+                    				var childhtml = "";
+                    				var currentSeq = replyList[i][z].parent;
+                    				console.log(currentSeq +"시퀀스값??");
+                    				childhtml +=       "<div class='childReply' value=1 style='display:none' reply_seq='"+replyList[i][z].reply_seq+"' parent_seq='"+replyList[i][z].parent+"'>"
+                    				childhtml +=     		"<span class='userProfile'>"
+                    				childhtml +=     			"<img class='userProfileImg' src="+replyList[i][z].profile_img+" alt='사진오류'>"
+                    				childhtml +=      		"</span>"
+                    				childhtml +=      		"<span class='userProfileID'>"+replyList[i][z].nickname+"</span>"
+                    				childhtml +=      "<span class='userReply'>"
+                    				childhtml +=      		"<div class='replyContents' contenteditable='false'>"+replyList[i][z].contents+"</div>"
+                    		       	childhtml +=      "</span>"
+                    		        childhtml +=      "<div class='replyBtns'>"
+                    			    if('${loginInfo.email}' ==  replyList[i][z].email){
+                               		childhtml +=      		"<button class='deleteChildReplyBtn'>삭제</button>"
+                    		        }
+                    	       		childhtml +=      "</div>"
+                             		childhtml +=      "</div>";
+                             		$(".parentReply[reply_seq="+currentSeq+"]").append(childhtml);
+                    				if($(".parentReply[reply_seq="+currentSeq+"]").find(".childReply").length > 0){
+                    					$(".parentReply[reply_seq="+currentSeq+"]").attr("child",1);
+                    					$(".parentReply[reply_seq="+currentSeq+"]").find(".showReply").show();
+                    				}
+                    			}
+                    		}
+                        }
+                        var writehtml = "";
+                        writehtml += "<div class='writeReplyBox'>"
+                        writehtml += "<span class='myProfileImgBox'><img class='userProfileImg' src='${loginInfo.profile_img}' alt=''></span>"
+                        writehtml += "<div class='myNickName'>${loginInfo.nickname}</div>"
+                        writehtml += "<div class='writeReply' id='writeReplyContents' contenteditable='true'></div>"
+                        writehtml += 	"<button class='replyBtn' onclick=\"replyBtnOnclick('${loginInfo.email}','"+list[i].feed_seq+"','${loginInfo.nickname}',this);\">등록</button>"
+                        writehtml += "</div>"
+                        feed.append(writehtml);
                      };
                   })
    }
@@ -475,7 +622,7 @@ html, body {
          </c:when>
          <c:otherwise>
             <c:forEach items="${list}" var="feed" varStatus="status">
-               <div class="feed">
+               <div class="feed" feed_seq=${feed.feed_seq }>
                   <div class="row profile">
                      <div class="row profileImg">
                         ${profile_imgList[status.index]}</div>
@@ -501,7 +648,6 @@ html, body {
                         </c:choose>
                      </div>
                   </c:when>
-                  <c:otherwise></c:otherwise>
                   </c:choose>   
                   </div>
                <c:choose>
@@ -559,15 +705,15 @@ html, body {
                <c:when test="${mediaList[status.index].size() == 0}"></c:when>
                </c:choose>
                   <div class="row contents" style="min-height: 100px; max-height: 400px;">
-                     ${feed.contents }</div>
-                  <div class="reply">
+                     ${feed.contents }</div> 
+                     <div class="reply">
 							<c:forEach items="${replyList[status.index] }" var="reply">								
 								<c:if test="${reply.parent == 0}">
-								<div class="parentReply" reply_seq="${reply.reply_seq }">
+								<div class="parentReply" reply_seq="${reply.reply_seq }" >
 									<div class="profileDiv">
 										<span class="userProfile"> 
-										<img class="userProfileImg"	src="${profile_imgList }" alt=""></span> 
-										<span class="userProfileID">${reply.email }</span> 
+										<img class="userProfileImg"	src="${reply.profile_img}" alt=""></span> 
+										<span class="userProfileID">${reply.nickname }</span> 
 										<span class="userReply">
 											<div class="replyContents" contenteditable="false">${reply.contents }</div>
 										</span>
@@ -575,16 +721,16 @@ html, body {
 									<div class="replyBtns">
 										<button type="button" class="deleteReply" style="">삭제</button>
 										<button type="button" class="registerChildBtn" style="">답글</button>
-										<button type="button" class="showReply" style="display: none">ㅡ답글보기</button>
-										<button type="button" class="hideReply" style="display: none">ㅡ답글숨기기</button>
+										<button type="button" class="showReply" style="display: none">──────────────  답글보기</button>
+										<button type="button" class="hideReply" style="display: none">────────────── 답글숨기기</button>
 									</div>
 									<c:forEach items="${replyList[status.index] }" var="childReply">	
-										<c:if test="${childReply.parent ==  reply.reply_seq}">
-											<div class="childReply" value="1" parent_seq="${childReply.parent }"	reply_seq="${childReply.reply_seq }">
+										<c:if test="${childReply.parent ==  reply.reply_seq}">											
+											<div class="childReply" value="1" parent_seq="${childReply.parent }" reply_seq="${childReply.reply_seq }">
 												<span class="userProfile"> 
-												<img class="userProfileImg"	src="${profile_imgList }" alt="사진오류"></span> 
-													<span class="userProfileID">${childReply.email }</span> <span class="userReply">
-													<div class="replyContents" contenteditable="false">${childReply.contents }</div>
+												<img class="userProfileImg"src="${reply.profile_img}" alt="사진오류"></span> 
+													<span class="userProfileID">${childReply.nickname }</span> 
+													<span class="userReply contentsBox"><div class="replyContents" contenteditable="false">${childReply.contents }</div>
 												</span>
 												<div class="replyBtns">
 													<button class="registerChildReply" style="display: none;">등록</button>
@@ -592,9 +738,16 @@ html, body {
 													<button class="deleteChildReplyBtn" style="">삭제</button>
 												</div>
 											</div>
+											<script>
+												$("div[parent_seq=${childReply.parent }]").parent().attr("child",1);
+												if($("div[parent_seq=${childReply.parent }]").attr("child") == 1){
+													$(".showReply").show();
+												}
+											</script>
 										</c:if>		
 									</c:forEach>									
 								</div>
+								
 								</c:if>								
 							</c:forEach>				
 						</div>
@@ -603,10 +756,9 @@ html, body {
 							<span class="myProfileImgBox"><img class="userProfileImg"
 								src="${loginInfo.profile_img }" alt=""></span>
 							<div class="myNickName">${loginInfo.nickname }</div>
-							<div id="writeReply" contenteditable="true"></div>
-							<button type="button" class="replyBtn"
-								onclick="replyBtnOnclick('${loginInfo.email}',${feed.feed_seq });">등록</button>
-						</div>
+							<div class="writeReply" id="writeReplyContents" contenteditable="true"></div>
+							<button class="replyBtn" onclick="replyBtnOnclick('${loginInfo.email}','${feed.feed_seq }','${loginInfo.nickname }',this);">등록</button>
+						</div>                 
                   
                   <c:choose>
                   <c:when test="${feed.email ne loginInfo.email}">
@@ -650,7 +802,6 @@ html, body {
                      </c:choose>
                   </div>
                   </c:when>
-                  <c:otherwise></c:otherwise>
                   </c:choose>
                   
                </div>
@@ -735,8 +886,9 @@ html, body {
    </div>
 
    <script>   
-   
-   
+   if($("div[parent_seq=${childReply.parent }]").attr("child") == 1){
+		$(".showReply").show();
+	}ss
    
    //신고확인 기능 모달
    $(document).on("click",".sirenBtn",function(){
@@ -827,6 +979,200 @@ html, body {
                   })
                   }
             })
+            
+            //댓글 스크립트
+        
+		function replyBtnOnclick(email,feed_seq,nickname,my) {	   
+	   		console.log("들어왔따따따따따따!");
+	   		var writeReply = $(my).siblings(".writeReply");
+			var contents = $(my).siblings(".writeReply").html();
+			console.log(feed_seq + " ## ?");
+			console.log($(my) + " #^^# ?");
+			console.log(contents + " ???? ");
+			if(contents == ""){ //컨텐츠가 null 값일 경우 등록 동작
+				return false;
+			}
+			$.ajax({
+				type : "POST",
+				url : "${pageContext.request.contextPath }/feed/registerReply",
+				data : {
+					feed_seq : feed_seq,
+					contents : contents,
+					email : email
+				},
+				dataType : "json"
+				}).done(function(data) {
+					console.log(data);
+					var parentReply = "";
+					parentReply += "<div class=\"parentReply\" reply_seq="+data.reply_seq+">"
+					parentReply += "<div class=\"profileDiv\"><span class=\"userProfile\"><img class=\"userProfileImg\" src=\"${loginInfo.profile_img }\" alt=\"\"></span><span class=\"userProfileID\">"+nickname+"</span><span class=\"userReply\"><div class=\"replyContents\">"+data.contents+"</div></span></div>"
+					parentReply += "<div class=\"replyBtns\">"
+					parentReply += "<button type=\"button\" class=\"deleteReply\">삭제</button>"
+					parentReply += "<button type=\"button\" class=\"registerChildBtn\">답글</button>"
+					parentReply += "<button type=\"button\" class=\"showReply\" style='display:none'>────────────── 답글보기</button>"
+					parentReply += "<button type=\"button\" class=\"hideReply\" style='display:none'>────────────── 답글숨기기</button>"	
+					parentReply += "</div>"		
+					parentReply += "</div>"
+					$(my).closest(".feed").find(".reply").append(parentReply);
+					writeReply.html("");
+			}).fail(function(a, b, c) {
+				console.log(a);
+				console.log(b);
+				console.log(c);
+			})
+		}
+		
+		
+		
+		//댓글 삭제 버튼
+		$(document).on("click",".deleteReply", function(){
+			var reply_seq = $(this).closest(".parentReply").attr("reply_seq");
+			console.log(reply_seq);
+			var deleteDiv = $(this).closest(".parentReply");
+			$.ajax({
+				type : "POST",
+				url : "${pageContext.request.contextPath }/feed/deleteReply",
+				data : {reply_seq:reply_seq}				
+			}).done(function(resp) {
+				console.log(resp + "행 댓글이 지워짐!");
+				deleteDiv.remove();
+			}).fail(function(){
+				alert("yes!");
+			})
+		});
+
+		
+		
+		
+		//답글버튼 눌렀을 때 이벤트
+		$(document).on("click",".registerChildBtn", function(){
+			$(".childReply[value=0]").remove();
+			var parentReply = $(this).closest(".parentReply");
+			var reply_seq = $(this).closest(".parentReply").attr("reply_seq");
+			var childhtml = "";
+			childhtml +=       "<div class='childReply' value='0' parent_seq='"+reply_seq+"'>"
+			childhtml +=     		"<span class='userProfile'>"
+			childhtml +=     			"<img class='userProfileImg' src=${loginInfo.profile_img } alt='사진오류'>"
+			childhtml +=      		"</span>"
+			childhtml +=      		"<span class='userProfileID'>${loginInfo.nickname }</span>"
+			childhtml +=      "<span class='userReply'>"
+			childhtml +=      		"<div class='replyContents' contenteditable='true'></div>"
+	       	childhtml +=      "</span>"
+	        childhtml +=      "<div class='replyBtns'>"
+	        childhtml +=      		"<button class='registerChildReply'>등록</button>"
+		  	childhtml +=      		"<button class='childReplyCancel'>취소</button>"
+       		childhtml +=      		"<button class='deleteChildReplyBtn' style='display:none'>삭제</button>"
+       		childhtml +=      "</div>"
+     		childhtml +=      "</div>";
+			if(parentReply.find(".childReply").length == 0){
+				parentReply.find(".showReply").hide();
+				parentReply.find(".hideReply").hide();
+			}
+     		$(this).closest(".parentReply").append(childhtml);
+			$(this).closest(".parentReply").find(".replyContents").focus();
+		});
+		
+		
+		//답글보이기
+		$(document).on("click",".showReply", function(){
+			var parentReply = $(this).closest(".parentReply");
+			$(this).parent(".replyBtns").children(".hideReply").show();	
+			$(this).parent(".replyBtns").children(".showReply").hide();
+			$(this).closest(".parentReply").find(".childReply").show();
+			
+			if(parentReply.find(".childReply").length == 0){
+				parentReply.find(".showReply").hide();
+				parentReply.find(".hideReply").hide();
+			}	
+		});
+
+		//답글숨기기
+		$(document).on("click",".hideReply", function(){
+			$(".childReply[value=0]").remove();
+			$(this).parent(".replyBtns").children(".showReply").show();	
+			$(this).parent(".replyBtns").children(".hideReply").hide();
+			$(this).closest(".parentReply").find(".childReply").hide();
+			var parentReply = $(this).closest(".parentReply");
+			
+			if(parentReply.find(".childReply").length == 0){
+				parentReply.find(".showReply").hide();
+				parentReply.find(".hideReply").hide();
+			}	
+		});
+		
+		//답글등록버튼
+		$(document).on("click",".registerChildReply", function(){
+			var feed_seq = $(this).closest(".feed").attr("feed_seq"); //게시글의 번호
+			console.log(feed_seq);
+			var reply_seq = $(this).closest(".parentReply").attr("reply_seq"); //부모댓글의 번호
+			var replyWriter = $(this).closest(".childReply").siblings(".profileDiv").find(".userProfileID").html(); //부모댓글의 닉네임
+			var childReplyContents = $(this).closest(".replyBtns").siblings(".userReply").find(".replyContents").html(); // 댓글 콘텐츠
+			var replyContents = $(this).closest(".replyBtns").siblings(".userReply").find(".replyContents");
+			var childReply = $(this).closest(".childReply");
+			
+			$.ajax({
+				type : "POST",
+				url : "${pageContext.request.contextPath }/feed/registerReply",
+				data : {feed_seq:feed_seq,email:'${loginInfo.email}',contents:childReplyContents,depth:1,parent:reply_seq},
+				dataType:"json"		
+			}).done(function(resp) {				
+				childReply.attr("reply_seq",resp.reply_seq); //자식댓글의 번호넣기
+				$(".parentReply[reply_seq="+resp.parent+"]").attr("child",1); // 대댓글이 생기면 child = 1 을 넣어줌
+				childReply.attr("parent_seq",resp.parent); //자식댓글의 부모번호 넣기	
+				childReply.attr("value",1); //자식댓글의 번호넣기
+				replyContents.attr("contentEditable","false");
+			}).fail(function(){
+				console.log("실패!");
+			});
+			$(this).parent(".replyBtns").children(".registerChildReply").hide();	
+			$(this).parent(".replyBtns").children(".childReplyCancel").hide();
+			$(this).parent(".replyBtns").children(".deleteChildReplyBtn").show();
+			console.log($(this).closest(".parentReply").find(".showReply").attr("style") + ">>>????");
+			if($(this).closest(".parentReply").find(".showReply").attr("style") == ""){
+				$(this).closest(".parentReply").find(".hideReply").hide();
+				$(this).closest(".parentReply").find(".showReply").show();
+				console.log("YESS!!");
+			}else{
+				$(this).closest(".parentReply").find(".hideReply").show();
+				$(this).closest(".parentReply").find(".showReply").hide();
+				
+			}
+		});
+		//답글삭제버튼
+		$(document).on("click",".deleteChildReplyBtn", function(){
+			var reply_seq = $(this).closest(".childReply").attr("reply_seq");
+			var deleteDiv = $(this).closest(".childReply");
+			var parentReply = $(this).closest(".parentReply");
+			$.ajax({
+				type : "POST",
+				url : "${pageContext.request.contextPath }/feed/deleteReply",
+				data : {reply_seq:reply_seq}				
+			}).done(function(resp) {
+				deleteDiv.remove();
+// 				if(parentReply.find(".childReply").length <= 1){
+// 					$(this).closest(".parentReply").attr("child",0);
+// 				}
+				console.log(parentReply.find(".childReply").length +"답글삭제?????");
+				if(parentReply.find(".childReply").length == 0){
+					parentReply.attr("child",0);
+					parentReply.find(".showReply").hide();
+					parentReply.find(".hideReply").hide();
+				}		
+			}).fail(function(){
+				alert("yes!");
+			})
+				
+		});
+		//답글을 취소했을 때
+		$(document).on("click",".childReplyCancel", function() {
+			var parentReply = $(this).closest(".parentReply");
+			$(this).closest(".childReply").remove();
+			console.log(parentReply.find(".childReply").length +"?????");
+			if(parentReply.find(".childReply").length == 0){
+				parentReply.find(".showReply").hide();
+				parentReply.find(".hideReply").hide();
+			}	
+		})
    </script>
 </body>
 </html>
