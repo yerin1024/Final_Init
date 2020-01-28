@@ -2327,6 +2327,7 @@
     });
 
     $("#backToFeed").on("click", function () {
+    	clearInterval(tid);
     	$("#modalModifyInfo").modal('hide');
     });
 
@@ -2510,7 +2511,7 @@
                 //전화번호 중복 검사 end
                 //인증번호 전송 start
                 if (resp.result == "available") {
-                    tid = setInterval('msg_time()', 1000); //인증번호 전송 시 카운트다운 시작
+                    tid = setInterval(msg_time, 1000); //인증번호 전송 시 카운트다운 시작
                     sendCode.hidden = true;
                     resendCode.hidden = false;
                     verifyCode.value = "";
@@ -2626,6 +2627,9 @@
                 sendCode.hidden = true;
                 resendCode.hidden = true;
                 verifyCode.disabled = true;
+                
+                clearInterval(tid);
+                
             } else if (resp.result == "unverified") {
                 console.log("인증 실패 ");
                 adviseVerifCode.innerHTML = "인증실패";
@@ -2779,7 +2783,9 @@
         console.log("최종 비밀번호 : " + pw.value);
         console.log("최종 이름 : " + username.value);
         console.log("최종 생년월일 : " + birth.value);
-
+        
+        clearInterval(tid);
+        
         doc.getElementById("signUpForm").submit();
     });
 

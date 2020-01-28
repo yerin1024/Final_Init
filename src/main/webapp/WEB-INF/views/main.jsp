@@ -5,7 +5,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> -->
 <meta http-equiv="x-ua-compatible" content="ie=edge">
 
 <title>Init</title>
@@ -23,23 +24,13 @@
     }
  	.modal {
          text-align: center;
-    }
-    @@media screen and (min-width: 768px) {
-         .modal:before {
-         	display: inline-block;
-         	vertical-align: middle;
-            content: " ";
-            height: 100%;
-         }
-    }
-    .modal-dialog {
-         display: inline-block;
-         text-align: left;
-         vertical-align: middle;
+
     }
     
     .modal-content {
         background-color: #fffefc;
+        min-height: 500px;
+        vertical-align: center;
     }
 
     .modal-header {
