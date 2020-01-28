@@ -221,6 +221,7 @@ public class FeedController {
 	}
 	@RequestMapping("/deleteProc")
 	public String deleteProc(int feed_seq) {
+		String email = ((MemberDTO)session.getAttribute("loginInfo")).getEmail();
 		System.out.println("삭제 도착!");
 		try {
 			int result =  service.deleteFeed(feed_seq);
@@ -228,7 +229,7 @@ public class FeedController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "redirect:myFeed";
+		return "redirect:myFeed?email="+email;
 	}
 
 	@RequestMapping("/writeFeed")
@@ -586,13 +587,14 @@ public class FeedController {
 	public String modifyFeedProc(FeedDTO dto,Model model) {
 		System.out.println("게시물 수정 시작!");
 		System.out.println(dto.getFeed_seq());
+		String email = ((MemberDTO)session.getAttribute("loginInfo")).getEmail();
 		try {
 			int result = service.modifyFeed(dto);
 			System.out.println(result + "행이 수정되었습니다!");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "redirect:myFeed";
+		return "redirect:myFeed?email="+email;
 	}
 	
 	@RequestMapping("/modifyFeedView")

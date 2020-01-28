@@ -44,6 +44,17 @@ body{
     font-size:20px;
 
 }
+
+.modifyA, .deleteA{
+	color:black;
+	margin-right:10px;
+	font-size:15px;
+}
+.modifyA:hover, .deleteA:hover{
+	font-weight:bold;
+	color:black;
+}
+
 .row{
 	width:100%;
 	height:100%;
@@ -722,7 +733,7 @@ function getList(page){
 	    <div class="modal-content">
 	      <div class="modal-header" style="width:99.9%;">
 	         <span class="writerProfile"><img class="userProfileImg" src="${loginInfo.profile_img }" alt=""></span>
-	        <h5 class="modal-title" id="exampleModalLabel">DETAIL VIEW</h5>
+	         <h5 class="modal-title" id="exampleModalLabel" style="font-size:30px;font-weight:bold;"></h5>
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 	          <span aria-hidden="true">&times;</span>
 	        </button>

@@ -180,8 +180,8 @@ $('#exampleModal').on('shown.bs.modal', function (event) {
 		bookmarkA.append(bookmarkS);
 		bookmarkS.append(bookmarkI); 
 		
-		var modifyA = $("<a href='modifyFeedView?feed_seq="+dto.feed_seq+"'>수정</a>");
-		var deleteA = $("<a href='deleteProc?feed_seq="+dto.feed_seq+"'>삭제</a>");
+		var modifyA = $("<a class='modifyA' href='modifyFeedView?feed_seq="+dto.feed_seq+"'>수정</a>");
+		var deleteA = $("<a class='deleteA' href='deleteProc?feed_seq="+dto.feed_seq+"'>삭제</a>");
 		
 		var sessionEmail = "${loginInfo.email}";
 		var writer = dto.email;

@@ -89,14 +89,14 @@ html, body {
 }
 
 .likeImg>img {
-	width: 28px;
-	height: 28px;
+	width: 35px;
+	height: 35px;
 	margin-left: 10px;
 }
 
 .bookmarkImg>img {
-	width: 28px;
-	height: 28px;
+	width: 35px;
+	height: 35px;
 	margin-left: 10px;
 }
 
@@ -466,7 +466,7 @@ html, body {
 	<jsp:include page="/resources/jsp/nav.jsp" />
 	<jsp:include page="/resources/jsp/msg.jsp" />
 	<jsp:include page="/resources/jsp/alr.jsp" />
-	<div id="wrapper" style="position: relative; top: 62px">
+	<div id="wrapper" style="position: relative; top: 30px">
 		<!-- <h1>친구피드</h1> -->
 		<c:choose>
 			<c:when test="${fn:length(list) <1}">

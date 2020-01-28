@@ -54,6 +54,15 @@
 	margin: auto;
 	padding: 60px 20px 0;
 }
+.modifyA, .deleteA{
+	color:black;
+	margin-right:10px;
+	font-size:15px;
+}
+.modifyA:hover, .deleteA:hover{
+	font-weight:bold;
+	color:black;
+}
 #search {
    margin: auto;
    text-align: center;
@@ -1108,7 +1117,7 @@
 	      <div class="detailView_header">
 	         <span class="writerProfile"><img class="userProfileImg" src="" alt=""></span>
 	         <span class="writer"></span>
-	        <h5 class="modal-title" id="exampleModalLabel"></h5>
+	        <h5 class="modal-title" id="exampleModalLabel" style="font-size:30px;font-weight:bold;"></h5>
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 	          <span aria-hidden="true">&times;</span>
 	        </button>
