@@ -1924,7 +1924,7 @@ margin:5px;
 
 		
 		
-		$('#identifyModalBtn').on('click', function () {
+		$('#identifyBtn').on('click', function () {
 			relation = $('input[name=relation]:checked').val();          
             
             $.ajax({

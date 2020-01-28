@@ -140,8 +140,8 @@
 	<select id="searchFriend" resultType="kh.init.members.MemberDTO" parameterType="java.util.Map">
 		select * from tb_member
 		where nickname=#{keyword}
-			and (p.email not in (select to_id from tb_block where from_id = #{email}) and
-			                    p.email not in (select from_id from tb_block where to_id = #{email}))
+			and (email not in (select to_id from tb_block where from_id = #{email}) and
+			                    email not in (select from_id from tb_block where to_id = #{email}))
 	</select>
 
 	<select id="getFeedSeq" resultType="integer">
