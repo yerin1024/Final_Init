@@ -101,8 +101,11 @@ public class FeedDAO {
 	}
 
 	//wholeFeed에서 친구검색했을 경우
-	public List<MemberDTO> searchFriend(String keyword) throws Exception{
-		List<MemberDTO> list = jdbc.selectList("Feed.searchFriend", keyword);
+	public List<MemberDTO> searchFriend(String email, String keyword) throws Exception{
+		Map<String, String> param = new HashMap<>();
+		param.put("keyword", keyword);
+		param.put("email", email);
+		List<MemberDTO> list = jdbc.selectList("Feed.searchFriend", param);
 		return list;
 	}
 

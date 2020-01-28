@@ -285,8 +285,8 @@ public class FeedService {
 		return map;
 	}
 
-	public List<MemberDTO> searchFriend(String keyword) throws Exception{
-		List<MemberDTO> list = dao.searchFriend(keyword);
+	public List<MemberDTO> searchFriend(String email, String keyword) throws Exception{
+		List<MemberDTO> list = dao.searchFriend(email, keyword);
 		return list;
 	}
 
