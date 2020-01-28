@@ -1702,6 +1702,7 @@ button.learn-more .button-text {
                     }
                     if (res.list != null) {
                         var list = JSON.parse(res.list);
+                        console.log(list);
                         for (var j = 0; j < list.length; j++) {
                             $('.frListBody').append(
                                 "<div class=frInfo ><a href='${pageContext.request.contextPath}/feed/myFeed?email="
@@ -1804,6 +1805,7 @@ button.learn-more .button-text {
                                 }
                                 if (res.list != null) {
                                     var list = JSON.parse(res.list);
+                                    console.log(list);
                                     for (var j = 0; j < list.length; j++) {
                                         $('.frListBody').append(
                                             "<div class=frInfo id=frNum" + j + " ><a href='${pageContext.request.contextPath}/feed/myFeed?email="
