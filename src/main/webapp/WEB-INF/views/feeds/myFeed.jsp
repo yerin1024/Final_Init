@@ -9,8 +9,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title></title>
 <link rel="stylesheet" href="/resources/css/nav.css?new"> 
-<link rel="stylesheet" href="/resources/css/msg.css"> 
-<link rel="stylesheet" href="/resources/css/alr.css"> 
+<link rel="stylesheet" href="/resources/css/msg.css?n"> 
+<link rel="stylesheet" href="/resources/css/alr.css?n"> 
 <link rel="stylesheet" href="/resources/css/test.css">
 <script src="https://code.jquery.com/jquery-3.4.1.js"
 	type="text/javascript"></script>
