@@ -81,6 +81,7 @@ $('#exampleModal').on('shown.bs.modal', function (event) {
 		var replyhtml = "";
 		for(var i=0; i<replyList.length; i++){
 			if(replyList[i].parent == 0){
+				console.log(replyList[i].profile_img);
 				replyhtml += "<div class='parentReply' reply_seq='"+replyList[i].reply_seq+"'>"							
 				replyhtml += "<div class='profileDiv'>"
 				replyhtml += "<span class='userProfile'>"

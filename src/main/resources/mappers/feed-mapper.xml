@@ -313,11 +313,6 @@
 		select tb_reply.*, tb_member.profile_img, tb_member.nickname from tb_reply ,tb_member where tb_reply.email = tb_member.email and feed_seq = #{feed_seq}
 	</select>
 	
-	<select id="viewAllReplyTest" resultType="kh.init.feeds.ReplyDTO">
-		select * from tb_reply
-		where feed_seq = #{feed_seq} order by 7 desc
-	</select>
-
 	<select id="replyNextSeq" resultType="Integer">
 		select reply_seq.nextval
 		from dual
