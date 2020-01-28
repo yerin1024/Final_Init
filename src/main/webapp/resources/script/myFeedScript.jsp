@@ -207,10 +207,10 @@ $('#exampleModal').on('shown.bs.modal', function (event) {
 		
             
 		function replyBtnOnclick(email,nickname) {	   
-	   		console.log("들어왔따따따따따따!");
 			var feed_seq = $("#exampleModal").attr("feed_seq");
 	   		var writeReply = $("#writeReply");
-			var contents = $("#writeReply").html();
+			var contentsHtml = $("#writeReply").html();
+			var contents = contentsHtml.replace(/(<div>|<\/div>|<br>)/g, '\r\n');
 			if(contents == ""){ //컨텐츠가 null 값일 경우 등록 동작
 				return false;
 			}

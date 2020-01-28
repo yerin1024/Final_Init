@@ -78,7 +78,6 @@ html,body {
    width: 99.5%;
    height:600px; 
 }
-
 .slide {
    width: 99.5%;
 }
@@ -176,15 +175,18 @@ html,body {
     height: 50px;
     border-radius: 16px;
     border: 1px solid rgb(239, 239, 239);
-    padding: 0px 10px;
-    line-height: 48px;
+    padding: 10px 10px;
+    overflow-y: scroll;
+}
+
+.writeReply::-webkit-scrollbar {
+        width: 0 !important
 }
 .replyContents{	
     background: transparent;
     font-size: 16px;
     margin: 12px 12px;
     width: 95%;
-    height: 50px;
     border-radius: 16px;
     border: 1px solid rgb(239, 239, 239);
     padding: 0px 10px;
@@ -992,16 +994,16 @@ html,body {
             
             //댓글 스크립트
         
-		function replyBtnOnclick(email,feed_seq,nickname,my) {	   
-	   		console.log("들어왔따따따따따따!");
-	   		var writeReply = $(my).siblings(".writeReply");
-			var contents = $(my).siblings(".writeReply").html();
-			console.log(feed_seq + " ## ?");
-			console.log($(my) + " #^^# ?");
-			console.log(contents + " ???? ");
+		function replyBtnOnclick(email,feed_seq,nickname,my) {
+  			var writeReply = $(my).siblings(".writeReply");
+			var contentsHtml = $(my).siblings(".writeReply").html();
+			var contents = contentsHtml.replace(/(<div>|<\/div>|<br>)/g, '\r\n');
 			if(contents == ""){ //컨텐츠가 null 값일 경우 등록 동작
 				return false;
-			}
+			}else if(contents.length>100){
+	            alert("댓글은 100글자 이하로 작성해주세요");
+	            return;
+	         }
 			$.ajax({
 				type : "POST",
 				url : "${pageContext.request.contextPath }/feed/registerReply",
