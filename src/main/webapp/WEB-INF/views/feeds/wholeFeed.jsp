@@ -24,6 +24,14 @@
 body{
 	background-color:#171C28;
 }
+#searchBtn{
+	border:2.5px solid white;
+	border-radius:5px;
+	height:30px;
+	background:none;
+	color:white;
+	margin-left:10px;
+}
 #wrapper {
 	margin: auto;
 	padding: 60px 20px 0;
@@ -102,7 +110,7 @@ body{
 }
 
 #keyword{
-	width:300px;
+	width:450px;
 }
 .nickname{
 	vertical-align:middle;
@@ -128,15 +136,20 @@ body{
 	height:100%;
 }
 div.cover {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    word-break: break-all;
-    max-width: 150px;
-    max-height: 150px;
+/*     position: absolute; */
+/*     top: 50%; */
+/*     left: 50%; */
+/*     transform: translate(-50%, -10%); */
+/*     max-width: 150px; */
+/*     max-height: 150px; */
     overflow-y: hidden;
-
+	word-break: break-all;
+	padding:10px;
+	padding-top:60px;
+	text-align:center;
+	word-break:break-all;
+	font-weight:600;
+	font-size:20px;
 }
 
 
@@ -550,7 +563,10 @@ div.cover {
 	margin:0px;
 }
 .media>p{
-	padding:10px;
+	padding:30px;
+	word-break:break-all;
+	text-align:left;
+	font-size:20px;
 }
 
 /* All Device */

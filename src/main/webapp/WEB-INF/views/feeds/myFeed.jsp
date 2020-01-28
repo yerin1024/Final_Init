@@ -1117,7 +1117,7 @@
 	      <div class="detailView_header">
 	         <span class="writerProfile"><img class="userProfileImg" src="" alt=""></span>
 	         <span class="writer"></span>
-	        <h5 class="modal-title" id="exampleModalLabel" style="font-size:30px;font-weight:bold;"></h5>
+	        <h5 class="modal-title" id="exampleModalLabel" style=""></h5>
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 	          <span aria-hidden="true">&times;</span>
 	        </button>
