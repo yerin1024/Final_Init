@@ -13,19 +13,21 @@
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-<link rel="stylesheet" href="/resources/css/nav.css?new"> 
+<link rel="stylesheet" href="/resources/css/nav.css"> 
 <link rel="stylesheet" href="/resources/css/alr.css">
 <link rel="stylesheet" href="/resources/css/msg.css">
 <link rel="stylesheet" href="/resources/css/test.css">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 <style>
+
 body{
 	background-color:#171C28;
 }
 #wrapper {
 	margin: auto;
 	padding: 60px 20px 0;
+	min-width:540px;
 }
 
 #search {
@@ -45,21 +47,9 @@ body{
 .row{
 	width:100%;
 	height:100%;
+	margin-bottom:15px;
 }
 
-/* .title{ */
-/*    display:inline-block; */
-/*    position:absolute; */
-/*    top:50%; */
-/*    left:50%; */
-/*    transform: translate(-50%, -50%); */
-/* } */
-/* .title{ */
-/* 	display:inline-block; */
-/* 	position:absolute;top:50%;left:50%;transform: translate(-50%, -50%); */
-/* 	 word-break: break-all; */
-/*     white-space: normal; */
-/* } */
 .parent([.title]){
 	border:1px solid red;
 }
@@ -397,7 +387,6 @@ div.cover {
 	width:80px;
 	height:80px;
 	border-radius: 160px;
-    border: 1px solid black;
 }
 .userProfileImg{
 	width:40px;
@@ -441,7 +430,7 @@ div.cover {
     word-break: break-all;	
     display: inherit;
 }
-}
+
 .childContentsBox{
 	width:322px;
     border: 1px solid rgb(239, 239, 239);
@@ -485,7 +474,7 @@ div.cover {
 	width:55%;
     height: 100%;
     position: relative;
-    border:1px solid black;
+/*     border:1px solid black; */
 }
 .title{
 	width:45%;
@@ -562,9 +551,7 @@ div.cover {
 /* Tablet &amp; Desktop Device */
 @media all and (min-width:768px) {
 	/*     사용자 해상도가 768px 이상일 때 이 코드가 실행됨. 테블릿과 데스크톱의 공통 코드를 작성한다. */
-	body {
-		background-color: purple;
-	}
+
 }
 
 @media all and (max-width:768px) {
@@ -595,9 +582,7 @@ div.cover {
 /* Desktop Device */
 @media all and (min-width:1025px) {
 	/*     사용자 해상도가 1025px 이상일 때 이 코드가 실행됨. 1025px 이상의 랩탑 또는 데스크톱에 대응하는 코드를 작성한다. */
-	body {
-		background-color: pink;
-	}
+
 }
 </style>
 <script>

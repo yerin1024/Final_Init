@@ -31,7 +31,6 @@ body{
 #wrapper {
 	color:white;
 	text-align:center;
-	font-size:30px;
 	margin: auto;
 }
 
@@ -45,7 +44,8 @@ html, body {
 }
 
 .feed {
-	border: 1px solid blue;
+	border: 2px solid white;
+	margin-bottom:30px;
 }
 
 .dz-default {
@@ -470,7 +470,7 @@ html, body {
 		<!-- <h1>친구피드</h1> -->
 		<c:choose>
 			<c:when test="${fn:length(list) <1}">
-				<div>게시물이 없습니다.</div>
+				<div style="font-size:30px;">게시물이 없습니다.</div>
 			</c:when>
 			<c:otherwise>
 				<c:forEach items="${list}" var="feed" varStatus="status">
