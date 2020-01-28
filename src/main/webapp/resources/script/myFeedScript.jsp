@@ -9,7 +9,6 @@ var temporaryReply;
 
 
 $('#exampleModal').on('shown.bs.modal', function (event) {
-	$(".reply").html("");
 	var seq = $(event.relatedTarget).data('id');
 	var feed_seq = $("#exampleModal").attr("feed_seq",seq);
 	$.ajax({
@@ -34,7 +33,7 @@ $('#exampleModal').on('shown.bs.modal', function (event) {
 		console.log("writerImg : " + writerProfile);
 		
 		$(".writer").html(writer);
-// 		$(".userProfileImg").attr("src", writerProfile);
+		$(".userProfileImg").attr("src", writerProfile);
 		//디테일뷰 미디어
 		if(mediaList.length>1){ //미디어가 존재하므로 캐러셀 만들어줌
 			console.log("캐러셀 시작");
@@ -65,9 +64,10 @@ $('#exampleModal').on('shown.bs.modal', function (event) {
 			var nextA = $("<a class='carousel-control-next' href='#carouselExampleIndicators' role='button' data-slide='next'></a>");
 			nextA.append("<span class='carousel-control-next-icon' aria-hidden='true'></span>");
 			nextA.append("<span class='sr-only'>Next</span>");
-			cInner.append(prevA);
-			cInner.append(nextA);
+			
 			cei.append(cInner);
+			cei.append(prevA);
+			cei.append(nextA);
 			mediaRow.append(cei);				
 			
 		}else if(mediaList.length==1){
@@ -76,7 +76,7 @@ $('#exampleModal').on('shown.bs.modal', function (event) {
 			var mediaRow = $("<div class='media' style='height:100%;width:100%;size:20px;text-align:center;vertical-align:center'></div>");
 			mediaRow.append(dto.contents);
 		}
-		$(".modal-body1").html(mediaRow);
+		$(".modal-body5").html(mediaRow);
 		
 		
 		var replyhtml = "";
@@ -94,7 +94,7 @@ $('#exampleModal').on('shown.bs.modal', function (event) {
              	replyhtml +=       "</span>"
              	replyhtml +=        "</div>"	            
              	replyhtml +=        "<div class='replyBtns'>"
-                if('${loginInfo.email}' == replyList[i].email){   
+                if('${loginInfo.email}' == dto.email){   
              	replyhtml +=  				"<button type='button' class='deleteReply'>삭제</button>"		
                 }             	
              	replyhtml +=        		"<button type='button' class='registerChildBtn'>답글</button>"
@@ -122,11 +122,11 @@ $('#exampleModal').on('shown.bs.modal', function (event) {
 				childhtml +=     			"<img class='userProfileImg' src="+replyList[i].profile_img+" alt='사진오류'>"
 				childhtml +=      		"</span>"
 				childhtml +=      		"<span class='userProfileID'>"+replyList[i].nickname+"</span>"
-				childhtml +=      "<span class='userReply' style='width:339px'>"
+				childhtml +=      "<span class='userReply'>"
 				childhtml +=      		"<div class='replyContents' contenteditable='false'>"+replyList[i].contents+"</div>"
 		       	childhtml +=      "</span>"
 		        childhtml +=      "<div class='replyBtns'>"
-			    if('${loginInfo.email}' ==  replyList[i].email){
+			    if('${loginInfo.email}' ==  dto.email){
            		childhtml +=      		"<button class='deleteChildReplyBtn'>삭제</button>"
 		        }
 	       		childhtml +=      "</div>"
@@ -175,8 +175,8 @@ $('#exampleModal').on('shown.bs.modal', function (event) {
 		bookmarkA.append(bookmarkS);
 		bookmarkS.append(bookmarkI); 
 		
-		var modifyA = $("<a href='modifyFeedView?feed_seq="+dto.feed_seq+"'>수정</a>");
-		var deleteA = $("<a href='deleteProc?feed_seq="+dto.feed_seq+"'>삭제</a>");
+		var modifyA = $("<a class='modifyA' href='modifyFeedView?feed_seq="+dto.feed_seq+"'>수정</a>");
+		var deleteA = $("<a class='deleteA' href='deleteProc?feed_seq="+dto.feed_seq+"'>삭제</a>");
 		
 		var sessionEmail = "${loginInfo.email}";
 		var writer = dto.email;
@@ -277,7 +277,7 @@ $('#exampleModal').on('shown.bs.modal', function (event) {
 			childhtml +=     			"<img class='userProfileImg' src=${loginInfo.profile_img } alt='사진오류'>"
 			childhtml +=      		"</span>"
 			childhtml +=      		"<span class='userProfileID'>${loginInfo.nickname }</span>"
-			childhtml +=      "<span class='userReply' style='width:339px'>"
+			childhtml +=      "<span class='userReply'>"
 			childhtml +=      		"<div class='replyContents' contenteditable='true'></div>"
 	       	childhtml +=      "</span>"
 	        childhtml +=      "<div class='replyBtns'>"

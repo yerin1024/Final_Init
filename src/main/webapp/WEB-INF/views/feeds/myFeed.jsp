@@ -23,6 +23,7 @@
 <style>
 /* 	폰트 */
 @import url('https://fonts.googleapis.com/css?family=Noto+Serif+KR|Orbitron&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Do+Hyeon&display=swap');
 	
 	body{
 		background-color:#171C28;
@@ -228,11 +229,15 @@
 }
 
 .profileButton{
-	width: 125px;
-	height: 125px;
-	border-radius: 80px;
-	border: 1px solid black;
-	background-color: white;
+    width: 90px;
+    height: 38px;
+    border-radius: 13px;
+    border: 1px solid white;
+    background-color: white;
+    font-size: 21px;
+    font-family: 'Do Hyeon', sans-serif;
+    background: transparent;
+    color: white;
 }
 
 .btn btn-primary btn-lg {
@@ -264,7 +269,7 @@
 	text-align: center;
 	font-size: 70px;
 	font-weight: bold;
-	color:white;
+	color:#ffdeb0;
 }
 
 .profileMessageLayout {
@@ -272,6 +277,7 @@
 }
 
 .profileMessage {
+    text-align:center;
     max-width: 600px;
     margin: auto;
     font-size: 15px;
@@ -368,7 +374,7 @@
     width: 50%;
     height:10%;
 }
-.modal-title{
+.myNickname{
 	line-height: 50px;
 }
 #writeReply{	
@@ -380,7 +386,12 @@
     border-radius: 16px;
     border: 1px solid rgb(239, 239, 239);
     padding: 0px 10px;
-    
+    max-height:400px;
+    overflow-y:scroll;
+	white-space:normal;
+}
+#writeReply::-webkit-scrollbar{
+        width: 0 !important;	
 }
 .replyBtns{
 	margin:20px 20px;
@@ -435,9 +446,6 @@
     display: flex;
     padding: 1rem 1rem;	
 }
-.modal-title{
-	margin:auto;
-}
 .replyBtns>button, .replyBtn{
 	background: 0 0;
     border: 0;
@@ -453,6 +461,7 @@
     border: 1px solid #999;
     padding: 5px 7px;
     border-radius: 8px;
+    max-height:70px;
 }
 
 .myProfile{	
@@ -474,17 +483,17 @@
 }
 
 /* 버튼호버 */
-.profileButton:hover, .profileImageBox:hover{
+.profileImageBox:hover{
   display: -webkit-box;
   display: flex;
   -webkit-box-align: center;
           align-items: center;
   -webkit-box-pack: center;
           justify-content: center;
-  --borderWidth: 3px;
+  --borderWidth: 5px;
   position: relative;
 }
-.profileButton:after, .profileImageBox:after {  
+.profileImageBox:after {  
   content: '';
   position: absolute;
   top: calc(-1 * var(--borderWidth));
@@ -533,6 +542,12 @@
     width: 30px;
     height: 30px;
 }
+#friendListModal{
+  margin:auto;
+  text-align:center;
+  width:35%;
+}
+
 /* 호버 */
 /* All Device */
 /* 모든 해상도를 위한 공통 코드를 작성한다. 모든 해상도에서 이 코드가 실행됨. */
@@ -551,8 +566,9 @@
 @media all and (max-width:768px) {
 	/*     사용자 해상도가 768px 이하일 때 이 코드가 실행됨. 테블릿과 데스크톱의 공통 코드를 작성한다. */
 	.profileButton {
-    	width: 70px;
-   		height: 70px;
+   		width: 65px;
+    	height: 30px;
+    	font-size: 13px;
 	}
 /* 	.row{ */
 /* 		margin:0px; */
@@ -851,7 +867,7 @@
 </head>
 
 <body>
-    <jsp:include page="/resources/jsp/nav.jsp" />
+    <jsp:include page="/resources/jsp/nav.jsp"/>
     <jsp:include page="/resources/jsp/alr.jsp"/>
 	<jsp:include page="/resources/jsp/msg.jsp"/>
 	<div class="container-fluid">
@@ -867,17 +883,16 @@
 						</c:if>
 						
 					</div>
-					<div class="profileLayout">
-					
+					<div class="profileLayout">					
 						<div class="profileLayoutLeft">
 						<c:if test="${frResult == null || frResult == 0  }">
-							<button class="profileButton btn-lg" id="openModalBtn">＋</button>
+							<button class="profileButton btn-lg" id="openModalBtn">+</button>
 						</c:if>			
 							<c:if test="${frResult == 1 }">
 						<button class="profileButton btn-lg" id="ingReq">＋</button>
 						</c:if>	
 						<c:if test="${frResult == 2  }">
-							<button class="profileButton btn-lg" id="openFrModal" >＋</button>
+							<button class="profileButton btn-lg" id="openFrModal" >+</button>
 						</c:if>	
 						
 						</div>
@@ -903,7 +918,7 @@
 					
 					<div class="profileLayout">
 						<div class="profileLayoutLeft">
-							<button class="profileButton" id="friendsList">＋</button>
+							<button class="profileButton" id="friendsList">친구목록</button>
 						</div>
 						<div class="profileLayoutCenter">
 							<div class="profileImageBox">
@@ -913,7 +928,7 @@
 						</div>
 						<c:if test="${loginInfo.id_type eq 'E'}">
 							<div class="profileLayoutRight">
-								<button class="profileButton" id="changeInfo">＋</button>
+								<button class="profileButton" id="changeInfo">정보수정</button>
 							</div>
 						</c:if>						
 					</div>
@@ -923,22 +938,23 @@
 					</div>
 				<div class="static" style="margin:auto; text-align:center;">
 				<br>
-				<table style="width:80%; margin:auto; ">
+				<table style="width:75%; margin:auto; ">
 				<tr>
-				<td style="color:gainsboro; font-size:40px;">${fn:length(list)}
-				<td style="color:gainsboro; font-size:40px;">${fn:length(flist)}
+				<td style="color:gainsboro; font-size:60px;">${totalFeedSize}
+				<td style="color:gainsboro; font-size:60px;">${fn:length(flist)}
 				</tr>
 				<tr>
-				<td style="color:grey; font-size:13px;">Posts
-				<td style="color:grey; font-size:13px;">Friends
+				<td style="color:grey; font-size:20px;">Posts
+				<td style="color:grey; font-size:20px;">Friends
 				</tr>
 				</table>
 				<br>
 				</div>
 				<div class="menubar">
 		<button type="button" id="personalFeed">Personal feed</button>
+		<button type="button" id="registerFeed">+게시물 추가+</button>
 		<button type="button" id="scrapFeed">scrap feed</button>
-		<button type="button" id="registerFeed">게시물 등록</button>	
+			
 		</div>
 				</c:otherwise>
 
@@ -970,56 +986,58 @@
           </div>	
          </div>
 	<!-- 친구요청 모달 영역 -->
-	<div id="modalBox" class="modal fade" id="myModal"
+	<div id="friendApply" class="modal fade" id="myModal"
 		role="dialog"  tabindex="-1" aria-labelledby="myModalLabel"
 		style="margin-top: 100px;">
 		<div class="modal-dialog" role="document">
-			<div class="modal-content">
+			<div class="modal-content" style="background-color:#171C28; color:gainsboro;">
 				<div class="modal-header">
 					<h4 class="modal-title" id="myModalLabel">친구 관계 설정</h4>
 					<button type="button" class="close" data-dismiss="modal"
 						aria-label="Close">
 						<span aria-hidden="true">×</span>
 					</button>
-
 				</div>
 
 				<div class="modal-body">
 					<input type=radio name="relation" value="3"> 절친<br>
 					<input type=radio name="relation" value="2"> 친구<br>
 					<input type=radio name="relation" value="1" checked="checked"> 아는 사람<br>
-						 
-						 
-					
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-primary" id="identifyModalBtn">확인</button>
-					<button type="button" class="btn btn-default" id="closeModalBtn">취소</button>
+					<button type="button" class="btn btn-primary" id="identifyBtn">확인</button>
+					<button type="button" class="btn btn-default" id="closeBtn">취소</button>
 				</div>
 			</div>
 		</div>
 	</div>
 
 	<!-- 친구 목록 모달 영역 -->
-	<div id="modalBox3" class="modal fade" role="dialog" tabindex="-1" aria-labelledby="myModalLabel2"
-		style="margin-top: 100px;">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h4 class="modal-title" id="myModalLabel2">친구 목록</h4>
+	<div id="friendListModal" class="modal fade" role="dialog" tabindex="-1" aria-labelledby="myModalLabel2"
+		style="margin-top:5%; margin-left:32%;">
+		<div class="modal-dialog" role="document" style="background-color:#171C28;">
+			<div class="modal-content" style="background-color:#171C28;">
+				<div class="modal-header" style="background-color:#171C28;">
+					<h4 class="modal-title" id="myModalLabel2" style="color:gainsboro;">My Friendlist</h4>
 					<button type="button" class="close" data-dismiss="modal"
 						aria-label="Close">
-						<span aria-hidden="true">×</span>
+						<span aria-hidden="true" style="color:white;">×</span>
 					</button>
 
 				</div>
-				<div style="text-align: center;">
-					친구 검색 : <input type=text placeholder=이름,닉네임 id="searchFriends"
-						value="">
+				<div style="text-align: center; background-color:#171C28; color:gainsboro; margin:20px;">
+					
+					친구 검색  :  <input type=text placeholder=이름,닉네임 id="searchFriendsList"
+						value="" style="background-color:gainsboro;">
+						<br>
 				</div>
-				<div class="modal-body2"></div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" id="closeModalBtn3">취소</button>
+				<div class="frListBody">
+				
+				</div>
+				<div class="modal-footer" style="background-color:#171C28;">
+
+					<button type="button" class="btn" id="closefriendList" style="background-color:gainsboro;">확인</button>
+
 				</div>
 			</div>
 		</div>
@@ -1052,7 +1070,7 @@
 	      	<div class="footer-btns" style="display:flex;width:50%;height:10%;"></div>
 	      	<div class="writeReplyBox">					
 	         	<span class="myProfile"><img class="userProfileImg" src="${loginInfo.profile_img }" alt=""></span>
-	       		<h5 class="modal-title" id="exampleModalLabel">${loginInfo.nickname }</h5>
+	       		<h5 class="myNickname">${loginInfo.nickname }</h5>
 	       		<div id="writeReply" contenteditable="true"></div>
 							<button class="replyBtn" onclick="replyBtnOnclick('${loginInfo.email}','${loginInfo.nickname }');">등록</button>
 			</div>
@@ -1062,11 +1080,11 @@
 	  </div>
 	  
 	  <!-- 친구 수락 모달 영역 -->
-	<div id="modalBox1" class="modal fade" id="myModal"
+	<div id="acceptfrCall" class="modal fade" id="myModal"
 		role="dialog"  tabindex="-1" aria-labelledby="myModalLabel"
 		style="margin-top: 100px;">
 		<div class="modal-dialog" role="document">
-			<div class="modal-content">
+			<div class="modal-content" style="background-color:#171C28; color:gainsboro;">
 				<div class="modal-header">
 					<h4 class="modal-title" id="myModalLabel">친구 관계 설정</h4>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -1082,20 +1100,20 @@
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-primary" id="acceptModalBtn">확인</button>
-					<button type="button" class="btn btn-default" id="closeModalBtn1">취소</button>
+					<button type="button" class="btn btn-default" id="closeBtn1">취소</button>
 				</div>
 			</div>
 		</div>
 	</div>
 	  
 	  <!-- 친구 특징 버튼 모달 영역 -->
-	<div id="modalBox2" class="modal fade" id="myModal"
+	<div id="friendFeature" class="modal fade" id="myModal"
 		role="dialog"  tabindex="-1" aria-labelledby="myModalLabel"
 		style="margin-top: 100px;">
 		<div class="modal-dialog" role="document">
-			<div class="modal-content">
+			<div class="modal-content" style="background-color:#171C28; color:gainsboro;">
 				<div class="modal-header">
-					<h4 class="modal-title" id="myModalLabel">친구 관계 설정</h4>
+					<h4 class="modal-title" id="myModalLabel">친구</h4>
 					<button type="button" class="close" data-dismiss="modal"
 						aria-label="Close">
 						<span aria-hidden="true">×</span>
@@ -1105,25 +1123,24 @@
 
 				<div class="modal-body2">
 					
-						<button type=button class="frcutfr" name="${mvo.email }">친구 끊기</button> 
+						<button type=button class="cutfrout" name="${mvo.email }">친구 끊기</button> 
 						
 						
 					
 				</div>
 				<div class="modal-footer">
 					
-					<button type="button" class="btn btn-default" id="closeModalBtn2">확인</button>
+					<button type="button" class="btn btn-default" id="closeBtn2">확인</button>
 				</div>
 			</div>
 		</div>
 	</div>
-
-	
-	<div id="modalBox4" class="modal fade" id="myModal"
+	<!-- 친구 관계 설정 모달 영역 -->
+	<div id="setRelation" class="modal fade" id="myModal"
 		role="dialog"  tabindex="-1" aria-labelledby="myModalLabel"
-		style="margin-top: 100px;">
+		style="margin-top: 170px; margin-left:32%; width:34%;">
 		<div class="modal-dialog" role="document">
-			<div class="modal-content">
+			<div class="modal-content" style="background-color:#171C28; color:gainsboro;">
 				<div class="modal-header">
 					<h4 class="modal-title" id="myModalLabel">친구 관계 설정</h4>
 					<button type="button" class="close" data-dismiss="modal"
@@ -1141,7 +1158,7 @@
 				</div>
 				<div class="modal-footer">
 					
-					<button type="button" class="btn btn-default" id="closeModalBtn4">확인</button>
+					<button type="button" class="btn btn-default" id="closeBtn4" style="color:gainsboro;">확인</button>
 				</div>
 			</div>
 		</div>
@@ -1149,12 +1166,12 @@
 
 	
 	
-<!-- 친구 관계 설정 모달 영역 --><!-- 	내 정보 수정 시작 -->
+<!-- 	내 정보 수정 시작 -->
 	<div id="modalModifyInfo" class="modal fade" role="dialog" tabindex="-1"
-	aria-labelledby="modalModify" style="margin-top: 45px;">
+	aria-labelledby="modalModify" style="margin-top: 45px;margin-left:33%; width:35%;">
 	<div class="modal-dialog" role="document">
-		<div class="modal-content">
-			<div class="modal-header header">
+		<div class="modal-content" style="background-color:#171C28;">
+			<div class="modal-header">
 				<h4 class="modal-title" id="modalModify" style="color: white;">My
 					Information</h4>
 				<button type="button" class="close" data-dismiss="modal"
@@ -1166,11 +1183,11 @@
 				<form
 					action="${pageContext.request.contextPath}/member/changeMyInfo"
 					method="post" id="signUpForm">
-					<div class="body" style="text-align: center; color: #0D4373;">
+					<div class="body" style="text-align: center; color: white;">
 						<!-- 이메일 -->
 						<label></label>
 						<div class="userInput" id="email" name="email"
-							style="font-family: fantasy; font-size: 20px;">${loginInfo.email}</div>
+							style="font-family: fantasy; font-size: 30px;">${loginInfo.email}</div>
 						<br> <label>비밀번호</label><br>
 						<div id="changePwDiv" style="display: none;">
 							<!-- 현재 비밀번호 -->
@@ -1446,7 +1463,8 @@
 	
 		        // 친구 모달 버튼에 이벤트를 건다.	
         $('#friendsList').on('click', function () {
-        	$('#modalBox3').modal('show');
+        	
+        	$('#friendListModal').modal('show');
             $('.frInfo').remove();
             $.ajax({
                 url: "${pageContext.request.contextPath}/friend/selectFndList",
@@ -1458,22 +1476,22 @@
                         var waitlist = JSON
                             .parse(res.waitlist);
                         for (var j = 0; j < waitlist.length; j++) {
-                            $('.modal-body2').append("<div class=frInfo><a href='${pageContext.request.contextPath}/feed/myFeed?email="
+                            $('.frListBody').append("<div class=frInfo ><a href='${pageContext.request.contextPath}/feed/myFeed?email="
                                 + waitlist[j].email
-                                + "'>"
-                                + waitlist[j].email
-                                + " </a> <button type=button class='frInfo acceptfr' name=" + waitlist[j].email + ">친구 추가</button><button type=button class='frInfo cancelfr' name=" + waitlist[j].email + ">취소</button></div>");
+                                + "'><img class=yprofileImg src="+waitlist[j].profile_img+" style=width:3%; height:3%;border-radius:10%;> "
+                                + waitlist[j].nickname
+                                + " </a> <button type=button class='frInfo acceptfr' name=" + waitlist[j].email + " style=border-radius:25%; background-color:gainsboro>친구 추가</button><button type=button class='frInfo cancelfr' name=" + waitlist[j].email + " style=border-radius:10%; background-color:gainsboro>취소</button><br></div>");
                         }
                     }
                     if (res.list != null) {
                         var list = JSON.parse(res.list);
                         for (var j = 0; j < list.length; j++) {
-                            $('.modal-body2').append(
-                                "<div class=frInfo><a href='${pageContext.request.contextPath}/feed/myFeed?email="
+                            $('.frListBody').append(
+                                "<div class=frInfo ><a href='${pageContext.request.contextPath}/feed/myFeed?email="
                                 + list[j].email
-                                + "'>"
-                                + list[j].email
-                                + " </a> <button type=button class='frInfo cutfr' name=" + list[j].email + ">친구 끊기</button> <button type=button class='frInfo changeRelation' name=" + list[j].email + ">친구 관계 변경</button></div>");
+                                + "'><img class=yprofileImg src="+list[j].profile_img+" style=width:3%; height:3%; border-radius:50%;> "
+                                + list[j].nickname
+                                + " </a> <button type=button class='frInfo cutfr' name=" + list[j].email + " style=border-radius:10%; background-color:gainsboro>친구 끊기</button> <button type=button class='frInfo changeRelation' name=" + list[j].email + " style=border-radius:10%; background-color:gainsboro>친구 관계 변경</button><br></div>");
                         }
                     }
                     
@@ -1498,7 +1516,7 @@
                                 console
                                     .log(yr_id);
                                 $('#friendsList').click();
-                                $('#modalBox1').modal('hide');
+                                $('#acceptfrCall').modal('hide');
                                 //$('.modal-body2').append("<div class=frInfo>"+list[j].email+"  <button type=button class=frInfo id=cutfr name="+list[j].email+">친구 끊기</button></div>");
 
                                 // show modal
@@ -1544,7 +1562,7 @@
                         })
                     });
                     //친구 검색
-                    $('#searchFriends').on('keyup', function () {
+                    $('#searchFriendsList').on('keyup', function () {
                         var search = $(this).val();
                         console.log(search);
                         $('.frInfo').remove();
@@ -1560,22 +1578,22 @@
                                 if (res.waitlist != null) {
                                     var waitlist = JSON.parse(res.waitlist);
                                     for (var j = 0; j < waitlist.length; j++) {
-                                        $('.modal-body2').append("<div class=frInfo id=wfrNum" + j + "><a href='${pageContext.request.contextPath}/feed/myFeed?email="
+                                        $('.frListBody').append("<div class=frInfo id=wfrNum" + j + " ><a href='${pageContext.request.contextPath}/feed/myFeed?email="
                                             + waitlist[j].email
-                                            + "'>"
-                                            + waitlist[j].email
-                                            + " </a> <button type=button class='frInfo acceptfr'   name=" + waitlist[j].email + ">친구 추가</button><button type=button class='frInfo cancelfr' name=" + waitlist[j].email + ">취소</button></div>");
+                                            + "'><img class=yprofileImg src="+waitlist[j].profile_img+" style=width:3%; height:3%; border-radius:50%;> "
+                                            + waitlist[j].nickname
+                                            + " </a> <button type=button class='frInfo acceptfr'   name=" + waitlist[j].email + " style=border-radius:10%; background-color:gainsboro;>친구 추가</button><button type=button class='frInfo cancelfr' name=" + waitlist[j].email + " style=border-radius:10%; background-color:gainsboro>취소</button><br></div>");
                                     }
                                 }
                                 if (res.list != null) {
                                     var list = JSON.parse(res.list);
                                     for (var j = 0; j < list.length; j++) {
-                                        $('.modal-body2').append(
-                                            "<div class=frInfo id=frNum" + j + "><a href='${pageContext.request.contextPath}/feed/myFeed?email="
+                                        $('.frListBody').append(
+                                            "<div class=frInfo id=frNum" + j + " ><a href='${pageContext.request.contextPath}/feed/myFeed?email="
                                             + list[j].email
-                                            + "'>"
-                                            + list[j].email
-                                            + " </a> <button type=button class='frInfo cutfr' name=" + list[j].email + ">친구 끊기</button> <button type=button class='frInfo changeRelation' name=" + list[j].email + ">친구 관계 변경</button></div>");
+                                            + "'><img class=yprofileImg src="+list[j].profile_img+" style=width:3%; height:3%; border-radius:50%; > "
+                                            + list[j].nickname
+                                            + " </a> <button type=button class='frInfo cutfr' name=" + list[j].email + " style=border-radius:10%; background-color:gainsboro>친구 끊기</button> <button type=button class='frInfo changeRelation' name=" + list[j].email + " style=border-radius:10%; background-color:gainsboro>친구 관계 변경</button><br></div>");
 
                                     }
                                 }
@@ -1604,7 +1622,7 @@
 
                     });
                     $('.acceptfr').on('click', function() {
-            			$('#modalBox1').modal('show');
+            			$('#acceptfrCall').modal('show');
             		});
                     //친구요청 취소
                     $(".cancelfr").on("click", function () {
@@ -1638,9 +1656,9 @@
                     });
                   //친구 관계 설정
                         $('.changeRelation').on('click', function() {
-			             $('#modalBox4').modal('show');
+			             $('#setRelation').modal('show');
 		                 });
-                        $("#closeModalBtn4").on("click", function () {
+                        $("#closeBtn4").on("click", function () {
                         var yr_id = $(".changeRelation").attr("name");
                         var crelation = $('input:radio[name="crelation"]:checked').val();
                         console.log(yr_id);
@@ -1656,7 +1674,7 @@
                                 console.log(res);
                                 console.log(yr_id);
                                 alert("친구 관계 설정 변경이 완료되었습니다.");
-                                $('#modalBox4').modal('hide');
+                                $('#setRelation').modal('hide');
 
                                 //$('.modal-body2').append("<div class=frInfo>"+list[j].email+"  <button type=button class=frInfo id=cutfr name="+list[j].email+">친구 끊기</button></div>");
 
@@ -1801,37 +1819,33 @@
 		})
 		
 		
-		$('#closeModalBtn2').on('click', function() {
+		$('#closeBtn2').on('click', function() {
 
-			$('#modalBox3').modal('hide');
+			$('#friendFeature').modal('hide');
 
-		});
-		$('#identifyModalBtn2').on('click', function() {
-
-			$('#modalBox3').modal('hide');
 		});
 
 		$('#openModalBtn').on('click', function() {
-			$('#modalBox').modal('show');
+			$('#friendApply').modal('show');
 		});
 		
 		$('#openFrModal').on('click', function() {
-			$('#modalBox2').modal('show');
+			$('#friendFeature').modal('show');
 		});
-		$('#closeModalBtn2').on('click', function() {
-			$('#modalBox2').modal('hide');
+		$('#closeBtn2').on('click', function() {
+			$('#friendFeature').modal('hide');
 		});
 		
 		// 모달 안의 취소 버튼에 이벤트를 건다.	
-		$('#closeModalBtn').on('click', function() {
-			$('#modalBox').modal('hide');
+		$('#closeBtn').on('click', function() {
+			$('#friendApply').modal('hide');
 		});
-		$('#closeModalBtn3').on('click', function() {
-			$('#modalBox3').modal('hide');
+		$('#closefriendList').on('click', function() {
+			$('#friendListModal').modal('hide');
 		});
 		
-		$('#closeModalBtn1').on('click', function() {
-			$('#modalBox1').modal('hide');
+		$('#closeBtn1').on('click', function() {
+			$('#acceptfrCall').modal('hide');
 		});
 
 		
@@ -1847,7 +1861,7 @@
                     "relation": relation
                 },
                 success: function (res) {
-                	$('#modalBox').modal('hide');
+                	$('#friendApply').modal('hide');
                 	console.log(res);
                     if(res == 'complete'){
                         alert("성공적으로 친구요청되었습니다.");
@@ -1915,7 +1929,7 @@
 
         })
         //친구 끊기
-    $(".frcutfr").on("click", function () {
+    $(".cutfrout").on("click", function () {
         var yr_id = $(this).attr("name");
         
         console.log(yr_id);
@@ -1930,7 +1944,7 @@
                 console.log(res);
                 console.log(yr_id);
                 alert("친구취소가 완료되었습니다.");
-                $('#modalBox2').modal('hide');
+                $('#friendFeature').modal('hide');
                 $(".btn-lg").remove();
                 $(".btnText").remove();
                 $(".profileLayoutLeft").append("<button class=btn btn-primary btn-lg id=openModalBtn >＋</button><div class=btnText>친구요청</div>");

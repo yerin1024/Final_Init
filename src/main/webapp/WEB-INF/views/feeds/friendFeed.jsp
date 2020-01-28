@@ -33,6 +33,7 @@ body{
    border: 1px solid red;
    margin: auto;
 }
+
 html,body {
    padding: 0px;
    margin: 0px;
@@ -361,6 +362,7 @@ html,body {
              }
         } 
    });
+
    $(window).scroll(
          function() { //스크롤이 최하단 으로 내려가면 리스트를 조회하고 page를 증가시킨다.
             if ($(window).scrollTop() >= $(document).height()
@@ -404,7 +406,7 @@ html,body {
                          var Img = $("<div class='row profileImg'></div>") 
                          Img.append(profile_imgList[i]); 
                          profile.append(Img);
-                         
+
                          var nick = $("<div class='row profileNickname'></div>");
                          nick.append(list[i].nickname);
                          profile.append(nick);
@@ -428,7 +430,9 @@ html,body {
                             feedDeclaration.append(beforeDec);    
                             profile.append(feedDeclaration); 
                          }
+
                          }else{ }                         
+
                         feed.append(profile);
                         //ajax media가 있으면 carousel 없으면 바로 contents
                         if(mediaList[i].length != 0){
@@ -485,8 +489,8 @@ html,body {
                         }else{}
                         var contents = $("<div class='row contents' style='min-height:100px; max-height:400px;'></div>");
                         contents.append(list[i].contents);
-
                         feed.append(contents);
+
 
                         var btns = $("<div class='row btns'></div>");
 
@@ -539,6 +543,7 @@ html,body {
                         }
                         feed.append(btns);
                         $("#wrapper").append(feed);
+
                         
                         var replyDiv = $("<div class='reply' style='border:1px solid red'></div>") 
                         feed.append(replyDiv);
@@ -624,11 +629,13 @@ html,body {
          </c:when>
          <c:otherwise>
             <c:forEach items="${list}" var="feed" varStatus="status">
+
                <div class="feed" feed_seq=${feed.feed_seq }>
                   <div class="row profile">
                      <div class="row profileImg">
                         ${profile_imgList[status.index]}</div>
                      <div class="row profileNickname">${feed.nickname}</div>
+
                <c:choose>
                <c:when test="${feed.email ne loginInfo.email}">
                      <div class="row profilefeedDeclaration" seq="${feed.feed_seq}">
@@ -706,6 +713,7 @@ html,body {
                </c:choose>
                   <div class="row contents" style="min-height: 100px; max-height: 400px;">
                      ${feed.contents }</div>
+
                      <div class="reply">
 							<c:forEach items="${replyList[status.index] }" var="reply">								
 								<c:if test="${reply.parent == 0}">							
@@ -1172,6 +1180,7 @@ html,body {
 				parentReply.find(".hideReply").hide();
 			}	
 		})
+
    </script>
 </body>
 </html>
