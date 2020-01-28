@@ -1765,7 +1765,7 @@
 			var doc = document;
 	        var changeProfile = doc.getElementById("changeProfile");
 	        var nickname = doc.getElementById("inputNick");
-	        var profile_msg = doc.getElementById("profile_msg");
+	        var profile_msg = doc.getElementById("inputProfile_msg");
 	        
 	        var adviseNickname = doc.getElementById("adviseNickname");
 	        var adviseInNickname = doc.getElementById("adviseInNickname");
@@ -1783,12 +1783,14 @@
 			}).done(function(data){
 				var dto = JSON.parse(data.dto)
 				$('#modalProfile').modal('show');
-				nickname.value = dto.nickname;
-				console.log("profile_msg : " + dto.profile_msg);
+				console.log("profile_img : " + dto.profile_img);
+				
+				$("#inputNick").val("${loginInfo.nickname}");
 				if(typeof dto.profile_msg != "undefined"){
-					profile_msg.value = dto.profile_msg;
+					$("#inputProfile_msg").val(dto.profile_msg);
+					console.log("profile_msg : " + dto.profile_msg);
 				}
-				setProfile.src = dto.profile_img;
+				$("#setProfile").attr("src", dto.profile_img);
 								
 				 function readURL(input) {
 			            if (input.files && input.files[0]) {
@@ -1806,7 +1808,7 @@
 			        });
 
 			        deletePic.addEventListener("click", function(){
-			            setProfile.src = "resources/default_profile_img.png";
+			            setProfile.src = "/resources/images/default_profile_img.png";
 			        });     
 
 			        nickname.addEventListener("keyup", function(){

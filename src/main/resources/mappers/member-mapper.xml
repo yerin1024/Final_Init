@@ -53,9 +53,7 @@
 	    <if test="profile_msg != null">
 	       ,profile_msg = #{profile_msg}
 	    </if>
-	    <if test="id != null">
 	       where email = #{id}
-	    </if>
 	     
 	    
 	    </trim>
