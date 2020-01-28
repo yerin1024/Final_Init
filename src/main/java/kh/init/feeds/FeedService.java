@@ -537,5 +537,9 @@ public class FeedService {
 		int result = replyDAO.updateReply(dto);
 		return result;
 	}
+	public int getMyFeedCountSVC(String email)throws Exception{
+		int result  = dao.getMyFeedCount(email);
+		return result;
+	}
 
 }
