@@ -295,6 +295,11 @@ body{
 				alert("내용을 입력하세요");
 				return;
 			}
+			console.log(title.length);
+			if(title.length>20){
+				alert("제목은 한글,영어,숫자 포함 20글자로 작성해주세요.");
+				return;
+			}
 			$("#writeFeedForm").submit();
 		})
 		$("#back").on("click", function(){
