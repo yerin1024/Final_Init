@@ -10,11 +10,13 @@ public class ReplyDTO {
 	private int parent;
 	private String contents;
 	private Timestamp write_date;
+	private String profile_img;
+	private String nickname;
 	public ReplyDTO() {
 		super();
 	}
 	public ReplyDTO(int feed_seq, int reply_seq, String email, int depth, int parent, String contents,
-			Timestamp write_date) {
+			Timestamp write_date, String profile_img, String nickname) {
 		super();
 		this.feed_seq = feed_seq;
 		this.reply_seq = reply_seq;
@@ -23,6 +25,8 @@ public class ReplyDTO {
 		this.parent = parent;
 		this.contents = contents;
 		this.write_date = write_date;
+		this.profile_img = profile_img;
+		this.nickname = nickname;
 	}
 	public int getFeed_seq() {
 		return feed_seq;
@@ -66,11 +70,25 @@ public class ReplyDTO {
 	public void setWrite_date(Timestamp write_date) {
 		this.write_date = write_date;
 	}
+	public String getProfile_img() {
+		return profile_img;
+	}
+	public void setProfile_img(String profile_img) {
+		this.profile_img = profile_img;
+	}
+	public String getNickname() {
+		return nickname;
+	}
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
 	@Override
 	public String toString() {
 		return "ReplyDTO [feed_seq=" + feed_seq + ", reply_seq=" + reply_seq + ", email=" + email + ", depth=" + depth
-				+ ", parent=" + parent + ", contents=" + contents + ", write_date=" + write_date + "]";
+				+ ", parent=" + parent + ", contents=" + contents + ", write_date=" + write_date + ", profile_img="
+				+ profile_img + ", nickname=" + nickname + "]";
 	}
+	
 	
 	
 	

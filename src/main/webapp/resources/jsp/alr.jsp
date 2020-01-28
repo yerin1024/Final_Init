@@ -3,11 +3,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!-- 친구요청 모달 영역 -->
-	<div id="modalBox" class="modal fade" id="myModal"
+	<div id="friendApply" class="modal fade" id="myModal"
 		role="dialog"  tabindex="-1" aria-labelledby="myModalLabel"
 		style="margin-top: 100px;">
 		<div class="modal-dialog" role="document">
-			<div class="modal-content">
+			<div class="modal-content" style="background-color:#171C28; color:gainsboro;">
 				<div class="modal-header">
 					<h4 class="modal-title" id="myModalLabel">친구 관계 설정</h4>
 					<button type="button" class="close" data-dismiss="modal"
@@ -19,52 +19,51 @@
 
 				<div class="modal-body">
 					
-						<input type=radio name="relation" value="1"> 아는 사람<br>
-						<input type=radio name="relation" value="2"> 친구<br> <input
-							type=radio name="relation" value="3"> 절친<br> 
+						<input type=radio name="relation" value="3"> 절친<br>
+					<input type=radio name="relation" value="2"> 친구<br>
+					<input type=radio name="relation" value="1" checked="checked"> 아는 사람<br>
 					
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-primary" id="identifyModalBtn">확인</button>
-					<button type="button" class="btn btn-default" id="closeModalBtn">취소</button>
+					<button type="button" class="btn btn-primary" id="identifyBtn">확인</button>
+					<button type="button" class="btn btn-default" id="closeBtn">취소</button>
 				</div>
 			</div>
 		</div>
 	</div>
 
 	<!-- 친구 목록 모달 영역 -->
-	<div id="modalBox3" class="modal fade" role="dialog" tabindex="-1" aria-labelledby="myModalLabel2"
-		style="margin-top: 100px;">
+	<div id="friendListModal" class="modal fade" role="dialog" tabindex="-1" aria-labelledby="myModalLabel2"
+		style="margin-top:5%; margin-left:32%;">
 		<div class="modal-dialog" role="document">
-			<div class="modal-content">
+			<div class="modal-content" style="background-color:#171C28;">
 				<div class="modal-header">
-					<h4 class="modal-title" id="myModalLabel2">친구 목록</h4>
+					<h4 class="modal-title" id="myModalLabel2" style="color:gainsboro;">친구 목록</h4>
 					<button type="button" class="close" data-dismiss="modal"
 						aria-label="Close">
-						<span aria-hidden="true">×</span>
+						<span aria-hidden="true" style="color:white;">×</span>
 					</button>
 
 				</div>
-				<div style="text-align: center;">
+				<div style="text-align: center; background-color:#171C28; color:gainsboro; margin:20px;">
 					친구 검색 : <input type=text placeholder=이름,닉네임 id="searchFriends"
-						value="">
+						value="" style="background-color:gainsboro;">
 				</div>
-				<div class="modal-body2"></div>
+				<div class="frListBody"></div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-primary"
-						id="identifyModalBtn2">확인</button>
-					<button type="button" class="btn btn-default" id="closeModalBtn3">취소</button>
+					
+					<button type="button" class="btn" id="closefriendList" style="background-color:gainsboro;">취소</button>
 				</div>
 			</div>
 		</div>
 	</div>
 	
 	<!-- 친구 수락 모달 영역 -->
-	<div id="modalBox1" class="modal fade" id="myModal"
+	<div id="acceptfrCall" class="modal fade" id="myModal"
 		role="dialog"  tabindex="-1" aria-labelledby="myModalLabel"
 		style="margin-top: 100px;">
 		<div class="modal-dialog" role="document">
-			<div class="modal-content">
+			<div class="modal-content" style="background-color:#171C28; color:gainsboro;">
 				<div class="modal-header">
 					<h4 class="modal-title" id="myModalLabel">친구 관계 설정</h4>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -73,24 +72,24 @@
 				</div>
 
 				<div class="modal-body1">
-					<input type=radio name="relation" value="1"> 아는 사람<br>
-					<input type=radio name="relation" value="2"> 친구<br> 
-					<input type=radio name="relation" value="3"> 절친<br> 
+					<input type=radio name="arelation" value="3"> 절친<br>
+					<input type=radio name="arelation" value="2"> 친구<br> 
+					<input type=radio name="arelation" value="1" checked="checked"> 아는 사람<br>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-primary" id="acceptModalBtn">확인</button>
-					<button type="button" class="btn btn-default" id="closeModalBtn1">취소</button>
+					<button type="button" class="btn btn-default" id="closeBtn1">취소</button>
 				</div>
 			</div>
 		</div>
 	</div>
 	
 	<!-- 친구 특징 버튼 모달 영역 -->
-	<div id="modalBox2" class="modal fade" id="myModal"
+	<div id="friendFeature" class="modal fade" id="myModal"
 		role="dialog"  tabindex="-1" aria-labelledby="myModalLabel"
 		style="margin-top: 100px;">
 		<div class="modal-dialog" role="document">
-			<div class="modal-content">
+			<div class="modal-content" style="background-color:#171C28; color:gainsboro;">
 				<div class="modal-header">
 					<h4 class="modal-title" id="myModalLabel">친구 관계 설정</h4>
 					<button type="button" class="close" data-dismiss="modal"
@@ -102,14 +101,14 @@
 
 				<div class="modal-body2">
 					
-						<button type=button>친구 끊기</button> 
+						<button type=button class="cutfrout" name="${mvo.email }">친구 끊기</button> 
 						
 						
 					
 				</div>
 				<div class="modal-footer">
 					
-					<button type="button" class="btn btn-default" id="closeModalBtn2">확인</button>
+					<button type="button" class="btn btn-default" id="closeBtn2">확인</button>
 				</div>
 			</div>
 		</div>
@@ -156,7 +155,9 @@
 				data: {},
 				dataType: "json"
 			}).done(function(resp){
-	        	 $(".a_sector").children().remove();
+	        	 
+				console.log("resp : " + resp)
+				$(".a_sector").children().remove();
 	        	 
 	        	 if(resp.length <1){
 	        		 $(".a_sector").append("<div id='noAlarmExist'>새로운 알림이 없습니다.</div>");
