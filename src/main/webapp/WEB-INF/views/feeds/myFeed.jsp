@@ -1181,7 +1181,7 @@
 		</div>
 	</div>
 
-	<!-- 친구 관계 설정 모달 영역 -->
+	
 	<div id="modalBox4" class="modal fade" id="myModal"
 		role="dialog"  tabindex="-1" aria-labelledby="myModalLabel"
 		style="margin-top: 100px;">
@@ -1213,7 +1213,7 @@
 
 	
 	
-<!-- 	내 정보 수정 시작 -->
+<!-- 친구 관계 설정 모달 영역 --><!-- 	내 정보 수정 시작 -->
 	<div id="modalModifyInfo" class="modal fade" role="dialog" tabindex="-1"
 	aria-labelledby="modalModify" style="margin-top: 45px;">
 	<div class="modal-dialog" role="document">
@@ -1348,7 +1348,7 @@
                                 <p class="adviseOut" id="adviseProfile-msg" readonly>*200자 이내로 입력 가능합니다.</p>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" id="changeProfileBtn" onclick="formValidation();" style="color:#0D4373; width:200px; margin-right:5%;">편집 완료</button>
+                                <button type="button" id="changeProfileBtn" style="color:#0D4373; width:200px; margin-right:5%;">편집 완료</button>
                                 <button type="button" id="cancelBtn"  style="color:#0D4373; width:200px; margin-right:5%;">취소</button>
                             </div>
                         </div>
@@ -1852,7 +1852,7 @@
 			        //submit 직전 유효성 검사
 
 			        $("#cancelBtn").on("click", function() {
-							location.href = "${pageContext.request.contextPath}/feed/myFeed?email=${dto.email}";
+							location.href = "${pageContext.request.contextPath}/feed/myFeed?email=${loginInfo.email}";
 						});
 				
 			}).fail(function(a,b,c){
