@@ -40,6 +40,7 @@ public class FeedController {
 		List<FeedDTO> list = null;
 		List<String> cover = new ArrayList<>();
 		List<MemberDTO> flist = new ArrayList<>();
+		int totalFeedSize =  0;
 		String myEmail = ((MemberDTO)session.getAttribute("loginInfo")).getEmail();
 		try {
 			if(!(email.equalsIgnoreCase(myEmail))) {
@@ -54,6 +55,7 @@ public class FeedController {
             	list = (List<FeedDTO>)service.getMyFeed(ipage, email).get("list");
     			cover = (List<String>)service.getMyFeed(ipage, email).get("cover");
     			flist = fservice.getFriendsListService(myEmail);
+    			totalFeedSize = service.getMyFeedCountSVC(myEmail);
             }
 			MemberDTO dto = mservice.getMyPageService(email);
 			int blockSize = mservice.blockSizeService(myEmail,  email);
@@ -61,6 +63,7 @@ public class FeedController {
 			model.addAttribute("mvo", dto);
 			model.addAttribute("blockSize", blockSize);	
 			model.addAttribute("flist", flist);
+			model.addAttribute("totalFeedSize", totalFeedSize);
 			model.addAttribute("list", list);
 			model.addAttribute("cover", cover);
 		}catch(Exception e) {
