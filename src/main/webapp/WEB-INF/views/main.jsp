@@ -67,7 +67,7 @@
         width: 50%;
     }
     .tab1_body > a{
-    	color: #171C28;
+    	color: #062f5c;
     }
     .tab1_logo {
     	width: 50%;
@@ -197,9 +197,38 @@
         color: #fffefc;
     }
 	
+	#tab5-1_generalSignup{
+        width: 200px;
+	    height: 200px;
+	    padding: 5px;
+	    margin: 5px;
+	    border: none;
+	    border-radius: 8px;
+	    font-size: 19px;
+	    background-color: #171C28;
+	    color: white;
+	}
 	#tab5-2_kakaoLoginBtn{
-		width: 100px;
-        height: 30px;
+		width: 200px;
+	    height: 200px;
+	    margin: 5px;
+	    border: none;
+	    border-radius: 8px;
+	    font-size: 19px;
+	}
+	
+	#tab5-2_kakaoLoginBtn:hover{
+		cursor: pointer;
+	}
+	
+	#tab4_goMain{
+		width: 150px;
+		height: 50px;
+		background-color: #171C28;
+	}
+	
+	.tab4_signupBtnBox{
+		padding: 50px;
 	}
 	
     .tab5-1_container {
