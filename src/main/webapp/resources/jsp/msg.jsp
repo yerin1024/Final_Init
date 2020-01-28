@@ -147,32 +147,21 @@
  					
  					$("#toUserFeed").children().remove();
  					$("#toUserFeed").append("<div id='toUserFeed'>"
- 			                +"<div class='imgContainer'>"
- 			                +"<img src='/images/toUserFeed.png' id='toUserFeedImg'>"
- 			                +"</div>"
- 			                +"<b>피드 가기</b>"
- 			            +"</div>");
+ 			                +"<div class='imgContainer'><img src='/images/toUserFeed.png' id='toUserFeedImg'></div>"
+ 			                +"<b>피드 가기</b></div>");
  					
  					$(".userToWhere").children().remove();
  					$(".userToWhere").append("<div class='userToWhere'>"
  							+"<a href='${pageContext.request.contextPath}/feed/myFeed?email="+friendId+"'>"
- 		 		            +"<div id='toUserFeed'>"
- 		 		            +"<div class='imgContainer'>"
+ 		 		            +"<div id='toUserFeed'><div class='imgContainer'>"
  		 		            +"<img src='/images/toUserFeed.png' id='toUserFeedImg'>"
- 		 		            +"</div>"
- 		 		            +"<b>피드 가기</b>"
- 		 		            +"</div>"
- 		 		            +"</a>"
+ 		 		            +"</div><b>피드 가기</b>"
+ 		 		            +"</div></a>"
  		 		            
- 		 		            +"<a href='#'>"
- 		 		            +"<div id='toUserMsg'>"
- 		 		            +"<div class='imgContainer'>"
+ 		 		            +"<div id='toUserMsg'><div class='imgContainer'>"
  		 		            +"<img src='/images/toUserMsg.png' id='toUserMsgImg'>"
- 		 		            +"</div>"
- 		 		            +"<b>메시지 보내기</b>"
- 		 		            +"</div>"
- 		 		            +"</a>"
- 		 		            +"</div>");
+ 		 		            +"</div><b>메시지 보내기</b>"
+ 		 		            +"</div></div>");
  					
  					$("#toUserMsg").on("click",function(){
  						$("img[id='"+friendId+"']").click();
@@ -186,8 +175,6 @@
  				$("#footer").append("<div class='toWhere ac1'><img src='/images/toFr_cl.png' id='toFrIcon'></div>"
  			            +"<div id='toBetween'></div>"
  			            +"<div class='toWhere toColl'><img src='/images/toMsg_un.png' id='toMsgIcon'></div>");
- 				
- 				
  				
  				
  				// 메시지 상세 보기
@@ -217,11 +204,11 @@
  							 if(resp[i].from_id=="${loginInfo.email}"){
  								 $(".sector_in").append("<ul class='ul_right'>"
  							                +"<li class='from_id'>"+resp[i].contents+"</li><span class=time_right>"
- 							                +resp[i].write_date+"</span><br></ul>");
+ 							                +resp[i].write_date_edit+"</span><br></ul>");
  							 }else{
  								 $(".sector_in").append("<ul class='ul_left'>"
  							                + "<li class='to_id'>"+resp[i].contents+"</li><span class=time>"
- 							                +resp[i].write_date+"</span><br></ul>");
+ 							                +resp[i].write_date_edit+"</span><br></ul>");
  							 }
  						}
  						 var objDiv = document.getElementById("view1");
@@ -309,7 +296,7 @@
 								$(".sector_in").append("<div class='pre_line'>"
  										 +"<div class='pre_pf'><img src='"+resp[i].profile_img+"' class='pre_pf_img'></div>"
  										 +"<div class='pre_text_p' id='"+resp[i].email+"' value='"+resp[i].nickname+"' name='"+resp[i].profile_img+"'><b>"+resp[i].nickname+"</b><br>"+resp[i].contents+"</div>"
- 										 +"<span class='pre_time_p'>"+resp[i].write_date+"</span>"
+ 										 +"<span class='pre_time_p'>"+resp[i].write_date_edit+"</span>"
  										 + "<span class='pre_new_p'><span class='pre_new_inside'>"+resp[i].unread_count+"</span></span>"
  										 +"</div>");
  							 }// 안읽 없음
@@ -317,7 +304,7 @@
 								$(".sector_in").append("<div class='pre_line'>"
  	 									 +"<div class='pre_pf'><img src='"+resp[i].profile_img+"' class='pre_pf_img'></div>"
  	 									 +"<div class='pre_text_p' id='"+resp[i].email+"' value='"+resp[i].nickname+"' name='"+resp[i].profile_img+"'><b>"+resp[i].nickname+"</b><br>"+resp[i].contents+"</div>"
- 	 									 +"<span class='pre_time_p'>"+resp[i].write_date+"</span>"
+ 	 									 +"<span class='pre_time_p'>"+resp[i].write_date_edit+"</span>"
  	 									 + "<span class='pre_new_p'></span>"
  	 									 +"</div>");
  							 }
@@ -359,11 +346,11 @@
 		 							 if(resp[i].from_id=='${loginInfo.email}'){
 		 								 $(".sector_in").append("<ul class='ul_right'><li class='from_id'>"
 		 										 +resp[i].contents+"</li><span class=time_right>"
-		 										 +resp[i].write_date+"</span><br></ul>");
+		 										 +resp[i].write_date_edit+"</span><br></ul>");
 		 							 }else{
 		 								 $(".sector_in").append("<ul class='ul_left'><li class='to_id'>"
 		 										 +resp[i].contents+"</li><span class=time>"
-		 										 +resp[i].write_date+"</span><br></ul>");
+		 										 +resp[i].write_date_edit+"</span><br></ul>");
 		 							 }
 		 						}
 		 						 var objDiv = document.getElementById("view1");

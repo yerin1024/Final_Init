@@ -20,11 +20,12 @@ public class MessageDTO {
 	private String profile_img;
 	private String email;
 	private String formed_date;
+	private String write_date_edit;
 	
 	public MessageDTO() {}
 	public MessageDTO(int msg_seq, String from_id, String to_id, String contents, Timestamp write_date,
 			String receive_read, int unread_count, String my_id, String fr_id, String nickname, String profile_img,
-			String email, String formed_date) {
+			String email, String formed_date, String write_date_edit) {
 		super();
 		this.msg_seq = msg_seq;
 		this.from_id = from_id;
@@ -39,6 +40,7 @@ public class MessageDTO {
 		this.profile_img = profile_img;
 		this.email = email;
 		this.formed_date = formed_date;
+		this.write_date_edit = write_date_edit;
 	}
 
 	public int getMsg_seq() {
@@ -137,16 +139,21 @@ public class MessageDTO {
 		this.email = email;
 	}
 
+	public String getWrite_date_edit() {
+		return write_date_edit;
+	}
+	public void setWrite_date_edit(String write_date_edit) {
+		this.write_date_edit = write_date_edit;
+	}
 	public String getFormed_date() {
-		SimpleDateFormat sdf = new SimpleDateFormat("MM-dd HH:mm");
+//		SimpleDateFormat sdf = new SimpleDateFormat("MM-dd HH:mm");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 		return sdf.format(this.write_date);
 	}
 
 	public void setFormed_date(String formed_date) {
 		this.formed_date = formed_date;
 	}
-	
-	
 	
 	
 	

@@ -44,8 +44,8 @@
 	overflow: scroll;
 	overflow-x: hidden;
 	padding-top: 10px;
-    padding-bottom: 10px;
-    z-index:999;
+	padding-bottom: 10px;
+	z-index: 999;
 }
 
 #view1::-webkit-scrollbar-track {
@@ -66,9 +66,10 @@
 }
 
 #cross {
-/* 	border: 1px solid red; */
+	/* 	border: 1px solid red; */
 	float: right;
-	width: 35px; height: 35px;
+	width: 35px;
+	height: 35px;
 	margin: 0px;
 }
 /* 	border: 1px solid red; */
@@ -81,6 +82,7 @@
 	padding-left: 5px;
 	height: 60px;
 }
+
 .pre_line {
 	padding-left: 5px;
 	height: 60px;
@@ -124,8 +126,9 @@
 	height: 60px;
 	font-size: 16px;
 }
-.pre_text:hover{
-	cursor:pointer
+
+.pre_text:hover {
+	cursor: pointer
 }
 
 .pre_text_name {
@@ -137,7 +140,8 @@
 	/*        border: 1px solid red;*/
 	float: left;
 	width: 210px;
-	min-width: 150px; min-height: 60px;
+	min-width: 150px;
+	min-height: 60px;
 	line-height: 25px;
 	font-size: 14px;
 	white-space: nowrap;
@@ -284,7 +288,8 @@ ul {
 	/*            border: 1px solid red;*/
 	/*            box-shadow: 0px 0px 2px 1px #c3c3c3;*/
 }
-.toWhere{
+
+.toWhere {
 	cursor: pointer;
 }
 
@@ -335,7 +340,8 @@ ul {
 .pre_time {
 	/*            border: 1px solid blue;*/
 	width: 60px;
-	height: 60px; text-align : center;
+	height: 60px;
+	text-align: center;
 	line-height: 60px;
 	float: right;
 	margin-right: 10px;
@@ -405,18 +411,18 @@ ul {
 	min-width: 350px;
 	/*    border: 1px solid black;*/
 	float: right;
-/* 	margin-bottom: -13px; */
-margin-top: 1px;
-margin-bottom: 1px;
+	/* 	margin-bottom: -13px; */
+	margin-top: 1px;
+	margin-bottom: 1px;
 }
 
 .ul_left {
 	min-width: 350px;
 	/*    border: 1px solid red;*/
 	float: left;
-/* 	margin-bottom: -13px; */
-margin-top: 1px;
-margin-bottom: 1px;
+	/* 	margin-bottom: -13px; */
+	margin-top: 1px;
+	margin-bottom: 1px;
 }
 
 .toWhere {
@@ -517,181 +523,175 @@ margin-bottom: 1px;
 /* ---------------------------------------------------------------------------------------- */
 /* ---------------------------------------------------------------------------------------- */
 /* ---------------------------------------------------------------------------------------- */
-
-@media ( max-width : 500px ){
-    #view1 {
-        background-color: #ffffff;
-        box-shadow: 0px 0px 4px 0px #c3c3c3;
-        display: none;
-        position: fixed;
-        bottom: 50px;
-        right: 0px;
-        width: 100%;
-        height: 300px;
-        /* border: 1px solid black; */
-        /* border-radius: 10px; */
-        overflow: scroll;
-        overflow-x: hidden;
-        z-index: 999;
-    }
-    .ac2 {
-        position: fixed;
-        bottom: 353px;
-        right: 5px;
-        /* border: 1px solid black; */
-        width: 30px;
-        height: 30px;
-        z-index: 9;
-    }
-    #cross {
-        /* border: 1px solid red; */
-        float: right;
-        width: 30px;
-        height: 30px;
-        margin: 0px;
-    }
-    .pre_top {
-        right: 0px;
-        position: fixed;
-        bottom: 350px;
-        width: 100%;
-        height: 40px;
-        /* border: 1px solid red; */
-        background-color: #ffffff;
-        box-shadow: 0px 0px 4px 0px #c3c3c3;
-        color: black;
-        border-top-left-radius: 15px;
-        border-top-right-radius: 15px;
-    }
-    .pre_title {
-        font-size: 20px;
-        margin-left: 15px;
-        line-height: 40px;
-        font-weight: 600;
-    }
-
-    .ppre_line {
-        padding-top: 0px;
-        height: 50px;
-        /* border: 1px solid red; */
-    }
-
-    .pre_pf {
-        /* border: 1px solid pink; */
-        width: 50px;
-        height: 50px;
-        float: left;
-        margin-left: 0px;
-        padding: 2px;
-        padding-top: 0px;
-    }
-    .pre_text {
-        /* border: 1px solid black; */
-        float: left;
-        width: 55vw;
-        height: 50px;
-        line-height: 50px;
-        padding-left: 10px;
-        padding-right: 10px;
-        max-width: 55vw;
-        min-width: 150px;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        font-size: 20px;
-    }
-    .pre_time {
-        /* border: 1px solid blue; */
-        width: 50px;
-        height: 50px;
-        text-align: center;
-        line-height: 60px;
-        float: right;
-        /* height: 0px; */
-        margin-right: 10px;
-        text-align: center;
-        line-height: 0px;
-    }
-
-    #footer {
-        position: fixed;
-        bottom: 0px;
-        width: 100%;
-        height: 50px;
-        float: left;
-        text-align: center;
-        /* border: 1px solid black; */
-        background-color: #ffffff;
-        box-shadow: 0px 0px 4px 0px #c3c3c3;
-        border-bottom-left-radius: 15px;
-        border-bottom-right-radius: 15px;
-    }
-    .toWhere {
-        float: left;
-        /* border: 1px solid black; */
-        width: 46%;
-        height: 100%;
-        padding-top: 5px;
-        margin-left: 10px;
-    }
-
-    .pre_line {
-        /* border: 1px solid black; */
-        padding-top: 0px;
-        height: 50px;
-    }
-    .pre_pf {
-        /* border: 1px solid pink; */
-        width: 50px;
-        height: 50px;
-        float: left;
-        margin-left: 0px;
-        padding: 2px;
-        padding-top: 0px;
-    }
-    .pre_text_p {
-        /* border: 1px solid red; */
-        float: left;
-        width: 48vw;
-        height: 50px;
-        max-height: 50px;
-        min-height: 50px;
-        /* min-width: 100px; */
-        line-height: 21px;
-        font-size: 13px;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        padding-left: 10px;
-        padding-right: 0px;
-        padding-top: 0px;
-    }
-
-    .pre_time_p {
-        /* border: 1px solid pink; */
-        height: 25px;
-        float: left;
-        width: 90px;
-        text-align: right;
-        line-height: 25px;
-        font-size: 12px;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
-    .pre_new_p {
-        /* border: 1px solid green; */
-        height: 25px;
-        float: left;
-        width: 90px;
-        text-align: right;
-        line-height: 25px;
-        font-size: 12px;
-        color: #535353;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
+@media ( max-width : 500px ) {
+	#view1 {
+		background-color: #ffffff;
+		box-shadow: 0px 0px 4px 0px #c3c3c3;
+		display: none;
+		position: fixed;
+		bottom: 50px;
+		right: 0px;
+		width: 100%;
+		height: 300px;
+		/* border: 1px solid black; */
+		/* border-radius: 10px; */
+		overflow: scroll;
+		overflow-x: hidden;
+		z-index: 999;
+	}
+	.ac2 {
+		position: fixed;
+		bottom: 353px;
+		right: 5px;
+		/* border: 1px solid black; */
+		width: 30px;
+		height: 30px;
+		z-index: 9;
+	}
+	#cross {
+		/* border: 1px solid red; */
+		float: right;
+		width: 30px;
+		height: 30px;
+		margin: 0px;
+	}
+	.pre_top {
+		right: 0px;
+		position: fixed;
+		bottom: 350px;
+		width: 100%;
+		height: 40px;
+		/* border: 1px solid red; */
+		background-color: #ffffff;
+		box-shadow: 0px 0px 4px 0px #c3c3c3;
+		color: black;
+		border-top-left-radius: 15px;
+		border-top-right-radius: 15px;
+	}
+	.pre_title {
+		font-size: 20px;
+		margin-left: 15px;
+		line-height: 40px;
+		font-weight: 600;
+	}
+	.ppre_line {
+		padding-top: 0px;
+		height: 50px;
+		/* border: 1px solid red; */
+	}
+	.pre_pf {
+		/* border: 1px solid pink; */
+		width: 50px;
+		height: 50px;
+		float: left;
+		margin-left: 0px;
+		padding: 2px;
+		padding-top: 0px;
+	}
+	.pre_text {
+		/* border: 1px solid black; */
+		float: left;
+		width: 55vw;
+		height: 50px;
+		line-height: 50px;
+		padding-left: 10px;
+		padding-right: 10px;
+		max-width: 55vw;
+		min-width: 150px;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		font-size: 20px;
+	}
+	.pre_time {
+		/* border: 1px solid blue; */
+		width: 50px;
+		height: 50px;
+		text-align: center;
+		line-height: 60px;
+		float: right;
+		/* height: 0px; */
+		margin-right: 10px;
+		text-align: center;
+		line-height: 0px;
+	}
+	#footer {
+		position: fixed;
+		bottom: 0px;
+		width: 100%;
+		height: 50px;
+		float: left;
+		text-align: center;
+		/* border: 1px solid black; */
+		background-color: #ffffff;
+		box-shadow: 0px 0px 4px 0px #c3c3c3;
+		border-bottom-left-radius: 15px;
+		border-bottom-right-radius: 15px;
+	}
+	.toWhere {
+		float: left;
+		/* border: 1px solid black; */
+		width: 46%;
+		height: 100%;
+		padding-top: 5px;
+		margin-left: 10px;
+	}
+	.pre_line {
+		/* border: 1px solid black; */
+		padding-top: 0px;
+		height: 50px;
+	}
+	.pre_pf {
+		/* border: 1px solid pink; */
+		width: 50px;
+		height: 50px;
+		float: left;
+		margin-left: 0px;
+		padding: 2px;
+		padding-top: 0px;
+	}
+	.pre_text_p {
+		/* border: 1px solid red; */
+		float: left;
+		width: 48vw;
+		height: 50px;
+		max-height: 50px;
+		min-height: 50px;
+		/* min-width: 100px; */
+		line-height: 21px;
+		font-size: 13px;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		padding-left: 10px;
+		padding-right: 0px;
+		padding-top: 0px;
+	}
+	.pre_time_p {
+		/* border: 1px solid pink; */
+		height: 25px;
+		float: left;
+		width: 90px;
+		text-align: right;
+		line-height: 25px;
+		font-size: 12px;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+	.pre_new_p {
+		/* border: 1px solid green; */
+		height: 25px;
+		float: left;
+		width: 90px;
+		text-align: right;
+		line-height: 25px;
+		font-size: 12px;
+		color: #535353;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
 }
 
 /* --------------------------------------------------------------------------- */
@@ -700,9 +700,7 @@ margin-bottom: 1px;
 /* --------------------------------------------------------------------------- */
 /* --------------------------------------------------------------------------- */
 /* --------------------------------------------------------------------------- */
-
 @media ( max-width : 700px ) {
-	
 	.ac2 {
 		position: fixed;
 		bottom: 580px;
@@ -728,7 +726,7 @@ margin-bottom: 1px;
 	#view1 {
 		background-color: #ffffff;
 		box-shadow: 0px 0px 4px 0px #c3c3c3;
-		display:none;
+		display: none;
 		position: fixed;
 		bottom: 80px;
 		right: 0px;
@@ -914,21 +912,25 @@ margin-bottom: 1px;
 	.pre_time_p {
 		/*    border: 1px solid pink;*/
 		height: 30px;
-	    float: left;
-	    width: 75px;
-	    text-align: right;
-	    line-height: 25px;
-	    font-size: 12px;
-	    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+		float: left;
+		width: 75px;
+		text-align: right;
+		line-height: 25px;
+		font-size: 12px;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
 	}
-	.pre_new_inside{
-/*    border: 1px solid black;*/
-    background-color: red;
-    padding: 2px; padding-left: 6px; padding-right: 6px;
-    margin-right: 10px;
-    color: white;
-    border-radius: 10px;
-}
+	.pre_new_inside {
+		/*    border: 1px solid black;*/
+		background-color: red;
+		padding: 2px;
+		padding-left: 6px;
+		padding-right: 6px;
+		margin-right: 10px;
+		color: white;
+		border-radius: 10px;
+	}
 	.pre_back {
 		/*                border: 1px solid red;*/
 		float: left;
@@ -1015,7 +1017,7 @@ margin-bottom: 1px;
 		/*        border: 1px solid red;*/
 		float: left;
 		width: 60vw;
-/* 		min-width: 100px; */
+		/* 		min-width: 100px; */
 		line-height: 25px;
 		font-size: 15px;
 		white-space: nowrap;
@@ -1104,13 +1106,13 @@ margin-bottom: 1px;
 	}
 
 	/* 친구를 만들어 보세요 ------------------------------------------------------- */
-/* 	#noFriendExist { */
-/* 		           border: 1px solid green; */
+	/* 	#noFriendExist { */
+	/* 		           border: 1px solid green; */
 
-/* 		height: 100px; */
-/* 		text-align: center; */
-/* 		margin-top: 170px; */
-/* 	} */
+	/* 		height: 100px; */
+	/* 		text-align: center; */
+	/* 		margin-top: 170px; */
+	/* 	} */
 	#noMessageExist {
 		/*            border: 1px solid green;*/
 		height: 400px;
@@ -1119,7 +1121,6 @@ margin-bottom: 1px;
 }
 
 /* no exist new ---------------------------- */
-
 #noFriendExistContainer {
 	
 }
@@ -1173,42 +1174,55 @@ margin-bottom: 1px;
 	color: #444444;
 }
 
-
 /* --- 모달 ----------------------------------------- */
-#profileBigger{
-/*            border: 1px solid black;*/
-            width: 200px; height: 200px;
-            margin: 30px auto 30px auto;
-        }
-        #profileBiggerImg{
-            border-radius: 150px;
-            width: 100%;
-        }
-        
-        .userToWhere{
-/*            border: 1px solid black;*/
-            width: 250px; height: 90px;
-            margin: auto;
-            margin-bottom: 30px;
-        }
-        #toUserFeed, #toUserMsg{
-/*            border: 1px solid red;*/
-            float: left;
-            width: 50%; height: 100%;
-            text-align: center;
-            font-size: 13px;
-            line-height: 40px;
-            color: gray;
-        }
-        #toUserMsgImg{
-            margin-top: 5px;
-        }
-        .imgContainer{
-/*            border: 1px solid green;*/
-            width: 60px; height: 60px;
-            margin: auto;
-        }
-        #toUserFeedImg, #toUserMsgImg{
-            width: 100%; height: 
-        }
+#profileBigger {
+	/*            border: 1px solid black;*/
+	width: 200px;
+	height: 200px;
+	margin: 30px auto 30px auto;
+}
+
+#profileBiggerImg {
+	border-radius: 150px;
+	width: 100%;
+}
+
+.userToWhere {
+	/*            border: 1px solid black;*/
+	width: 250px;
+	height: 90px;
+	margin: auto;
+	margin-bottom: 30px;
+}
+
+.userToWhere:hover {
+	cursor: pointer;
+}
+
+#toUserFeed, #toUserMsg {
+	/*            border: 1px solid red;*/
+	float: left;
+	width: 50%;
+	height: 100%;
+	text-align: center;
+	font-size: 13px;
+	line-height: 40px;
+	color: gray;
+}
+
+#toUserMsgImg {
+	margin-top: 5px;
+}
+
+.imgContainer {
+	/*            border: 1px solid green;*/
+	width: 60px;
+	height: 60px;
+	margin: auto;
+}
+
+#toUserFeedImg, #toUserMsgImg {
+	width: 100%;
+	height:
+}
 /* ----------------------------------------- 모달 끝 --- */

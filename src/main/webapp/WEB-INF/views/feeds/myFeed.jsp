@@ -1217,11 +1217,11 @@
 						 if(resp[i].from_id=="${loginInfo.email}"){
 							 $(".sector_in").append("<ul class='ul_right'>"
 						                +"<li class='from_id'>"+resp[i].contents+"</li><span class=time_right>"
-						                +resp[i].write_date+"</span><br></ul>");
+						                +resp[i].write_date_edit+"</span><br></ul>");
 						 }else{
 							 $(".sector_in").append("<ul class='ul_left'>"
 						                + "<li class='to_id'>"+resp[i].contents+"</li><span class=time>"
-						                +resp[i].write_date+"</span><br></ul>");
+						                +resp[i].write_date_edit+"</span><br></ul>");
 						 }
 					}
 					 var objDiv = document.getElementById("view1");

@@ -130,7 +130,7 @@
 	<div id="a_view1" style="background-color:white; z-index:9;">
 		<div class="a_ac2">
 		    <div id=a_cross>
-		    <img src="/images/cross.png" style="width:30px;">
+		    <img src="/images/cancel.png" style="width:30px;">
             </div>
 		</div>
           
@@ -181,13 +181,13 @@
 		        			 $(".a_sector").append("<div class='a_pre_line "+seqId+"' style='background-color:#e9f1f5; color:black;'>"
 		        			 		+ "<div class='a_pre_pf'><img src='/images/likeAfter.png' class='a_pre_pf_img_nr'></div>"
 		        			 		+ "<div class='a_pre_text'>" + resp[i].nickname +"님이 회원님의 게시글을 좋아합니다.</div>"
-		        			 		+ "<div class='a_pre_time'>"+ resp[i].reg_date +"</div>"
+		        			 		+ "<div class='a_pre_time'>"+ resp[i].reg_date_edit +"</div>"
 		        			 		+"<button class=delAlarm value="+seq+" style='background-color:#e9f1f5; color:black;'>X</button></div>");
 		        		 }else if(resp[i].alarm_check == 'Y'){
 		        			 $(".a_sector").append("<div class='a_pre_line "+seqId+"'>"
 			        			 		+ "<div class='a_pre_pf'><img src='/images/likeAfter.png' class='a_pre_pf_img_nr'></div>"
 			        			 		+ "<div class='a_pre_text'>" + resp[i].nickname +"님이 회원님의 게시글을 좋아합니다.</div>"
-			        			 		+ "<div class='a_pre_time'>"+ resp[i].reg_date +"</div>"
+			        			 		+ "<div class='a_pre_time'>"+ resp[i].reg_date_edit +"</div>"
 			        			 		+"<button class=delAlarm value="+seq+">X</button></div>");
 		        		 }
 		        	 }else if(resp[i].type == 'R'){
@@ -207,7 +207,7 @@
 			        			 		+ "<div class='a_pre_pf'><img src='/images/reply.png' class='a_pre_pf_img_nr'></div>"
 			        			 		+ "<div class='a_pre_text'><div class='inner_profile'><img src='"+resp[i].profile_img+"' class='innerImg'></div>"
 			        			 		+"<b>" + resp[i].nickname +" </b>"+resp[i].contents+"</div>"
-			        			 		+ "<div class='a_pre_time'>"+ resp[i].reg_date +"</div>"
+			        			 		+ "<div class='a_pre_time'>"+ resp[i].reg_date_edit +"</div>"
 			        			 		+"<button class=delAlarm value="+seq+" style='background-color:#e9f1f5; color:black;'>X</button></div>");
 		        			 
 		        		 }else if(resp[i].alarm_check == 'Y'){
@@ -215,7 +215,7 @@
 			        			 		+ "<div class='a_pre_pf'><img src='/images/reply.png' class='a_pre_pf_img_nr'></div>"
 			        			 		+ "<div class='a_pre_text'><div class='inner_profile'><img src='"+resp[i].profile_img+"' class='innerImg'></div>"
 			        			 		+"<b>" + resp[i].nickname +" </b>"+resp[i].contents+"</div>"
-			        			 		+ "<div class='a_pre_time'>"+ resp[i].reg_date +"</div>"
+			        			 		+ "<div class='a_pre_time'>"+ resp[i].reg_date_edit +"</div>"
 			        			 		+"<button class=delAlarm value="+seq+">X</button></div>");
 		        		 }
 		        	 }else if(resp[i].type == 'F'){
@@ -226,14 +226,14 @@
 		        			 $(".a_sector").append("<div class='a_pre_line "+seqId+"' style='background-color:#e9f1f5; color:black;'>"
 			        			 		+ "<div class='a_pre_pf'><img src='/images/friendAlarm.png' class='a_pre_pf_img_nr'></div>"
 			        			 		+ "<div class='a_pre_text friendsList'>" + resp[i].nickname +"님의 친구 요청이 있습니다. </div>"
-			        			 		+ "<div class='a_pre_time'>"+ resp[i].reg_date +"</div>"
+			        			 		+ "<div class='a_pre_time'>"+ resp[i].reg_date_edit +"</div>"
 			        			 		+"<button class=delAlarm value="+seq+" style='background-color:#e9f1f5; color:black;'>X</button></div>");
 		        			 
 		        		 }else if(resp[i].alarm_check == 'Y'){
 		        			 $(".a_sector").append("<div class='a_pre_line "+seqId+"'>"
 			        			 		+ "<div class='a_pre_pf'><img src='/images/friendAlarm.png' class='a_pre_pf_img_nr'></div>"
 			        			 		+ "<div class='a_pre_text friendsList'>" + resp[i].nickname +"님의 친구 요청이 있습니다. </div>"
-			        			 		+ "<div class='a_pre_time'>"+ resp[i].reg_date +"</div>"
+			        			 		+ "<div class='a_pre_time'>"+ resp[i].reg_date_edit +"</div>"
 			        			 		+"<button class=delAlarm value="+seq+">X</button></div>");
 		        		 }
 		        	 
