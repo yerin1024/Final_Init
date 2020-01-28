@@ -763,6 +763,7 @@ function getList(page){
 	      <div class="modal-header" style="width:99.9%;">
 	         <span class="writerProfile"><img class="userProfileImg" src="${loginInfo.profile_img }" alt=""></span>
 	         <h5 class="modal-title" id="exampleModalLabel" style="font-size:30px;font-weight:bold;"></h5>
+
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 	          <span aria-hidden="true">&times;</span>
 	        </button>
