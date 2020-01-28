@@ -27,6 +27,7 @@
 <style>
 body{
 	background-color:#171C28;
+    color: white;
 }
 #wrapper {
    border: 1px solid red;
@@ -722,7 +723,7 @@ html,body {
 									</div>
 									<c:forEach items="${replyList[status.index] }" var="childReply">	
 										<c:if test="${childReply.parent ==  reply.reply_seq}">											
-											<div class="childReply" value="1" parent_seq="${childReply.parent }" reply_seq="${childReply.reply_seq }">
+											<div class="childReply" value="1" parent_seq="${childReply.parent }" reply_seq="${childReply.reply_seq }" style="display:none">
 												<span class="userProfile"> 
 												<img class="userProfileImg"src="${reply.profile_img}" alt="사진오류"></span> 
 													<span class="userProfileID">${childReply.nickname }</span> 
@@ -736,8 +737,8 @@ html,body {
 											</div>
 											<script>
 												$("div[parent_seq=${childReply.parent }]").parent().attr("child",1);
-												if($("div[parent_seq=${childReply.parent }]").attr("child") == 1){
-													$(".showReply").show();
+												if($("div[parent_seq=${childReply.parent }]").parent().attr("child") == 1){
+													$("div[parent_seq=${childReply.parent }]").parent().find(".showReply").show();
 												}
 											</script>
 										</c:if>		
@@ -881,8 +882,7 @@ html,body {
       </c:choose>
    </div>
 
-   <script>   
-   
+   <script>
    //신고확인 기능 모달
    $(document).on("click",".sirenBtn",function(){
         var seq = $(this).attr("id");
