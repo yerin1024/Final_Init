@@ -194,13 +194,7 @@
 	position: relative;
 }
 
-.report {
-    
-	position: absolute;
-	right:0px;
-	border: none;
-	background-color: none;
-}
+
 
 .profileLayout {
 	display: flex;
@@ -923,11 +917,11 @@
 		<div class="profile">
 			<c:choose>
 				<c:when test="${loginInfo.email ne mvo.email}">
-				<div class="report">
+				
+					<div class="profileLayout">
+					<div class="report">
 						<img class="blockFr" src="/resources/images/whitex.png" alt="" style="width:15%;">
 					</div>
-					<div class="profileLayout">
-					
 						<div class="profileLayoutLeft">
 						<c:if test="${frResult == null || frResult == 0  }">
 							<button class="btn btn-primary btn-lg" id="openModalBtn">＋</button>
@@ -948,13 +942,15 @@
 								<img class="profileImg" src="${mvo.profile_img}" alt="">
 						</div>
 					</div>
-					<div class="profileMessageLayout">
-						<div class="profileName">${mvo.nickname }</div>
-						<div class="profileMessage">${mvo.profile_msg}</div>
-					</div>
+					
 					<div class="profileLayoutRight">
 						<button class="messageRequest" id="msgRequest">＋</button>
 						<div class="btnText">메세지</div>
+					</div>
+					</div>
+					<div class="profileMessageLayout">
+						<div class="profileName">${mvo.nickname }</div>
+						<div class="profileMessage">${mvo.profile_msg}</div>
 					</div>
 				</c:when>
 				<c:otherwise>
@@ -1048,10 +1044,11 @@
 				</div>
 
 				<div class="modal-body">
-					
-						<input type=radio name="relation" value="1"> 아는 사람<br>
-						<input type=radio name="relation" value="2"> 친구<br> <input
-							type=radio name="relation" value="3"> 절친<br> 
+					<input type=radio name="relation" value="3"> 절친<br>
+					<input type=radio name="relation" value="2"> 친구<br>
+					<input type=radio name="relation" value="1" checked="checked"> 아는 사람<br>
+						 
+						 
 					
 				</div>
 				<div class="modal-footer">
@@ -1139,9 +1136,10 @@
 				</div>
 
 				<div class="modal-body1">
-					<input type=radio name="relation" value="1"> 아는 사람<br>
-					<input type=radio name="relation" value="2"> 친구<br> 
-					<input type=radio name="relation" value="3"> 절친<br> 
+					<input type=radio name="arelation" value="3"> 절친<br>
+					<input type=radio name="arelation" value="2"> 친구<br> 
+					<input type=radio name="arelation" value="1" checked="checked"> 아는 사람<br>
+					
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-primary" id="acceptModalBtn">확인</button>
@@ -1198,10 +1196,9 @@
 
 				<div class="modal-body4">
 					
-						<input type=radio name="relation" value="1"> 아는 사람<br>
-					<input type=radio name="relation" value="2"> 친구<br> 
-					<input type=radio name="relation" value="3"> 절친<br> 
-					
+					<input type=radio name="crelation" value="3"> 절친<br> 
+					<input type=radio name="crelation" value="2"> 친구<br> 
+					<input type=radio name="crelation" value="1" checked="checked"> 아는 사람<br>
 				</div>
 				<div class="modal-footer">
 					
@@ -1361,8 +1358,9 @@
 
 	
 	<script>	
+	var myMail = '${mvo.email }';
 		var doc = document;
-
+		var relation = "";
 	    $("#registerFeed").on("click", function() {
 	    	location.href = "${pageContext.request.contextPath}/feed/writeFeed";
 		});
@@ -1546,14 +1544,14 @@
                     //친구수락 로직~
                     $("#acceptModalBtn").on("click", function () {
                         var yr_id = $('.acceptfr').attr("name");
-                        var relation = $('input[name=relation]').val();
+                        var arelation = $('input[name=arelation]:checked').val();
                         console.log(yr_id);
                         $.ajax({
                             url: "${pageContext.request.contextPath}/friend/acceptFndRequest",
                             type: "POST",
                             data: {
-                                yr_id: yr_id,
-                                relation : relation
+                                "yr_id": yr_id,
+                                "relation" : arelation
                             },
                             dataType: "text",
                             success: function (
@@ -1707,13 +1705,14 @@
 		                 });
                         $("#closeModalBtn4").on("click", function () {
                         var yr_id = $(".changeRelation").attr("name");
-                        var relation = $('input[name=relation]').val();
+                        var crelation = $('input:radio[name="crelation"]:checked').val();
                         console.log(yr_id);
+                        console.log(crelation);
                         $.ajax({
                             url: "${pageContext.request.contextPath}/friend/changeRelation",
                             type: "POST",
                             data: {
-                                yr_id: yr_id,relation :relation
+                                "yr_id": yr_id,"relation" :crelation
                             },
                             dataType: "text",
                             success: function (res) {
@@ -1899,14 +1898,14 @@
 		
 		
 		$('#identifyModalBtn').on('click', function () {
-			var relation = $('input[name=relation]').val();          
+			relation = $('input[name=relation]:checked').val();          
             
             $.ajax({
                 url: "${pageContext.request.contextPath}/friend/friendRequest?to_id=${mvo.email}",
                 type: "POST",
                 dataType: "text",
                 data: {
-                    relation: relation
+                    "relation": relation
                 },
                 success: function (res) {
                 	$('#modalBox').modal('hide');
@@ -2172,6 +2171,7 @@
                         .attr('selected', 'selected');
                 }
             }
+
 
             var bLength1 = $(".bOption1").length;
             for (var i = 0; i < bLength1; i++) {
@@ -2797,6 +2797,45 @@
     });
     });
     
+  //차단
+    $(".blockFr").on("click", function () {
+        
+        console.log(myMail);
+        $.ajax({
+            url: "${pageContext.request.contextPath}/member/blockMem",
+            type: "POST",
+            data: {
+                yr_id: myMail
+            },
+            dataType: "text",
+            success: function (res) {
+                console.log(res);
+                if(res == "notInsert"){
+                	 $(".blockFr").remove();
+                     $(".report").append("<img class=blockFr src=/resources/images/redx.png alt= style=width:15%;>");
+                     location.reload();
+                	
+                }else{
+                	$(".blockFr").remove();
+                    $(".report").append("<img class=blockFr src=/resources/images/whitex.png alt= style=width:15%;>");
+                    location.reload();
+                }
+                
+
+                //$('.modal-body2').append("<div class=frInfo>"+list[j].email+"  <button type=button class=frInfo id=cutfr name="+list[j].email+">친구 끊기</button></div>");
+
+                // show modal
+
+            },
+            error: function (
+                request,
+                status,
+                error) {
+                console.log("ajax call went wrong:"
+                    + request.responseText);
+            }
+        })
+    });
     </script>
    	<jsp:include page="/resources/script/myFeedScript.jsp" />
 </body>
