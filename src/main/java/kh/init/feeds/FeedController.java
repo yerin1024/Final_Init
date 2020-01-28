@@ -39,6 +39,7 @@ public class FeedController {
 		int ipage = 1;
 		List<FeedDTO> list = null;
 		List<String> cover = new ArrayList<>();
+		List<MemberDTO> flist = new ArrayList<>();
 		String myEmail = ((MemberDTO)session.getAttribute("loginInfo")).getEmail();
 		try {
 			if(!(email.equalsIgnoreCase(myEmail))) {
@@ -47,15 +48,19 @@ public class FeedController {
 				list = (List<FeedDTO>)service.getMyFeedByFriend(ipage, email, myEmail).get("list");
 				cover = (List<String>)service.getMyFeedByFriend(ipage, email, myEmail).get("cover");
             int frResult = fservice.friendIsOkService(email, myEmail);
+            
             model.addAttribute("frResult", frResult);
             }else {
             	list = (List<FeedDTO>)service.getMyFeed(ipage, email).get("list");
     			cover = (List<String>)service.getMyFeed(ipage, email).get("cover");
+    			flist = fservice.getFriendsListService(myEmail);
             }
 			MemberDTO dto = mservice.getMyPageService(email);
-			
+			int blockSize = mservice.blockSizeService(myEmail,  email);
 			System.out.println("dto 이메일값 확인 : "+dto.getEmail()+dto.getName());
-			model.addAttribute("mvo", dto);		
+			model.addAttribute("mvo", dto);
+			model.addAttribute("blockSize", blockSize);	
+			model.addAttribute("flist", flist);
 			model.addAttribute("list", list);
 			model.addAttribute("cover", cover);
 		}catch(Exception e) {
