@@ -156,7 +156,9 @@
 				data: {},
 				dataType: "json"
 			}).done(function(resp){
-	        	 $(".a_sector").children().remove();
+	        	 
+				console.log("resp : " + resp)
+				$(".a_sector").children().remove();
 	        	 
 	        	 if(resp.length <1){
 	        		 $(".a_sector").append("<div id='noAlarmExist'>새로운 알림이 없습니다.</div>");

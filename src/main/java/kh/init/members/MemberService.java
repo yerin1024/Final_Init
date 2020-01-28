@@ -323,22 +323,22 @@ public class MemberService {
 	
 	//내 프로필 변경하기
 	@Transactional("txManager")
-	public int changeMyProfileService(String id,MemberDTO dto,MultipartFile profile_img, String path) throws Exception {
+	public int changeMyProfileService(String email,MemberDTO dto,MultipartFile profile_img, String path) throws Exception {
 		File filePath = new File(path);
 		if(!filePath.exists()) {
 			filePath.mkdir();
 		}
 		System.out.println(profile_img);
 		if(profile_img != null) {		
-			String profile =  "/files/" + dto.getEmail() + "_profile_img.jpg";
+			String profile =  "/files/" + email + "_profile_img.jpg";
 			dto.setProfile_img(profile);
 			try {
-				profile_img.transferTo(new File(path + "/" + dto.getEmail() + "_profile_img.jpg"));
+				profile_img.transferTo(new File(path + "/" + email + "_profile_img.jpg"));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
-		int result = dao.changeMyInfo(id,dto);
+		int result = dao.changeMyInfo(email, dto);
 		return result;
 
 	}
