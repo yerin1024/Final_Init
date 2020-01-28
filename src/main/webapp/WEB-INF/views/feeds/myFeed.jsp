@@ -1000,7 +1000,7 @@
 				<br>
 				<table style="width:80%; margin:auto; ">
 				<tr>
-				<td style="color:gainsboro; font-size:40px;">${fn:length(list)}
+				<td style="color:gainsboro; font-size:40px;">${totalFeedSize}
 				<td style="color:gainsboro; font-size:40px;">${fn:length(flist)}
 				</tr>
 				<tr>
@@ -1092,11 +1092,11 @@
 					친구 검색 : <input type=text placeholder=이름,닉네임 id="searchFriends"
 						value="">
 				</div>
-				<div class="modal-body2"></div>
+				<div class="modal-body2">
+				
+				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-primary"
-						id="identifyModalBtn2">확인</button>
-					<button type="button" class="btn btn-default" id="closeModalBtn3">취소</button>
+					<button type="button" class="btn" id="closeModalBtn3">확인</button>
 				</div>
 			</div>
 		</div>
@@ -1194,7 +1194,6 @@
 			</div>
 		</div>
 	</div>
-
 	
 	<div id="modalBox4" class="modal fade" id="myModal"
 		role="dialog"  tabindex="-1" aria-labelledby="myModalLabel"
@@ -1523,6 +1522,7 @@
 	
 		        // 친구 모달 버튼에 이벤트를 건다.	
         $('#friendsList').on('click', function () {
+        	
         	$('#modalBox3').modal('show');
             $('.frInfo').remove();
             $.ajax({
@@ -1880,10 +1880,6 @@
 
 			$('#modalBox3').modal('hide');
 
-		});
-		$('#identifyModalBtn2').on('click', function() {
-
-			$('#modalBox3').modal('hide');
 		});
 
 		$('#openModalBtn').on('click', function() {
