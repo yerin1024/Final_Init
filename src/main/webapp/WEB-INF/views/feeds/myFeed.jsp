@@ -685,6 +685,121 @@ margin:5px;
 		background-color: #171C28;
 	}
 }
+
+
+/* -- 나유리 ----------------------------------------------------------------------- */
+@import url('https://fonts.googleapis.com/css?family=Mukta:700');
+* {
+  box-sizing: border-box;
+}
+*::before, *::after {
+  box-sizing: border-box;
+}
+.learn-more {
+  position: relative;
+  float: left;
+  display: inline-block;
+  cursor: pointer;
+  outline: none;
+  border: 0;
+  vertical-align: middle;
+  text-decoration: none;
+  background: transparent;
+  padding: 0;
+  font-size: inherit;
+  font-family: inherit;
+}
+button.learn-more {
+  width: 10rem;
+  height: auto;
+/*    border: 1px solid red;*/
+}
+button.learn-more .circles {
+  transition: all 0.3s cubic-bezier(0.65, 0, 0.076, 1);
+  position: relative;
+  display: block;
+  margin: 0;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: #171C28;
+  border-radius: 1.225rem;
+}
+button.learn-more .circles .icon {
+  transition: all 0.35s cubic-bezier(0.65, 0, 0.076, 1);
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  background: #fff;
+}
+button.learn-more .circles .icon.arrow {
+  transition: all 0.35s cubic-bezier(0.65, 0, 0.076, 1);
+  left: 0.425rem;
+  width: 1.125rem;
+  height: 0.125rem;
+  background: none;
+}
+button.learn-more .circles .icon.arrow::before {
+  position: absolute;
+  content: "";
+  top: -0.25rem;
+  right: 0.0625rem;
+  width: 0.625rem;
+  height: 0.625rem;
+  border-top: 0.125rem solid #fff;
+  border-right: 0.125rem solid #fff;
+  transform: rotate(45deg);
+}
+button.learn-more .button-text {
+  transition: all 0.35s cubic-bezier(0.65, 0, 0.076, 1);
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 0.35rem 0;
+  margin: 0 0 0 1.85rem;
+  color: #282936;
+  font-weight: 700;
+  line-height: 1.6;
+  text-align: center;
+  text-transform: uppercase;
+}
+.learn-more:hover .circles {
+  width: 100%;
+}
+.learn-more:hover .circles .icon.arrow {
+  background: #fff;
+  transform: translate(1rem, 0);
+}
+.learn-more:hover .button-text {
+  color: #fff;
+}
+
+@supports (display: grid) {
+	#cbtnContainer {
+	width: 380px;
+	height: 40px;
+    grid-area: main;
+    align-self: center;
+    justify-self: center;
+  }
+}
+
+#deletePic{
+	width: 30px; height: 30px;
+    background: white;
+    border: none;
+}
+#deletePicImg{
+	margin-left: -2px;
+	margin-top: -3px;
+    width: 25px;
+}
+#profileImg{
+	
+}
+/* ----------------------------------------------------------------- 나유리 끝 -------- */
 </style>
 <script>
 	window.onload = function(){
@@ -1375,8 +1490,8 @@ margin:5px;
                             <div class="modal-body" style="text-align:center; color:#0D4373;">
                                 <label style="margin:auto;">프로필 사진</label><br>
                                 <img src="/resources/images/default_profile_img.png" id="setProfile" style="margin:auto; width:30%; border-radius:50%"><br><br>
-                                <button type="button" id="deletePic">X</button>
-                                <input type="file" id="profileImg" name="profileImg" ><br> 
+                                <button type="button" id="deletePic"><image src="${pageContext.request.contextPath}/resources/images/trash.png" id="deletePicImg"></button>
+                                <input type="file" id="profileImg" name="profileImg"><br> 
                                 <p class="adviseOut" id="adviseProfile" readonly>*프로필 사진 미등록시 기본이미지로 등록됩니다.</p>
                                 <label>닉네임 : </label>
                                 <input type="text" id="inputNick" name="nickname" maxlength="20">
@@ -1388,8 +1503,20 @@ margin:5px;
                                 <p class="adviseOut" id="adviseProfile-msg" readonly>*200자 이내로 입력 가능합니다.</p>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" id="changeProfileBtn" style="color:#0D4373; width:200px; margin-right:5%;">편집 완료</button>
-                                <button type="button" id="cancelBtn"  style="color:#0D4373; width:200px; margin-right:5%;">취소</button>
+                            <div id="cbtnContainer">
+                                <button type="button" class="learn-more" id="changeProfileBtn" style="color:#0D4373; margin-right:5%;">
+	                                <span class="circles" aria-hidden="true">
+								      <span class="icon arrow"></span>
+								    </span>
+								    <span class="button-text">수정</span><br>
+                                </button>
+                                <button type="button" class="learn-more" id="cancelBtn"  style="color:#0D4373; margin-right:5%;">
+                                	<span class="circles" aria-hidden="true">
+								      <span class="icon arrow"></span>
+								    </span>
+								    <span class="button-text">취소</span><br>
+                                </button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -1937,7 +2064,7 @@ margin:5px;
 
 		
 		
-		$('#identifyModalBtn').on('click', function () {
+		$('#identifyBtn').on('click', function () {
 			relation = $('input[name=relation]:checked').val();          
             
             $.ajax({

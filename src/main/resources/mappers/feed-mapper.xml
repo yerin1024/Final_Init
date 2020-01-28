@@ -3,6 +3,7 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="Feed">
+
 	<select id="selectAll" resultType="kh.init.feeds.FeedDTO"
 		parameterType="java.util.Map">
 		select feed_seq, email, nickname, title, contents, relation, write_date, hashtag
@@ -143,7 +144,7 @@
 		select * from tb_member
 		where nickname=#{keyword}
 			and (email not in (select to_id from tb_block where from_id = #{email}) and
-			     email not in (select from_id from tb_block where to_id = #{email}))
+                  email not in (select from_id from tb_block where to_id = #{email}))
 	</select>
 
 	<select id="getFeedSeq" resultType="integer">
