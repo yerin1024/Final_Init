@@ -78,6 +78,7 @@ public class MemberDAO {
 		param.put("name", dto.getName());
 		param.put("phone", dto.getPhone());
 		param.put("birth", dto.getBirth());
+		System.out.println("################## : " + dto.getProfile_img());
 		param.put("profile_img", dto.getProfile_img());
 		param.put("nickname", dto.getNickname());
 		param.put("profile_msg", dto.getProfile_msg());

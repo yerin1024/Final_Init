@@ -11,6 +11,11 @@
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 </head>
 <style>
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans+KR&display=swap');
+*{
+	font-family: 'Noto Sans KR', sans-serif;
+	
+}
 label {
 	color: #2e291b;
 	font-size: 0.8rem;

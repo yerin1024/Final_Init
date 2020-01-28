@@ -20,7 +20,11 @@
 <link rel="stylesheet" href="/resources/css/test.css">
 
 <style>
-
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans+KR&display=swap');
+*{
+	font-family: 'Noto Sans KR', sans-serif;
+	
+}
 html, body {
 	background-color: white;
 	margin: 0px;

@@ -25,6 +25,11 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.js"></script>
 
 <style>
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans+KR&display=swap');
+*{
+	font-family: 'Noto Sans KR', sans-serif;
+	
+}
 body{
 	background-color:#171C28;
     color: white;

@@ -19,7 +19,9 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 </head>
 <style>
-    * {
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans+KR&display=swap');
+*{
+	font-family: 'Noto Sans KR', sans-serif;
         box-sizing: border-box;
     }
  	.modal {

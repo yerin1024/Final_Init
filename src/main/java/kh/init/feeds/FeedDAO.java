@@ -105,6 +105,8 @@ public class FeedDAO {
 		Map<String, String> param = new HashMap<>();
 		param.put("keyword", keyword);
 		param.put("email", email);
+		System.out.println("dao email : "+email);
+		System.out.println("dao keyword : "+keyword);
 		List<MemberDTO> list = jdbc.selectList("Feed.searchFriend", param);
 		return list;
 	}
