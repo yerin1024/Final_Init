@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
     <style>
         .select-menu {
-            --background: #242836;
+            --background: #32384e;
             --text: #fff;
             --icon: #fff;
             --icon-active: #3F4656;
@@ -60,6 +60,8 @@
         .select-menu ul li {
             padding: 8px 36px 8px 12px;
             cursor: pointer;
+            font-size:14px;
+            font-weight:bold;
         }
 
         .select-menu>ul {
@@ -91,6 +93,8 @@
             border-radius: 6px;
             color: var(--text);
             background: var(--background);
+            height:35px;
+            margin-top:3px;
         }
 
         .select-menu .button em {

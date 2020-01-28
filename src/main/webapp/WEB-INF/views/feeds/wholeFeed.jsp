@@ -595,9 +595,7 @@ div.cover {
 /* Desktop Device */
 @media all and (min-width:1025px) {
 	/*     사용자 해상도가 1025px 이상일 때 이 코드가 실행됨. 1025px 이상의 랩탑 또는 데스크톱에 대응하는 코드를 작성한다. */
-	body {
-		background-color: pink;
-	}
+
 }
 </style>
 <script>
