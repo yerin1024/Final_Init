@@ -44,7 +44,8 @@ html, body {
 }
 
 .feed {
-	border: 1px solid blue;
+	border: 2px solid white;
+	margin-bottom:30px;
 }
 
 .dz-default {
