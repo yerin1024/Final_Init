@@ -226,8 +226,7 @@
 				order by rnum desc, feed_seq desc)
 		where rnum between #{startNum} and #{endNum} 
         order by feed_seq desc
-		
-		
+
 		
 <!-- 		select feed_seq, email, nickname, title, contents, -->
 <!-- 		relation, write_date, -->
@@ -240,6 +239,7 @@
 <!-- 		or p.email -->
 <!-- 		= #{email}) -->
 <!-- 		where rnum between #{startNum} and #{endNum} -->
+
 	</select>
 
    <!-- 신고 버튼을 위한 쿼리 -->
@@ -313,11 +313,6 @@
 		select tb_reply.*, tb_member.profile_img, tb_member.nickname from tb_reply ,tb_member where tb_reply.email = tb_member.email and feed_seq = #{feed_seq}
 	</select>
 	
-	<select id="viewAllReplyTest" resultType="kh.init.feeds.ReplyDTO">
-		select * from tb_reply
-		where feed_seq = #{feed_seq} order by 7 desc
-	</select>
-
 	<select id="replyNextSeq" resultType="Integer">
 		select reply_seq.nextval
 		from dual

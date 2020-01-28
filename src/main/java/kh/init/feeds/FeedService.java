@@ -357,6 +357,7 @@ public class FeedService {
 
 	public List<FeedDTO> getFriendFeed(int page, String email) throws Exception{
 		System.out.println("service page: "+page);
+		System.out.println("service email:"+ email);
 		int totalFeed = dao.getFriendFeedCount(email);
 		int startNum = 0;
 		int endNum = 0;
@@ -374,6 +375,7 @@ public class FeedService {
 		}
 		System.out.println();
 		List<FeedDTO> list = dao.getFriendFeed(email, startNum, endNum);
+		System.out.println("email확인 : " + email);
 		System.out.println("service getFriendFeed size : "+list.size());
 		System.out.println("service startNum: "+startNum);
 		System.out.println("service endNum: "+endNum);
@@ -519,6 +521,7 @@ public class FeedService {
 		map.put("parent", dto.getParent());
 		map.put("profile_img", mdto.getProfile_img());
 		map.put("nickname", mdto.getNickname());
+		String nickname = (String) map.get("nickname");
 		String jsonString = gson.toJson(map);
 		return jsonString;
 	}

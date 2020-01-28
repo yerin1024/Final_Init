@@ -425,6 +425,9 @@ public class FeedController {
 			bookmarkCheck = service.bookmarkCheck(feed_seq, ((MemberDTO)session.getAttribute("loginInfo")).getEmail());
 			list = service.getMediaList(feed_seq);
 			replyList = service.viewAllReply(feed_seq);
+			for(int i=0;i<replyList.size();i++) {
+				System.out.println(replyList.get(i).getNickname());				
+			}
 			System.out.println("Email : "+dto.getEmail());
 			System.out.println("memberDTO : "+mservice.getMemberDTO(dto.getEmail()));
 			obj.addProperty("writerProfile", g.toJson((mservice.getMemberDTO(dto.getEmail())).getProfile_img()));
