@@ -150,6 +150,11 @@ html,body {
 /* 댓글 */
 .reply{	
     margin-bottom: 40px;
+    overflow: scroll;
+    height: 300px;
+}
+.reply::-webkit-scrollbar {
+        width: 0 !important
 }
 .myProfileImgBox,.userProfile{
 	margin:10px 20px;
@@ -714,7 +719,9 @@ html,body {
 										</span>
 									</div>
 									<div class="replyBtns">
+									<c:if test="${loginInfo.email eq reply.email}">
 										<button type="button" class="deleteReply" style="">삭제</button>
+									</c:if>
 										<button type="button" class="registerChildBtn" style="">답글</button>
 										<button type="button" class="showReply" style="display: none">──────────────  답글보기</button>
 										<button type="button" class="hideReply" style="display: none">────────────── 답글숨기기</button>
@@ -729,8 +736,10 @@ html,body {
 												</span>
 												<div class="replyBtns">
 													<button class="registerChildReply" style="display: none;">등록</button>
-													<button class="childReplyCancel" style="display: none;">취소</button>
-													<button class="deleteChildReplyBtn" style="">삭제</button>
+													<button class="childReplyCancel" style="display: none;">취소</button>													
+													<c:if test="${loginInfo.email eq reply.email}">
+													<button class="deleteChildReplyBtn">삭제</button>
+													</c:if>
 												</div>
 											</div>
 											<script>	

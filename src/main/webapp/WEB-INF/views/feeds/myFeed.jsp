@@ -260,66 +260,6 @@
 	
 	border: none;
 }
-/*This is coded CSS rainbow*/
-#changeProfile:hover {
-	-webkit-animation: rainbow 1s infinite;
-	-ms-animation: rainbow 1s infinite;
-	-o-animation: rainbow 1s infinite;
-	animation: rainbow 1s infinite;
-}
-
-@-webkit-keyframes rainbow {
-0% {color: #ff0000;}
-10% {color: #ff8000;}
-20% {color: #ffff00;}
-30% {color: #80ff00;}
-40% {color: #00ff00;}
-50% {color: #00ff80;}
-60% {color: #00ffff;}
-70% {color: #0080ff;}
-80% {color: #0000ff;}
-90% {color: #8000ff;}
-100% {color: #ff0080;}
-}
-@-ms-keyframes rainbow {
-0% {color: #ff0000;}
-10% {color: #ff8000;}
-20% {color: #ffff00;}
-30% {color: #80ff00;}
-40% {color: #00ff00;}
-50% {color: #00ff80;}
-60% {color: #00ffff;}
-70% {color: #0080ff;}
-80% {color: #0000ff;}
-90% {color: #8000ff;}
-100% {color: #ff0080;}
-}
-@-o-keyframes rainbow {
-0% {color: #ff0000;}
-10% {color: #ff8000;}
-20% {color: #ffff00;}
-30% {color: #80ff00;}
-40% {color: #00ff00;}
-50% {color: #00ff80;}
-60% {color: #00ffff;}
-70% {color: #0080ff;}
-80% {color: #0000ff;}
-90% {color: #8000ff;}
-100% {color: #ff0080;}
-}
-@keyframes rainbow {
-0% {color: #ff0000;}
-10% {color: #ff8000;}
-20% {color: #ffff00;}
-30% {color: #80ff00;}
-40% {color: #00ff00;}
-50% {color: #00ff80;}
-60% {color: #00ffff;}
-70% {color: #0080ff;}
-80% {color: #0000ff;}
-90% {color: #8000ff;}
-100% {color: #ff0080;}
-}
 .profileName {
 	text-align: center;
 	font-size: 70px;
@@ -584,17 +524,6 @@
 	}
 }
 
-.clock {
-	position: absolute; 
-    top: -80px;
-	left: 50%; 	
-    color: #17D4FE;
-    font-size: 20px;
-    font-family: Orbitron;
-    letter-spacing: 7px;
-    transition-duration: 0.5s;
-    transform: translateX(-50%);
-}
 .report{	
     position: absolute;
     right: 110px; 	
@@ -926,8 +855,6 @@
     <jsp:include page="/resources/jsp/alr.jsp"/>
 	<jsp:include page="/resources/jsp/msg.jsp"/>
 	<div class="container-fluid">
-		${loginInfo.profile_img } ???????????????????????
-		<div id="MyClockDisplay" class="clock" onload="showTime()"></div>
 		<div class="profile">
 			<c:choose>
 				<c:when test="${loginInfo.email ne mvo.email}">
@@ -945,15 +872,12 @@
 						<div class="profileLayoutLeft">
 						<c:if test="${frResult == null || frResult == 0  }">
 							<button class="profileButton btn-lg" id="openModalBtn">＋</button>
-							<div class="btnText">친구요청</div>
 						</c:if>			
 							<c:if test="${frResult == 1 }">
 						<button class="profileButton btn-lg" id="ingReq">＋</button>
-							<div class="btnText">친구요청중</div>
 						</c:if>	
 						<c:if test="${frResult == 2  }">
 							<button class="profileButton btn-lg" id="openFrModal" >＋</button>
-							<div class="btnText">친구</div>
 						</c:if>	
 						
 						</div>
@@ -965,7 +889,6 @@
 					
 					<div class="profileLayoutRight">
 						<button class="messageRequest profileButton" id="msgRequest">＋</button>
-						<div class="btnText">메세지</div>
 					</div>
 					</div>
 					<div class="profileMessageLayout">
@@ -981,7 +904,6 @@
 					<div class="profileLayout">
 						<div class="profileLayoutLeft">
 							<button class="profileButton" id="friendsList">＋</button>
-							<div class="btnText">친구목록</div>
 						</div>
 						<div class="profileLayoutCenter">
 							<div class="profileImageBox">
@@ -992,7 +914,6 @@
 						<c:if test="${loginInfo.id_type eq 'E'}">
 							<div class="profileLayoutRight">
 								<button class="profileButton" id="changeInfo">＋</button>
-								<div class="btnText">회원정보</div>
 							</div>
 						</c:if>						
 					</div>
@@ -2029,47 +1950,6 @@
             }
         })
     });
-	
-    $(".profileImageBox").mouseenter(function(){
-		$("#MyClockDisplay").css("top","0px");
-    });
-     $(".profileImageBox").mouseleave(function(){ 
- 		$("#MyClockDisplay").css("top","-80px");
-    }); 
-	function showTime(){
-	    var date = new Date();
-	    var h = date.getHours(); // 0 - 23
-	    var m = date.getMinutes(); // 0 - 59
-	    var s = date.getSeconds(); // 0 - 59
-	    var session = "AM";
-	    
-	    if(h == 0){
-	        h = 12;
-	    }
-	    
-	    if(h > 12){
-	        h = h - 12;
-	        session = "PM";
-	    }
-	    
-	    h = (h < 10) ? "0" + h : h;
-	    m = (m < 10) ? "0" + m : m;
-	    s = (s < 10) ? "0" + s : s;
-	    
-	    var time = h + ":" + m + ":" + s + " " + session;
-	    document.getElementById("MyClockDisplay").innerText = time;
-	    document.getElementById("MyClockDisplay").textContent = time;
-	    
-	    setTimeout(showTime, 1000);
-	    
-	}
-
-	showTime();
-	
-    var poption1;
-    var boption1;
-    var boption2;
-    var boption3;
 
     $("#changeInfo").on("click", function () {
         $.ajax({

@@ -9,6 +9,7 @@ var temporaryReply;
 
 
 $('#exampleModal').on('shown.bs.modal', function (event) {
+	$(".reply").html("");
 	var seq = $(event.relatedTarget).data('id');
 	var feed_seq = $("#exampleModal").attr("feed_seq",seq);
 	$.ajax({
@@ -33,7 +34,7 @@ $('#exampleModal').on('shown.bs.modal', function (event) {
 		console.log("writerImg : " + writerProfile);
 		
 		$(".writer").html(writer);
-		$(".userProfileImg").attr("src", writerProfile);
+// 		$(".userProfileImg").attr("src", writerProfile);
 		//디테일뷰 미디어
 		if(mediaList.length>1){ //미디어가 존재하므로 캐러셀 만들어줌
 			console.log("캐러셀 시작");
@@ -93,7 +94,7 @@ $('#exampleModal').on('shown.bs.modal', function (event) {
              	replyhtml +=       "</span>"
              	replyhtml +=        "</div>"	            
              	replyhtml +=        "<div class='replyBtns'>"
-                if('${loginInfo.email}' == dto.email){   
+                if('${loginInfo.email}' == replyList[i].email){   
              	replyhtml +=  				"<button type='button' class='deleteReply'>삭제</button>"		
                 }             	
              	replyhtml +=        		"<button type='button' class='registerChildBtn'>답글</button>"
@@ -121,11 +122,11 @@ $('#exampleModal').on('shown.bs.modal', function (event) {
 				childhtml +=     			"<img class='userProfileImg' src="+replyList[i].profile_img+" alt='사진오류'>"
 				childhtml +=      		"</span>"
 				childhtml +=      		"<span class='userProfileID'>"+replyList[i].nickname+"</span>"
-				childhtml +=      "<span class='userReply'>"
+				childhtml +=      "<span class='userReply' style='width:339px'>"
 				childhtml +=      		"<div class='replyContents' contenteditable='false'>"+replyList[i].contents+"</div>"
 		       	childhtml +=      "</span>"
 		        childhtml +=      "<div class='replyBtns'>"
-			    if('${loginInfo.email}' ==  dto.email){
+			    if('${loginInfo.email}' ==  replyList[i].email){
            		childhtml +=      		"<button class='deleteChildReplyBtn'>삭제</button>"
 		        }
 	       		childhtml +=      "</div>"
@@ -276,7 +277,7 @@ $('#exampleModal').on('shown.bs.modal', function (event) {
 			childhtml +=     			"<img class='userProfileImg' src=${loginInfo.profile_img } alt='사진오류'>"
 			childhtml +=      		"</span>"
 			childhtml +=      		"<span class='userProfileID'>${loginInfo.nickname }</span>"
-			childhtml +=      "<span class='userReply'>"
+			childhtml +=      "<span class='userReply' style='width:339px'>"
 			childhtml +=      		"<div class='replyContents' contenteditable='true'></div>"
 	       	childhtml +=      "</span>"
 	        childhtml +=      "<div class='replyBtns'>"
