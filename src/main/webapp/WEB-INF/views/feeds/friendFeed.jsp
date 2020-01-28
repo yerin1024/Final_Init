@@ -27,6 +27,7 @@
 <style>
 body{
 	background-color:#171C28;
+    color: white;
 }
 #wrapper {
    margin: auto;
@@ -624,8 +625,6 @@ html,body {
                      <div class="row profileImg">
                         ${profile_imgList[status.index]}</div>
                      <div class="row profileNickname">${feed.nickname}</div>
-
-
                <c:choose>
                <c:when test="${feed.email ne loginInfo.email}">
                      <div class="row profilefeedDeclaration" seq="${feed.feed_seq}">
@@ -702,10 +701,11 @@ html,body {
                <c:when test="${mediaList[status.index].size() == 0}"></c:when>
                </c:choose>
                   <div class="row contents" style="min-height: 100px; max-height: 400px;">
-                     ${feed.contents }</div> 
+                     ${feed.contents }</div>
                      <div class="reply">
+                     	<button type="button" class="allReply" style="display:none">──────────────  댓글보기</button>
 							<c:forEach items="${replyList[status.index] }" var="reply">								
-								<c:if test="${reply.parent == 0}">
+								<c:if test="${reply.parent == 0}">							
 								<div class="parentReply" reply_seq="${reply.reply_seq }" >
 									<div class="profileDiv">
 										<span class="userProfile"> 
@@ -723,7 +723,7 @@ html,body {
 									</div>
 									<c:forEach items="${replyList[status.index] }" var="childReply">	
 										<c:if test="${childReply.parent ==  reply.reply_seq}">											
-											<div class="childReply" value="1" parent_seq="${childReply.parent }" reply_seq="${childReply.reply_seq }">
+											<div class="childReply" value="1" parent_seq="${childReply.parent }" reply_seq="${childReply.reply_seq }" style="display:none">
 												<span class="userProfile"> 
 												<img class="userProfileImg"src="${reply.profile_img}" alt="사진오류"></span> 
 													<span class="userProfileID">${childReply.nickname }</span> 
@@ -735,10 +735,22 @@ html,body {
 													<button class="deleteChildReplyBtn" style="">삭제</button>
 												</div>
 											</div>
-											<script>
+											<script>	
+// 												console.log($(".reply").children(".parentReply").length);
+// 												console.log($("div[parent_seq=${childReply.parent }]").closest(".feed").attr("feed_seq") + "???");
+// 												if($(".reply").children(".parentReply").length == 0){
+// 													$("div[parent_seq=${childReply.parent }]").parent().show();
+// 													$("div[parent_seq=${childReply.parent }]").parent().siblings(".allReply").hide();
+// 												}else{
+// 													$("div[parent_seq=${childReply.parent }]").parent().hide();
+// 													$("div[parent_seq=${childReply.parent }]").parent().siblings(".allReply").show();													
+// 												}
+												
 												$("div[parent_seq=${childReply.parent }]").parent().attr("child",1);
-												if($("div[parent_seq=${childReply.parent }]").attr("child") == 1){
-													$(".showReply").show();
+												console.log($("div[parent_seq=${childReply.parent }]").closest(".reply").children(".parentReply").length + "????????");
+												if($("div[parent_seq=${childReply.parent }]").parent().attr("child") == 1){
+													$("div[parent_seq=${childReply.parent }]").parent().find(".showReply").show();
+													$("div[parent_seq=${childReply.parent }]").parent().siblings(".allReply").show();
 												}
 											</script>
 										</c:if>		
@@ -882,8 +894,7 @@ html,body {
       </c:choose>
    </div>
 
-   <script>   
-   
+   <script>
    //신고확인 기능 모달
    $(document).on("click",".sirenBtn",function(){
         var seq = $(this).attr("id");
@@ -1015,8 +1026,6 @@ html,body {
 				console.log(c);
 			})
 		}
-		
-		
 		
 		//댓글 삭제 버튼
 		$(document).on("click",".deleteReply", function(){

@@ -932,6 +932,7 @@
     <jsp:include page="/resources/jsp/alr.jsp"/>
 	<jsp:include page="/resources/jsp/msg.jsp"/>
 	<div class="container-fluid">
+		${loginInfo.profile_img } ???????????????????????
 		<div id="MyClockDisplay" class="clock" onload="showTime()"></div>
 		<div class="profile">
 			<c:choose>

@@ -519,6 +519,7 @@ public class FeedService {
 		map.put("parent", dto.getParent());
 		map.put("profile_img", mdto.getProfile_img());
 		map.put("nickname", mdto.getNickname());
+		String nickname = (String) map.get("nickname");
 		String jsonString = gson.toJson(map);
 		return jsonString;
 	}
