@@ -34,7 +34,7 @@
     }
 
     .modal-header {
-        background-color: #0f4c81;
+        background-color: #171C28;
         color: #fffefc;
     }
 
@@ -50,7 +50,7 @@
 
     #closeBtn {
         font-size: 30px;
-        color: #fffefc;
+        color: #171C28;
     }
     
     .tab1_container{
@@ -66,7 +66,9 @@
         font-family: 'Noto Sans KR', sans-serif;
         width: 50%;
     }
+    .tab1_body > a{
     
+    }
     .tab1_logo {
     	width: 50%;
     	height: 100%;
@@ -96,8 +98,8 @@
         border: none;
         border-radius: 8px;
         font-size: 19px;
-        background-color: #0f4c81;
-        color: #fffefc;
+        background-color: #171C28;
+        color: white;
     }
     
     #tab1_kakaoLoginBtn {
@@ -326,6 +328,10 @@
 	body {
 		background-color: pink;
 	}
+}
+
+@media all and (min-width : 320px) and (max-width : 768px) {
+    .tab1_logo { display:none }
 }
 </style>
 <body>
