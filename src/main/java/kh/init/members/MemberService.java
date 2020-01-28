@@ -370,4 +370,14 @@ public class MemberService {
 		}
 		return realResult;
 	}
+	public int blockSizeService(String myEmail, String yr_id) throws Exception{
+		BlockDTO dto = new BlockDTO(myEmail, yr_id);
+		int result = 0;
+		
+		List<BlockDTO> list = dao.getMyBlock(dto);
+		System.out.println("블락 사이즈는 "+list.size());
+		result = list.size();
+		
+		return result;
+	}
 }
