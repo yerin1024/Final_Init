@@ -7,9 +7,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
 <title></title>
-<link rel="stylesheet" href="/resources/css/nav.css">
+<link rel="stylesheet" href="/resources/css/nav.css?new"> 
 <link rel="stylesheet" href="/resources/css/msg.css"> 
 <link rel="stylesheet" href="/resources/css/alr.css"> 
 <link rel="stylesheet" href="/resources/css/test.css">
@@ -1386,8 +1385,6 @@
 	    // 메시지 보내기 -----------------------------------------------------------
 	    // 메시지 보내기 -----------------------------------------------------------
 	    // 메시지 보내기 -----------------------------------------------------------
-	    // 메시지 보내기 -----------------------------------------------------------
-	    // 메시지 보내기 -----------------------------------------------------------
 	    $("#msgRequest").on("click",function(){
 	    	
 	    	$("div[id='view1']").fadeIn(0);
@@ -1414,11 +1411,11 @@
 						 if(resp[i].from_id=="${loginInfo.email}"){
 							 $(".sector_in").append("<ul class='ul_right'>"
 						                +"<li class='from_id'>"+resp[i].contents+"</li><span class=time_right>"
-						                +resp[i].write_date+"</span><br></ul>");
+						                +resp[i].write_date_edit+"</span><br></ul>");
 						 }else{
 							 $(".sector_in").append("<ul class='ul_left'>"
 						                + "<li class='to_id'>"+resp[i].contents+"</li><span class=time>"
-						                +resp[i].write_date+"</span><br></ul>");
+						                +resp[i].write_date_edit+"</span><br></ul>");
 						 }
 					}
 					 var objDiv = document.getElementById("view1");
