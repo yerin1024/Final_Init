@@ -1179,7 +1179,7 @@
 		</div>
 	</div>
 
-	<!-- 친구 관계 설정 모달 영역 -->
+	
 	<div id="modalBox4" class="modal fade" id="myModal"
 		role="dialog"  tabindex="-1" aria-labelledby="myModalLabel"
 		style="margin-top: 100px;">
@@ -1210,7 +1210,7 @@
 
 	
 	
-<!-- 	내 정보 수정 시작 -->
+<!-- 친구 관계 설정 모달 영역 --><!-- 	내 정보 수정 시작 -->
 	<div id="modalModifyInfo" class="modal fade" role="dialog" tabindex="-1"
 	aria-labelledby="modalModify" style="margin-top: 45px;">
 	<div class="modal-dialog" role="document">
@@ -1345,7 +1345,7 @@
                                 <p class="adviseOut" id="adviseProfile-msg" readonly>*200자 이내로 입력 가능합니다.</p>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" id="changeProfileBtn" onclick="formValidation();" style="color:#0D4373; width:200px; margin-right:5%;">편집 완료</button>
+                                <button type="button" id="changeProfileBtn" style="color:#0D4373; width:200px; margin-right:5%;">편집 완료</button>
                                 <button type="button" id="cancelBtn"  style="color:#0D4373; width:200px; margin-right:5%;">취소</button>
                             </div>
                         </div>
@@ -1851,7 +1851,7 @@
 			        //submit 직전 유효성 검사
 
 			        $("#cancelBtn").on("click", function() {
-							location.href = "${pageContext.request.contextPath}/feed/myFeed?email=${dto.email}";
+							$("#modalProfile").modal("hide");
 						});
 				
 			}).fail(function(a,b,c){
@@ -2327,7 +2327,8 @@
     });
 
     $("#backToFeed").on("click", function () {
-        location.href = "${pageContext.request.contextPath}/feed/myFeed?email=${loginInfo.email}";
+    	clearInterval(tid);
+    	$("#modalModifyInfo").modal('hide');
     });
 
     //현재 비밀번호 일치여부 검사 start
@@ -2510,7 +2511,7 @@
                 //전화번호 중복 검사 end
                 //인증번호 전송 start
                 if (resp.result == "available") {
-                    tid = setInterval('msg_time()', 1000); //인증번호 전송 시 카운트다운 시작
+                    tid = setInterval(msg_time, 1000); //인증번호 전송 시 카운트다운 시작
                     sendCode.hidden = true;
                     resendCode.hidden = false;
                     verifyCode.value = "";
@@ -2626,6 +2627,9 @@
                 sendCode.hidden = true;
                 resendCode.hidden = true;
                 verifyCode.disabled = true;
+                
+                clearInterval(tid);
+                
             } else if (resp.result == "unverified") {
                 console.log("인증 실패 ");
                 adviseVerifCode.innerHTML = "인증실패";
@@ -2779,7 +2783,9 @@
         console.log("최종 비밀번호 : " + pw.value);
         console.log("최종 이름 : " + username.value);
         console.log("최종 생년월일 : " + birth.value);
-
+        
+        clearInterval(tid);
+        
         doc.getElementById("signUpForm").submit();
     });
 

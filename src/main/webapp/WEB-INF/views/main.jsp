@@ -5,7 +5,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> -->
 <meta http-equiv="x-ua-compatible" content="ie=edge">
 
 <title>Init</title>
@@ -23,23 +24,13 @@
     }
  	.modal {
          text-align: center;
-    }
-    @@media screen and (min-width: 768px) {
-         .modal:before {
-         	display: inline-block;
-         	vertical-align: middle;
-            content: " ";
-            height: 100%;
-         }
-    }
-    .modal-dialog {
-         display: inline-block;
-         text-align: left;
-         vertical-align: middle;
+
     }
     
     .modal-content {
         background-color: #fffefc;
+        min-height: 500px;
+        vertical-align: center;
     }
 
     .modal-header {
@@ -372,7 +363,7 @@
 												</label>
 												<br>
 												<label for="tab1_pw" class="inp">
-												  <input type="password" class="inputLogin" id="tab1_pw" name="pw" placeholder="&nbsp;">
+												  <input type="password" class="inputLogin" id="tab1_pw" name="pw" placeholder="&nbsp;" onkeyup="enterkey();">
 												  <span class="label">Password</span>
 												  <span class="border"></span>
 												</label>
@@ -619,6 +610,14 @@
         }    
         //tab1_로그인 start
         var login = doc.getElementById("tab1_loginBtn");
+
+        function enterkey(){
+            if(window.event.keyCode == 13){
+                if(doc.getElementById("tab1_email").value != "" && doc.getElementById("tab1_pw").value != ""){
+                	toLogin();
+                }
+            }    
+        }    
         
         function toLogin() { //로그인 시도
         	if(doc.getElementById("tab1_email").value == ""){
