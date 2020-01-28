@@ -262,7 +262,23 @@ public class FeedController {
 
 		return "redirect:myFeed?email="+email;
 	}
-
+	
+	@RequestMapping("/modifyFeedProc")
+	public String modifyFeedProc(FeedDTO dto,Model model) {
+		System.out.println("게시물 수정 시작!");
+		System.out.println(dto.getFeed_seq());
+		System.out.println(dto.getContents());
+		String email = ((MemberDTO)session.getAttribute("loginInfo")).getEmail();
+		dto.setEmail(email);
+		try {
+			int result = service.modifyFeed(dto);
+			System.out.println(result + "행이 수정되었습니다!");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "redirect:myFeed?email="+email;
+	}
+	
 
 	//writeFeed에서 dropzone을 이용해서 파일업로드를 했을 때의 ajax 통신을 위한 requestMapping
 	@RequestMapping(value="/mediaTmpUpload", produces="application/json; charset=UTF-8")
@@ -587,20 +603,7 @@ public class FeedController {
 	}
 	
 	
-	@RequestMapping("/modifyFeedProc")
-	public String modifyFeedProc(FeedDTO dto,Model model) {
-		System.out.println("게시물 수정 시작!");
-		System.out.println(dto.getFeed_seq());
-		String email = ((MemberDTO)session.getAttribute("loginInfo")).getEmail();
-		try {
-			int result = service.modifyFeed(dto);
-			System.out.println(result + "행이 수정되었습니다!");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return "redirect:myFeed?email="+email;
-	}
-	
+
 	@RequestMapping("/modifyFeedView")
 	public String modifyFeedView(int feed_seq, Model model) {
 		System.out.println("게시물 수정페이지 도착!");

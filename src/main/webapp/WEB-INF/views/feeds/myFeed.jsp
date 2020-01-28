@@ -6,24 +6,31 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title></title>
-<link rel="stylesheet" href="/resources/css/nav.css?new"> 
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Insert title here</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="/resources/css/nav.css">
 <link rel="stylesheet" href="/resources/css/msg.css"> 
 <link rel="stylesheet" href="/resources/css/alr.css"> 
 <link rel="stylesheet" href="/resources/css/test.css">
-<script src="https://code.jquery.com/jquery-3.4.1.js"
-	type="text/javascript"></script>
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-<script
-	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-<script
-	src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.css">
+
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.js"></script>
+
 <style>
 /* 	폰트 */
 @import url('https://fonts.googleapis.com/css?family=Noto+Serif+KR|Orbitron&display=swap');
-	
+	#exampleModal{
+	width:1200px;
+	margin:auto;
+}
 	body{
 		background-color:#171C28;
     	font-family: Orbitron;
@@ -36,7 +43,6 @@
     word-break: break-all;
     max-width: 150px;
     max-height: 150px;
-    overflow-y: hidden;
     color:black;
 	}
 	img.cover{	
@@ -54,6 +60,7 @@
 	margin: auto;
 	padding: 60px 20px 0;
 }
+
 .modifyA, .deleteA{
 	color:black;
 	margin-right:10px;
@@ -154,8 +161,8 @@
     width: 25vw;
 }
 #likeBtn, #bookmarkBtn{
-   width:20px;
-   height:20px;
+   width:50px;
+   height:50px;
 }
 
 .container-fluid {
@@ -462,7 +469,7 @@
     border: 1px solid rgb(239, 239, 239);
     padding: 0px 10px;
 }
-.modal-body1{
+.modal-body5{
 	width:55%;
     height: 100%;
     position: relative;
@@ -846,7 +853,7 @@
 	              console.log(i);
 	              if(i%3==1){
 	                 console.log(i+"는 1");
-	                 data = "<div class='row' style='margin:0px'>" +data;
+	                 data = "<div class='row'>" +data;
 	              }
 	              if(i%3==0){
 	                 console.log(i+"는0");
@@ -1122,7 +1129,7 @@
 	        </button>
 	      </div>
 	      <div class="modal-main">			
-	      		<div class="modal-body1">
+	      		<div class="modal-body5">
 	      		</div>
             <div class="title">
                 <div class="reply">

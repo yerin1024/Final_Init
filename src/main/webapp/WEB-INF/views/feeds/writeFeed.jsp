@@ -89,9 +89,9 @@ body{
 .carousel-inner * {
 	width: 14vw;
 }
-.carousel-inner{
-	width:60vw;
-}
+/* .carousel-inner{ */
+/* 	width:60vw; */
+/* } */
 #summernote{
 	width:55vw; 
 	min-width:670px;

@@ -252,8 +252,8 @@
 		select email from tb_feed where feed_seq = #{feed_seq}
 	</select>
 
-	<update id="modifyFeed" parameterType="kh.init.feeds.FeedDTO">
-		update tb_feed set title = #{title}, contents=#{contents} , relation=#{relation} where feed_seq = #{feed_seq}
+	<update id="modifyFeed"  parameterType="java.util.Map">
+		update tb_feed set title = #{title}, contents=#{contents} , relation=#{relation}, hashtag =#{hashtag} where feed_seq = #{feed_seq}
 	</update>
 
 	<!--좋아요 기능 -->

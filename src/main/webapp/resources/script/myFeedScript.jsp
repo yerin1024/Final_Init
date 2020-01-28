@@ -64,9 +64,10 @@ $('#exampleModal').on('shown.bs.modal', function (event) {
 			var nextA = $("<a class='carousel-control-next' href='#carouselExampleIndicators' role='button' data-slide='next'></a>");
 			nextA.append("<span class='carousel-control-next-icon' aria-hidden='true'></span>");
 			nextA.append("<span class='sr-only'>Next</span>");
-			cInner.append(prevA);
-			cInner.append(nextA);
+			
 			cei.append(cInner);
+			cei.append(prevA);
+			cei.append(nextA);
 			mediaRow.append(cei);				
 			
 		}else if(mediaList.length==1){
@@ -75,7 +76,7 @@ $('#exampleModal').on('shown.bs.modal', function (event) {
 			var mediaRow = $("<div class='media' style='height:100%;width:100%;size:20px;text-align:center;vertical-align:center'></div>");
 			mediaRow.append(dto.contents);
 		}
-		$(".modal-body1").html(mediaRow);
+		$(".modal-body5").html(mediaRow);
 		
 		
 		var replyhtml = "";
