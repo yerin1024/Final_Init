@@ -114,10 +114,12 @@
 	padding-right: 5px;
 	padding-top: 5px;
 }
-.a_pre_text:hover{
-	cursor: pointer;
+
+.a_pre_text:hover {
+	
 }
-.a_pre_line:hover{
+
+.a_pre_line:hover, .a_pre_line:hover .delAlarm{
 	background-color: #ebebeb;
 	transition-duration: 0.2s;
 }
@@ -162,4 +164,60 @@
 .innerImg {
 	width: 100%;
 	border-radius: 50px;
+}
+
+@media ( max-width : 1000px ) {
+	#a_view1 {
+		display: none;
+		position: fixed;
+		background-color: white;
+		top: 110px;
+		right: 10px;
+		width: 350px;
+		/* font-size: 12px; */
+		height: 300px;
+		border: 1px solid #9f9f9f;
+		/* border-radius: 10px; */
+		overflow: scroll;
+		overflow-x: hidden;
+		z-index: 99;
+	}
+	.a_pre_pf {
+		/* border: 1px solid #1bd369; */
+		width: 50px;
+		float: left;
+		margin-left: 2px;
+		padding: 2px;
+		padding-top: 2px;
+		display: none;
+	}
+	.a_pre_time {
+		/* border: 1px solid #764b91; */
+		float: left;
+		width: 95px;
+		text-align: center;
+		line-height: 40px;
+		font-size: 12px;
+		color: #535353;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		display: none;
+	}
+	[class^=a_pre] {
+		height: 40px;
+	}
+	.a_pre_text {
+		/* border: 1px solid #4500ff; */
+		float: left;
+		width: 265px;
+		line-height: 30px;
+		font-size: 12px;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		padding-left: 5px;
+		padding-right: 5px;
+		padding-top: 5px;
+	}
 }

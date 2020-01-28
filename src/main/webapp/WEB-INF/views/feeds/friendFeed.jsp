@@ -30,8 +30,8 @@ body{
     color: white;
 }
 #wrapper {
-   border: 1px solid red;
    margin: auto;
+   color:white;
 }
 
 html,body {
@@ -44,7 +44,8 @@ html,body {
 }
 
 .feed {
-   border: 1px solid blue;
+   border: 3px solid white;
+   margin-bottom:30px;
 }
 
 .dz-default {
@@ -74,7 +75,7 @@ html,body {
 }
 
 .carousel-item * {
-   width: 100%;
+   width: 99.5%;
    height:600px; 
 }
 
@@ -88,15 +89,15 @@ html,body {
 }
 
 .likeImg>img {
-   width: 28px;
-   height: 28px;
-   margin-left: 10px;
+	width: 35px;
+	height: 35px;
+	margin-left: 10px;
 }
 
 .bookmarkImg>img {
-   width: 28px;
-   height: 28px;
-   margin-left: 10px;
+	width: 35px;
+	height: 35px;
+	margin-left: 10px;
 }
 
 .row {
@@ -106,6 +107,8 @@ html,body {
 .profileNickname {
    position: absolute;
    left: 80px;
+   font-size:20px;
+   font-weight:600;
 }
 
 .profile {
@@ -149,9 +152,7 @@ html,body {
 }
 
 /* 댓글 */
-.reply{	
-    margin-bottom: 40px;
-}
+
 .myProfileImgBox,.userProfile{
 	margin:10px 20px;
 }
@@ -540,7 +541,7 @@ html,body {
                         $("#wrapper").append(feed);
 
                         
-                        var replyDiv = $("<div class='reply' style='border:1px solid red'></div>") 
+                        var replyDiv = $("<div class='reply'></div>") 
                         feed.append(replyDiv);
                         
                         if(replyList[i].length != 0){
@@ -616,7 +617,7 @@ html,body {
    <jsp:include page="/resources/jsp/nav.jsp" />
    <jsp:include page="/resources/jsp/msg.jsp" />
    <jsp:include page="/resources/jsp/alr.jsp" />
-   <div id="wrapper" style="position: relative; top: 62px">
+   <div id="wrapper" style="position: relative; top: 30px">
       <!-- <h1>친구피드</h1> -->
       <c:choose>
          <c:when test="${fn:length(list) <1}">

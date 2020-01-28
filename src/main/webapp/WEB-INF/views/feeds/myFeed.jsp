@@ -6,24 +6,31 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title></title>
-<link rel="stylesheet" href="/resources/css/nav.css?new"> 
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Insert title here</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="/resources/css/nav.css">
 <link rel="stylesheet" href="/resources/css/msg.css"> 
 <link rel="stylesheet" href="/resources/css/alr.css"> 
 <link rel="stylesheet" href="/resources/css/test.css">
-<script src="https://code.jquery.com/jquery-3.4.1.js"
-	type="text/javascript"></script>
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-<script
-	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-<script
-	src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.css">
+
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.js"></script>
+
 <style>
 /* 	폰트 */
 @import url('https://fonts.googleapis.com/css?family=Noto+Serif+KR|Orbitron&display=swap');
-	
+	#exampleModal{
+	width:1200px;
+	margin:auto;
+}
 	body{
 		background-color:#171C28;
     	font-family: Orbitron;
@@ -36,7 +43,6 @@
     word-break: break-all;
     max-width: 150px;
     max-height: 150px;
-    overflow-y: hidden;
     color:black;
 	}
 	img.cover{	
@@ -53,6 +59,16 @@
 	min-width: 470px;
 	margin: auto;
 	padding: 60px 20px 0;
+}
+
+.modifyA, .deleteA{
+	color:black;
+	margin-right:10px;
+	font-size:15px;
+}
+.modifyA:hover, .deleteA:hover{
+	font-weight:bold;
+	color:black;
 }
 #search {
    margin: auto;
@@ -145,8 +161,8 @@
     width: 25vw;
 }
 #likeBtn, #bookmarkBtn{
-   width:20px;
-   height:20px;
+   width:50px;
+   height:50px;
 }
 
 .container-fluid {
@@ -250,7 +266,6 @@
 	bottom: -10px;
 	border-radius: 20px;
 	padding: 5px 20px;
-	width:120px;
 	font-weight: bold;
 	font-size: 13px;
 	background-color: white;
@@ -324,7 +339,6 @@
 	text-align: center;
 	font-size: 70px;
 	font-weight: bold;
-	color:white;
 }
 
 .profileMessageLayout {
@@ -337,7 +351,6 @@
     margin: auto;
     font-size: 15px;
 	font-family: 'Noto Serif KR', serif;
-    color: white;
 }
 
 .modal-dialog {
@@ -457,7 +470,7 @@
     border: 1px solid rgb(239, 239, 239);
     padding: 0px 10px;
 }
-.modal-body1{
+.modal-body5{
 	width:55%;
     height: 100%;
     position: relative;
@@ -672,6 +685,121 @@ margin:5px;
 		background-color: #171C28;
 	}
 }
+
+
+/* -- 나유리 ----------------------------------------------------------------------- */
+@import url('https://fonts.googleapis.com/css?family=Mukta:700');
+* {
+  box-sizing: border-box;
+}
+*::before, *::after {
+  box-sizing: border-box;
+}
+.learn-more {
+  position: relative;
+  float: left;
+  display: inline-block;
+  cursor: pointer;
+  outline: none;
+  border: 0;
+  vertical-align: middle;
+  text-decoration: none;
+  background: transparent;
+  padding: 0;
+  font-size: inherit;
+  font-family: inherit;
+}
+button.learn-more {
+  width: 10rem;
+  height: auto;
+/*    border: 1px solid red;*/
+}
+button.learn-more .circles {
+  transition: all 0.3s cubic-bezier(0.65, 0, 0.076, 1);
+  position: relative;
+  display: block;
+  margin: 0;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: #171C28;
+  border-radius: 1.225rem;
+}
+button.learn-more .circles .icon {
+  transition: all 0.35s cubic-bezier(0.65, 0, 0.076, 1);
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  background: #fff;
+}
+button.learn-more .circles .icon.arrow {
+  transition: all 0.35s cubic-bezier(0.65, 0, 0.076, 1);
+  left: 0.425rem;
+  width: 1.125rem;
+  height: 0.125rem;
+  background: none;
+}
+button.learn-more .circles .icon.arrow::before {
+  position: absolute;
+  content: "";
+  top: -0.25rem;
+  right: 0.0625rem;
+  width: 0.625rem;
+  height: 0.625rem;
+  border-top: 0.125rem solid #fff;
+  border-right: 0.125rem solid #fff;
+  transform: rotate(45deg);
+}
+button.learn-more .button-text {
+  transition: all 0.35s cubic-bezier(0.65, 0, 0.076, 1);
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 0.35rem 0;
+  margin: 0 0 0 1.85rem;
+  color: #282936;
+  font-weight: 700;
+  line-height: 1.6;
+  text-align: center;
+  text-transform: uppercase;
+}
+.learn-more:hover .circles {
+  width: 100%;
+}
+.learn-more:hover .circles .icon.arrow {
+  background: #fff;
+  transform: translate(1rem, 0);
+}
+.learn-more:hover .button-text {
+  color: #fff;
+}
+
+@supports (display: grid) {
+	#cbtnContainer {
+	width: 380px;
+	height: 40px;
+    grid-area: main;
+    align-self: center;
+    justify-self: center;
+  }
+}
+
+#deletePic{
+	width: 30px; height: 30px;
+    background: white;
+    border: none;
+}
+#deletePicImg{
+	margin-left: -2px;
+	margin-top: -3px;
+    width: 25px;
+}
+#profileImg{
+	
+}
+/* ----------------------------------------------------------------- 나유리 끝 -------- */
 </style>
 <script>
 	window.onload = function(){
@@ -1123,13 +1251,13 @@ margin:5px;
 	      <div class="detailView_header">
 	         <span class="writerProfile"><img class="userProfileImg" src="" alt=""></span>
 	         <span class="writer"></span>
-	        <h5 class="modal-title" id="exampleModalLabel"></h5>
+	        <h5 class="modal-title" id="exampleModalLabel" style=""></h5>
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 	          <span aria-hidden="true">&times;</span>
 	        </button>
 	      </div>
 	      <div class="modal-main">			
-	      		<div class="modal-body1">
+	      		<div class="modal-body5">
 	      		</div>
             <div class="title">
                 <div class="reply">
@@ -1146,7 +1274,7 @@ margin:5px;
 	         	<span class="myProfile"><img class="userProfileImg" src="${loginInfo.profile_img }" alt=""></span>
 	       		<h5 class="modal-title" id="exampleModalLabel">${loginInfo.nickname }</h5>
 	       		<div id="writeReply" contenteditable="true"></div>
-							<button class="replyBtn" onclick="replyBtnOnclick('${loginInfo.email}','${loginInfo.nickname }');">등록</button>
+	       		<button type="button" class="replyBtn" onclick="replyBtnOnclick('${loginInfo.email}');">등록</button>
 			</div>
 	      </div>
 	    </div>
@@ -1362,8 +1490,8 @@ margin:5px;
                             <div class="modal-body" style="text-align:center; color:#0D4373;">
                                 <label style="margin:auto;">프로필 사진</label><br>
                                 <img src="/resources/images/default_profile_img.png" id="setProfile" style="margin:auto; width:30%; border-radius:50%"><br><br>
-                                <button type="button" id="deletePic">X</button>
-                                <input type="file" id="profileImg" name="profileImg" ><br> 
+                                <button type="button" id="deletePic"><image src="${pageContext.request.contextPath}/resources/images/trash.png" id="deletePicImg"></button>
+                                <input type="file" id="profileImg" name="profileImg"><br> 
                                 <p class="adviseOut" id="adviseProfile" readonly>*프로필 사진 미등록시 기본이미지로 등록됩니다.</p>
                                 <label>닉네임 : </label>
                                 <input type="text" id="inputNick" name="nickname" maxlength="20">
@@ -1375,8 +1503,20 @@ margin:5px;
                                 <p class="adviseOut" id="adviseProfile-msg" readonly>*200자 이내로 입력 가능합니다.</p>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" id="changeProfileBtn" style="color:#0D4373; width:200px; margin-right:5%;">편집 완료</button>
-                                <button type="button" id="cancelBtn"  style="color:#0D4373; width:200px; margin-right:5%;">취소</button>
+                            <div id="cbtnContainer">
+                                <button type="button" class="learn-more" id="changeProfileBtn" style="color:#0D4373; margin-right:5%;">
+	                                <span class="circles" aria-hidden="true">
+								      <span class="icon arrow"></span>
+								    </span>
+								    <span class="button-text">수정</span><br>
+                                </button>
+                                <button type="button" class="learn-more" id="cancelBtn"  style="color:#0D4373; margin-right:5%;">
+                                	<span class="circles" aria-hidden="true">
+								      <span class="icon arrow"></span>
+								    </span>
+								    <span class="button-text">취소</span><br>
+                                </button>
+                                </div>
                             </div>
                         </div>
                     </div>

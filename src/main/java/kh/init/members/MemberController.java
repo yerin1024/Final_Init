@@ -248,7 +248,8 @@ public class MemberController {
 				result = service.changeMyProfileService(mDto.getEmail(), dto,profileImg,path);
 			}
 			if(result> 0) {
-
+				session.removeAttribute("loginInfo");
+				session.setAttribute("loginInfo", service.getMemberDTO(mDto.getEmail())); // 세션 로그인정보 담기
 				System.out.println("정보변경에 성공하셨슴당.");
 				return "redirect:/feed/myFeed";
 			}else {

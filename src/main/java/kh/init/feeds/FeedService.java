@@ -75,6 +75,20 @@ public class FeedService {
 
 		return result;
 	}
+	
+	public int modifyFeed(FeedDTO dto)throws Exception{
+		//해시태그 찾아냄
+				Pattern p = Pattern.compile("(#[가-히a-zA-Z]*[가-히a-zA-Z])");
+				Matcher m = p.matcher(dto.getContents());
+				String hashtag = "";
+				while(m.find()) {
+					hashtag += (m.group(0)+",");
+				}
+				dto.setHashtag(hashtag);
+		
+		int result = dao.modifyFeed(dto);
+		return result;
+	}
 
 	public String mediaTmpUpload(MultipartFile file, String tmpPath) throws Exception{
 
@@ -258,6 +272,7 @@ public class FeedService {
 
 		if(keyword!=null) {
 			keyword = "%"+keyword+"%";
+			System.out.println("service의 keyword"+keyword);
 		}
 		List<FeedDTO> list = (List<FeedDTO>)dao.selectAll(keyword, startNum, endNum, email).get("list");
 		System.out.println("service list : "+list.toString());
@@ -302,10 +317,7 @@ public class FeedService {
 		return replyResult;
 	}
 
-	public int modifyFeed(FeedDTO dto)throws Exception{
-		int result = dao.modifyFeed(dto);
-		return result;
-	}
+
 
 
 	public Map<String, Object> scrapFeed(String email) throws Exception{

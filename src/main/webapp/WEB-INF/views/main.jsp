@@ -65,9 +65,10 @@
     .tab1_body {
         font-family: 'Noto Sans KR', sans-serif;
         width: 50%;
+        margin: auto;
     }
     .tab1_body > a{
-    
+    	color: #062f5c;
     }
     .tab1_logo {
     	width: 50%;
@@ -197,9 +198,30 @@
         color: #fffefc;
     }
 	
-	#tab5-2_kakaoLoginBtn{
-		width: 100px;
-        height: 30px;
+	#tab5-1_generalSignup, #tab5-2_kakaoLoginBtn{
+        width: 200px;
+	    height: 200px;
+	    padding: 5px;
+	    margin: 10px;
+	    border: none;
+	    border-radius: 8px;
+	    font-size: 19px;
+	    background-color: #171C28;
+	    color: white;
+	}
+	
+	#tab5-2_kakaoLoginBtn:hover{
+		cursor: pointer;
+	}
+	
+	#tab4_goMain{
+		width: 150px;
+		height: 50px;
+		background-color: #171C28;
+	}
+	
+	.tab4_signupBtnBox{
+		padding: 50px;
 	}
 	
     .tab5-1_container {
@@ -423,7 +445,7 @@
                                     <div class="tab4_body">
                                     	<div class="tab4_signupBtnBox">
 											<button type="button" id="tab5-1_generalSignup">일반 회원가입</button>
-											<img src="${pageContext.request.contextPath}/resources/images/kakaoSignup_btn.png" id="tab5-2_kakaoLoginBtn" style=""><br>
+											<button type="button" id="tab5-2_kakaoLoginBtn"><img src="/resources/images/kakaolink_btn.png"></button>
                                     	</div>
                                         <div class="tab4_btnBox">
                                             <button type="button" id="tab4_goMain">이전</button>
@@ -1233,33 +1255,33 @@
                             verifyCode.disabled = false;
                             confirmVerifyCode.hidden = true;
                             //잠시 테스트 
-                             hiddenRespPhone.innerHTML = "사용가능";
+//                              hiddenRespPhone.innerHTML = "사용가능";
                             //
-//                             $.ajax({
-//                                 url: "${pageContext.request.contextPath}/guest/sendVerifCode.do",
-//                                 data: { phone: phone.value },
-//                                 dataType: "json",
-//                                 type: "post"
-//                             }).done(function (resp) {
-//                             console.log("인증번호 서버 전송 결과: " + resp.result);            
-//                             if (resp.result != "Verify Code sent") {
-//                                 adviseVerifCode.innerHTML("인증번호 전송에 실패했습니다.");
-//                                 adviseVerifCode.style.color = "red";
-//                                 hiddenRespPhone.innerHTML = "사용불가";
-//                                 hiddenRespVerifCode.innerHTML = "인증실패";
-//                                 confirmVerifyCode.hidden = true;
-//                                 sendCode.hidden = false;
-//                                 resendCode.hidden = true;
-//                                 verifyCode.disabled = true;
-//                             }else{
-//                                 console.log("인증 코드 발송 완료");
-//                                 confirmVerifyCode.hidden = false;                  
-//                             }              
-//                             }).fail(function (a, b, c) {
-//                                 console.log(a);
-//                                 console.log(b);
-//                                 console.log(c);
-//                             });
+                            $.ajax({
+                                url: "${pageContext.request.contextPath}/guest/sendVerifCode.do",
+                                data: { phone: phone.value },
+                                dataType: "json",
+                                type: "post"
+                            }).done(function (resp) {
+                            console.log("인증번호 서버 전송 결과: " + resp.result);            
+                            if (resp.result != "Verify Code sent") {
+                                adviseVerifCode.innerHTML("인증번호 전송에 실패했습니다.");
+                                adviseVerifCode.style.color = "red";
+                                hiddenRespPhone.innerHTML = "사용불가";
+                                hiddenRespVerifCode.innerHTML = "인증실패";
+                                confirmVerifyCode.hidden = true;
+                                sendCode.hidden = false;
+                                resendCode.hidden = true;
+                                verifyCode.disabled = true;
+                            }else{
+                                console.log("인증 코드 발송 완료");
+                                confirmVerifyCode.hidden = false;                  
+                            }              
+                            }).fail(function (a, b, c) {
+                                console.log(a);
+                                console.log(b);
+                                console.log(c);
+                            });
                         } else if (resp.result == "unavailable") {
                             advisePhone.innerHTML = "중복된 번호입니다.";
                             advisePhone.style.color = "red";
@@ -1278,40 +1300,40 @@
             }
         	//인증번호 전송 end
             //사용자 입력 인증번호 일치여부 검사 start
-//                 function confirmVerifCode() {
-//                     $.ajax({
-//                         url: "${pageContext.request.contextPath}/guest/verifyUser.do",
-//                         data: { verifyCode: verifyCode.value },
-//                         dataType: "json",
-//                         type: "post",
-//                     }).done(function (resp) {
-//                         console.log("인증번호 서버 검증 결과 : " + resp.result);
-//         	          if (resp.result == "verified") {
-//         	            console.log("인증 완료 ");
-//                         adviseVerifCode.innerHTML = "인증완료";
-//                         adviseVerifCode.style.color = "green";
-//                         hiddenRespPhone.innerHTML = "사용가능";
-//                         hiddenRespVerifCode.innerHTML = "사용가능";
-//                         sendCode.hidden = true;
-//                         resendCode.hidden = true;
-//                         verifyCode.disabled = true;
-//         	          } else if (resp.result == "unverified") {
-//         	            console.log("인증 실패 ");
-//         	            adviseVerifCode.innerHTML = "인증실패";
-//         	            adviseVerifCode.style.color = "red";
-//         	            hiddenRespPhone.innerHTML = "사용불가";
-//         	            hiddenRespVerifCode.innerHTML = "인증실패";
-//         	            sendCode.hidden = true;
-//         	            resendCode.hidden = false;
-//         	            verifyCode.disabled = false;
-//         	          };
-//                     }).fail(function (a, b, c) {
-//                         console.log(a);
-//                         console.log(b);
-//                         console.log(c);
-//                         return false;
-//                     });
-//                 }
+                function confirmVerifCode() {
+                    $.ajax({
+                        url: "${pageContext.request.contextPath}/guest/verifyUser.do",
+                        data: { verifyCode: verifyCode.value },
+                        dataType: "json",
+                        type: "post",
+                    }).done(function (resp) {
+                        console.log("인증번호 서버 검증 결과 : " + resp.result);
+        	          if (resp.result == "verified") {
+        	            console.log("인증 완료 ");
+                        adviseVerifCode.innerHTML = "인증완료";
+                        adviseVerifCode.style.color = "green";
+                        hiddenRespPhone.innerHTML = "사용가능";
+                        hiddenRespVerifCode.innerHTML = "사용가능";
+                        sendCode.hidden = true;
+                        resendCode.hidden = true;
+                        verifyCode.disabled = true;
+        	          } else if (resp.result == "unverified") {
+        	            console.log("인증 실패 ");
+        	            adviseVerifCode.innerHTML = "인증실패";
+        	            adviseVerifCode.style.color = "red";
+        	            hiddenRespPhone.innerHTML = "사용불가";
+        	            hiddenRespVerifCode.innerHTML = "인증실패";
+        	            sendCode.hidden = true;
+        	            resendCode.hidden = false;
+        	            verifyCode.disabled = false;
+        	          };
+                    }).fail(function (a, b, c) {
+                        console.log(a);
+                        console.log(b);
+                        console.log(c);
+                        return false;
+                    });
+                }
                 //사용자 입력 인증번호 일치여부 검사 end  
             //인증번호 제한시간 이벤트 start
             function msg_time() {

@@ -30,10 +30,10 @@ $('#exampleModal').on('shown.bs.modal', function (event) {
 		console.log(dto.contents);
 		
 		console.log("writer : "  + writer);
-		console.log("writerImg : " + writerProfile);
+// 		console.log("writerImg : " + writerProfile);
 		
 		$(".writer").html(writer);
-		$(".userProfileImg").attr("src", writerProfile);
+// 		$(".userProfileImg").attr("src", writerProfile);
 		//디테일뷰 미디어
 		if(mediaList.length>1){ //미디어가 존재하므로 캐러셀 만들어줌
 			console.log("캐러셀 시작");
@@ -64,9 +64,10 @@ $('#exampleModal').on('shown.bs.modal', function (event) {
 			var nextA = $("<a class='carousel-control-next' href='#carouselExampleIndicators' role='button' data-slide='next'></a>");
 			nextA.append("<span class='carousel-control-next-icon' aria-hidden='true'></span>");
 			nextA.append("<span class='sr-only'>Next</span>");
-			cInner.append(prevA);
-			cInner.append(nextA);
+			
 			cei.append(cInner);
+			cei.append(prevA);
+			cei.append(nextA);
 			mediaRow.append(cei);				
 			
 		}else if(mediaList.length==1){
@@ -75,7 +76,7 @@ $('#exampleModal').on('shown.bs.modal', function (event) {
 			var mediaRow = $("<div class='media' style='height:100%;width:100%;size:20px;text-align:center;vertical-align:center'></div>");
 			mediaRow.append(dto.contents);
 		}
-		$(".modal-body1").html(mediaRow);
+		$(".modal-body5").html(mediaRow);
 		
 		
 		var replyhtml = "";
@@ -174,8 +175,8 @@ $('#exampleModal').on('shown.bs.modal', function (event) {
 		bookmarkA.append(bookmarkS);
 		bookmarkS.append(bookmarkI); 
 		
-		var modifyA = $("<a href='modifyFeedView?feed_seq="+dto.feed_seq+"'>수정</a>");
-		var deleteA = $("<a href='deleteProc?feed_seq="+dto.feed_seq+"'>삭제</a>");
+		var modifyA = $("<a class='modifyA' href='modifyFeedView?feed_seq="+dto.feed_seq+"'>수정</a>");
+		var deleteA = $("<a class='deleteA' href='deleteProc?feed_seq="+dto.feed_seq+"'>삭제</a>");
 		
 		var sessionEmail = "${loginInfo.email}";
 		var writer = dto.email;
