@@ -8,11 +8,17 @@
 <title></title>
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <style>
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans+KR&display=swap');
+*{
+	font-family: 'Noto Sans KR', sans-serif;
+	
+}
 	#wrapper{
 		border:2px solid navy;
 		margin:auto;
 		text-align:center;
 	}
+	
 </style>
 </head>
 <body>
