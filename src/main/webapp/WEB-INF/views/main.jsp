@@ -327,6 +327,10 @@
 		background-color: pink;
 	}
 }
+
+@media all and (min-width : 320px) and (max-width : 768px) {
+    .tab1_logo { display:none }
+}
 </style>
 <body>
  <jsp:include page="/resources/script/index.jsp" flush="true"/>
