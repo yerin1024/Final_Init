@@ -1094,8 +1094,6 @@
 				</div>
 				<div class="modal-body2"></div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-primary"
-						id="identifyModalBtn2">확인</button>
 					<button type="button" class="btn btn-default" id="closeModalBtn3">취소</button>
 				</div>
 			</div>

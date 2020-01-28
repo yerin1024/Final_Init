@@ -13,7 +13,7 @@
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-<link rel="stylesheet" href="/resources/css/nav.css"> 
+<link rel="stylesheet" href="/resources/css/nav.css?new"> 
 <link rel="stylesheet" href="/resources/css/alr.css">
 <link rel="stylesheet" href="/resources/css/msg.css?new">
 <link rel="stylesheet" href="/resources/css/test.css">
@@ -53,6 +53,7 @@ body{
 .parent([.title]){
 	border:1px solid red;
 }
+
 .btn-primary{
    width:100%;
    height:100%;
@@ -68,9 +69,11 @@ body{
    width:50px;
    height:50px;
 }
+
 #carouselExampleIndicators{
    width:100%;
 }
+
 .carousel-item {
    margin: auto;
    width:10px;
@@ -85,6 +88,7 @@ body{
    width: 100%;
    height: 200px;
 }
+
 #writerProfile{
    width:50px;
    height:50px;
@@ -93,6 +97,7 @@ body{
 #keyword{
 	width:300px;
 }
+
 .nickname{
 	vertical-align:middle;
 	line-height:60px;
@@ -100,7 +105,6 @@ body{
 	font-weight:600;
 	text-align:left;
 }
-
 
 .fRow:hover{
 	background-color:#fafafa;
