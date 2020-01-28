@@ -67,7 +67,7 @@
         width: 50%;
     }
     .tab1_body > a{
-    
+    	color: #171C28;
     }
     .tab1_logo {
     	width: 50%;
