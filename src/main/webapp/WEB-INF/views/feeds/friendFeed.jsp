@@ -153,9 +153,10 @@ html,body {
 
 /* 댓글 */
 .reply{	
-    margin-bottom: 40px;
     overflow: scroll;
-    height: 300px;
+    border-top: 1px solid white;
+    border-bottom: 1px solid white;
+    max-height: 300px;
 }
 .reply::-webkit-scrollbar {
         width: 0 !important
@@ -182,7 +183,7 @@ html,body {
     background: transparent;
     font-size: 16px;
     margin: 12px 12px;
-    width: 100%;
+    width: 95%;
     height: 50px;
     border-radius: 16px;
     border: 1px solid rgb(239, 239, 239);
@@ -220,7 +221,7 @@ html,body {
 }
 .userReply{	
     display: inline-block;
-    width: 430px;
+    width: 100%;
 }
 .replyBtns>button:not(.showReply):not(.hideReply){	
     border: 1px solid #999;
@@ -238,9 +239,6 @@ html,body {
     border: none;
     background: transparent;
     color:#999;
-}
-.parentReply{
-	border:1px solid #999;
 }
 /* .modal {
           text-align: center;
@@ -624,7 +622,7 @@ html,body {
    <jsp:include page="/resources/jsp/nav.jsp" />
    <jsp:include page="/resources/jsp/msg.jsp" />
    <jsp:include page="/resources/jsp/alr.jsp" />
-   <div id="wrapper" style="position: relative; top: 30px">
+   <div id="wrapper" style="position: relative; top: 7px">
       <!-- <h1>친구피드</h1> -->
       <c:choose>
          <c:when test="${fn:length(list) <1}">

@@ -297,6 +297,7 @@
     margin: auto;
     font-size: 15px;
 	font-family: 'Noto Serif KR', serif;
+	color:white;
 }
 
 .modal-dialog {
