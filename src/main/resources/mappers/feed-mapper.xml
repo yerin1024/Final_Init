@@ -142,7 +142,7 @@
 		select * from tb_member
 		where nickname=#{keyword}
 			and (email not in (select to_id from tb_block where from_id = #{email}) and
-			     email not in (select from_id from tb_block where to_id = #{email}))
+                  email not in (select from_id from tb_block where to_id = #{email}))
 	</select>
 
 	<select id="getFeedSeq" resultType="integer">
