@@ -1183,7 +1183,7 @@ html,body {
 				parentReply.find(".hideReply").hide();
 			}	
 		})
->>>>>>> acb60622d005d6ab2e1a28370c40604cb047e55b
+
    </script>
 </body>
 </html>
