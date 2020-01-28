@@ -225,14 +225,14 @@
 		        		 if(resp[i].alarm_check == 'N'){
 		        			 $(".a_sector").append("<div class='a_pre_line "+seqId+"' style='background-color:#e9f1f5; color:black;'>"
 			        			 		+ "<div class='a_pre_pf'><img src='/images/friendAlarm.png' class='a_pre_pf_img_nr'></div>"
-			        			 		+ "<div class='a_pre_text friendsList'>" + resp[i].nickname +"님의 친구 요청이 있습니다. </div>"
+			        			 		+ "<div class='a_pre_text friendsList' style='cursor:pointer;'>" + resp[i].nickname +"님의 친구 요청이 있습니다. </div>"
 			        			 		+ "<div class='a_pre_time'>"+ resp[i].reg_date_edit +"</div>"
 			        			 		+"<button class=delAlarm value="+seq+" style='background-color:#e9f1f5; color:black;'>X</button></div>");
 		        			 
 		        		 }else if(resp[i].alarm_check == 'Y'){
 		        			 $(".a_sector").append("<div class='a_pre_line "+seqId+"'>"
 			        			 		+ "<div class='a_pre_pf'><img src='/images/friendAlarm.png' class='a_pre_pf_img_nr'></div>"
-			        			 		+ "<div class='a_pre_text friendsList'>" + resp[i].nickname +"님의 친구 요청이 있습니다. </div>"
+			        			 		+ "<div class='a_pre_text friendsList' style='cursor:pointer;'>" + resp[i].nickname +"님의 친구 요청이 있습니다. </div>"
 			        			 		+ "<div class='a_pre_time'>"+ resp[i].reg_date_edit +"</div>"
 			        			 		+"<button class=delAlarm value="+seq+">X</button></div>");
 		        		 }

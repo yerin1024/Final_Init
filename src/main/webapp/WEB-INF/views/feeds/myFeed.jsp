@@ -8,9 +8,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title></title>
-<link rel="stylesheet" href="/resources/css/nav.css?new"> 
+<link rel="stylesheet" href="/resources/css/nav.css?n"> 
 <link rel="stylesheet" href="/resources/css/msg.css?n"> 
-<link rel="stylesheet" href="/resources/css/alr.css?n"> 
+<link rel="stylesheet" href="/resources/css/alr.css?"> 
 <link rel="stylesheet" href="/resources/css/test.css">
 <script src="https://code.jquery.com/jquery-3.4.1.js"
 	type="text/javascript"></script>
@@ -216,6 +216,8 @@
 	height: 300px;
 	width: 300px;
 	display: block;
+    border: 1px solid black;
+    border-radius: 180px;
 }
 
 .profileImg {
@@ -248,6 +250,7 @@
 	bottom: -10px;
 	border-radius: 20px;
 	padding: 5px 20px;
+	width:120px;
 	font-weight: bold;
 	font-size: 13px;
 	background-color: white;
@@ -321,6 +324,7 @@
 	text-align: center;
 	font-size: 70px;
 	font-weight: bold;
+	color:white;
 }
 
 .profileMessageLayout {
@@ -332,6 +336,7 @@
     margin: auto;
     font-size: 15px;
 	font-family: 'Noto Serif KR', serif;
+    color: white;
 }
 
 .modal-dialog {
@@ -590,6 +595,15 @@
     transition-duration: 0.5s;
     transform: translateX(-50%);
 }
+.report{	
+    position: absolute;
+    right: 110px; 	
+    top: -50px;
+}
+.blockFr{	
+    width: 30px;
+    height: 30px;
+}
 /* 호버 */
 /* All Device */
 /* 모든 해상도를 위한 공통 코드를 작성한다. 모든 해상도에서 이 코드가 실행됨. */
@@ -826,7 +840,7 @@
 	              console.log(i);
 	              if(i%3==1){
 	                 console.log(i+"는 1");
-	                 data = "<div class='row' style='margin:0px'>" +data;
+	                 data = "<div class='row'>" +data;
 	              }
 	              if(i%3==0){
 	                 console.log(i+"는0");
@@ -916,22 +930,28 @@
 		<div class="profile">
 			<c:choose>
 				<c:when test="${loginInfo.email ne mvo.email}">
-				
-					<div class="profileLayout">
-					<div class="report">
-						<img class="blockFr" src="/resources/images/whitex.png" alt="" style="width:15%;">
+				<div class="report">
+				        <c:if test="${blockSize == 0  }">
+							<img class="blockFr" src="/resources/images/whitex.png" alt="">
+						</c:if>
+						<c:if test="${blockSize > 0  }">
+							<img class="blockFr" src="/resources/images/limex.png" alt="">
+						</c:if>
+						
 					</div>
+					<div class="profileLayout">
+					
 						<div class="profileLayoutLeft">
 						<c:if test="${frResult == null || frResult == 0  }">
-							<button class="btn btn-primary btn-lg" id="openModalBtn">＋</button>
+							<button class="profileButton btn-lg" id="openModalBtn">＋</button>
 							<div class="btnText">친구요청</div>
 						</c:if>			
 							<c:if test="${frResult == 1 }">
-						<button class="btn btn-primary btn-lg" id="ingReq">＋</button>
+						<button class="profileButton btn-lg" id="ingReq">＋</button>
 							<div class="btnText">친구요청중</div>
 						</c:if>	
 						<c:if test="${frResult == 2  }">
-							<button class="friend btn btn-primary btn-lg" id="openFrModal" >＋</button>
+							<button class="profileButton btn-lg" id="openFrModal" >＋</button>
 							<div class="btnText">친구</div>
 						</c:if>	
 						
@@ -943,7 +963,7 @@
 					</div>
 					
 					<div class="profileLayoutRight">
-						<button class="messageRequest" id="msgRequest">＋</button>
+						<button class="messageRequest profileButton" id="msgRequest">＋</button>
 						<div class="btnText">메세지</div>
 					</div>
 					</div>
@@ -983,8 +1003,8 @@
 				<br>
 				<table style="width:80%; margin:auto; ">
 				<tr>
-				<td style="color:gainsboro; font-size:40px;">127
-				<td style="color:gainsboro; font-size:40px;">250
+				<td style="color:gainsboro; font-size:40px;">${fn:length(list)}
+				<td style="color:gainsboro; font-size:40px;">${fn:length(flist)}
 				</tr>
 				<tr>
 				<td style="color:grey; font-size:13px;">Posts
@@ -1114,7 +1134,7 @@
 	         	<span class="myProfile"><img class="userProfileImg" src="${loginInfo.profile_img }" alt=""></span>
 	       		<h5 class="modal-title" id="exampleModalLabel">${loginInfo.nickname }</h5>
 	       		<div id="writeReply" contenteditable="true"></div>
-	       		<button type="button" class="replyBtn" onclick="replyBtnOnclick('${loginInfo.email}');">등록</button>
+							<button class="replyBtn" onclick="replyBtnOnclick('${loginInfo.email}','${loginInfo.nickname }');">등록</button>
 			</div>
 	      </div>
 	    </div>
@@ -1972,6 +1992,42 @@
             
 
         })
+        //친구 끊기
+    $(".frcutfr").on("click", function () {
+        var yr_id = $(this).attr("name");
+        
+        console.log(yr_id);
+        $.ajax({
+            url: "${pageContext.request.contextPath}/friend/cutFndRelation",
+            type: "POST",
+            data: {
+                yr_id: yr_id
+            },
+            dataType: "text",
+            success: function (res) {
+                console.log(res);
+                console.log(yr_id);
+                alert("친구취소가 완료되었습니다.");
+                $('#modalBox2').modal('hide');
+                $(".btn-lg").remove();
+                $(".btnText").remove();
+                $(".profileLayoutLeft").append("<button class=btn btn-primary btn-lg id=openModalBtn >＋</button><div class=btnText>친구요청</div>");
+               location.reload();
+                
+                //$('.modal-body2').append("<div class=frInfo>"+list[j].email+"  <button type=button class=frInfo id=cutfr name="+list[j].email+">친구 끊기</button></div>");
+
+                // show modal
+
+            },
+            error: function (
+                request,
+                status,
+                error) {
+                console.log("ajax call went wrong:"
+                    + request.responseText);
+            }
+        })
+    });
 	
     $(".profileImageBox").mouseenter(function(){
 		$("#MyClockDisplay").css("top","0px");
@@ -2042,42 +2098,7 @@
             }
 
 
-	//친구 끊기
-    $(".frcutfr").on("click", function () {
-        var yr_id = $(this).attr("name");
-        
-        console.log(yr_id);
-        $.ajax({
-            url: "${pageContext.request.contextPath}/friend/cutFndRelation",
-            type: "POST",
-            data: {
-                yr_id: yr_id
-            },
-            dataType: "text",
-            success: function (res) {
-                console.log(res);
-                console.log(yr_id);
-                alert("친구취소가 완료되었습니다.");
-                $('#modalBox2').modal('hide');
-                $(".btn-lg").remove();
-                $(".btnText").remove();
-                $(".profileLayoutLeft").append("<button class=btn btn-primary btn-lg id=openModalBtn >＋</button><div class=btnText>친구요청</div>");
-               location.reload();
-                
-                //$('.modal-body2').append("<div class=frInfo>"+list[j].email+"  <button type=button class=frInfo id=cutfr name="+list[j].email+">친구 끊기</button></div>");
-
-                // show modal
-
-            },
-            error: function (
-                request,
-                status,
-                error) {
-                console.log("ajax call went wrong:"
-                    + request.responseText);
-            }
-        })
-    });
+	
 
     var poption1;
     var boption1;
@@ -2808,14 +2829,14 @@
             success: function (res) {
                 console.log(res);
                 if(res == "notInsert"){
-                	 $(".blockFr").remove();
-                     $(".report").append("<img class=blockFr src=/resources/images/redx.png alt= style=width:15%;>");
-                     location.reload();
+                	 
+                     $(".blockFr").attr("src", $(".blockFr").attr("src").replace("/resources/images/whitex.png", "/resources/images/limex.png"));  
+                     //location.reload();
                 	
                 }else{
-                	$(".blockFr").remove();
-                    $(".report").append("<img class=blockFr src=/resources/images/whitex.png alt= style=width:15%;>");
-                    location.reload();
+                	
+                    $(".blockFr").attr("src", $(".blockFr").attr("src").replace("/resources/images/limex.png", "/resources/images/whitex.png"));
+                    //location.reload();
                 }
                 
 

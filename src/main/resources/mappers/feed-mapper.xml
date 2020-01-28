@@ -137,11 +137,11 @@
       #{email})
    </select>
 
-   <select id="searchFriend" resultType="kh.init.members.MemberDTO">
+   <select id="searchFriend" resultType="kh.init.members.MemberDTO" parameterType="java.util.Map">
       select * from tb_member
       where nickname=#{keyword}
          and (email not in (select to_id from tb_block where from_id = #{email}) and
-                             email not in (select from_id from tb_block where to_id = #{email}))
+              email not in (select from_id from tb_block where to_id = #{email}))
    </select>
 
    <select id="getFeedSeq" resultType="integer">
@@ -307,12 +307,8 @@
       where ${col} = #{val} or parent = #{val}
    </delete>
 
-   <select id="viewAllReply" resultType="kh.init.feeds.ReplyDTO">
-      select * from tb_reply
-      where feed_seq = #{feed_seq}
-      start with parent = 0
-      connect by prior
-      reply_seq = parent order SIBLINGS by write_date asc
+   <select id="viewAllReply" resultType="kh.init.feeds.ReplyDTO">   	
+		select tb_reply.*, tb_member.profile_img,tb_member.nickname from tb_reply ,tb_member where tb_reply.email = tb_member.email and feed_seq = #{feed_seq}
    </select>
    
    <select id="viewAllReplyTest" resultType="kh.init.feeds.ReplyDTO">

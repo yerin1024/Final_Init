@@ -116,10 +116,10 @@
 }
 
 .a_pre_text:hover {
-	cursor: pointer;
+	
 }
 
-.a_pre_line:hover {
+.a_pre_line:hover, .a_pre_line:hover .delAlarm{
 	background-color: #ebebeb;
 	transition-duration: 0.2s;
 }
