@@ -7,22 +7,39 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Whole Feed</title>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"> 
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-<link rel="stylesheet" href="/resources/css/nav.css?new"> 
-<link rel="stylesheet" href="/resources/css/alr.css">
-<link rel="stylesheet" href="/resources/css/msg.css?new">
-<link rel="stylesheet" href="/resources/css/test.css">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
-<style>
+<title>Insert title here</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="/resources/css/nav.css">
+<link rel="stylesheet" href="/resources/css/msg.css"> 
+<link rel="stylesheet" href="/resources/css/alr.css"> 
+<link rel="stylesheet" href="/resources/css/test.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.css">
 
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.js"></script>
+
+<style>
+#exampleModal{
+	width:1200px;
+	margin:auto;
+}
 body{
 	background-color:#171C28;
+}
+#searchBtn{
+	border:2.5px solid white;
+	border-radius:5px;
+	height:30px;
+	background:none;
+	color:white;
+	margin-left:10px;
 }
 #wrapper {
 	margin: auto;
@@ -44,10 +61,21 @@ body{
     font-size:20px;
 
 }
+
+.modifyA, .deleteA{
+	color:black;
+	margin-right:10px;
+	font-size:15px;
+}
+.modifyA:hover, .deleteA:hover{
+	font-weight:bold;
+	color:black;
+}
+
 .row{
 	width:100%;
 	height:100%;
-	margin-bottom:15px;
+	margin-bottom:30px;
 }
 
 .parent([.title]){
@@ -95,7 +123,7 @@ body{
 }
 
 #keyword{
-	width:300px;
+	width:450px;
 }
 
 .nickname{
@@ -116,11 +144,15 @@ body{
 	text-decoration:none;
 }
 
-.cover{
-	width:100%;
-	height:100%;
+img.cover{	
+    width: 100%;
+    height: 100%;
 }
-div.cover {
+video.cover{	
+    width: 100%;
+    height: 100%;
+}
+div.cover { 
     position: absolute;
     top: 50%;
     left: 50%;
@@ -129,9 +161,10 @@ div.cover {
     max-width: 150px;
     max-height: 150px;
     overflow-y: hidden;
-
+    color:black;
+    font-size:17px;
+    font-weight:600;
 }
-
 
 .feed{
 	min-width:150px;
@@ -474,7 +507,7 @@ div.cover {
     border: 1px solid rgb(239, 239, 239);
     padding: 0px 10px;
 }
-.modal-body1{
+.modal-body5{
 	width:55%;
     height: 100%;
     position: relative;
@@ -543,7 +576,10 @@ div.cover {
 	margin:0px;
 }
 .media>p{
-	padding:10px;
+	padding:30px;
+	word-break:break-all;
+	text-align:left;
+	font-size:20px;
 }
 
 /* All Device */
@@ -725,14 +761,15 @@ function getList(page){
 	  <div class="modal-dialog" role="document">
 	    <div class="modal-content">
 	      <div class="modal-header" style="width:99.9%;">
-	         <span class="writerProfile"><img class="userProfileImg" src="${loginInfo.profile_img}" alt=""></span>
-	        <h5 class="modal-title" id="exampleModalLabel">DETAIL VIEW</h5>
+	         <span class="writerProfile"><img class="userProfileImg" src="${loginInfo.profile_img }" alt=""></span>
+	         <h5 class="modal-title" id="exampleModalLabel" style="font-size:30px;font-weight:bold;"></h5>
+
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 	          <span aria-hidden="true">&times;</span>
 	        </button>
 	      </div>
 		<div class="modal-main">			
-	      	<div class="modal-body1">
+	      	<div class="modal-body5">
 	      	</div>
             <div class="title">
                 <div class="reply">

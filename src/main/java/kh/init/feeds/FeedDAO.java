@@ -115,6 +115,18 @@ public class FeedDAO {
 		int result = jdbc.insert("Feed.registerFeed", dto);
 		return result;
 	}
+	
+	public int modifyFeed(FeedDTO dto)throws Exception{
+		Map<String, String> param = new HashMap<>();
+		param.put("feed_seq", dto.getFeed_seq()+"");
+		param.put("title", dto.getTitle());
+		param.put("contents", dto.getContents());
+		param.put("relation", dto.getRelation());
+		param.put("hashtag", dto.getHashtag());
+		return jdbc.update("Feed.modifyFeed",param);		
+	}
+	
+	
 	//writeFeed에서 글쓰기 눌렀을때 미디어 등록
 	public int registerMedia(int feed_seq, String media) throws Exception{
 		Map<String, String> param = new HashMap<>();
@@ -134,11 +146,6 @@ public class FeedDAO {
 	}
 
 
-
-
-	public int modifyFeed(FeedDTO dto)throws Exception{
-		return jdbc.update("Feed.modifyFeed",dto);		
-	}
 
 	public FeedDTO detailView(int feed_seq) throws Exception{
 		FeedDTO dto = jdbc.selectOne("Feed.detailView", feed_seq);
