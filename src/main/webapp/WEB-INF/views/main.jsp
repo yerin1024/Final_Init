@@ -21,7 +21,6 @@
     * {
         box-sizing: border-box;
     }
-    
  	.modal {
          text-align: center;
     }
@@ -204,7 +203,12 @@
         background-color: #0f4c81;
         color: #fffefc;
     }
-
+	
+	#tab5-2_kakaoLoginBtn{
+		width: 100px;
+        height: 30px;
+	}
+	
     .tab5-1_container {
         text-align: left;
     }
@@ -920,7 +924,7 @@
         
         doc.getElementById("tab5-1_cancelBtn").addEventListener("click", function (){
         	clearInput(userInput, userInput.length);
-        	doc.getElementById("mainTab").click();
+        	doc.getElementById("mainTab").click();  	
         });
 
         // 입력 변수

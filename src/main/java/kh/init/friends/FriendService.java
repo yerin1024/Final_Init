@@ -78,6 +78,13 @@ public class FriendService {
 		return result;
 	}
 	
+	public int changeRelation(String my_id, String fr_id,String relation) throws Exception{
+		System.out.println("친구 관계 변경 svc 도착");
+		int result =dao.changeRelation(my_id, fr_id, relation);
+		System.out.println("svc결과는 "+result);
+		return result;
+	}
+	
 	@Transactional("txManager") // 친구 리스트 가져오기
 	public List<MemberDTO> getFriendsListService(String id) throws Exception{
 		List<MemberDTO> list = new ArrayList<>();
@@ -163,7 +170,7 @@ public class FriendService {
 			   
 		}
 	
-	@Transactional("txManager") //친구 요청하기
+	@Transactional("txManager") //친구 여부 확인하기
 	public int friendIsOkService(String fr_id,String my_id) throws Exception {
 		System.out.println("친구여부 서비스 도착");
 		List<FriendRequestDTO> reqList = dao.getFndRequestIsOk(fr_id, my_id);

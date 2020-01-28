@@ -77,7 +77,7 @@ public class FriendController {
 		}
 		
 	}
-	@RequestMapping("/redoFndRequest") //친구요청 거부하기~
+	@RequestMapping("/redoFndRequest") //친구요청 취소하기~
 	@ResponseBody
 	public String redoFndRequest(String yr_id) {
 		System.out.println("친구 요청 취소 CON 도착"); 
@@ -86,6 +86,25 @@ public class FriendController {
 		try {
 			int result = service.rejectFriendRequestService( yr_id,mDto.getEmail());
 			
+			return "ok";
+		 } catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return "error";
+		}
+		
+	}
+	@RequestMapping("/changeRelation") //친구 관계 변경하기~
+	@ResponseBody
+	public String changeRelation(String yr_id,String relation) {
+		System.out.println("친구 관계 변경 CON 도착"); 
+		System.out.println(yr_id);
+		System.out.println("관계는 "+relation);
+		MemberDTO mDto = (MemberDTO)session.getAttribute("loginInfo");
+		System.out.println("myid는 "+mDto.getEmail());
+		try {
+			int result = service.changeRelation( mDto.getEmail(),yr_id,relation);
+			System.out.println("관계설정 결과는  "+result);
 			return "ok";
 		 } catch (Exception e) {
 			// TODO Auto-generated catch block
