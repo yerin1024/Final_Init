@@ -322,7 +322,7 @@ public class FeedController {
 				}else { //친구검색
 					cover = null;
 					System.out.println("wholeFeed controller- 친구검색");
-					friendList = service.searchFriend(keyword);
+					friendList = service.searchFriend(email, keyword);
 					model.addAttribute("option", "friend");
 				}
 		}catch(Exception e) {
@@ -364,7 +364,7 @@ public class FeedController {
 					obj.addProperty("option", "nfriend");
 				}else { //친구검색
 					cover = null;
-					friendList = service.searchFriend(keyword);
+					friendList = service.searchFriend(email, keyword);
 					obj.addProperty("option", "friend");
 				}
 				obj.addProperty("option", "nfriend");
