@@ -51,13 +51,13 @@ public class FriendDAO {
 		return jdbc.delete("Friend.deleteRelation",map);
 	}
 	//관계 바꿔
-	public int changeRelation(FriendDTO dto) throws Exception {
+	public int changeRelation(String my_id,String yr_id,String relation) throws Exception {
 		Map<String,String> param= new HashMap<>();
-		//		param.put("id", dto.getId());
-		//		param.put("pw", dto.getPw());
-		//		param.put("name", dto.getName());
-		//		param.put("phone", dto.getPhone());
-		return jdbc.update("Members.update",param);
+				param.put("my_id", my_id);
+				param.put("fr_id", yr_id);
+				param.put("relation", relation);
+		
+		return jdbc.update("Friend.changeRelation",param);
 	}
 	//친구 수락해서 우정 생김
 	public int insertFriendship(String my_id,String yr_id,String relation) throws Exception {

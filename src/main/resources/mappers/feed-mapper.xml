@@ -9,7 +9,7 @@
 		from (select p.*, row_number()over(order by p.feed_seq) rnum
 			from tb_feed p where relation='0'
 			                     and 
-			                    (p.email not in (select to_id from tb_block where from_id = #{email}) and 
+			                    (p.email not in (select to_id from tb_block where from_id = #{email}) and
 			                    p.email not in (select from_id from tb_block where to_id = #{email}))
 								<if test="keyword != null">
 									and hashtag Like #{keyword}
@@ -25,7 +25,7 @@
 		from (select p.*, row_number()over(order by p.feed_seq) rnum
 			from tb_feed p where relation='0'
 			                     and 
-			                    (p.email not in (select to_id from tb_block where from_id = #{email}) and 
+			                    (p.email not in (select to_id from tb_block where from_id = #{email}) and
 			                    p.email not in (select from_id from tb_block where to_id = #{email}))
 								<if test="keyword != null">
 									and hashtag Like #{keyword}
@@ -38,7 +38,7 @@
 		from (select p.*, row_number()over(order by p.feed_seq) rnum
 			from tb_feed p where relation='0'
 			                     and 
-			                    (p.email not in (select to_id from tb_block where from_id = #{email}) and 
+			                    (p.email not in (select to_id from tb_block where from_id = #{email}) and
 			                    p.email not in (select from_id from tb_block where to_id = #{email}))
 								<if test="keyword != null">
 									and hashtag Like #{keyword}
@@ -137,9 +137,11 @@
 		#{email})
 	</select>
 
-	<select id="searchFriend" resultType="kh.init.members.MemberDTO">
+	<select id="searchFriend" resultType="kh.init.members.MemberDTO" parameterType="java.util.Map">
 		select * from tb_member
 		where nickname=#{keyword}
+			and (p.email not in (select to_id from tb_block where from_id = #{email}) and
+			                    p.email not in (select from_id from tb_block where to_id = #{email}))
 	</select>
 
 	<select id="getFeedSeq" resultType="integer">

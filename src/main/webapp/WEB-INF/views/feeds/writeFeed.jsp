@@ -19,7 +19,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.js"></script>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.css">
-<link rel="stylesheet" href="/resources/css/nav.css"> 
+<link rel="stylesheet" href="/resources/css/nav.css?new"> 
 <link rel="stylesheet" href="/resources/css/alr.css">
 <link rel="stylesheet" href="/resources/css/msg.css">
 <link rel="stylesheet" href="/resources/css/test.css">
@@ -31,21 +31,50 @@ body{
 }
 #mediaRow{
 	width:1000px;
-	margin:auto;
+}
+#writeFeedProc{
+	padding-left:50px;
 }
 
-
 #writeForm{
-	border:2px solid red;
+	border:3px solid white;
   	margin:auto;
-  	padding-top:60px;
+  	margin-top:100px;
+  	height:700px;
+  	width:1000px;
+  	border-radius:20px;
 }
 
 #title {
-	width:40%;
+	width:670px;
+	margin-left:50px;
+	margin-right:15px;
 }
+
+#register{
+	border:2px solid white;
+	border-radius:5px;
+	height:30px;
+	background:none;
+	color:white;
+	margin-left:10px;
+}
+#back{
+	border:2px solid white;
+	border-radius:5px;
+	height:30px;
+	background:none;
+	color:white;
+	margin-left:10px;
+}
+
 .dz-default {
-	border: 1px solid black;
+	text-align:center;
+	margin-left:13px;
+	border: 2px solid white;
+	border-radius : 15px;
+	color:white;
+	font-weight:100;
 	width:90%;
 	margin-top:10px;
 }
@@ -129,7 +158,7 @@ body{
 }
 </style>
 
-<jsp:include page="/resources/jsp/select.jsp" />
+
 <script>
 	$(function() {
 		$("#writeFeedForm").on("submit", function() {
@@ -148,7 +177,7 @@ body{
 		<div id="writeForm">
 		<br>
 			<form action="writeFeedProc" method="post" enctype="multipart/form-data" id="writeFeedForm">
-				제목&nbsp;&nbsp;<input type="text" name="title" id="title">
+				&nbsp;&nbsp;<input type="text" name="title" id="title">
 				<select name="relation" data-menu>
 				<option value='0'>전체보기</option>
 				<option value='1'>지인</option>
@@ -157,12 +186,15 @@ body{
 				<option value='4' selected>나만보기</option>
 				</select>
 				<textarea name="contents" style="display: none" id="contents"></textarea>
-				<button type="button" id="register">등록</button>
+				<button type="button" id="register">등록</button><button type="button" id="back">취소</button>
 			</form>
 			<br>
 			<br>
 		
 			<div class="row" id="mediaRow">
+				<div class="col-8" style="margin:auto">
+				<div id="summernote"></div>
+				</div>
 				<div class="col-3">
 				<div class="row">
 					<div class="col-12">
@@ -190,9 +222,6 @@ body{
 				</div>
 				</div>
 				<!-- 	캐러셀에서 첫번째 미디어만 active가 붙어야 정상동작하는데 그떼 사용하기 위해 index div를 만들어놓고 display none을 시켜놨음 -->
-				<div class="col-8" style="margin:auto">
-				<div id="summernote"></div>
-				</div>
 			</div>
 			<span id="index" style="display: none">0</span>
 		</div>
@@ -268,6 +297,15 @@ body{
 			}
 			$("#writeFeedForm").submit();
 		})
+		$("#back").on("click", function(){
+			var result = confirm("취소하시겠습니까?");
+			if(result==true){
+				history.back();
+			}else{
+				return;
+			}
+		})
 	</script>
+	<jsp:include page="/resources/jsp/select.jsp" />
 </body>
 </html>

@@ -192,7 +192,6 @@ public class FeedService {
 			return map;
 		}
 	
-	//myFeed를 위한
 		public Map<String, Object> getMyScrapFeed(int page, String email) throws Exception{
 			int totalFeed = dao.getMyFeedCount(email);
 			int startNum = 0;
@@ -218,7 +217,7 @@ public class FeedService {
 				int feed_seq = tmp.getFeed_seq();
 				List<String> media = dao.getMediaList(feed_seq);
 				if(media.size()==0) { //이미지나 비디오가 없기 때문에 제목으로 커버를 만들어야되는 경우
-					cover.add("<div class='cover' style='width:100%;height:100%'>"+tmp.getTitle()+"</div>");
+					cover.add("<div class='cover'>"+tmp.getTitle()+"</div>");
 				}else {
 					if(media.get(0).endsWith("mp4")) { //파일이 동영상일 경우
 						String video = "<video class='cover' style='width:100%;height:100%' src=\""+media.get(0)+"\">";
@@ -289,8 +288,8 @@ public class FeedService {
 		return map;
 	}
 
-	public List<MemberDTO> searchFriend(String keyword) throws Exception{
-		List<MemberDTO> list = dao.searchFriend(keyword);
+	public List<MemberDTO> searchFriend(String email, String keyword) throws Exception{
+		List<MemberDTO> list = dao.searchFriend(email, keyword);
 		return list;
 	}
 

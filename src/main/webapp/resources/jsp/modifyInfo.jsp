@@ -1,32 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<!DOCTYPE html>
-<html>
-<head>
-<link rel="stylesheet" href="/resources/css/nav.css">
-<script src="https://code.jquery.com/jquery-3.4.1.js"
-	type="text/javascript"></script>
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-<script
-	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-<script
-	src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-	<style>
-	body{
-	background-color:white;
-	}
-	#modalBox{
-	 
-	}
-	</style>
-<meta charset="UTF-8">
-<title>내 정보 수정</title>
-</head>
-<body>
-<jsp:include page="${pageContext.request.contextPath}/resources/jsp/nav.jsp" />
-	<div id="modalBox" class="modal fade" id="myModal"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<div id="modalBox" class="modal fade"
 		role="dialog"  tabindex="-1" aria-labelledby="myModalLabel"
 		style="margin-top: 45px;">
 		<div class="modal-dialog" role="document">
@@ -75,7 +50,7 @@
 			<!-- 이름 -->
 			<label>이름</label><span class="required">*</span class="required"><br> <input
 				type="text" class="userInput" id="username" name="name"
-				maxlength="70" value="${dto.name}">
+				maxlength="70">
 			<p class="advise" id="adviseName" readonly></p>
 			<p class="hiddenResp" id="hiddenRespName" style="display:none;"></p>
 			<!-- 생년월일 -->
@@ -103,9 +78,9 @@
 				<option class="pOption1" value="018">018</option>
 				<option class="pOption1" value="019">019</option>
 			</select> - <input type="text" id="phone2" maxlength="4"
-				style="text-align: center; width: 80px;" value="${poption2}"> - <input
+				style="text-align: center; width: 80px;"> - <input
 				type="text" id="phone3" maxlength="4"
-				style="text-align: center; width: 80px;" value="${poption3}"> 
+				style="text-align: center; width: 80px;"> 
 			<input type="text" id="phone" name="phone" maxlength="11" style="display:none;">
 			<p class="advise" id="advisePhone" readonly></p>
 			<p class="hiddenResp" id="hiddenRespPhone" style="display:none;"></p>
@@ -129,8 +104,7 @@
 			<button type=button id="changeInfo" onclick="formValidation();">수정완료</button>
 			<button type=button id="backToFeed">뒤로가기</button>
 		</div>
-	</form>
-					
+	</form>					
 				</div>
 				<div class="modal-footer">
 					
@@ -139,8 +113,7 @@
 		</div>
 	</div>
 	
-	<script>
-	$('#modalBox').modal('show');
+	<script>	
 		var doc = document;
 	
 	    // 입력 변수
@@ -227,8 +200,7 @@
     						.attr('selected', 'selected');
     			}
     		}
-		}	    
-	    
+		}	    	    
 	    
 	    changePw.addEventListener("click", function(){
 	    	changePwComplete.style.display = "initial";
@@ -271,9 +243,6 @@
 	    		console.log(b);
 	    		console.log(c);s
 	    	});
-	    	
-	    	
-
 	    });
 		
 
@@ -673,6 +642,9 @@
                     advisePhone.style.color = "red";
                     return false;
                 } 
+                
+                phone.value = phone1.value + phone2.value + phone3.value;
+                
                 if("${dto.phone}" != phone.value){
                 	if(verifyCode.value === ""){
                 		adviseVerifCode.innerHTML = "휴대폰 인증은 필수입니다."
@@ -696,7 +668,6 @@
                     console.log(day);
                 }
                 birth.value = birthYear.value + month + day;
-                phone.value = phone1.value + phone2.value + phone3.value;
                 //전화번호, 이메일 한 줄로 조합 end
 
                 console.log("최종 휴대폰 : " + phone.value);
@@ -707,5 +678,3 @@
                 doc.getElementById("signUpForm").submit();
             };		
 	</script>
-</body>
-</html>

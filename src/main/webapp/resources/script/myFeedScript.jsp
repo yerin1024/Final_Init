@@ -5,6 +5,9 @@
 var temporaryReply;
 
 
+
+
+
 $('#exampleModal').on('shown.bs.modal', function (event) {
 	var seq = $(event.relatedTarget).data('id');
 	var feed_seq = $("#exampleModal").attr("feed_seq",seq);
@@ -102,7 +105,7 @@ $('#exampleModal').on('shown.bs.modal', function (event) {
 
 		
 		if(mediaList.length>0){
-			var dtoContents = $("<div class='dtoContents' style='display:inline-block;border:2px solid red;min-height:100px;width: 100%;padding-left: 10px;padding-top: 10px;padding-right: 10px;word-break: break-all;'></div>");
+			var dtoContents = $("<div class='dtoContents' style='display:inline-block;border:2px solid #ebebeb;border-radius:15px;margin-bottom:20px;min-height:100px;width: 100%;padding-left: 10px;padding-top: 10px;padding-right: 10px;word-break: break-all;'></div>");
 			dtoContents.append(dto.contents);
 			$(".reply").append(dtoContents);			
 		}

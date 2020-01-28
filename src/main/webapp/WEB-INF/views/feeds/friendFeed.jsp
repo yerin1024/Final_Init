@@ -14,6 +14,7 @@
 <link rel="stylesheet" href="/resources/css/nav.css">
 <link rel="stylesheet" href="/resources/css/msg.css"> 
 <link rel="stylesheet" href="/resources/css/alr.css"> 
+<link rel="stylesheet" href="/resources/css/test.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.css">
 
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
@@ -23,19 +24,15 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.js"></script>
 
-<link rel="stylesheet" href="/resources/css/nav.css">
-<link rel="stylesheet" href="/resources/css/alr.css">
-<link rel="stylesheet" href="/resources/css/msg.css">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="X-UA-Compatible" content="ie=edge">
-
 <style>
+body{
+	background-color:#171C28;
+}
 #wrapper {
    border: 1px solid red;
    margin: auto;
 }
-
-html, body {
+html,body {
    padding: 0px;
    margin: 0px;
 }
@@ -358,7 +355,6 @@ html, body {
              }
         } 
    });
-
    $(window).scroll(
          function() { //스크롤이 최하단 으로 내려가면 리스트를 조회하고 page를 증가시킨다.
             if ($(window).scrollTop() >= $(document).height()
@@ -886,9 +882,6 @@ html, body {
    </div>
 
    <script>   
-   if($("div[parent_seq=${childReply.parent }]").attr("child") == 1){
-		$(".showReply").show();
-	}ss
    
    //신고확인 기능 모달
    $(document).on("click",".sirenBtn",function(){

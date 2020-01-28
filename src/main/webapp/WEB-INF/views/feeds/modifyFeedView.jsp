@@ -26,7 +26,7 @@
 	rel="stylesheet">
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.js"></script>
-<link rel="stylesheet" href="/resources/css/nav.css"> 
+<link rel="stylesheet" href="/resources/css/nav.css?new"> 
 <link rel="stylesheet" href="/resources/css/msg.css"> 
 <link rel="stylesheet" href="/resources/css/alr.css">
 <link rel="stylesheet" href="/resources/css/test.css">
@@ -39,21 +39,51 @@ body{
 }
 #mediaRow{
 	width:1000px;
-	margin:auto;
 }
 
+#writeFeedProc{
+	padding-left:50px;
+}
 
 #writeForm{
-	border:2px solid red;
+	border:3px solid white;
   	margin:auto;
-  	padding-top:60px;
+  	margin-top:100px;
+  	height:700px;
+  	width:1000px;
+  	border-radius:20px;
 }
 
 #title {
-	width:40%;
+	width:670px;
+	margin-left:50px;
+	margin-right:15px;
 }
+
+#register{
+	border:2px solid white;
+	border-radius:5px;
+	height:30px;
+	background:none;
+	color:white;
+	margin-left:10px;
+}
+#back{
+	border:2px solid white;
+	border-radius:5px;
+	height:30px;
+	background:none;
+	color:white;
+	margin-left:10px;
+}
+
 .dz-default {
-	border: 1px solid black;
+	text-align:center;
+	margin-left:13px;
+	border: 2px solid white;
+	border-radius : 15px;
+	color:white;
+	font-weight:100;
 	width:90%;
 	margin-top:10px;
 }
@@ -134,6 +164,7 @@ body{
 
 }
 </style>
+
 <script>
 	$(function() {
 		$("#writeFeedForm").on("submit", function() {
@@ -149,23 +180,28 @@ body{
 <jsp:include page="/resources/jsp/msg.jsp"/>
 <body>
 	<div id="wrapper">
-		<div id="writeForm" style="height: 715px">
+		<div id="writeForm">
 		<br>
 			<form action="modifyFeedProc?feed_seq=${dto.feed_seq }" method="post" id="modifyProc">
-				제목&nbsp;&nbsp;<input type="text" name="title" id="title" value="${dto.title }">
-				<select name="relation">
+				&nbsp;&nbsp;<input type="text" name="title" id="title" value="${dto.title }">
+				<select name="relation" data-menu>
 				<option value='0'>전체보기</option>
 				<option value='1'>지인</option>
 				<option value='2'>아는친구</option>
 				<option value='3'>절친</option>
 				<option value='4' selected>나만보기</option>
-				</select> <button>등록</button>
+				</select> <button id="register">등록</button><button type="button" id="back">취소</button>
 			</form>
 			<br>
 			<br>
 						
 					
 			<div class="row" id="mediaRow">
+			<div class="col-8" style="margin:auto">
+			<div id="summernote">
+				${dto.contents }
+			</div>
+			</div>
 			<div class="col-3">
 				<c:choose>             
 					<c:when test="${fn:length(media) >=1 }">
@@ -207,11 +243,7 @@ body{
 				</c:choose>
 			</div>
 			<textarea name="contents" style="display: none" id="contents"></textarea>
-			<div class="col-8" style="margin:auto">
-			<div id="summernote">
-				${dto.contents }
-			</div>
-			</div>
+
 	
 			
 		</div>
@@ -231,6 +263,15 @@ body{
 	             ['height', ['height']]
 	           ]
 		});
+		$("#back").on("click", function(){
+			var result = confirm("취소하시겠습니까?");
+			if(result==true){
+				history.back();
+			}else{
+				return;
+			}
+		})
 	</script>
+	<jsp:include page="/resources/jsp/select.jsp" />
 </body>
 </html>
