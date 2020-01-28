@@ -255,8 +255,7 @@ public class FeedController {
 			result = service.registerFeed(dto, mediaList, mediaPath, realPath);
 		}catch(Exception e) {
 			e.printStackTrace();
-		}
-		
+		}		
 		//등록이 되면 mediaList를 비워둠
 		session.setAttribute("mediaList", new ArrayList<String>());
 
@@ -446,7 +445,7 @@ public class FeedController {
 		int ipage = 1;
 		System.out.println("friendFeed 도착");
 		String email = ((MemberDTO)session.getAttribute("loginInfo")).getEmail();
-		String profile_img = ((MemberDTO)session.getAttribute("loginInfo")).getProfile_img();
+//		String profile_img = ((MemberDTO)session.getAttribute("loginInfo")).getProfile_img();
 		try {
 			List<FeedDTO> list = service.getFriendFeed(ipage, email);
 			System.out.println("feed size : "+list.size());
@@ -455,6 +454,7 @@ public class FeedController {
 			List<Integer> declareCheckList = new ArrayList<>();
 			List<List<String>> mediaList = new ArrayList<>();
 			List<List<ReplyDTO>> replyList = new ArrayList<>();
+
 			List<Integer> likeCheckList = new ArrayList<>();
 			List<Integer> bookmarkCheckList = new ArrayList<>();
 			tfeed_seqList=service.getDeclare(email);
@@ -482,7 +482,8 @@ public class FeedController {
 				
 				index++;
 				mediaList.add(service.getMediaListForFriendFeed(feed_seq));
-//				replyList.add(service.viewAllReply(feed_seq));
+				replyList.add(service.viewAllReply(feed_seq));
+				
 				likeCheckList.add(service.likeCheck(feed_seq, ((MemberDTO)session.getAttribute("loginInfo")).getEmail()));
 				bookmarkCheckList.add(service.bookmarkCheck(feed_seq, ((MemberDTO)session.getAttribute("loginInfo")).getEmail()));
 			}
@@ -554,7 +555,7 @@ public class FeedController {
 				}
 				index++;
 				mediaList.add(service.getMediaListForFriendFeed(feed_seq));
-//				replyList.add(service.viewAllReply(feed_seq));
+				replyList.add(service.viewAllReply(feed_seq));
 				likeCheckList.add(service.likeCheck(feed_seq, ((MemberDTO)session.getAttribute("loginInfo")).getEmail()));
 				bookmarkCheckList.add(service.bookmarkCheck(feed_seq, ((MemberDTO)session.getAttribute("loginInfo")).getEmail()));
 			}
@@ -562,7 +563,7 @@ public class FeedController {
 			System.out.println(profile_imgList);
 			System.out.println(declareCheckList);
 			System.out.println(mediaList);
-			System.out.println(replyList);
+			System.out.println(" 에이잭스 리플라이리스트~: " + replyList);
 			System.out.println(likeCheckList);
 			System.out.println(bookmarkCheckList);
 
