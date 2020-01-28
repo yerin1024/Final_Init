@@ -3,6 +3,7 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="Feed">
+
 	<select id="selectAll" resultType="kh.init.feeds.FeedDTO"
 		parameterType="java.util.Map">
 		select feed_seq, email, nickname, title, contents, relation, write_date, hashtag

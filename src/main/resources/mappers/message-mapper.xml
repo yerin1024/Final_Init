@@ -80,7 +80,9 @@
 	
 	<!-- 새 메시지가 존재하는지 -->
 	<select id="isNewMsg" resultType="java.lang.Integer"> 
-		select count(*) from tb_message where to_id=#{from_id} and receive_read='N'
+		select count(*) from tb_message msg 
+		full outer join tb_block bl on (bl.from_id = msg.to_id and bl.to_id = msg.from_id) or (bl.from_id = msg.from_id and bl.to_id = msg.to_id)
+		where msg.to_id=#{from_id} and receive_read='N' and ((bl.from_id != #{from_id} and bl.to_id != #{from_id}) or bl.from_id is null or bl.to_id is null)
 	</select>
 	
 	<!-- 친구 목록 --><!-- return : fr_id, nickname -->
