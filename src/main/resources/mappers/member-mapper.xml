@@ -64,7 +64,7 @@
 		insert into tb_block values(#{from_id},#{to_id})
 	</insert>
 	 <delete id="deleteBlock" >
-	   delete from tb_member where from_id = #{from_id} and to_id = #{to_id}
+	   delete from tb_block where from_id = #{from_id} and to_id = #{to_id}
 	  </delete>
 	  <select id="selectBlock" parameterType="java.util.Map" resultType="kh.init.members.BlockDTO">
   		select * from tb_block where from_id = #{from_id} and to_id = #{to_id}
