@@ -99,4 +99,16 @@ public class MemberDAO {
 		param.put("col", "email");
     	return jdbc.selectOne("Member.selectMember",param);
 	}
+	public int insertBlock(BlockDTO dto) {
+		return jdbc.insert("Member.insertBlock", dto);
+	}
+	public int deleteBlock(BlockDTO dto) throws Exception {
+    	System.out.println("dao 회원탈퇴 인자값은 "+dto);
+		
+        return jdbc.delete("Member.deleteBlock",dto);
+    }
+	public List<BlockDTO> getMyBlock(BlockDTO dto) throws Exception{
+		
+    	return jdbc.selectList("Member.selectBlock",dto);
+    }
 }

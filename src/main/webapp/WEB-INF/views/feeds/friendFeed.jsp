@@ -25,8 +25,13 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.js"></script>
 
 <style>
+body{
+	background-color:#171C28;
+}
 #wrapper {
-	border: 1px solid red;
+	color:white;
+	text-align:center;
+	font-size:30px;
 	margin: auto;
 }
 
@@ -421,7 +426,6 @@ html, body {
 									imgBTNS.attr("seq", list[i].feed_seq);
 									spanBTNS.append(imgBTNS);
 									spanBTNS.attr("seq", list[i].feed_seq);
-
 									var aBTNS = $("<a href='#' class='like' onclick='return false'></a>");
 									aBTNS.attr("id", list[i].feed_seq);
 									aBTNS.append(spanBTNS);

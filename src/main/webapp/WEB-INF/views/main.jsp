@@ -5,7 +5,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> -->
 <meta http-equiv="x-ua-compatible" content="ie=edge">
 
 <title>Init</title>
@@ -21,26 +22,15 @@
     * {
         box-sizing: border-box;
     }
-    
- 		.modal {
-          text-align: center;
-        }
-        @media screen and (min-width: 768px) {
-          .modal:before {
-            display: inline-block;
-            vertical-align: middle;
-            content: " ";
-            height: 100%;
-          }
-        }
-        .modal-dialog {
-          display: inline-block;
-          text-align: left;
-          vertical-align: middle;
-        }
+ 	.modal {
+         text-align: center;
+
+    }
     
     .modal-content {
         background-color: #fffefc;
+        min-height: 500px;
+        vertical-align: center;
     }
 
     .modal-header {
@@ -49,7 +39,6 @@
     }
 
     .modal-body {
-        /* padding: 100px; */
         padding: 30px;
     }
     
@@ -71,13 +60,11 @@
 	.tab1_loginContainer{
         display: flex;
 		width: 100%;
-        margin: 0px;
- 
+        margin: 0px; 
 	}
     .tab1_body {
         font-family: 'Noto Sans KR', sans-serif;
         width: 50%;
-
     }
     
     .tab1_logo {
@@ -207,7 +194,12 @@
         background-color: #0f4c81;
         color: #fffefc;
     }
-
+	
+	#tab5-2_kakaoLoginBtn{
+		width: 100px;
+        height: 30px;
+	}
+	
     .tab5-1_container {
         text-align: left;
     }
@@ -358,7 +350,7 @@
                                 <div class="tab1_container">
                                     <form action="${pageContext.request.contextPath}/member/loginProc.do" method="post" id="tab1_loginForm">
                                         <div class="tab1_loginContainer">
-                                        <div class="tab1_logo d-sm-none d-md-block">
+                                        	<div class="tab1_logo">
 	                                        	<div id="logoDiv">
 	                                        		<img src="${pageContext.request.contextPath}/resources/images/mainLogo.jpg">
 	                                        	</div>   
@@ -371,7 +363,7 @@
 												</label>
 												<br>
 												<label for="tab1_pw" class="inp">
-												  <input type="password" class="inputLogin" id="tab1_pw" name="pw" placeholder="&nbsp;">
+												  <input type="password" class="inputLogin" id="tab1_pw" name="pw" placeholder="&nbsp;" onkeyup="enterkey();">
 												  <span class="label">Password</span>
 												  <span class="border"></span>
 												</label>
@@ -618,6 +610,14 @@
         }    
         //tab1_로그인 start
         var login = doc.getElementById("tab1_loginBtn");
+
+        function enterkey(){
+            if(window.event.keyCode == 13){
+                if(doc.getElementById("tab1_email").value != "" && doc.getElementById("tab1_pw").value != ""){
+                	toLogin();
+                }
+            }    
+        }    
         
         function toLogin() { //로그인 시도
         	if(doc.getElementById("tab1_email").value == ""){
@@ -923,7 +923,7 @@
         
         doc.getElementById("tab5-1_cancelBtn").addEventListener("click", function (){
         	clearInput(userInput, userInput.length);
-        	doc.getElementById("mainTab").click();
+        	doc.getElementById("mainTab").click();  	
         });
 
         // 입력 변수
