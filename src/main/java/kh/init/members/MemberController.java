@@ -148,7 +148,7 @@ public class MemberController {
 		try {
 			MemberDTO mDto = (MemberDTO)session.getAttribute("loginInfo");
 			MemberDTO dto = service.getMyPageService(mDto.getEmail());
-			System.out.println(dto.getProfile_img());
+			System.out.println("dto 프로필 사진 : " + dto.getProfile_img());
 			System.out.println(dto.getNickname());
 			System.out.println(dto.getProfile_msg());
 			
@@ -237,16 +237,20 @@ public class MemberController {
 		System.out.println("dto 출력 : " + dto.toString());
 		String path = session.getServletContext().getRealPath("files");
 		MemberDTO mDto = (MemberDTO)session.getAttribute("loginInfo");
+		 
 		model.addAttribute("email", mDto.getEmail());
 		System.out.println("이메일는 "+mDto.getEmail());
 		System.out.println("파일명은 : " + profileImg.getOriginalFilename());
 		int result = 0;
+		System.out.println("현재 프로필 이미지는? " + mDto.getProfile_img());
 		try {
 			if(profileImg.getOriginalFilename() == "") {
 				result = service.changeMyProfileService(mDto.getEmail(), dto,null,path);
 			}else {
 				result = service.changeMyProfileService(mDto.getEmail(), dto,profileImg,path);
 			}
+			
+			
 			if(result> 0) {
 				session.removeAttribute("loginInfo");
 				session.setAttribute("loginInfo", service.getMemberDTO(mDto.getEmail())); // 세션 로그인정보 담기

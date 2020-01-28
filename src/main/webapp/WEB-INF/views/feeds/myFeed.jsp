@@ -1489,7 +1489,9 @@ button.learn-more .button-text {
                             </div>
                             <div class="modal-body" style="text-align:center; color:#0D4373;">
                                 <label style="margin:auto;">프로필 사진</label><br>
-                                <img src="/resources/images/default_profile_img.png" id="setProfile" style="margin:auto; width:30%; border-radius:50%"><br><br>
+                                <img src="" id="setProfile" name="profile_img" style="margin:auto; width:30%; border-radius:50%"><br><br>
+                                <input type="hidden" name="profile_img" id="hiddenImg">
+                                
                                 <button type="button" id="deletePic"><image src="${pageContext.request.contextPath}/resources/images/trash.png" id="deletePicImg"></button>
                                 <input type="file" id="profileImg" name="profileImg"><br> 
                                 <p class="adviseOut" id="adviseProfile" readonly>*프로필 사진 미등록시 기본이미지로 등록됩니다.</p>
@@ -1945,6 +1947,7 @@ button.learn-more .button-text {
 					console.log("profile_msg : " + dto.profile_msg);
 				}
 				$("#setProfile").attr("src", dto.profile_img);
+				$("#hiddenImg").attr("value", dto.profile_img);
 								
 				 function readURL(input) {
 			            if (input.files && input.files[0]) {
@@ -2017,6 +2020,11 @@ button.learn-more .button-text {
 			                return false;
 			            }
 			            console.log("완성 닉네임 : " + nickname.value);
+			            
+			            if($("#setProfile").attr('src') == "/resources/images/default_profile_img.png"){
+			            	$("#hiddenImg").attr("value","/resources/images/default_profile_img.png");
+			            }
+			            
 			            doc.getElementById("profileFrm").submit();
 					}); 
 			        //submit 직전 유효성 검사
