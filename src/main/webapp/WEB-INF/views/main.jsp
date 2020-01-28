@@ -372,7 +372,7 @@
 												</label>
 												<br>
 												<label for="tab1_pw" class="inp">
-												  <input type="password" class="inputLogin" id="tab1_pw" name="pw" placeholder="&nbsp;">
+												  <input type="password" class="inputLogin" id="tab1_pw" name="pw" placeholder="&nbsp;" onkeyup="enterkey();">
 												  <span class="label">Password</span>
 												  <span class="border"></span>
 												</label>
@@ -619,6 +619,14 @@
         }    
         //tab1_로그인 start
         var login = doc.getElementById("tab1_loginBtn");
+
+        function enterkey(){
+            if(window.event.keyCode == 13){
+                if(doc.getElementById("tab1_email").value != "" && doc.getElementById("tab1_pw").value != ""){
+                	toLogin();
+                }
+            }    
+        }    
         
         function toLogin() { //로그인 시도
         	if(doc.getElementById("tab1_email").value == ""){

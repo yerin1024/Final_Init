@@ -1852,7 +1852,7 @@
 			        //submit 직전 유효성 검사
 
 			        $("#cancelBtn").on("click", function() {
-							location.href = "${pageContext.request.contextPath}/feed/myFeed?email=${loginInfo.email}";
+							$("#modalProfile").modal("hide");
 						});
 				
 			}).fail(function(a,b,c){
@@ -2327,7 +2327,7 @@
     });
 
     $("#backToFeed").on("click", function () {
-        location.href = "${pageContext.request.contextPath}/feed/myFeed?email=${loginInfo.email}";
+    	$("#modalModifyInfo").modal('hide');
     });
 
     //현재 비밀번호 일치여부 검사 start
