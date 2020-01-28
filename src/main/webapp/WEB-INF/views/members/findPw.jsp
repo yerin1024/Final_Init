@@ -7,6 +7,12 @@
 <meta charset="UTF-8">
 <title></title>
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans+KR&display=swap');
+*{
+	font-family: 'Noto Sans KR', sans-serif;
+}
+</style>
 </head>
 <body>
     <form id="findFrm" action="${pageContext.request.contextPath}/member/findPwProc.do" method="post">

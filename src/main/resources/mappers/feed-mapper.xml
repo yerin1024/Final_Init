@@ -15,6 +15,7 @@
 								<if test="keyword != null">
 									and hashtag Like #{keyword}
 								</if>
+							order by rnum 
 			)
 		where rnum between #{startNum} and #{endNum} 
 	</select>
@@ -52,9 +53,10 @@
 		select feed_seq, email, nickname, title, contents,
 		relation, write_date, hashtag
 		from (SELECT p.*, ROW_NUMBER()OVER(ORDER
-		BY P.FEED_SEQ) as rnum FROM TB_FEED P WHERE email=#{email})
+		BY P.FEED_SEQ desc) as rnum FROM TB_FEED P WHERE email=#{email})
 		where rnum
 		between #{startNum} and #{endNum}
+		order by rnum 
 	</select>
 
 	<select id="getMyFeedRnum" resultType="Integer"
@@ -67,9 +69,9 @@
 	</select>
 	
 	<select id="getMyFeedByFriend" resultType="kh.init.feeds.FeedDTO" parameterType="java.util.Map">
-		select distinct(feed_seq), email, nickname, title, contents, relation, sysdate, hashtag
+		select distinct(feed_seq), email, nickname, title, contents, relation, sysdate, hashtag, rnum
 		from
-    		(select p.*, r.fr_id, r.relation as fr_rel, ROW_NUMBER() OVER(ORDER BY p.feed_seq) rnum 
+    		(select p.*, r.fr_id, r.relation as fr_rel, ROW_NUMBER() OVER(ORDER BY p.feed_seq desc) rnum 
     		from tb_feed p left join tb_friend r on p.email = r.my_id
    			 where 
 	            (r.my_id = #{yourEmail} and r.fr_id = #{myEmail} and
@@ -80,9 +82,11 @@
 	            and
 	            (r.fr_id not in (select to_id from tb_block where from_id = #{myEmail}) and 
 	            r.fr_id not in (select from_id from tb_block where to_id = #{myEmail})) )
-		where rnum between #{startNum} and #{endNum}
+		where rnum between #{startNum} and #{endNum} order by rnum 
+  
+    
 
-	</select>
+   </select>
 
 	<select id="getMyFeedRnumByFriend" resultType="Integer"
 		parameterType="java.util.Map">
@@ -213,11 +217,11 @@
 		resultType="kh.init.feeds.FeedDTO">
 		select distinct(feed_seq), email, nickname, title, contents, relation, sysdate, hashtag
 		from
-    		(select p.*, r.fr_id, r.relation as fr_rel, ROW_NUMBER() OVER(ORDER BY p.feed_seq) rnum 
+    		(select p.*, r.fr_id, r.relation as fr_rel, ROW_NUMBER() OVER(ORDER BY p.feed_seq desc) rnum 
     		from tb_feed p left join tb_friend r on p.email = r.my_id
    			 where 
 	            (r.fr_id = #{email} and 
-	            p.relation >= r.relation and 
+	            r.relation >= p.relation and 
 	            p.email not in (select to_id from tb_block where from_id = #{email}) and 
 	            p.email not in (select from_id from tb_block where to_id = #{email}))
 	            
@@ -226,7 +230,7 @@
 	            r.fr_id not in (select from_id from tb_block where to_id = #{email}))
 				order by rnum desc, feed_seq desc)
 		where rnum between #{startNum} and #{endNum} 
-        order by feed_seq desc
+        order by feed_seq
 
 		
 <!-- 		select feed_seq, email, nickname, title, contents, -->

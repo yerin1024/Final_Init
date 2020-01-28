@@ -26,6 +26,11 @@
 
 
 <style>
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans+KR&display=swap');
+*{
+	font-family: 'Noto Sans KR', sans-serif;
+	
+}
 body{
 	background-color:#171C28;
 }
@@ -293,6 +298,11 @@ body{
 			console.log(contents);
 			if(contents=="<p><br></p>"){
 				alert("내용을 입력하세요");
+				return;
+			}
+			console.log(title.length);
+			if(title.length>20){
+				alert("제목은 한글,영어,숫자 포함 20글자로 작성해주세요.");
 				return;
 			}
 			$("#writeFeedForm").submit();
